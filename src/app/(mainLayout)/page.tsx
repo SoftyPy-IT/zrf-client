@@ -14,10 +14,10 @@ const Home = () => {
     <div>
       {/* <Slider />
       <Welcome /> */}
-      <Impact />
+      {/* <Impact />
       <RecentActivitiesOfZRF />
       <Program />
-      <OurProjects />
+      <OurProjects /> */}
       <Publications />
       <GallerySection />
     </div>
