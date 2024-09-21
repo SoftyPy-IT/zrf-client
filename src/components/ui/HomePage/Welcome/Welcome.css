@@ -1,0 +1,25 @@
+/* @media only screen and (max-width:500px){
+  .imgResponsive{
+    margin-left:80px;
+    width:220px !important;
+    height:220px !important ;
+  }
+}    
+@media only screen and (max-width:375px){
+  .imgResponsive{
+    margin-left:60px;
+    width:180px !important;
+    height:180px !important ;
+  }
+}    
+
+@media only screen and (max-width:275px){
+    .imgResponsive{
+        margin-left:45px;
+        width:150px !important;
+        height:150px !important ;
+    }
+    .smallImg{
+        display: none !important;
+    }
+}     */

@@ -1,0 +1,38 @@
+/* Slider.css */
+
+.slider-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  overflow: hidden;
+}
+
+.mySwiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide-zoom {
+  overflow: hidden;
+}
+
+.slide-image {
+  transition: transform 20s ease-in-out; /* Reduced duration for smoother zoom */
+}
+
+/* Apply zoom effect to the active slide */
+.swiper-slide-active .slide-image {
+  transform: scale(2.05); /* Subtle zoom effect */
+}
+
+/* Smooth fade transitions between slides */
+.swiper-slide {
+  opacity: 0;
+  transition: opacity 6s ease-in-out; /* Reduced duration for smoother fade */
+}
+
+.swiper-slide-next,
+.swiper-slide-prev,
+.swiper-slide-active {
+  opacity: 1;
+}
