@@ -150,7 +150,7 @@ const Publication = () => {
                   {featured.description}
                 </p>
                 <div className="flex justify-end">
-                  <Link href="/publication/publication-details">
+                  <Link href="/news/id">
                     <button className="border border-green-600 hover:bg-gradient-to-r from-yellow-600 to-green-600 hover:text-white px-2 py-1 rounded-full text-sm mt-3">
                       আরো পড়ুন <EastIcon fontSize="small" />
                     </button>
@@ -176,7 +176,7 @@ const Publication = () => {
                           {data.title.slice(0, 50)}...
                         </h3>
                         <div className="flex justify-end">
-                          <Link href="/publication">
+                          <Link href="/news/id">
                             <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-2 text-white rounded-full uppercase text-sm">
                               <EastIcon />
                             </button>
