@@ -72,7 +72,7 @@ const page = () => {
                   <p className="text-gray-600">{data.date}</p>
                   <Link href={`/recent-activities-of-zrf/${data.id}`}>
                     <button className="hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-1 hover:text-white rounded-full uppercase text-xs border">
-                      আরো পড়ুন <EastIcon fontSize="small" />
+                      আরো পড়ুন <EastIcon fontSize="small" /> 
                     </button>
                   </Link>
                 </div>
