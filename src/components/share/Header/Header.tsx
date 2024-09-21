@@ -37,7 +37,7 @@ const Header = () => {
   return (
     <>
       <Container>
-        <div className="relative pt-4 pb-10 z-40">
+        <div className="relative pt-4 pb-10 z-40 bg-red-500">
           <div>
             <div className=" lg:mx-auto lg:flex lg:justify-between lg:items-center lg:mb-3">
               <div className="lg:flex lg:items-center lg:space-x-4">
@@ -67,11 +67,10 @@ const Header = () => {
 
             {/* Navbar */}
             <div
-              className={`${
-                isSticky
+              className={`${isSticky
                   ? "fixed top-0 left-0 w-full bg-white shadow-lg z-50"
                   : "relative"
-              } transition-all duration-300`}
+                } transition-all duration-300`}
             >
               {open ? (
                 <div onClick={handleClose} className="bar1 z-50">
@@ -91,9 +90,8 @@ const Header = () => {
               )}
 
               <ul
-                className={`lg:w-full xl:w-full lg:py-2 flex justify-center text-sm lg:text-base xl:text-base text-white absolute z-50 bg-red-500 lg:bg-green-700 xl:bg-green-700 navItems ${
-                  open ? "" : "activeMenu z-50"
-                }`}
+                className={`lg:w-full xl:w-full lg:py-2 flex justify-center text-sm lg:text-base xl:text-base text-white absolute z-50 bg-red-500 lg:bg-green-700 xl:bg-green-700 navItems ${open ? "" : "activeMenu z-50"
+                  }`}
               >
                 <li className="lg:border-none border-b lg:py-0 py-1">
                   <Link href="/">Home</Link>

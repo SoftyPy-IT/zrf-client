@@ -34,7 +34,7 @@ const slides = [
 
 const Slider = () => { 
   return (
-    <div className="slider-container">
+    <div className="slider-container ">
       <Swiper
         autoplay={{
           delay: 6000,
