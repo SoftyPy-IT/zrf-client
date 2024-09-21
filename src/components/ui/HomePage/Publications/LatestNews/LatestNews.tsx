@@ -60,10 +60,10 @@ const LatestNews = () => {
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-y-[10px] mt-10  ">
+      <div className="grid grid-cols-1 gap-y-[10px] md:mt-10  ">
         {newsToShow.map((data) => (
           <div key={data.id} className="newsCard">
-            <div className="flex md:flex-row gap-x-3 items-center justify-between">
+            <div className="flex gap-x-3 items-center justify-between">
               <div className="newsContent text-sm">
                 <small className="text-[12px] font-bold block mb-2">{data.title.slice(0,50)}... </small>
                 <div className="bnpBtnStyle ">

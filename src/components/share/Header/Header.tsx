@@ -168,9 +168,9 @@ const Header = () => {
                 <li className="lg:border-none border-b lg:py-0 py-2">
                   <Link href="/news">News</Link>
                 </li>
-                <li className="lg:border-none border-b lg:py-0 py-2">
+                {/* <li className="lg:border-none border-b lg:py-0 py-2">
                   <Link href="/contact">Contact</Link>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>

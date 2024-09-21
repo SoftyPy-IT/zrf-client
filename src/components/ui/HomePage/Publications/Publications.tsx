@@ -36,9 +36,9 @@ const Publication = () => {
           </div>
         </div>
         <div className="w-28 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-10"></div>
-        <div className="flex flex-col md:flex-row mt-20 ">
+        <div className="flex flex-col  md:grid grid-cols-12  gap-10 mt-20 ">
 
-          <div className="">
+          <div className="md:col-span-7">
             <PublicationSlider />
            <div className="md:hidden block mt-5 ">
            <Link href="/ebooks">
@@ -49,7 +49,7 @@ const Publication = () => {
            </div>
           </div>
 
-          <div className="">
+          <div className="md:col-span-5">
 
             <LatestNews />
           </div>

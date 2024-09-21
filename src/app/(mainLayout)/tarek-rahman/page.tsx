@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import img1 from "../../../../src/assets/images/tarek-rahman/tarek.jpg";
+import img1 from "../../../../src/assets/images/tarek-rahman/tarek2.jpg";
 import Container from "@/components/share/Container";
 import { useState } from "react";
 import Modal from "./_components/Modal";
