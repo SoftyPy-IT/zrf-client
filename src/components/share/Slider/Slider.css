@@ -1,9 +1,7 @@
-/* Slider.css */
-
-.slider-container {
-  position: relative;
+Slider.css .slider-container {
+  position: relative !important;
   z-index: 1;
-  width: 100%;
+  width: 1300px !important;
   overflow: hidden;
 }
 
@@ -17,18 +15,21 @@
 }
 
 .slide-image {
-  transition: transform 20s ease-in-out; /* Reduced duration for smoother zoom */
+  transition: transform 20s ease-in-out;
+  /* Reduced duration for smoother zoom */
 }
 
 /* Apply zoom effect to the active slide */
 .swiper-slide-active .slide-image {
-  transform: scale(2.05); /* Subtle zoom effect */
+  transform: scale(2.05);
+  /* Subtle zoom effect */
 }
 
 /* Smooth fade transitions between slides */
 .swiper-slide {
   opacity: 0;
-  transition: opacity 6s ease-in-out; /* Reduced duration for smoother fade */
+  transition: opacity 6s ease-in-out;
+  /* Reduced duration for smoother fade */
 }
 
 .swiper-slide-next,

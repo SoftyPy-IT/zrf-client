@@ -40,7 +40,7 @@ const Slider = () => {
           delay: 6000,
           disableOnInteraction: false,
         }}
-        spaceBetween={0}  // Removed space between slides for seamless effect
+        spaceBetween={0} 
         effect={"fade"}
         navigation={true}
         pagination={{
