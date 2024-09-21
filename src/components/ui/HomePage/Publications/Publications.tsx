@@ -78,15 +78,14 @@ const Publication = () => {
 
   return (
     <Container>
-      <div className="sectionMargin mt-96 ">
-        <div className="grid grid-cols-12 gap-10 ">
-
-          <div className="col-span-7">
-            <PublicationSlider />
+      <div className="sectionMargin ">
+        <div className="grid grid-cols-12">
+          <div className="col-span-12 lg:col-span-7">
+            <h2 className="text-3xl font-bold uppercase mdw-[400px]">E-Books</h2>
           </div>
 
-          <div className="col-span-5">
-            <div className="flex items-center mb-10 border border-green-600 lg:mt-0 mt-10">
+          <div className="col-span-12 lg:col-span-5">
+            <div className="flex items-center  border border-green-600 ">
               <h2 className="text-2xl font-bold uppercase bg-gradient-to-r from-yellow-600 to-green-600 text-white px-6 py-2">
                 News
               </h2>
@@ -96,11 +95,19 @@ const Publication = () => {
                   Rahman !
                 </h1>
               </Marquee>
-            </div>
-            <div className="lg:flex gap-5  p-5">
+            </div >
+          </div>
+        </div>
+        <div className="w-28 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-10"></div>
+        <div className="grid grid-cols-12 gap-10 mt-20 ">
+
+          <div className="col-span-12 lg:col-span-7">
+            <PublicationSlider />
+          </div>
+
+          <div className="col-span-12 lg:col-span-5">
+
             <LatestNews />
-             
-            </div>
           </div>
         </div>
         <div className="flex justify-end mt-5">

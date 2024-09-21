@@ -36,7 +36,7 @@ function PublicationSlider() {
     }, [updateIndex]);
 
     return (
-        <div className='container'>
+        <div className=''>
             <Swiper
                 effect={'coverflow'}
                 centeredSlides={true}
@@ -63,25 +63,25 @@ function PublicationSlider() {
                     <Image className='swiperImg' alt='slider' src={book1} />
                 </SwiperSlide>
                 <SwiperSlide className='swiperSlide'>
-                    <Image className='swiperImg' alt='slider' src={book2} />
+                    <Image alt='slider' src={book2} />
                 </SwiperSlide>
                 <SwiperSlide className='swiperSlide'>
-                    <Image className='swiperImg' alt='slider' src={book3} />
-                </SwiperSlide>
-                <SwiperSlide className='swiperSlide'>
-                    <Image className='swiperImg' alt='slider' src={book4} />
-                </SwiperSlide>
-                <SwiperSlide className='swiperSlide'>
-                    <Image className='swiperImg' alt='slider' src={book1} />
-                </SwiperSlide>
-                <SwiperSlide className='swiperSlide'>
-                    <Image className='swiperImg' alt='slider' src={book2} />
-                </SwiperSlide>
-                <SwiperSlide className='swiperSlide'>
-                    <Image className='swiperImg' alt='slider' src={book3} />
+                    <Image alt='slider' src={book3} />
                 </SwiperSlide>
                 <SwiperSlide className='swiperSlide'>
                     <Image className='swiperImg' alt='slider' src={book4} />
+                </SwiperSlide>
+                <SwiperSlide className='swiperSlide'>
+                    <Image alt='slider' src={book1} />
+                </SwiperSlide>
+                <SwiperSlide className='swiperSlide'>
+                    <Image className='swiperImg' alt='slider' src={book2} />
+                </SwiperSlide>
+                <SwiperSlide className='swiperSlide'>
+                    <Image alt='slider' src={book3} />
+                </SwiperSlide>
+                <SwiperSlide className='swiperSlide'>
+                    <Image alt='slider' src={book4} />
                 </SwiperSlide>
             </Swiper>
         </div>

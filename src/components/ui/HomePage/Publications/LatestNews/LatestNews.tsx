@@ -49,12 +49,12 @@ const LatestNews = () => {
           image: img3,
           date: "১০ এপ্রিল ২০২৪",
         },
-        {
-          id: 4,
-          title: "ভোলায় শহিদ নুরে আলম ও আব্দুর রহিমের",
-          image: img4,
-          date: "১০ এপ্রিল ২০২৪",
-        },
+        // {
+        //   id: 4,
+        //   title: "ভোলায় শহিদ নুরে আলম ও আব্দুর রহিমের",
+        //   image: img4,
+        //   date: "১০ এপ্রিল ২০২৪",
+        // },
         // {
         //   id: 5,
         //   title:
@@ -67,8 +67,8 @@ const LatestNews = () => {
   const newsToShow = isSmallScreen ? newsData.slice(0, 2) : newsData;
 
   return (
-    <div className="">
-      <div className="grid grid-cols-1 gap-y-[10px] ">
+    <>
+      <div className="grid grid-cols-1 gap-y-[10px] mt-10  ">
         {newsToShow.map((data) => (
           <div key={data.id} className="newsCard">
             <div className="flex md:flex-row items-center justify-between">
@@ -92,7 +92,7 @@ const LatestNews = () => {
           </div>
         ))}
       </div>
-    </div>
+    </>
   );
 };
 
