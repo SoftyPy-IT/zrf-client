@@ -9,7 +9,7 @@
 
 .newsImgWrap {
     width: 210px;
-    height: 100px;
+    height: 135px;
     overflow: hidden !important;
 }
 
@@ -36,11 +36,13 @@
         width: 100%;
     }
 }
+
 @media only screen and (max-width:500px) {
     .newsCard {
         width: 100%;
         height: auto;
     }
+
     .newsContent {
         width: 100%;
     }

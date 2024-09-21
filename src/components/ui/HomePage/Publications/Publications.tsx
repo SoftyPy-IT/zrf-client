@@ -78,7 +78,7 @@ const Publication = () => {
 
   return (
     <Container>
-      <div className="sectionMargin ">
+      <div className="sectionMargin hidden md:block ">
         <div className="grid grid-cols-12">
           <div className="col-span-12 lg:col-span-7">
             <h2 className="text-3xl font-bold uppercase mdw-[400px]">E-Books</h2>

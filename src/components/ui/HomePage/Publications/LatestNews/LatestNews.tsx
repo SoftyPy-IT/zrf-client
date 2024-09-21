@@ -28,41 +28,41 @@ const buttonStyle = {
 
 const LatestNews = () => {
 
-    const newsData = [
-        {
-          id: 1,
-          title:
-            "জিয়াউর রহমান ফাউন্ডেশন’র ২৪তম প্রতিষ্ঠা বার্ষিকী উপলক্ষে শহিদ প্রেসিডেন্ট জিয়াউর রহমান’র সমাধিতে শ্রদ্ধা নিবেদন।",
-          image: img1,
-          date: "১০ এপ্রিল ২০২৪",
-        },
-        {
-          id: 2,
-          title:
-            "কুড়িগ্রাম, বন্যা কবলিত এলাকার মানুষের মাঝে বিনামূল্যে স্বাস্থ্য সেবা",
-          image: img2,
-          date: "১০ এপ্রিল ২০২৪",
-        },
-        {
-          id: 3,
-          title: "বিশিষ্ট ক্রীড়া সংগঠক আরাফাত রহমান কোকোর",
-          image: img3,
-          date: "১০ এপ্রিল ২০২৪",
-        },
-        // {
-        //   id: 4,
-        //   title: "ভোলায় শহিদ নুরে আলম ও আব্দুর রহিমের",
-        //   image: img4,
-        //   date: "১০ এপ্রিল ২০২৪",
-        // },
-        // {
-        //   id: 5,
-        //   title:
-        //     "কুড়িগ্রাম, বন্যা কবলিত এলাকার মানুষের মাঝে বিনামূল্যে স্বাস্থ্য সেবা",
-        //   image: img5,
-        //   date: "১০ এপ্রিল ২০২৪",
-        // },
-      ];
+  const newsData = [
+    {
+      id: 1,
+      title:
+        "জিয়াউর রহমান ফাউন্ডেশন’র ২৪তম প্রতিষ্ঠা বার্ষিকী উপলক্ষে শহিদ প্রেসিডেন্ট জিয়াউর রহমান’র সমাধিতে শ্রদ্ধা নিবেদন।",
+      image: img1,
+      date: "১০ এপ্রিল ২০২৪",
+    },
+    {
+      id: 2,
+      title:
+        "কুড়িগ্রাম, বন্যা কবলিত এলাকার মানুষের মাঝে বিনামূল্যে স্বাস্থ্য সেবা",
+      image: img2,
+      date: "১০ এপ্রিল ২০২৪",
+    },
+    {
+      id: 3,
+      title: "বিশিষ্ট ক্রীড়া সংগঠক আরাফাত রহমান কোকোর",
+      image: img3,
+      date: "১০ এপ্রিল ২০২৪",
+    },
+    // {
+    //   id: 4,
+    //   title: "ভোলায় শহিদ নুরে আলম ও আব্দুর রহিমের",
+    //   image: img4,
+    //   date: "১০ এপ্রিল ২০২৪",
+    // },
+    // {
+    //   id: 5,
+    //   title:
+    //     "কুড়িগ্রাম, বন্যা কবলিত এলাকার মানুষের মাঝে বিনামূল্যে স্বাস্থ্য সেবা",
+    //   image: img5,
+    //   date: "১০ এপ্রিল ২০২৪",
+    // },
+  ];
   const isSmallScreen = useMediaQuery('(max-width: 640px)');
   const newsToShow = isSmallScreen ? newsData.slice(0, 2) : newsData;
 
@@ -75,11 +75,11 @@ const LatestNews = () => {
               <div className="newsContent text-sm">
                 <small className="text-[12px] font-bold ">{data.title} </small>
                 <div className="bnpBtnStyle">
-                  <Button component={Link} href="/press/1" sx={buttonStyle}>
-                    <span>
+                  <Link href="/publication">
+                    <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-2 text-white rounded-full uppercase text-sm">
                       আরও পড়ুন <ArrowRightAlt sx={{ fontSize: "13px" }} />
-                    </span>{" "}
-                  </Button>
+                    </button>
+                  </Link>
                 </div>
               </div>
               <div className="newsImgWrap">
