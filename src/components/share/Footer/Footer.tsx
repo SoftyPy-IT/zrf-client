@@ -33,7 +33,6 @@ const Footer = () => {
     { name: "Programm", href: "/about" },
     { name: "Initiativs", href: "/case-studies" },
     { name: "Covid", href: "/services" },
-
   ];
 
   const latestNews = [
@@ -90,9 +89,10 @@ const Footer = () => {
               <div className="w-full md:w-1/4 mb-8 md:mb-0">
                 <div className="space-y-3 flex flex-col items-center">
                   <Image src={logo} alt="Seville Logo" width={50} height={50} />
-                  <h3 className="font-bold text-lg">Ziaur Rahman Foundation</h3>
+                  <h3 className="font-bold text-lg text-center">
+                    Ziaur Rahman Foundation
+                  </h3>
                 </div>
-
               </div>
 
               <div className="w-full md:w-1/4 mb-8 md:mb-0 text-center">
@@ -128,40 +128,42 @@ const Footer = () => {
 
                 <div className=" mt-4 text-center md:text-left lg:text-left xl:text-left">
                   {/* Social Media Icons */}
-                  <h4 className="font-semibold ">Follow Us</h4>
-                  <div className="mt-4 flex space-x-4 justify-center md:justify-start lg:justify-start xl:justify-start">
-                    <a
-                      href="https://www.facebook.com/zrf.org/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-400 hover:text-white"
-                    >
-                      <FacebookIcon />
-                    </a>
-                    <a
-                      href="https://x.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-400 hover:text-white"
-                    >
-                      <XIcon />
-                    </a>
-                    <a
-                      href="https://instagram.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-400 hover:text-white"
-                    >
-                      <InstagramIcon />
-                    </a>
-                    <a
-                      href="https://linkedin.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-400 hover:text-white"
-                    >
-                      <LinkedInIcon />
-                    </a>
+                  <h4 className="font-semibold text-center">Follow Us</h4>
+                  <div className="flex justify-center">
+                    <div className="mt-4 flex space-x-4">
+                      <a
+                        href="https://www.facebook.com/zrf.org/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-400 hover:text-white"
+                      >
+                        <FacebookIcon />
+                      </a>
+                      <a
+                        href="https://x.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-400 hover:text-white"
+                      >
+                        <XIcon />
+                      </a>
+                      <a
+                        href="https://instagram.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-400 hover:text-white"
+                      >
+                        <InstagramIcon />
+                      </a>
+                      <a
+                        href="https://linkedin.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-400 hover:text-white"
+                      >
+                        <LinkedInIcon />
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
