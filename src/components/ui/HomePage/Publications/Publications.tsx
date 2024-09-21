@@ -21,6 +21,8 @@ import { Autoplay, EffectFade, Zoom } from "swiper/modules";
 import Link from "next/link";
 import EastIcon from "@mui/icons-material/East";
 import Marquee from "react-fast-marquee";
+import PublicationSlider from "./PublicationSlider";
+import LatestNews from "./LatestNews/LatestNews";
 
 const Publication = () => {
   const books = [
@@ -76,52 +78,14 @@ const Publication = () => {
 
   return (
     <Container>
-      <div className="sectionMargin mt-96 ">
-        <div className="lg:flex gap-5 bg-white">
-          {/*  Swiper for Books */}
-          <div className="lg:w-[400px] lg:h-[300px]">
-            <div>
-              <h2 className="text-3xl font-bold uppercase">E-Books</h2>
-              <div className="w-28 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-10"></div>
-              <div className="slider-container lg:h-[540px] border-2 p-1">
-                <Swiper
-                  autoplay={{
-                    delay: 6000,
-                    disableOnInteraction: false,
-                  }}
-                  spaceBetween={0}
-                  effect={"fade"}
-                  zoom={true}
-                  modules={[Autoplay, EffectFade, Zoom]}
-                  className="mySwiper"
-                >
-                  {books.map((slide, index) => (
-                    <SwiperSlide key={index} className="swiper-slide-zoom">
-                      <div className="relative w-full h-[400px] lg:h-[700px]">
-                        <Image
-                          src={slide.image}
-                          alt={`Slide ${index + 1}`}
-                          layout="fill"
-                          // objectFit="cover"
-                          className="slide-image"
-                        />
-                      </div>
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </div>
-            </div>
-            <div className="mt-10 ">
-              <Link href="/ebooks">
-                <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-6 py-2 text-white rounded-full uppercase">
-                  সবগুলো পড়ুন <EastIcon fontSize="small" />
-                </button>
-              </Link>
-            </div>
+      <div className="sectionMargin hidden md:block ">
+        <div className="grid grid-cols-12">
+          <div className="col-span-12 lg:col-span-7">
+            <h2 className="text-3xl font-bold uppercase mdw-[400px]">E-Books</h2>
           </div>
 
-          <div>
-            <div className="flex items-center mb-10 border border-green-600 lg:mt-0 mt-10">
+          <div className="col-span-12 lg:col-span-5">
+            <div className="flex items-center  border border-green-600 ">
               <h2 className="text-2xl font-bold uppercase bg-gradient-to-r from-yellow-600 to-green-600 text-white px-6 py-2">
                 News
               </h2>
@@ -131,63 +95,19 @@ const Publication = () => {
                   Rahman !
                 </h1>
               </Marquee>
-            </div>
-            <div className="lg:flex gap-5 bg-gray-100 p-5">
-              {/* Middle content (Featured) */}
-              <div className="bg-white shadow-lg lg:w-[450px] lg:h-[500px] p-5 border rounded">
-                <div className="relative w-full h-64 mb-5">
-                  <Image
-                    src={featured.image}
-                    alt={featured.title}
-                    layout="fill"
-                    objectFit="cover"
-                  />
-                </div>
-                <h3 className="text-xl font-bold">
-                  {featured.title.slice(0, 80)}...
-                </h3>
-                <p className="text-gray-600 mt-3 text-justify">
-                  {featured.description}
-                </p>
-                <div className="flex justify-end">
-                  <Link href="/publication/publication-details">
-                    <button className="border border-green-600 hover:bg-gradient-to-r from-yellow-600 to-green-600 hover:text-white px-2 py-1 rounded-full text-sm mt-3">
-                      আরো পড়ুন <EastIcon fontSize="small" />
-                    </button>
-                  </Link>
-                </div>
-              </div>
+            </div >
+          </div>
+        </div>
+        <div className="w-28 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-10"></div>
+        <div className="grid grid-cols-12 gap-10 mt-20 ">
 
-              {/* Sidebar: News Section */}
-              <div className="lg:w-[300px]  lg:mt-0 md:mt-5 mt-5">
-                <div className="grid grid-cols-1 gap-3 h-[500px] w-full">
-                  {news.map((data) => (
-                    <div
-                      key={data.id}
-                      className="flex items-center gap-5 bg-white p-3 rounded shadow-md transition-transform duration-500 transform hover:scale-105"
-                    >
-                      <Image
-                        src={data.image}
-                        alt={data.title}
-                        className="w-20 h-16 object-cover rounded transition-opacity duration-500"
-                      />
-                      <div>
-                        <h3 className="text-xs font-bold">
-                          {data.title.slice(0, 50)}...
-                        </h3>
-                        <div className="flex justify-end">
-                          <Link href="/publication">
-                            <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-2 text-white rounded-full uppercase text-sm">
-                              <EastIcon />
-                            </button>
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+          <div className="col-span-12 lg:col-span-7">
+            <PublicationSlider />
+          </div>
+
+          <div className="col-span-12 lg:col-span-5">
+
+            <LatestNews />
           </div>
         </div>
         <div className="flex justify-end mt-5">

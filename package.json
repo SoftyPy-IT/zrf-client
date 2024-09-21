@@ -19,6 +19,7 @@
     "@mui/styled-engine-sc": "^6.0.1",
     "@reduxjs/toolkit": "^2.2.7",
     "@studio-freight/lenis": "^1.0.42",
+    "@vercel/speed-insights": "^1.0.12",
     "axios": "^1.7.7",
     "flickr-justified-gallery": "^2.2.0",
     "framer-motion": "^11.5.4",
