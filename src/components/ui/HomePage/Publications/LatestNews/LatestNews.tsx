@@ -65,8 +65,8 @@ const LatestNews = () => {
           <div key={data.id} className="newsCard">
             <div className="flex md:flex-row gap-x-3 items-center justify-between">
               <div className="newsContent text-sm">
-                <small className="text-[12px] font-bold ">{data.title} </small>
-                <div className="bnpBtnStyle">
+                <small className="text-[12px] font-bold block mb-2">{data.title.slice(0,50)}... </small>
+                <div className="bnpBtnStyle ">
                   <Link href={`/recent-activities-of-zrf/${data.id}`}>
                     <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-2 text-white rounded-full uppercase text-sm">
                       আরও পড়ুন <ArrowRightAlt sx={{ fontSize: "13px" }} />
