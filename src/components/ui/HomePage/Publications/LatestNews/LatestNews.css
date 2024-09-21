@@ -1,0 +1,47 @@
+.newsCard {
+    background: #fff;
+    box-shadow: 0 1px 2px #3c40434d, 0 2px 6px 2px #3c404326;
+    border-radius: 5px;
+    padding: 10px;
+    height: 115px;
+    overflow: hidden;
+}
+
+.newsImgWrap {
+    width: 210px;
+    height: 100px;
+    overflow: hidden !important;
+}
+
+.newsImgWrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.newsContent {
+    width: 300px
+}
+
+@media only screen and (max-width:1024px) {
+    .newsCard {
+        width: 54%;
+        margin: 0 auto;
+        height: 150px;
+    }
+}
+
+@media only screen and (max-width:768px) {
+    .newsCard {
+        width: 100%;
+    }
+}
+@media only screen and (max-width:500px) {
+    .newsCard {
+        width: 100%;
+        height: auto;
+    }
+    .newsContent {
+        width: 100%;
+    }
+}

@@ -1,36 +1,31 @@
-.slider-container {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  overflow: hidden;
+.swiperSlide {
+  background-position: center;
+  background-size: cover;
+  width: 400px !important;
+  height: 600px !important;
+  transition: transform 0.5s ease;
+
 }
 
-.mySwiper {
+.swiper-slide-active {
+  transform: scale(1.2);
+  z-index: 15;
+}
+
+.swiper-slide img {
+  display: block;
   width: 100%;
   height: 100%;
 }
 
-.swiper-slide-zoom {
-  overflow: hidden;
-}
+@media only screen and (max-width: 576px) {
+  .swiper-slide {
+    width: 100px !important;
+    height: 150px !important;
+  }
 
-.slide-image {
-  transition: transform 20s ease-in-out; /* Reduced duration for smoother zoom */
-}
+  .swiper-slide-active {
+    transform: scale(1.1);
 
-/* Apply zoom effect to the active slide */
-.swiper-slide-active .slide-image {
-  transform: scale(2.05); /* Subtle zoom effect */
-}
-
-/* Smooth fade transitions between slides */
-.swiper-slide {
-  opacity: 0;
-  transition: opacity 6s ease-in-out; /* Reduced duration for smoother fade */
-}
-
-.swiper-slide-next,
-.swiper-slide-prev,
-.swiper-slide-active {
-  opacity: 1;
+  }
 }
