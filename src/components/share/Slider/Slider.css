@@ -1,3 +1,17 @@
+.swiper-button-prev,
+.swiper-button-next {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border-radius: 50%;
+}
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  font-size: 16px;
+  color: #fff;
+}
+
 Slider.css .slider-container {
   position: relative !important;
   z-index: 1;

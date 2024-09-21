@@ -75,7 +75,7 @@
     left: -500px;
     display: block;
     width: 240px;
-    top: 0px;
+    top: -72px;
     height: 100vh;
     padding: 20px;
     transition: all 0.5s cubic-bezier(0.43, 0.38, 0.68, 0.63);
@@ -112,7 +112,7 @@
     .activeBar,
     .bar1 {
       top: -34px;
-      right: 30px;
+      right: 6px;
     }
 
     .bar2 {
