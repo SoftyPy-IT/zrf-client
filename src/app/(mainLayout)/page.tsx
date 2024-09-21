@@ -12,8 +12,8 @@ import Welcome from "@/components/ui/HomePage/Welcome/Welcome";
 const Home = () => {
   return (
     <div>
-      <Slider />
-      <Welcome />
+      {/* <Slider />
+      <Welcome /> */}
       <Impact />
       <RecentActivitiesOfZRF />
       <Program />
