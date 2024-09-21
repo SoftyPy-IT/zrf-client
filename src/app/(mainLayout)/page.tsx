@@ -16,8 +16,8 @@ const Home = () => {
       <Welcome /> 
        <Impact />
       <RecentActivitiesOfZRF />
-      {/* <Program />
-      <OurProjects />  */}
+      <Program />
+      <OurProjects /> 
       <Publications />
       <GallerySection />
     </div>

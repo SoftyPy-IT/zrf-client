@@ -110,7 +110,12 @@ const Publication = () => {
             <LatestNews />
           </div>
         </div>
-        <div className="flex justify-end mt-5">
+        <div className="flex justify-between mt-5">
+          <Link href="/ebooks">
+            <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-6 py-2 text-white rounded-full uppercase">
+              সবগুলো দেখুন <EastIcon fontSize="small" />
+            </button>
+          </Link>
           <Link href="/news">
             <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-6 py-2 text-white rounded-full uppercase">
               সবগুলো পড়ুন <EastIcon fontSize="small" />

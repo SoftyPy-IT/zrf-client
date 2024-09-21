@@ -11,7 +11,8 @@ import book2 from "../../../../../src/assets/images/ebooks/e2.jpg";
 import book3 from "../../../../../src/assets/images/ebooks/e3.jpg";
 import book4 from "../../../../../src/assets/images/ebooks/e4.jpg";
 import Image from 'next/image';
-
+import Link from 'next/link';
+import EastIcon from "@mui/icons-material/East";
 function PublicationSlider() {
     const [activeIndex, setActiveIndex] = useState(0);
 
@@ -84,6 +85,7 @@ function PublicationSlider() {
                     <Image alt='slider' src={book4} />
                 </SwiperSlide>
             </Swiper>
+            
         </div>
     );
 }
