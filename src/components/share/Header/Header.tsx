@@ -37,7 +37,7 @@ const Header = () => {
   return (
     <>
       <Container>
-        <div className="relative pt-4 pb-10 z-40 ">
+        <div className="relative pt-4 pb-10 z-40 bg-red-600">
           <div>
             <div className=" lg:mx-auto lg:flex lg:justify-between lg:items-center lg:mb-3">
               <div className="lg:flex lg:items-center lg:space-x-4">
