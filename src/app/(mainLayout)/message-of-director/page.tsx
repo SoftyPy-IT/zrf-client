@@ -10,9 +10,9 @@ const page = () => {
     <div>
       <DirectorBanner />
       <Container>
-        <section className="lg:p-10 mb-10">
+        <section className="my-16">
           {/* Director's Image */}
-          <div className="sticky top-[56px] bg-gradient-to-r from-yellow-600 to-green-600">
+          <div className="sticky lg:top-[56px] top-0 bg-gradient-to-r from-yellow-600 to-green-600">
             <div className="flex flex-col md:flex-row items-center justify-center mb-8 py-3">
               <div className="relative w-40 h-40 mb-6 md:mb-0">
                 <Image

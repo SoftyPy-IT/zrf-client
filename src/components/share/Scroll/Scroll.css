@@ -24,7 +24,7 @@
 
 @media (max-width: 490px) {
   .scroll-up-button {
-    right: 50px;
+    right: 30px;
     bottom: 20px;
     z-index: 1000;
   }

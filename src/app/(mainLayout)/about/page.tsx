@@ -67,7 +67,7 @@ const AboutUs = () => {
         {/* Foundation Overview Section */}
         <section className="my-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-            <div className="space-y-4">
+            <div className="space-y-4 lg:order-1 order-2">
               <h2 className="text-3xl font-bold text-center uppercase">
                 Who We Are
               </h2>
@@ -95,7 +95,7 @@ const AboutUs = () => {
                 সামাজিক উন্নয়নমুলক কাজ করে যাচ্ছে।
               </p>
             </div>
-            <div>
+            <div className="lg:order-2 order-1">
               <Image
                 src={img}
                 alt="Foundation"

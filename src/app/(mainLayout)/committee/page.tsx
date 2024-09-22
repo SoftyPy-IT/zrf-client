@@ -139,7 +139,7 @@ const ProfileCard = ({
       </div>
       <div className="p-4 text-center">
         <h3 className="text-lg font-semibold">{name}</h3>
-        <p className="text-gray-600">{committee}</p>
+        {/* <p className="text-gray-600">{committee}</p> */}
       </div>
     </div>
   );

@@ -95,7 +95,7 @@ const OurProjects = () => {
                   Our Projects
                 </h1>
                 <div className="w-28 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-5 mx-auto"></div>
-                <p className="text-center lg:w-[500px] mx-auto mb-10">
+                <p className="lg:text-center md:text-center text-justify lg:w-[500px] mx-auto mb-10 lg:px-0 md:px-0 px-5">
                   Ziaur Rahman Foundations is committed to empowering
                   communities through impactful initiatives, sustainable
                   solutions, and strategic support. We focus on fostering

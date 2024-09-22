@@ -12,7 +12,7 @@ const Videos = () => {
     <div className="videos">
       <Container>
         <div className="content">
-          <h1 className="text-5xl font-bold uppercase">Videos Gallery</h1>
+          <h1 className="lg:text-5xl text-4xl font-bold uppercase">Videos Gallery</h1>
         </div>
       </Container>
     </div>

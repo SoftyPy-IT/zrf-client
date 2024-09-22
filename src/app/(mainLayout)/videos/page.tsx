@@ -40,7 +40,6 @@ const videos = [
 const VideoGallery = () => {
   const [mounted, setMounted] = useState(false);
 
-  // This hook ensures that the component is rendered only on the client side
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -49,7 +48,7 @@ const VideoGallery = () => {
     <div>
       <Videos />
       <Container>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 my-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-16">
           {videos.map((video) => (
             <div key={video.id} className="relative rounded overflow-hidden">
               <div className="border-2">
