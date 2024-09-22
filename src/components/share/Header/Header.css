@@ -124,7 +124,7 @@
       transition: all 0.5s cubic-bezier(0.43, 0.38, 0.68, 0.63);
     }
 
-    .activeBar span:nth-child(3) {
+    .activeBar span:nth-child(3) { 
       rotate: -45deg;
       top: 0px;
       position: absolute;
