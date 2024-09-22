@@ -153,7 +153,7 @@ const Header = () => {
                       <Link href="/khaleda-zia">Begum Khaleda Zia</Link>
                     </li>
                     <li>
-                      <Link href="/tarek-rahman">Tarique Rahman</Link>
+                      <Link href="/tarique-rahman">Tarique Rahman</Link>
                     </li>
                     <li>
                       <Link href="/arafat-rahman">Arafat Rahman Koko</Link>

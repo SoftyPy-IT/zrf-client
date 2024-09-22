@@ -23,7 +23,7 @@ const profiles = [
     committee: "Working Body Committee",
   },
   {
-    name: "Dr. warse Simky",
+    name: "Dr. Warse Simky",
     imageSrc: img1,
     committee: "Working Body Committee",
   },
