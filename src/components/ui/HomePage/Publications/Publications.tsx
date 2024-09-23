@@ -18,7 +18,8 @@ const Publication = () => {
       <div className="sectionMargin ">
         <div className="grid grid-cols-12">
           <div className="col-span-12 lg:col-span-7">
-            <h2 className="text-3xl font-bold uppercase mdw-[400px]">E-Books</h2>
+            <h2 className="text-3xl font-bold uppercase md:w-[400px]">E-Books</h2>
+            <div className="w-28 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-10"></div>
           </div>
 
           <div className="col-span-12 lg:col-span-5 hidden md:block ">
@@ -35,8 +36,8 @@ const Publication = () => {
             </div >
           </div>
         </div>
-        <div className="w-28 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-10"></div>
-        <div className="flex flex-col  md:grid grid-cols-12  gap-10 mt-20 ">
+     
+        <div className="flex flex-col  md:grid grid-cols-12  gap-10 mt-10  ">
 
           <div className="md:col-span-7">
             <PublicationSlider />
@@ -50,7 +51,6 @@ const Publication = () => {
           </div>
 
           <div className="md:col-span-5">
-
             <LatestNews />
           </div>
         </div>

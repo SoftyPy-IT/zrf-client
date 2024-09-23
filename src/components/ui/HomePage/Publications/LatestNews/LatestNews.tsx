@@ -3,25 +3,11 @@ import "./LatestNews.css";
 import news1 from "../../../../../../src/assets/images/activities/01.jpg";
 import news2 from "../../../../../../src/assets/images/activities/02.jpg";
 import news3 from "../../../../../../src/assets/images/activities/03.jpg";
-import news4 from "../../../../../../src/assets/images/activities/04.jpg";
 import Image from "next/image";
-import { Button } from "@mui/material";
 import { ArrowRightAlt } from "@mui/icons-material";
 import Link from "next/link";
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-const buttonStyle = {
-  width: "90px",
-  height: "25px",
-  borderRadius: "2px",
-  padding: "3px",
-  fontSize: "10px",
-  backgroundColor: "white",
-  color: "black",
-  '&:hover': {
-    backgroundColor: "#f0f0f0",
-  },
-};
 
 const LatestNews = () => {
 
@@ -53,19 +39,20 @@ const LatestNews = () => {
         "আবদুল্লাহ আল মামুন,মাগুরা হোসেন শহীদ সোহরাওয়ার্দী কলেজ এর রাষ্ট্রবিজ্ঞান বিভাগের মাস্টার্স এর ছাত্র।বৈষম্যবিরোধী ছাত্রজনতার আন্দোলনে গত ৫ আগস্ট উত্তরা পূর্ব থানায় পুলিশের গুলিতে আহত হলে মুমূর্ষু অবস্থায় তাকে উত্তরা উইমেন্স মেডিকেল কলেজ হাসপাতাল এ ভর্তি করা হয়।মৃতপ্রায় মামুনকে বাচাতে তার ইমারজেন্সি ট্রাকিওস্টমি করা হয়। বিএনপি ভারপ্রাপ্ত চেয়ারম্যান ও জিয়াউর রহমান ফাউন্ডেশন এর প্রেসিডেন্ট জনাব তারেক রহমান এর নির্দেশে জিয়াউর রহমান ফাউন্ডেশন এর নির্বাহী পরিচালক অধ্যাপক ডা ফরহাদ হালিম ডোনার এর তত্বাবধানে, জেড আর এফ রিহ্যাবিলিটেশন কমিটির আহবায়ক ডা শাহ মুহম্মদ আমান উল্ল্যাহ ও সদস্য সচিব ডা পারভেজ রেজা কাকন এর সার্বিক সহযোগিতায় আই.সি,ইউ তে মৃত্যুর সাথে পাঞ্জা লড়া মামুনের চিকিৎসার সার্বিক ব্যবস্থাপনা ও দায়িত্ব গ্রহণ করেছে জিয়াউর রহমান ফাউন্ডেশন।জিয়াউর রহমান ফাউন্ডেশন এর কো অর্ডিনেটর ডা সাজিদ ইমতিয়াজ, ডা শাওন বিন রহমান,ডা রাফসান জানি আবির গনতন্ত্র পুনরুদ্ধার এর সম্মুখ যোদ্ধা  মামুনের চিকিৎসার সার্বিক তদারকি করছেন",
       date: "৫ আগস্ট, ২০২৪",
     },
-    
+
   ];
   const isSmallScreen = useMediaQuery('(max-width: 640px)');
   const newsToShow = isSmallScreen ? newsData.slice(0, 2) : newsData;
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-y-[10px] md:mt-10  ">
+      <div className="grid grid-cols-1 gap-y-[10px] ">
         {newsToShow.map((data) => (
           <div key={data.id} className="newsCard">
             <div className="flex gap-x-3 items-center justify-between">
-              <div className="newsContent text-sm">
-                <small className="text-[12px] font-bold block mb-2">{data.title.slice(0,50)}... </small>
+              <div className="newsContent text-sm space-y-2 ">
+                <h3 className="text-[12px] font-bold block">{data.title.slice(0, 50)}... </h3>
+                <small> {data.description.slice(0, 110)}...</small>
                 <div className="bnpBtnStyle ">
                   <Link href={`/recent-activities-of-zrf/${data.id}`}>
                     <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-2 text-white rounded-full uppercase text-sm">

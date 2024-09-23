@@ -3,12 +3,6 @@ import envir1 from "../../../../assets/images/environment/1-1.jpg";
 import envir2 from "../../../../assets/images/environment/3-1.jpg";
 import envir3 from "../../../../assets/images/environment/4-2.jpeg";
 import envir4 from "../../../../assets/images/environment/5.1.jpg";
-
-import envir5 from "../../../../assets/images/environment/icon-1.webp";
-import envir6 from "../../../../assets/images/environment/icon-2.webp";
-import envir7 from "../../../../assets/images/environment/icon-3.webp";
-import envir8 from "../../../../assets/images/environment/icon-4.webp";
-
 import "./Welcome.css";
 import Container from "@/components/share/Container";
 import Link from "next/link";
@@ -17,7 +11,7 @@ const Welcome = () => {
   return (
     <Container>
       <div className=" py-10 lg:py-32 grid xl:grid-cols-2 2xl:grid-cols-2 mt-5 md:mt-14 lg:mt-0 mb-5 md:mb-8 lg:mb-0 text-center md:text-left lg:text-left">
-        <div className="h-full xl:w-[500px] mx-0 md:mx-5 lg:mx-0 mb-4 md:mb-0 lg:mb-0">
+        <div className="h-full xl:w-[500px] mx-0 md:mx-5 lg:mx-0 mb-4 md:mb-0 lg:mb-0 space-y-3">
           <h4 className="text-2xl md:text-3xl lg:text-3xl font-bold">
             Welcome To{" "}
           </h4>
@@ -25,7 +19,7 @@ const Welcome = () => {
             <span className="text-green-600 text-4xl lg:text-6xl ">
               Ziaur Rahman{" "}
             </span>
-            Foundation
+            <span className="block mt-2">Foundation</span>
           </h2>
 
           <div className="w-44 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-5"></div>
