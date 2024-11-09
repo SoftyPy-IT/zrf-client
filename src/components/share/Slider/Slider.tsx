@@ -7,7 +7,13 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/zoom";
 
-import { EffectFade, Autoplay, Navigation, Pagination, Zoom } from "swiper/modules";
+import {
+  EffectFade,
+  Autoplay,
+  Navigation,
+  Pagination,
+  Zoom,
+} from "swiper/modules";
 
 import Image from "next/image";
 import img1 from "../../../assets/images/banner/sliderfisr.jpeg";
@@ -32,7 +38,7 @@ const slides = [
   },
 ];
 
-const Slider = () => { 
+const Slider = () => {
   return (
     <div className="slider-container ">
       <Swiper
@@ -40,7 +46,7 @@ const Slider = () => {
           delay: 6000,
           disableOnInteraction: false,
         }}
-        spaceBetween={0} 
+        spaceBetween={0}
         effect={"fade"}
         navigation={true}
         pagination={{
@@ -52,14 +58,14 @@ const Slider = () => {
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index} className="swiper-slide-zoom">
-            <div className="relative w-full h-[200px] lg:h-[700px]">
+            <div className="relative w-full h-[300px] md:h-[500px] lg:h-[700px]">
               <Image
                 src={slide.img}
                 alt={`Slide ${index + 1}`}
                 layout="fill"
                 objectFit="cover"
                 className="slide-image"
-              />              
+              />
             </div>
           </SwiperSlide>
         ))}

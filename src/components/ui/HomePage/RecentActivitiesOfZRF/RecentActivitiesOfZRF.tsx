@@ -85,7 +85,7 @@ const sidebar = [
 const RecentActivitiesOfZRF = () => {
   return (
     <Container className="my-20">
-      <h1 className="text-3xl font-bold uppercase">Recent Activities of ZRF</h1>
+      <h1 className="lg:text-3xl text-2xl font-bold uppercase">Recent Activities of ZRF</h1>
       <div className="w-28 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-5"></div>
       <div className="lg:flex gap-10">
         {/* Main News Content */}
@@ -130,7 +130,7 @@ const RecentActivitiesOfZRF = () => {
 
         {/* Sidebar */}
         <div className=" lg:w-[500px] w-full">
-          <div className="grid grid-cols-1 gap-5 lg:h-[500px] bg-gray-100 p-5 lg:mt-0 md:mt-5 mt-5">
+          <div className="grid grid-cols-1 lg:grid-cols-1 md:grid-cols-2 gap-5 lg:h-[500px] bg-gray-100 p-5 lg:mt-0 md:mt-5 mt-5">
             {sidebar.map((data) => (
               <div
                 key={data.id}
@@ -143,7 +143,6 @@ const RecentActivitiesOfZRF = () => {
                 />
                 <div>
                   <h3 className="text-sm font-bold">{data.title}</h3>
-                  {/* <p className="text-sm text-gray-600">{data.date}</p> */}
                   <div className="flex justify-end">
                     <Link href="/recent-activities-of-zrf">
                       <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-2 text-white rounded-full uppercase text-xs">

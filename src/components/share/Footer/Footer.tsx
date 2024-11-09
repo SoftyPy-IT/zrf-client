@@ -63,9 +63,9 @@ const Footer = () => {
                 <input
                   type="text"
                   placeholder="Enter your email"
-                  className="w-full lg:w-[500px] py-3 lg:py-6 pl-1 lg:pl-4 border border-gray-300 rounded-full text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full lg:w-[500px] py-3 lg:py-6 px-4 border border-gray-300 rounded-full text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-                <button className="absolute right-0 py-1 lg:py-4 px-1 lg:px-8 mr-1 lg:mr-2 my-2 bg-green-600 text-white rounded-full font-semibold hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button className="absolute right-0 py-1 lg:py-4 px-2 lg:px-8 mx-2  my-2 bg-green-600 text-white rounded-full font-semibold hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
                   Subscribe <EastIcon />
                 </button>
               </div>
