@@ -16,31 +16,29 @@ import {
 } from "swiper/modules";
 
 import Image from "next/image";
-import img1 from "../../../assets/images/banner/sliderfisr.jpeg";
-import img2 from "../../../assets/images/banner/1-1.jpg";
-import img3 from "../../../assets/images/banner/Shishu.jpg";
-import img4 from "../../../assets/images/banner/4-2.jpeg";
-
 import "./Slider.css";
+import { useGetAllBannerQuery } from "@/redux/api/allApi";
 
-const slides = [
-  {
-    img: img1,
-  },
-  {
-    img: img2,
-  },
-  {
-    img: img3,
-  },
-  {
-    img: img4,
-  },
-];
+interface BannerItem {
+  _id: string;
+  thumnailImages: string[];
+}
 
 const Slider = () => {
+  const { data, isLoading, isError } = useGetAllBannerQuery({});
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error fetching data.</div>;
+  }
+
+  // console.log(data);
+
   return (
-    <div className="slider-container ">
+    <div className="slider-container">
       <Swiper
         autoplay={{
           delay: 6000,
@@ -56,16 +54,19 @@ const Slider = () => {
         modules={[Autoplay, EffectFade, Navigation, Pagination, Zoom]}
         className="mySwiper"
       >
-        {slides.map((slide, index) => (
+        {data?.banners.map((slide: BannerItem, index: number) => (
           <SwiperSlide key={index} className="swiper-slide-zoom">
-            <div className="relative w-full h-[300px] md:h-[500px] lg:h-[700px]">
-              <Image
-                src={slide.img}
-                alt={`Slide ${index + 1}`}
-                layout="fill"
-                objectFit="cover"
-                className="slide-image"
-              />
+            <div className="relative w-full h-[300px] md:h-[500px] lg:h-[500px]">
+              {slide.thumnailImages.map((item: string, index: number) => (
+                <Image
+                  key={index}
+                  src={item}
+                  alt={`Slide ${index + 1}`}
+                  layout="fill"
+                  objectFit="cover"
+                  className="slide-image h-[500px] w-full"
+                />
+              ))}
             </div>
           </SwiperSlide>
         ))}

@@ -1,20 +1,28 @@
+
+
+import CursorCustomize from "@/components/CursorCustomize/CursorCustomize";
 import Footer from "@/components/share/Footer/Footer";
 import Header from "@/components/share/Header/Header";
 import Scroll from "@/components/share/Scroll/Scroll";
 import LandingPageProvider from "@/lib/Theme/LandingPageProvider";
-import React, { ReactNode, Suspense } from "react";
+import { LanguageProvider } from "@/provider/LanguageProvider";
+import React, { ReactNode, Suspense, useEffect } from "react";
 
-const layout = ({ children }: { children: ReactNode }) => {
+const Layout = ({ children }: { children: ReactNode }) => {
+
   return (
-    <LandingPageProvider>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Header />
-        {children}
-        <Scroll />
-        <Footer />
-      </Suspense>
-    </LandingPageProvider>
+    <LanguageProvider>
+      <LandingPageProvider>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Header />
+          {children}
+          <CursorCustomize />
+          <Scroll />
+          <Footer />
+        </Suspense>
+      </LandingPageProvider>
+    </LanguageProvider>
   );
 };
 
-export default layout;
+export default Layout;

@@ -27,13 +27,13 @@ export default function RootLayout({
     <html lang="en">
 
       <Providers>
-      <body className={`${inter.className} ${notoSansBengali.className}`}>
+        <body className={`${inter.className} ${notoSansBengali.className}`}>
 
           <Toaster position="bottom-right" richColors />
           <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
         </body>
       </Providers>
-  
+
     </html>
   );
 }
