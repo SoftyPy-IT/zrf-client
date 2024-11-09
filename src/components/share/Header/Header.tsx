@@ -9,6 +9,7 @@ import Container from "../Container";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import logo from "../../../assets/images/logo/zfa.png";
 import { useLanguage } from "@/provider/LanguageProvider";
+import { Button } from "@mui/material";
 
 const dropdown =
   "dropdownMenu absolute flex flex-col justify-center mt-[20px] md:mt-[15px] lg:mt-[30px] xl:mt-[18px] rounded-md bg-white shadow-md border border-t-4 border-t-green-600 invisible opacity-0  origin-top z-50 ";
@@ -33,6 +34,8 @@ const Header = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const buttonStyle = { width: '150px', height: '45px', borderRadius: '50px', color: 'white', background: '#E3C80D', padding: '0px', }
 
   return (
     <>
@@ -99,89 +102,95 @@ const Header = () => {
                 </div>
               )}
 
-              <ul
-                className={`lg:w-full xl:w-full lg:py-2 flex justify-center text-sm lg:text-base xl:text-base text-white absolute z-50 bg-green-700 navItems ${open ? "" : "activeMenu z-50"
-                  }`}
-              >
-                <li className="lg:border-none border-b lg:py-0 py-1">
-                  <Link href="/">Home</Link>
-                </li>
-                <li className="dropdownMenuWrap relative">
-                  <Link href="#">
-                    Who We Are <KeyboardArrowDownIcon />
-                  </Link>
-                  <ul className={`w-[290px] h-[160px] ${dropdown}`}>
-                    <li>
-                      <Link href="/message-of-president">
-                        Message of President
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/message-of-director">
-                        Message of Executive Director
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/committee">Committee</Link>
-                    </li>
-                    <li>
-                      <Link href="/about">About Us</Link>
-                    </li>
-                  </ul>
-                </li>
-                <li className="dropdownMenuWrap relative">
-                  <Link href="#">
-                    What We Do <KeyboardArrowDownIcon />
-                  </Link>
-                  <ul className={`w-[240px] h-[160px] ${dropdown}`}>
-                    <li>
-                      <Link href="/whatwedo/program">Program</Link>
-                    </li>
-                    <li>
-                      <Link href="/whatwedo/rehabilitation">
-                        ZRF Rehabilitation Team
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/whatwedo/initiatives">Initiatives</Link>
-                    </li>
-                    <li>
-                      <Link href="/whatwedo/covid">Covid</Link>
-                    </li>
-                  </ul>
-                </li>
-                <li className="dropdownMenuWrap relative">
-                  <Link href="#">
-                    History of the Family <KeyboardArrowDownIcon />
-                  </Link>
-                  <ul className={`w-[220px] h-[160px] ${dropdown}`}>
-                    <li>
-                      <Link href="/ziaur-rahman">Ziaur Rahman</Link>
-                    </li>
-                    <li>
-                      <Link href="/khaleda-zia">Begum Khaleda Zia</Link>
-                    </li>
-                    <li>
-                      <Link href="/tarique-rahman">Tarique Rahman</Link>
-                    </li>
-                    <li>
-                      <Link href="/arafat-rahman">Arafat Rahman Koko</Link>
-                    </li>
-                  </ul>
-                </li>
-                <li className="lg:border-none border-b lg:py-0 py-2">
-                  <Link href="/education">ZRF Education Program</Link>
-                </li>
-                <li className="lg:border-none border-b lg:py-0 py-2">
-                  <Link href="/ebooks">E-Books</Link>
-                </li>
-                <li className="lg:border-none border-b lg:py-0 py-2">
-                  <Link href="/news">News</Link>
-                </li>
-                {/* <li className="lg:border-none border-b lg:py-0 py-2">
-                  <Link href="/contact">Contact</Link>
-                </li> */}
-              </ul>
+              <div className="flex items-center justify-between absolute z-50 w-[1100px] left-1/2 transform -translate-x-1/2  bg-green-700 px-4">
+                <ul
+                  className={`lg:w-full xl:w-full lg:py-2 flex justify-center text-sm lg:text-base xl:text-base text-white  navItems ${open ? "" : "activeMenu z-50"
+                    }`}
+                >
+                  <li className="lg:border-none border-b lg:py-0 py-1">
+                    <Link href="/">Home</Link>
+                  </li>
+                  <li className="dropdownMenuWrap relative">
+                    <Link href="#">
+                      Who We Are <KeyboardArrowDownIcon />
+                    </Link>
+                    <ul className={`w-[290px] h-[160px] ${dropdown}`}>
+                      <li>
+                        <Link href="/message-of-president">
+                          Message of President
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="/message-of-director">
+                          Message of Executive Director
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="/committee">Committee</Link>
+                      </li>
+                      <li>
+                        <Link href="/about">About Us</Link>
+                      </li>
+                    </ul>
+                  </li>
+                  <li className="dropdownMenuWrap relative">
+                    <Link href="#">
+                      What We Do <KeyboardArrowDownIcon />
+                    </Link>
+                    <ul className={`w-[240px] h-[160px] ${dropdown}`}>
+                      <li>
+                        <Link href="/whatwedo/program">Program</Link>
+                      </li>
+                      <li>
+                        <Link href="/whatwedo/rehabilitation">
+                          ZRF Rehabilitation Team
+                        </Link>
+                      </li>
+                      <li className="lg:border-none border-b lg:py-0 py-2">
+                        <Link href="/education">ZRF Education Program</Link>
+                      </li>
+                      <li>
+                        <Link href="/whatwedo/initiatives">Initiatives</Link>
+                      </li>
+                      <li>
+                        <Link href="/whatwedo/covid">Covid</Link>
+                      </li>
+                    </ul>
+                  </li>
+                  <li className="dropdownMenuWrap relative">
+                    <Link href="#">
+                      History of the Family <KeyboardArrowDownIcon />
+                    </Link>
+                    <ul className={`w-[220px] h-[160px] ${dropdown}`}>
+                      <li>
+                        <Link href="/ziaur-rahman">Ziaur Rahman</Link>
+                      </li>
+                      <li>
+                        <Link href="/khaleda-zia">Begum Khaleda Zia</Link>
+                      </li>
+                      <li>
+                        <Link href="/tarique-rahman">Tarique Rahman</Link>
+                      </li>
+                      <li>
+                        <Link href="/arafat-rahman">Arafat Rahman Koko</Link>
+                      </li>
+                    </ul>
+                  </li>
+
+                  <li className="lg:border-none border-b lg:py-0 py-2">
+                    <Link href="/ebooks">E-Books</Link>
+                  </li>
+                  <li className="lg:border-none border-b lg:py-0 py-2">
+                    <Link href="/news">News</Link>
+                  </li>
+
+
+                </ul>
+                <div >
+                 
+                  <Button sx={buttonStyle}>Get Membership </Button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
