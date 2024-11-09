@@ -8,6 +8,7 @@ import { useState } from "react";
 import Container from "../Container";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import logo from "../../../assets/images/logo/zfa.png";
+import { useLanguage } from "@/provider/LanguageProvider";
 
 const dropdown =
   "dropdownMenu absolute flex flex-col justify-center mt-[20px] md:mt-[15px] lg:mt-[30px] xl:mt-[18px] rounded-md bg-white shadow-md border border-t-4 border-t-green-600 invisible opacity-0  origin-top z-50 ";
@@ -15,7 +16,7 @@ const dropdown =
 const Header = () => {
   const [open, setOpen] = useState(true);
   const [isSticky, setIsSticky] = useState(false);
-
+  const { language, setLanguage } = useLanguage();
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -50,27 +51,36 @@ const Header = () => {
                 </Link>
               </div>
               <h2 className="font-bold text-xl hidden lg:flex">
-                একটি উদ্যোগ, একটু চেষ্টা, এনে দিবে স্বচ্ছলতা, দেশে আসবে
-                স্বনির্ভরতা।
+
+                {language === 'ENG' ? 'An initiative, a little effort, will bring prosperity, will come to the country self reliance' : " একটি উদ্যোগ, একটু চেষ্টা, এনে দিবে স্বচ্ছলতা, দেশে আসবেস্বনির্ভরতা।"}
               </h2>
               {/* Contact Info */}
               <div className="hidden lg:flex space-x-4">
-                <button className="bg-gradient-to-r from-yellow-600 to-green-600 text-white px-4 py-2 rounded">
-                  বাংলা
-                </button>
-                <button className=" bg-gradient-to-r from-yellow-600 to-green-600 text-white px-4 py-2 rounded">
+                <button
+                  onClick={() => setLanguage("ENG")}
+                  className={`bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white ${language === "ENG" ? "opacity-100" : "opacity-60"
+                    }`}
+                //  className="bg-gradient-to-r  text-white px-4 py-2 rounded"
+                >
                   ENG
+                </button>
+                <button
+                  onClick={() => setLanguage("BNG")}
+                  className={`bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3 rounded text-white ${language === "BNG" ? "opacity-100" : "opacity-60"
+                    }`}
+                // className=" bg-gradient-to-r from-yellow-600 to-green-600 text-white px-4 py-2 rounded"
+                >
+                  বাংলা
                 </button>
               </div>
             </div>
 
             {/* Navbar */}
             <div
-              className={`${
-                isSticky
-                  ? "fixed top-0 left-0 w-full bg-white shadow-lg z-50"
-                  : "relative"
-              } transition-all duration-300`}
+              className={`${isSticky
+                ? "fixed top-0 left-0 w-full bg-white shadow-lg z-50"
+                : "relative"
+                } transition-all duration-300`}
             >
               {open ? (
                 <div onClick={handleClose} className="bar1 z-50">
@@ -90,9 +100,8 @@ const Header = () => {
               )}
 
               <ul
-                className={`lg:w-full xl:w-full lg:py-2 flex justify-center text-sm lg:text-base xl:text-base text-white absolute z-50 bg-green-700 navItems ${
-                  open ? "" : "activeMenu z-50"
-                }`}
+                className={`lg:w-full xl:w-full lg:py-2 flex justify-center text-sm lg:text-base xl:text-base text-white absolute z-50 bg-green-700 navItems ${open ? "" : "activeMenu z-50"
+                  }`}
               >
                 <li className="lg:border-none border-b lg:py-0 py-1">
                   <Link href="/">Home</Link>
