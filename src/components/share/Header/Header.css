@@ -68,6 +68,25 @@
   /* color: red; */
 }
 
+.paymentWrap {
+  width: 292px;
+  height: 160px;
+  box-shadow: 0 1px 2px #3c40434d, 0 1px 3px 1px #3c404326;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+
+}
+
+.paymentWrap img {
+  width: 70%;
+  height: 70%;
+  object-fit: cover;
+  border-radius: 5px;
+
+}
+
 @media only screen and (max-width: 1024px) {
   .navItems {
     background: #cb2d2e;
