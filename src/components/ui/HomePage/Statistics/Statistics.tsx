@@ -31,7 +31,7 @@ const stats = [
 const Statistics = () => {
   return (
     <Container>
-      <div className="bg-gray-100 p-8">
+      <div className="bg-gray-100 p-8 mt-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {stats.map((stat, index) => (
             <div

@@ -10,6 +10,7 @@ import RecentActivitiesOfZRF from "@/components/ui/HomePage/RecentActivitiesOfZR
 import Welcome from "@/components/ui/HomePage/Welcome/Welcome";
 import Featured from "@/components/ui/HomePage/Featured/Featured";
 import Statistics from "@/components/ui/HomePage/Statistics/Statistics";
+import Volunteer from "@/components/ui/HomePage/Volunteer/Volunteer";
 
 const Home = () => {
   return (
@@ -17,6 +18,7 @@ const Home = () => {
       <Slider />
       <Featured />
       <Statistics />
+      <Volunteer />
       <Welcome />
       <Impact />
       <RecentActivitiesOfZRF />
