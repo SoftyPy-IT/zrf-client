@@ -12,6 +12,7 @@ import Featured from "@/components/ui/HomePage/Featured/Featured";
 import Statistics from "@/components/ui/HomePage/Statistics/Statistics";
 import Volunteer from "@/components/ui/HomePage/Volunteer/Volunteer";
 import TrustedCharity from "@/components/ui/HomePage/TrustedCharity/TrustedCharity";
+import HelpingVirtue from "@/components/ui/HomePage/HelpingVirtue/HelpingVirtue";
 
 const Home = () => {
   return (
@@ -21,6 +22,7 @@ const Home = () => {
       <Statistics />
       <Volunteer />
       <TrustedCharity />
+      <HelpingVirtue />
       <Welcome />
       <Impact />
       <RecentActivitiesOfZRF />
