@@ -1,9 +1,21 @@
-/* Slider.css */
+.swiper-button-prev,
+.swiper-button-next {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border-radius: 50%;
+}
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  font-size: 16px;
+  color: #fff;
+}
 
-.slider-container {
-  position: relative;
+Slider.css .slider-container {
+  position: relative !important;
   z-index: 1;
-  width: 100%;
+  width: 1300px !important;
   overflow: hidden;
 }
 
@@ -17,22 +29,69 @@
 }
 
 .slide-image {
-  transition: transform 20s ease-in-out; /* Reduced duration for smoother zoom */
+  transition: transform 20s ease-in-out;
+
 }
 
-/* Apply zoom effect to the active slide */
+
 .swiper-slide-active .slide-image {
-  transform: scale(2.05); /* Subtle zoom effect */
+  transform: scale(2.05);
+
 }
 
-/* Smooth fade transitions between slides */
+
 .swiper-slide {
   opacity: 0;
-  transition: opacity 6s ease-in-out; /* Reduced duration for smoother fade */
+  transition: opacity 6s ease-in-out;
+
 }
 
 .swiper-slide-next,
 .swiper-slide-prev,
 .swiper-slide-active {
   opacity: 1;
+}
+
+.overlay {
+  opacity: 0; 
+  transition: opacity 1s ease-in-out; 
+}
+
+.swiper-slide-active .overlay {
+  opacity: 0.5; 
+}
+
+
+.swiper-slide .content {
+  z-index: 10; 
+}
+
+.sliderWrap:after{
+  width:100%;
+  height:100%;
+  position: absolute;
+  z-index: 99999;
+  background:black;
+  content:'';
+  opacity: 0.5;
+}
+.overlay {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+/* Content transition for slide-up animation */
+.swiper-slide .slide-content {
+  transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+}
+
+.swiper-slide-active .slide-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.swiper-slide-prev .slide-content,
+.swiper-slide-next .slide-content {
+  opacity: 0;
+  transform: translateY(10px);
 }

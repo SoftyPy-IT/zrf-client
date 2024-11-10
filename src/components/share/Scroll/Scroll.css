@@ -1,7 +1,7 @@
 .scroll-up-button {
   position: fixed;
   bottom: 30px;
-  right: 100px;
+  right: 50px;
   outline: none;
   border: none;
   height: 50px;
@@ -24,7 +24,7 @@
 
 @media (max-width: 490px) {
   .scroll-up-button {
-    right: 90px;
+    right: 30px;
     bottom: 20px;
     z-index: 1000;
   }

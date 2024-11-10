@@ -68,14 +68,33 @@
   /* color: red; */
 }
 
-@media only screen and (max-width: 768px) {
+.paymentWrap {
+  width: 292px;
+  height: 160px;
+  box-shadow: 0 1px 2px #3c40434d, 0 1px 3px 1px #3c404326;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+
+}
+
+.paymentWrap img {
+  width: 70%;
+  height: 70%;
+  object-fit: cover;
+  border-radius: 5px;
+
+}
+
+@media only screen and (max-width: 1024px) {
   .navItems {
     background: #cb2d2e;
     position: absolute;
     left: -500px;
     display: block;
     width: 240px;
-    top: 0px;
+    top: -72px;
     height: 100vh;
     padding: 20px;
     transition: all 0.5s cubic-bezier(0.43, 0.38, 0.68, 0.63);
@@ -93,8 +112,8 @@
     width: 20px;
     height: 40px;
     position: absolute;
-    top: 35px;
-    right: 30px;
+    top: -34px;
+    right: 6px;
     transition: all 0.5s cubic-bezier(0.43, 0.38, 0.68, 0.63);
   }
 
@@ -112,7 +131,7 @@
     .activeBar,
     .bar1 {
       top: -34px;
-      right: 30px;
+      right: 6px;
     }
 
     .bar2 {
@@ -120,11 +139,11 @@
       height: 50px;
       position: absolute;
       top: -28px;
-      right: -2px;
+      right: -28px;
       transition: all 0.5s cubic-bezier(0.43, 0.38, 0.68, 0.63);
     }
 
-    .activeBar span:nth-child(3) {
+    .activeBar span:nth-child(3) { 
       rotate: -45deg;
       top: 0px;
       position: absolute;

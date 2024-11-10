@@ -33,7 +33,6 @@ const Footer = () => {
     { name: "Programm", href: "/about" },
     { name: "Initiativs", href: "/case-studies" },
     { name: "Covid", href: "/services" },
-
   ];
 
   const latestNews = [
@@ -64,9 +63,9 @@ const Footer = () => {
                 <input
                   type="text"
                   placeholder="Enter your email"
-                  className="w-full lg:w-[500px] py-3 lg:py-6 pl-1 lg:pl-4 border border-gray-300 rounded-full text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full lg:w-[500px] py-3 lg:py-6 px-4 border border-gray-300 rounded-full text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-                <button className="absolute right-0 py-1 lg:py-4 px-1 lg:px-8 mr-1 lg:mr-2 my-2 bg-green-600 text-white rounded-full font-semibold hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button className="absolute right-0 py-1 lg:py-4 px-2 lg:px-8 mx-2  my-2 bg-green-600 text-white rounded-full font-semibold hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
                   Subscribe <EastIcon />
                 </button>
               </div>
@@ -90,9 +89,10 @@ const Footer = () => {
               <div className="w-full md:w-1/4 mb-8 md:mb-0">
                 <div className="space-y-3 flex flex-col items-center">
                   <Image src={logo} alt="Seville Logo" width={50} height={50} />
-                  <h3 className="font-bold text-lg">Ziaur Rahman Foundation</h3>
+                  <h3 className="font-bold text-lg text-center">
+                    Ziaur Rahman Foundation
+                  </h3>
                 </div>
-
               </div>
 
               <div className="w-full md:w-1/4 mb-8 md:mb-0 text-center">
@@ -128,40 +128,42 @@ const Footer = () => {
 
                 <div className=" mt-4 text-center md:text-left lg:text-left xl:text-left">
                   {/* Social Media Icons */}
-                  <h4 className="font-semibold ">Follow Us</h4>
-                  <div className="mt-4 flex space-x-4 justify-center md:justify-start lg:justify-start xl:justify-start">
-                    <a
-                      href="https://www.facebook.com/zrf.org/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-400 hover:text-white"
-                    >
-                      <FacebookIcon />
-                    </a>
-                    <a
-                      href="https://x.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-400 hover:text-white"
-                    >
-                      <XIcon />
-                    </a>
-                    <a
-                      href="https://instagram.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-400 hover:text-white"
-                    >
-                      <InstagramIcon />
-                    </a>
-                    <a
-                      href="https://linkedin.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-400 hover:text-white"
-                    >
-                      <LinkedInIcon />
-                    </a>
+                  <h4 className="font-semibold text-center">Follow Us</h4>
+                  <div className="flex justify-center">
+                    <div className="mt-4 flex space-x-4">
+                      <a
+                        href="https://www.facebook.com/zrf.org/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-400 hover:text-white"
+                      >
+                        <FacebookIcon />
+                      </a>
+                      <a
+                        href="https://x.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-400 hover:text-white"
+                      >
+                        <XIcon />
+                      </a>
+                      <a
+                        href="https://instagram.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-400 hover:text-white"
+                      >
+                        <InstagramIcon />
+                      </a>
+                      <a
+                        href="https://linkedin.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-400 hover:text-white"
+                      >
+                        <LinkedInIcon />
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
