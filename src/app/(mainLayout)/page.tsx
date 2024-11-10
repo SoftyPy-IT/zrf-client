@@ -9,12 +9,14 @@ import GallerySection from "@/components/ui/HomePage/Gallery/Gallery";
 import RecentActivitiesOfZRF from "@/components/ui/HomePage/RecentActivitiesOfZRF/RecentActivitiesOfZRF";
 import Welcome from "@/components/ui/HomePage/Welcome/Welcome";
 import Featured from "@/components/ui/HomePage/Featured/Featured";
+import Statistics from "@/components/ui/HomePage/Statistics/Statistics";
 
 const Home = () => {
   return (
     <div>
       <Slider />
       <Featured />
+      <Statistics />
       <Welcome />
       <Impact />
       <RecentActivitiesOfZRF />

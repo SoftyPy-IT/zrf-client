@@ -4,8 +4,6 @@ import React from "react";
 import img1 from "../../../../../src/assets/images/featured/1.jpg";
 import img2 from "../../../../../src/assets/images/featured/2.jpeg";
 import img3 from "../../../../../src/assets/images/featured//3.jpeg";
-import EastIcon from "@mui/icons-material/East";
-import Link from "next/link";
 
 const Featured = () => {
   const programs = [
@@ -28,8 +26,8 @@ const Featured = () => {
 
   return (
     <Container>
-      <div className="relative -top-28 z-10">
-        <div className="grid md:grid-cols-3 gap-8 bg-white p-8 shadow-md">
+      <div className="lg:relative -top-28 z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:bg-white lg:p-8 lg:shadow-md lg:mt-0 mt-10">
           {programs.map((program, index) => (
             <div key={index} className="flex gap-5 bg-green-600 p-5">
               <div className="space-y-3">
