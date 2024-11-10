@@ -40,7 +40,9 @@ const OurProgramSection = () => {
         </h2>
         <div className="w-28 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-5 mx-auto"></div>
         <p className="text-center lg:w-[500px] mx-auto mb-10">
-        Our program provides expert guidance, innovative strategies, and personalized solutions to help businesses grow and succeed. We focus on delivering measurable results.
+          Our program provides expert guidance, innovative strategies, and
+          personalized solutions to help businesses grow and succeed. We focus
+          on delivering measurable results.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 text-center">
           {programs.map((program, index) => (

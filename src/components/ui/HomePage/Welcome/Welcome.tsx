@@ -13,16 +13,16 @@ const Welcome = () => {
       <div className=" py-10 lg:py-32 grid xl:grid-cols-2 2xl:grid-cols-2 mt-5 md:mt-14 lg:mt-0 mb-5 md:mb-8 lg:mb-0 text-center md:text-left lg:text-left">
         <div className="h-full xl:w-[500px] mx-0 md:mx-5 lg:mx-0 mb-4 md:mb-0 lg:mb-0 space-y-3">
           <h4 className="text-2xl md:text-3xl lg:text-3xl font-bold">
-            Welcome To{" "}
+            Welcome To
           </h4>
           <h2 className="text-3xl md:text-4xl lg:text-4xl font-bold">
             <span className="text-green-600 text-4xl lg:text-6xl ">
-              Ziaur Rahman{" "}
+              Ziaur Rahman
             </span>
             <span className="block mt-2">Foundation</span>
           </h2>
 
-          <div className="w-44 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-5"></div>
+          <div className="w-44 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-5 hidden lg:block md:block"></div>
           <p className="text-justify lg:my-10">
             জিয়াউর রহমান ফাউন্ডেশন বাংলাদেশের স্বাধীনতার ঘোষক ও মহান
             মুক্তিযোদ্ধা শহীদ রাষ্ট্রপতি জিয়াউর রহমানের স্মৃতির উদ্দেশ্যে
@@ -56,7 +56,6 @@ const Welcome = () => {
 
           {/* -------------Main Images----------------- */}
           <div className="mt-[60px] md:mt-[0px] lg:mt-[0px] xl:mt-[180px] 2xl:mt-[180px] ml-[15px] md:-ml-[45px] lg:ml-[500px] xl:ml-[290px] 2xl:ml-[300px] flex flex-col gap-10">
-
             <div className="mt-[0px] md:mt-[40px] lg:mt-[100px] xl:-mt-[150px] 2xl:-mt-[180px] xl:-ml-[0px] ">
               <div className="absolute ml-[70px] md:ml-3 lg:-ml-[100px] xl:-ml-[200px] 2xl:-ml-[200px] -mt-[25px] md:mt-[20px] lg:mt-0 xl:mt-0 2xl: ">
                 <div className="absolute bg-blue-500 h-[80px] md:h-[140px] lg:h-[140px] xl: 2xl: w-[80px] md:w-[140px] lg:w-[140px] xl:w-[140px] 2xl:w-[140px] rotate-45 rounded-xl ml-0 md:ml-[240px] lg:-ml-[0px] xl: 2xl: mt-0 md:mt-[0px] lg:-mt-[20px] xl:-mt-[20px] 2xl:-mt-[20px]"></div>
