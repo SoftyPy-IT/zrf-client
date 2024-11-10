@@ -7,8 +7,8 @@ import {
 } from "@mui/icons-material";
 import EastIcon from "@mui/icons-material/East";
 import Link from "next/link";
-import programm from '../../../../assets/images/program/project.jpeg'
-import programm2 from '../../../../assets/images/program/project2.jpeg'
+import programm from '../../../../assets/images/program/programm2.jpeg'
+import programm2 from '../../../../assets/images/program/programm.jpeg'
 import Image from "next/image";
 import './Programm.css'
 const OurProgramSection = () => {
@@ -35,16 +35,17 @@ const OurProgramSection = () => {
     },
   ];
 
+
   return (
     <div className="my-20">
       <Container>
-        <div className="grid grid-cols-2  justify-items-center">
+        <div className="grid grid-cols-1 xl:grid-cols-2  gap-y-10 xl:gap-y-0  justify-items-center">
           <div className="ImgWrap">
-            <div className="programmBigImg">
+            <div className="programmBigImg ">
               <Image src={programm} width={1000} height={500} alt="programm" />
 
             </div>
-            <div className="programmSmallImg">
+            <div className="programmSmallImg hidden xl:block ">
 
               <Image src={programm2} width={300} height={300} className="" alt="programm" />
             </div>

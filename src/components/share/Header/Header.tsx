@@ -17,7 +17,7 @@ const dropdown =
 
 const Header = () => {
   const [open, setOpen] = useState(true);
-  const [modalOpen, setModalOpen] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const [isSticky, setIsSticky] = useState(false);
   const { language, setLanguage } = useLanguage();
@@ -108,7 +108,7 @@ const Header = () => {
                 </div>
               )}
 
-              <div className="flex items-center justify-between absolute z-50 w-[1100px] left-1/2 transform -translate-x-1/2  bg-green-700 px-4">
+              <div className="flex items-center justify-between absolute z-50 md:w-[1100px] left-1/2 transform -translate-x-1/2  bg-green-700 px-4">
                 <ul
                   className={`lg:w-full xl:w-full lg:py-2 flex justify-center text-sm lg:text-base xl:text-base text-white  navItems ${open ? "" : "activeMenu z-50"
                     }`}

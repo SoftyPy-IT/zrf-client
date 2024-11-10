@@ -76,7 +76,7 @@ const DonateForm = () => {
     return (
         <>
             <Container>
-                <Box width="650px"bgcolor='white' padding='30px 20px' borderRadius='5px' >
+                <Box  bgcolor='white' borderRadius='5px' >
                     <Stepper activeStep={activeStep} alternativeLabel>
                         {steps.map((label) => (
                             <Step key={label}>

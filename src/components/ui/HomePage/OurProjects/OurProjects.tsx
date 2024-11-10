@@ -72,8 +72,8 @@ const OurProjects = () => {
     speed: 5000,
     slidesToShow,
     slidesToScroll: slidesToShow,
-    // autoplay: true,
-    // autoplaySpeed: 5000,
+    autoplay: true,
+    autoplaySpeed: 5000,
     arrows: false,
     Autoplay: true,
   };
@@ -119,7 +119,7 @@ const OurProjects = () => {
                         style={{ backgroundImage: `url(${card.image.src})` }}
                       >
                         {/* Bottom shadow overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
 
                         {/* Content Section */}
                         <div className="absolute bottom-0 p-5 text-white z-20 transition-colors duration-300">
@@ -127,7 +127,7 @@ const OurProjects = () => {
                             <small>April 3, 2024</small>
                             <small>08:00 AM</small>
                           </div>
-                          <h2   className="text-2xl hover:underline font-bold ">
+                          <h2 className="text-2xl hover:underline font-bold ">
                             {card.title.slice(0, 70)}
                           </h2>
                           <p className="mt-2 text-justify">
