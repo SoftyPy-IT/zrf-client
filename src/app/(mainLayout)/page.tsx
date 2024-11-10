@@ -8,16 +8,18 @@ import React from "react";
 import GallerySection from "@/components/ui/HomePage/Gallery/Gallery";
 import RecentActivitiesOfZRF from "@/components/ui/HomePage/RecentActivitiesOfZRF/RecentActivitiesOfZRF";
 import Welcome from "@/components/ui/HomePage/Welcome/Welcome";
+import Featured from "@/components/ui/HomePage/Featured/Featured";
 
 const Home = () => {
   return (
     <div>
       <Slider />
-      <Welcome /> 
-       <Impact />
+      <Featured />
+      <Welcome />
+      <Impact />
       <RecentActivitiesOfZRF />
       <Program />
-      <OurProjects /> 
+      <OurProjects />
       <Publications />
       <GallerySection />
     </div>
