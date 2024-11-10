@@ -13,6 +13,8 @@ import {
   School,
   Campaign,
 } from "@mui/icons-material";
+import TrustedCharity from "@/components/ui/HomePage/TrustedCharity/TrustedCharity";
+import HelpingVirtue from "@/components/ui/HomePage/HelpingVirtue/HelpingVirtue";
 
 const AboutUs = () => {
   const programs = [
@@ -65,7 +67,7 @@ const AboutUs = () => {
       <AboutBanner />
       <Container>
         {/* Foundation Overview Section */}
-        <section className="my-16">
+        {/* <section className="my-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
             <div className="space-y-4 lg:order-1 order-2">
               <h2 className="text-3xl font-bold text-center uppercase">
@@ -103,10 +105,11 @@ const AboutUs = () => {
               />
             </div>
           </div>
-        </section>
+        </section> */}
+        <HelpingVirtue />
 
         {/* উল্লেখযোগ্য কাজ */}
-        <section>
+        <section className="sectionMargin">
           <h2 className="text-center text-3xl font-bold">উল্লেখযোগ্য কাজ</h2>
           <div className="w-44 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-7 mx-auto"></div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 text-center">

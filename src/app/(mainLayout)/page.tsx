@@ -19,11 +19,13 @@ const Home = () => {
     <div>
       <Slider />
       <Featured />
-      <Statistics />
-      <Volunteer />
+
+
+      {/* <Volunteer />
       <TrustedCharity />
-      <HelpingVirtue />
+      <HelpingVirtue /> */}
       <Welcome />
+      <Statistics />
       <Impact />
       <RecentActivitiesOfZRF />
       <Program />

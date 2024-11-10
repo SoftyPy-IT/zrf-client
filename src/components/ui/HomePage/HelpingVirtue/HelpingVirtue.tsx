@@ -1,3 +1,4 @@
+'use client'
 import Image from "next/image";
 import React, { useState } from "react";
 import image from "../../../../../src/assets/images/featured/1.png";
@@ -28,11 +29,10 @@ const HelpingVirtue = () => {
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`font-semibold ${
-                  activeTab === tab
+                className={`font-semibold ${activeTab === tab
                     ? "bg-red-500 text-white px-4 py-2"
                     : "bg-gray-100 px-4 py-2"
-                } hover:text-red-500`}
+                  } hover:text-red-500`}
               >
                 {tab}
               </button>

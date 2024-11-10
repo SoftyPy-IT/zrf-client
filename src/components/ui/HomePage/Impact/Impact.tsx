@@ -1,6 +1,7 @@
 import Container from "@/components/share/Container";
 import "./Impact.css";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import Statistics from "../Statistics/Statistics";
 
 const ImpactSection = () => {
   const impactData = [
@@ -27,9 +28,10 @@ const ImpactSection = () => {
   ];
 
   return (
-    <div className="impact-bg py-16 my-20">
+    <div className="impact-bg  py-32  ">
       <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-10 gap-16 items-center">
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-10 gap-16 items-center mt-10 ">
           <div>
             <h2 className="text-3xl font-bold mb-7 text-white uppercase border-l-4 border-yellow-600 pl-2 rounded-t-full">
               উল্লেখযোগ্য কার্যক্রম

@@ -7,8 +7,8 @@ import {
 } from "@mui/icons-material";
 import EastIcon from "@mui/icons-material/East";
 import Link from "next/link";
-import programm from '../../../../assets/images/program/project.jpeg'
-import programm2 from '../../../../assets/images/program/project2.jpeg'
+import programm from '../../../../assets/images/program/programm2.jpeg'
+import programm2 from '../../../../assets/images/program/programm.jpeg'
 import Image from "next/image";
 import './Programm.css'
 const OurProgramSection = () => {
@@ -34,6 +34,7 @@ const OurProgramSection = () => {
       icon: <LocalLibrary fontSize="large" className="text-yellow-500" />,
     },
   ];
+
 
   return (
     <div className="my-20">

@@ -72,8 +72,8 @@ const OurProjects = () => {
     speed: 5000,
     slidesToShow,
     slidesToScroll: slidesToShow,
-    // autoplay: true,
-    // autoplaySpeed: 5000,
+    autoplay: true,
+    autoplaySpeed: 5000,
     arrows: false,
     Autoplay: true,
   };
@@ -127,7 +127,7 @@ const OurProjects = () => {
                             <small>April 3, 2024</small>
                             <small>08:00 AM</small>
                           </div>
-                          <h2   className="text-2xl hover:underline font-bold ">
+                          <h2 className="text-2xl hover:underline font-bold ">
                             {card.title.slice(0, 70)}
                           </h2>
                           <p className="mt-2 text-justify">
