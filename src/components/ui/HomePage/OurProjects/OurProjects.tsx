@@ -119,7 +119,7 @@ const OurProjects = () => {
                         style={{ backgroundImage: `url(${card.image.src})` }}
                       >
                         {/* Bottom shadow overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
 
                         {/* Content Section */}
                         <div className="absolute bottom-0 p-5 text-white z-20 transition-colors duration-300">
