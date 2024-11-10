@@ -21,9 +21,9 @@ const Home = () => {
       <Featured />
 
 
-      {/* <Volunteer />
-      <TrustedCharity />
-      <HelpingVirtue /> */}
+       {/* <Volunteer />
+      <TrustedCharity /> */}
+     
       <Welcome />
       <Statistics />
       <Impact />
