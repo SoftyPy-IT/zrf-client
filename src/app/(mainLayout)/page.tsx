@@ -13,16 +13,18 @@ import Statistics from "@/components/ui/HomePage/Statistics/Statistics";
 import Volunteer from "@/components/ui/HomePage/Volunteer/Volunteer";
 import TrustedCharity from "@/components/ui/HomePage/TrustedCharity/TrustedCharity";
 import HelpingVirtue from "@/components/ui/HomePage/HelpingVirtue/HelpingVirtue";
+// import FAQ from "@/components/ui/HomePage/FAQ/FAQ";
 
 const Home = () => {
   return (
     <div>
       <Slider />
-      <Featured />
+      <Featured /> 
       <Statistics />
       <Volunteer />
       <TrustedCharity />
       <HelpingVirtue />
+      {/* <FAQ /> */}
       <Welcome />
       <Impact />
       <RecentActivitiesOfZRF />
