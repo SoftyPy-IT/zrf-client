@@ -56,6 +56,16 @@ const Featured = () => {
       description: "Donation for Healthy Food to Children",
       imageUrl: img3,
     },
+    {
+      title: "Rehabilitation",
+      description: "Donation for Healthy Food to Children",
+      imageUrl: img3,
+    },
+    {
+      title: "lotus seeds",
+      description: "Donation for Healthy Food to Children",
+      imageUrl: img3,
+    },
   ];
 
   return (

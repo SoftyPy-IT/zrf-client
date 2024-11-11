@@ -4,7 +4,10 @@ import "./History.css";
 const History = () => {
   return (
     <div className="mt-20">
-      {/* <!-- Vertical Timeline --> */}
+     <div className="mb-10">
+     <h2 className="text-center text-3xl font-bold">Our History </h2>
+     <div className="w-44 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-7 mx-auto"></div>
+     </div>
       <section id="conference-timeline">
         <div className="timeline-start">Start</div>
         <div className="conference-center-line"></div>
