@@ -1,3 +1,4 @@
+@import '~font-awesome/css/font-awesome.min.css';
 
 @tailwind base;
 @tailwind components;
@@ -31,4 +32,15 @@
   border: 1px solid #E3C80D;
   border-radius: 50%;
   transition: transform 0.2s ease-out; 
+}
+.react-international-phone-input-container .react-international-phone-input {
+  width: 474px !important;
+  height: 50px !important;
+  border-top-right-radius: 5px !important;
+  border-bottom-right-radius: 5px !important;
+}
+.react-international-phone-input-container .react-international-phone-country-selector-button {
+
+  height: 50px !important;
+  width: 54px !important;
 }

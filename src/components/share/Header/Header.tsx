@@ -10,12 +10,15 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import logo from "../../../assets/images/logo/zfa.png";
 import { useLanguage } from "@/provider/LanguageProvider";
 import { Button } from "@mui/material";
+import DonationModal from "./DonationModal";
 
 const dropdown =
   "dropdownMenu absolute flex flex-col justify-center mt-[20px] md:mt-[15px] lg:mt-[30px] xl:mt-[18px] rounded-md bg-white shadow-md border border-t-4 border-t-green-600 invisible opacity-0  origin-top z-50 ";
 
 const Header = () => {
   const [open, setOpen] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
+
   const [isSticky, setIsSticky] = useState(false);
   const { language, setLanguage } = useLanguage();
   const handleOpen = () => setOpen(true);
@@ -36,6 +39,9 @@ const Header = () => {
   }, []);
 
   const buttonStyle = { width: '150px', height: '45px', borderRadius: '50px', color: 'white', background: '#E3C80D', padding: '0px', }
+
+  const handleModalOpen = () => setModalOpen(true);
+  const handleModalClose = () => setModalOpen(false);
 
   return (
     <>
@@ -102,7 +108,7 @@ const Header = () => {
                 </div>
               )}
 
-              <div className="flex items-center justify-between absolute z-50 w-[1100px] left-1/2 transform -translate-x-1/2  bg-green-600 px-4">
+              <div className="flex items-center justify-between absolute z-50 md:w-[1100px] left-1/2 transform -translate-x-1/2  bg-green-700 px-4">
                 <ul
                   className={`lg:w-full xl:w-full lg:py-2 flex justify-center text-sm lg:text-base xl:text-base text-white  navItems ${open ? "" : "activeMenu z-50"
                     }`}
@@ -187,14 +193,21 @@ const Header = () => {
 
                 </ul>
                 <div >
-                 
-                  <Button sx={buttonStyle}>Get Membership </Button>
+
+                  <Button onClick={handleModalOpen} sx={buttonStyle}>Get Involved </Button>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </Container>
+
+      {
+
+        modalOpen && (
+          <DonationModal onClose={handleModalClose} />
+        )
+      }
     </>
   );
 };

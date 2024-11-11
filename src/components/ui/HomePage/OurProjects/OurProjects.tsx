@@ -95,6 +95,7 @@ const OurProjects = () => {
                   Our Projects
                 </h1>
                 <div className="w-28 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-5 mx-auto"></div>
+
                 <p className="lg:text-center md:text-center text-justify lg:w-[800px] mx-auto mb-10 lg:px-0 md:px-0 px-5 text-[16px]">
                   Ziaur Rahman Foundations is committed to empowering
                   communities through impactful initiatives, sustainable
@@ -105,39 +106,49 @@ const OurProjects = () => {
               </div>
               <Slider {...settings}>
                 {cardsData.map((card, index) => (
-                  <div
-                    key={index}
-                    className="justify-center items-center z-10 p-5"
-                  >
-                    <div className="relative h-[450px] bg-white shadow-lg overflow-hidden group hover:scale-105 transition-transform duration-300 animate-fadeIn">
-                      <div className="relative">
-                        <Image
-                          src={card.image}
-                          className="h-[200px] w-full object-cover transition-opacity duration-300"
-                          alt={card.title}
-                        />
+                  <div key={index} className="justify-center items-center z-10 p-5">
+
+                    <div className="relative h-[530px] rounded-sm bg-white shadow-lg overflow-hidden group hover:scale-105 transition-transform duration-300 animate-fadeIn">
+                      <div className="absolute px-6 py-2 font-bold z-30 top-0 right-0 bg-[#E3C80D] text-white ">
+                        <b>Education </b>
                       </div>
-                      <div className="relative p-5 bg-white transition-colors duration-300 ">
-                        <Link href={"#"}>
-                          <h2 className="text-xl font-semibold text-gray-800 hover:underline">
+
+                      {/* Image as Background with Bottom-to-Center Shadow Overlay */}
+                      <div
+                        className="relative h-full w-full bg-cover bg-center"
+                        style={{ backgroundImage: `url(${card.image.src})` }}
+                      >
+                        {/* Bottom shadow overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
+
+                        {/* Content Section */}
+                        <div className="absolute bottom-0 p-5 text-white z-20 transition-colors duration-300">
+                          <div className="time flex items-center italic mb-3 ">
+                            <small>April 3, 2024</small>
+                            <small>08:00 AM</small>
+                          </div>
+                          <h2 className="text-2xl hover:underline font-bold ">
                             {card.title.slice(0, 70)}
                           </h2>
-                        </Link>
-                        <p className="text-gray-600 mt-2 z-50 text-justify">
-                          {card.description.slice(0, 150)}...
-                        </p>
-                        <div className="flex justify-end mt-5">
-                          <Link href={`/our-projects/${card.id}`}>
-                            <button className="hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-1 hover:text-white rounded-full uppercase text-sm border">
-                              আরো পড়ুন <EastIcon />
-                            </button>
-                          </Link>
+                          <p className="mt-2 text-justify">
+                            {card.description.slice(0, 150)}...
+                          </p>
+
+                          <div className=" mt-5">
+                            <Link href={`/our-projects/${card.id}`}>
+                              <button className="hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-1 hover:text-white rounded-full uppercase text-sm border">
+                                আরো পড়ুন <EastIcon />
+                              </button>
+                            </Link>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 ))}
               </Slider>
+
+
               <div className="flex justify-end pb-7 pr-5">
                 <Link href="/our-projects">
                   <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-2 text-white rounded-full uppercase text-sm">

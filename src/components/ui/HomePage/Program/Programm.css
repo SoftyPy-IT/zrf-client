@@ -1,0 +1,38 @@
+.ImgWrap {
+    position: relative;
+}
+
+.programmBigImg {
+    width: 450px;
+    height: 500px;
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+
+.ImgWrap .programmSmallImg {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    bottom: -17px;
+    left: -150px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.programmSmallImg img,
+.programmBigImg img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+
+@media only screen and (max-width:768px) {
+
+
+    .programmBigImg .programmSmallImg {
+        width: 100%;
+    }
+
+}

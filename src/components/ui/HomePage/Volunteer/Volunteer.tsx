@@ -31,7 +31,7 @@ const Volunteer = () => {
   ];
 
   return (
-    <Container className="mt-20">
+    <div className="mt-20">
       <div className="bg-green-600 text-white py-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center p-10">
           <div className="lg:mb-0 mb-10">
@@ -59,7 +59,7 @@ const Volunteer = () => {
           </div>
         </div>
       </div>
-    </Container>
+    </div>
   );
 };
 

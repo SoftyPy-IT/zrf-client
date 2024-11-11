@@ -130,7 +130,7 @@ const RecentActivitiesOfZRF = () => {
 
         {/* Sidebar */}
         <div className=" lg:w-[500px] w-full">
-          <div className="grid grid-cols-1 gap-5 lg:h-[500px] bg-gray-100 p-5 lg:mt-0 md:mt-5 mt-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-5 lg:h-[500px] bg-gray-100 p-5 lg:mt-0 md:mt-5 mt-5">
             {sidebar.map((data) => (
               <div
                 key={data.id}

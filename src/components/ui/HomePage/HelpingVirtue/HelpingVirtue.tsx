@@ -1,7 +1,8 @@
+'use client'
 import Image from "next/image";
 import React, { useState } from "react";
 import image from "../../../../../src/assets/images/featured/1.png";
-import Container from "@/components/share/Container";
+
 
 const HelpingVirtue = () => {
   const [activeTab, setActiveTab] = useState("Mission");
@@ -9,7 +10,7 @@ const HelpingVirtue = () => {
   const tabs = ["About Us", "Vision", "Mission"];
 
   return (
-    <Container>
+    <>
       <div className="flex flex-col lg:flex-row bg-white p-10 shadow-md mt-20 items-center border">
         {/* Left Section - Image */}
         <div className="lg:w-1/2 mb-8 lg:mb-0 flex justify-center">
@@ -28,11 +29,10 @@ const HelpingVirtue = () => {
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`font-semibold ${
-                  activeTab === tab
+                className={`font-semibold ${activeTab === tab
                     ? "bg-red-500 text-white px-4 py-2"
                     : "bg-gray-100 px-4 py-2"
-                } hover:text-red-500`}
+                  } hover:text-red-500`}
               >
                 {tab}
               </button>
@@ -75,7 +75,7 @@ const HelpingVirtue = () => {
           </button>
         </div>
       </div>
-    </Container>
+    </>
   );
 };
 
