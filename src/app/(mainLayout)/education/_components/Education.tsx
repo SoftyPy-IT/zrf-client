@@ -11,13 +11,15 @@ const cardData = [
     id: 1,
     imageUrl: image1,
     title: "'ভবিষ্যত বিজ্ঞানীর খোঁজে'",
-    description: "ভার্চুয়াল বিজ্ঞান মেলা 'ভবিষ্যত বিজ্ঞানীর খোঁজে'। ক গ্রুপ চূড়ান্ত পর্ব - ৩ ফেব্রুয়ারী, ২০২৩, বিকেল ৫ টা।",
+    description:
+      "ভার্চুয়াল বিজ্ঞান মেলা 'ভবিষ্যত বিজ্ঞানীর খোঁজে'। ক গ্রুপ চূড়ান্ত পর্ব - ৩ ফেব্রুয়ারী, ২০২৩, বিকেল ৫ টা।",
   },
   {
     id: 2,
     imageUrl: image2,
     title: "'ভবিষ্যত বিজ্ঞানীর খোঁজে'",
-    description: "ভার্চুয়াল বিজ্ঞান মেলা 'ভবিষ্যত বিজ্ঞানীর খোঁজে'। খ গ্রুপ চূড়ান্ত পর্ব - ২৮ এপ্রিল, ২০২৩, বিকেল ৪ টা।",
+    description:
+      "ভার্চুয়াল বিজ্ঞান মেলা 'ভবিষ্যত বিজ্ঞানীর খোঁজে'। খ গ্রুপ চূড়ান্ত পর্ব - ২৮ এপ্রিল, ২০২৩, বিকেল ৪ টা।",
   },
   {
     id: 3,
@@ -30,12 +32,12 @@ const cardData = [
 const Education = () => {
   return (
     <>
-      <Container>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5 py-[50px]">
+      <Container className="my-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
           {cardData.map((card, index) => (
             <div
               key={index}
-              className="relative group w-auto h-[450px] bg-white border border-gray-300 rounded-lg overflow-hidden shadow-md transition-transform transform hover:scale-105 "
+              className="relative group w-auto h-[450px] bg-white overflow-hidden transition-transform transform hover:scale-105 border"
             >
               {/* Image */}
               <Image
@@ -58,7 +60,7 @@ const Education = () => {
               {/* Overlay */}
 
               {/* Card Border */}
-              <div className="absolute top-0 left-0 w-full h-full border-2 border-blue-500 rounded-lg pointer-events-none" />
+              <div className="absolute top-0 left-0 w-full h-full pointer-events-none" />
             </div>
           ))}
         </div>
