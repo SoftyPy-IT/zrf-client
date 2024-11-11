@@ -194,7 +194,7 @@ const Header = () => {
                 </ul>
                 <div >
 
-                  <Button onClick={handleModalOpen} sx={buttonStyle}>Get Involved </Button>
+                  <Button onClick={handleModalOpen} sx={buttonStyle}>Join Us </Button>
                 </div>
               </div>
             </div>

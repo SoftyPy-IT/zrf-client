@@ -42,3 +42,15 @@
   height: 50px !important;
   width: 54px !important;
 }
+@media only screen and (max-width:768px){
+  .react-international-phone-input-container .react-international-phone-input {
+    width: 100% !important;
+    height: 50px !important;
+  }
+  .react-international-phone-input-container .react-international-phone-country-selector-button {
+  
+    height: 50px !important;
+    width: 54px !important;
+  }
+  
+}

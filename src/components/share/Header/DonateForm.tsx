@@ -167,7 +167,7 @@ const DonateForm = () => {
                     <Checkbox defaultChecked />
                     <Typography>
                       I do hereby declare that the contributions are from my
-                      personal fund and also I agree to all policy of BNP.
+                      personal fund and also I agree to all policy of ZRF.
                     </Typography>
                   </div>
                 </Box>

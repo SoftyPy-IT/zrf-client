@@ -40,10 +40,10 @@ export default function DonationTab() {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-
+                px: { xs: 0, sm: 2 }, 
             }}
         >
-            <Box sx={{ width: '100%', maxWidth: 700, typography: 'body1' }}>
+            <Box sx={{ width: '100%', maxWidth: 700, }}>
                 <TabContext value={value}>
                     <Box sx={{ borderBottom: 'none', display: 'flex', justifyContent: 'center' }}>
                         <TabList
@@ -71,7 +71,7 @@ export default function DonationTab() {
                         </TabList>
                     </Box>
                     <TabPanel value="1"><DonateForm /></TabPanel>
-                    <TabPanel value="2"><MembershipForm /> </TabPanel>
+                    <TabPanel value="2"><MembershipForm /></TabPanel>
                 </TabContext>
             </Box>
         </Box>
