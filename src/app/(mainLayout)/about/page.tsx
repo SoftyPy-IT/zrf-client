@@ -15,6 +15,8 @@ import {
 } from "@mui/icons-material";
 import TrustedCharity from "@/components/ui/HomePage/TrustedCharity/TrustedCharity";
 import HelpingVirtue from "@/components/ui/HomePage/HelpingVirtue/HelpingVirtue";
+import Volunteer from "@/components/ui/HomePage/Volunteer/Volunteer";
+
 
 const AboutUs = () => {
   const programs = [
@@ -107,7 +109,9 @@ const AboutUs = () => {
           </div>
         </section> */}
         <HelpingVirtue />
+        <Volunteer/>
 
+        {/* <TrustedCharity /> */}
         {/* উল্লেখযোগ্য কাজ */}
         <section className="sectionMargin">
           <h2 className="text-center text-3xl font-bold">উল্লেখযোগ্য কাজ</h2>
