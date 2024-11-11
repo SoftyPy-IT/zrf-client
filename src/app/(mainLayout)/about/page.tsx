@@ -16,6 +16,8 @@ import {
 import TrustedCharity from "@/components/ui/HomePage/TrustedCharity/TrustedCharity";
 import HelpingVirtue from "@/components/ui/HomePage/HelpingVirtue/HelpingVirtue";
 import Volunteer from "@/components/ui/HomePage/Volunteer/Volunteer";
+import History from "@/components/ui/HomePage/History/History";
+
 
 
 const AboutUs = () => {
@@ -68,6 +70,7 @@ const AboutUs = () => {
     <div>
       <AboutBanner />
       <Container>
+        <History />
         <HelpingVirtue />
         <Volunteer/>
 

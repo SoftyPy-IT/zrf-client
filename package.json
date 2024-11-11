@@ -22,6 +22,7 @@
     "@vercel/speed-insights": "^1.0.12",
     "axios": "^1.7.7",
     "flickr-justified-gallery": "^2.2.0",
+    "font-awesome": "^4.7.0",
     "framer-motion": "^11.5.4",
     "i18next": "^23.15.1",
     "lenis": "^1.1.13",
