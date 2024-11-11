@@ -108,7 +108,7 @@ const OurProjects = () => {
                 {cardsData.map((card, index) => (
                   <div key={index} className="justify-center items-center z-10 p-5">
 
-                    <div className="relative h-[530px] rounded-sm bg-white shadow-lg overflow-hidden group hover:scale-105 transition-transform duration-300 animate-fadeIn">
+                    <div className="relative h-[530px] bg-white shadow-lg overflow-hidden group hover:scale-105 transition-transform duration-300 animate-fadeIn rounded-md">
                       <div className="absolute px-6 py-2 font-bold z-30 top-0 right-0 bg-[#E3C80D] text-white ">
                         <b>Education </b>
                       </div>

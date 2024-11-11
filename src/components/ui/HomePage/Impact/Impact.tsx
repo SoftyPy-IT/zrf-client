@@ -1,8 +1,9 @@
 import Container from "@/components/share/Container";
 import "./Impact.css";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import Statistics from "../Statistics/Statistics";
-
+import programm from '../../../../../src/assets/images/program/project4.png'
+import Image from "next/image";
+import { Button } from "@mui/material";
 const ImpactSection = () => {
   const impactData = [
     {
@@ -32,55 +33,12 @@ const ImpactSection = () => {
       <Container>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-10 gap-16 items-center mt-10 ">
-          <div>
-            <h2 className="text-3xl font-bold mb-7 text-white uppercase border-l-4 border-yellow-600 pl-2 rounded-t-full">
-              উল্লেখযোগ্য কার্যক্রম
-            </h2>
-            <ul className="text-white space-y-3">
-              <li>
-                <CheckCircleOutlineIcon className="text-yellow-600" /> ঠোঁটকাটা,
-                তালুকাটা এবং পোড়া রোগীদের জন্য প্লাস্টিক সার্জারি ক্যাম্পের
-                আয়োজন
-              </li>
-              <li>
-                <CheckCircleOutlineIcon className="text-yellow-600" /> দারিদ্র্য
-                বিমোচন কর্মসূচির অংশ হিসেবে হাঁস-মুরগি, ছাগল ও মাছের পোনা বিতরণ
-              </li>
-              <li>
-                <CheckCircleOutlineIcon className="text-yellow-600" /> গণতন্ত্র
-                পুনরুদ্ধারের আন্দোলনে পঙ্গুত্ববরণকারী নেতা কর্মীদের কৃত্রিম পা
-                প্রতিস্থাপন
-              </li>
-              <li>
-                <CheckCircleOutlineIcon className="text-yellow-600" />{" "}
-                রিহ্যাবিলিটেশন কমিটির মাধ্যমে নির্যাতিত কর্মীদের চিকিৎসা সেবা
-                প্রদান করা
-              </li>
-              <li>
-                <CheckCircleOutlineIcon className="text-yellow-600" /> ২৪ ঘন্টা
-                মোবাইল হটলাইন সেবার মাধ্যমে বিশেষজ্ঞ চিকিৎসা সেবা প্রদান করা
-              </li>
-              <li>
-                <CheckCircleOutlineIcon className="text-yellow-600" /> গুম খুন
-                নির্যাতিত বিএনপির কর্মীদের পরিবারকে শিক্ষা সহায়তা ও চিকিৎসা
-                প্রদান
-              </li>
-            </ul>
-            {/* <button className="bg-yellow-600 px-6 py-2 text-white rounded-full mt-7 uppercase">
-              এখনই অনুদান দিন
-            </button> */}
+          <div className="space-y-3 text-white">
+            <h2 className="text-3xl font-bold ">Helping is Great Virtue for Every Human’s.</h2>
+            <p className="text-white ">It has been determined through research that when we feel to help, and that someone authentically needs our assistance, and that no trick is being played on us, we reliably do intervene. Interestingly, it has been found that we are less likely to help an examination of the intrinsic worth of helping others, transcending cultural, religious, and societal boundaries.</p>
+            <Button sx={{background:'#E3C80D'}}>Donate Now </Button>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 text-center">
-            {impactData.map((item, index) => (
-              <div key={index} className="border p-5 text-white">
-                <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                <p className="text-4xl font-bold text-yellow-600 mb-4">
-                  {item.value}
-                </p>
-                <p>{item.description}</p>
-              </div>
-            ))}
-          </div>
+          <Image src={programm} alt="Programm" width={1000} height={300} />
         </div>
       </Container>
     </div>

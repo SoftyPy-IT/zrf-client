@@ -29,13 +29,36 @@ const stats = [
 ];
 
 const Statistics = () => {
+
+   const impactData = [
+    {
+      title: "Years of Foundation",
+      value: "25+",
+      icon: <FoundationIcon sx={{ fontSize: 60 }} />,
+    },
+    {
+      title: "Volunteers",
+      value: "1000+",
+      icon: <DonationIcon sx={{ fontSize: 60 }} />,
+    },
+    {
+      title: "Completed Project",
+      value: "200+",
+      icon: <PartnersIcon sx={{ fontSize: 60 }} />,
+    },
+    {
+      title: "Amount of Donation ",
+      value: "$1M+",
+      icon: <ProjectsIcon sx={{ fontSize: 60 }} />,
+    },
+  ];
   return (
     <Container>
       <div className="-mb-[100px] z-[99] relative">
-        {/* Added 'rounded-lg' for rounded corners on shadow */}
+       
         <div className="bg-white p-10 shadow-xl">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
+            {impactData.map((stat, index) => (
               <div
                 key={index}
                 className="flex flex-col items-center justify-center bg-white px-5 py-12 text-center border-b-4 border hover:border-green-600 transition duration-300 rounded-sm"
@@ -44,7 +67,7 @@ const Statistics = () => {
                   {stat.value}
                 </div>
                 <div className="text-gray-700 font-semibold text-lg mb-4">
-                  {stat.label}
+                  {stat.title}
                 </div>
                 <div className="text-green-600">{stat.icon}</div>
               </div>
