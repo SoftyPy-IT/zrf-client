@@ -19,10 +19,6 @@ const Home = () => {
     <div>
       <Slider />
       <Featured />
-
-
-   
-     
       <Welcome />
       <Statistics />
       <Impact />
