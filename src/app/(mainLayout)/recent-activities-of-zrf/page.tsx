@@ -14,37 +14,37 @@ const newsItems = [
     id: 1,
     image: news1,
     title:
-      "জিয়াউর রহমান ফাউন্ডেশন ও ডক্টরস এসোসিয়েশন অব বাংলাদেশ ড্যাব এর উদ্যোগে মাসব্যাপী বন্যাদুর্গত অঞ্চলে মেডিকেল ক্যাম্প পরিচালিত হচ্ছে।",
+      "A month-long medical camp is being conducted in flood-affected areas by Ziaur Rahman Foundation and Doctors Association of Bangladesh (DAB).",
     description:
-      "জিয়াউর রহমান ফাউন্ডেশন ও ডক্টরস এসোসিয়েশন অব বাংলাদেশ ড্যাব এর উদ্যোগে ফেনী জেলায় সহস্রাধিক মানুষের চিকিৎসা সেবা দেবার জন্য মেডিকেল ক্যাম্প আয়োজন করা হয়েছে।আয়োজন প্রস্তুতি টিম ইতিমধ্যে ঔষধ সহ ফেনীতে পৌঁছে গেছে।",
-    date: "১৭ সেপ্টেম্বর,২০২৪",
+      "A medical camp has been organized in Feni district to provide medical services to over a thousand people, under the initiative of Ziaur Rahman Foundation and the Doctors Association of Bangladesh (DAB). The preparation team, along with the necessary medicines, has already arrived in Feni.",
+    date: "September 17, 2024",
   },
   {
     id: 2,
     image: news2,
     title:
-      "জিয়াউর রহমান ফাউন্ডেশন ও ডক্টরস এসোসিয়েশন অব বাংলাদেশ ড্যাব এর উদ্যোগে মাসব্যাপী বন্যাদুর্গত অঞ্চলে মেডিকেল ক্যাম্প পরিচালিত হচ্ছে।",
+      "A month-long medical camp is being conducted in flood-affected areas by Ziaur Rahman Foundation and Doctors Association of Bangladesh (DAB).",
     description:
-      "বিএনপির ভারপ্রাপ্ত চেয়ারম্যান ও জিয়াউর রহমান ফাউন্ডেশন এর প্রেসিডেন্ট জনাব তারেক রহমান এর নির্দেশে বন্যাদুর্গত ফেনী জেলায় সদর হাসপাতালে জিয়াউর রহমান ফাউন্ডেশন ও ডক্টরস এসোসিয়েশন অব বাংলাদেশ (ড্যাব) এর উদ্যোগে  অসুস্থ রোগীদের জন্য চলমান ধারাবাহিক চিকিৎসা সেবা ও ঔষধ বিতরন কার্যক্রম এর অংশ হিসেবে আজকে চিকিৎসা সেবা প্রদান করেন স্বনামধন্য শিশু বিশেষজ্ঞ ঢাকা শিশু হাসপাতাল এর সহযোগী অধ্যাপক ডা সালাহউদ্দিন মাহমুদ,ডা: এম.আর. হাসান,ডা: মুননাসির জামান রেমো,ডা:ইমাম হাসান,ডা:সৌরভ,ডা: রাকিব",
-    date: "১০ সেপ্টেম্বর,২০২৪",
+      "Under the directive of BNP’s Acting Chairman and President of Ziaur Rahman Foundation, Mr. Tarique Rahman, ongoing medical services and medicine distribution are being provided for sick patients at the Sadar Hospital in flood-affected Feni district. Today, renowned pediatrician Dr. Salahuddin Mahmood, along with Dr. M.R. Hasan, Dr. Munnasir Zaman Remo, Dr. Imam Hasan, Dr. Saurav, and Dr. Rakib, have provided their services as part of this initiative by Ziaur Rahman Foundation and DAB.",
+    date: "September 10, 2024",
   },
   {
     id: 3,
     image: news3,
     title:
-      "জিয়াউর রহমান ফাউন্ডেশন ও ডক্টরস এসোসিয়েশন অব বাংলাদেশ ড্যাব এর উদ্যোগে মাসব্যাপী বন্যাদুর্গত অঞ্চলে মেডিকেল ক্যাম্প পরিচালিত হচ্ছে।",
+      "A month-long medical camp is being conducted in flood-affected areas by Ziaur Rahman Foundation and Doctors Association of Bangladesh (DAB).",
     description:
-      "আবদুল্লাহ আল মামুন,মাগুরা হোসেন শহীদ সোহরাওয়ার্দী কলেজ এর রাষ্ট্রবিজ্ঞান বিভাগের মাস্টার্স এর ছাত্র।বৈষম্যবিরোধী ছাত্রজনতার আন্দোলনে গত ৫ আগস্ট উত্তরা পূর্ব থানায় পুলিশের গুলিতে আহত হলে মুমূর্ষু অবস্থায় তাকে উত্তরা উইমেন্স মেডিকেল কলেজ হাসপাতাল এ ভর্তি করা হয়।মৃতপ্রায় মামুনকে বাচাতে তার ইমারজেন্সি ট্রাকিওস্টমি করা হয়। বিএনপি ভারপ্রাপ্ত চেয়ারম্যান ও জিয়াউর রহমান ফাউন্ডেশন এর প্রেসিডেন্ট জনাব তারেক রহমান এর নির্দেশে জিয়াউর রহমান ফাউন্ডেশন এর নির্বাহী পরিচালক অধ্যাপক ডা ফরহাদ হালিম ডোনার এর তত্বাবধানে, জেড আর এফ রিহ্যাবিলিটেশন কমিটির আহবায়ক ডা শাহ মুহম্মদ আমান উল্ল্যাহ ও সদস্য সচিব ডা পারভেজ রেজা কাকন এর সার্বিক সহযোগিতায় আই.সি,ইউ তে মৃত্যুর সাথে পাঞ্জা লড়া মামুনের চিকিৎসার সার্বিক ব্যবস্থাপনা ও দায়িত্ব গ্রহণ করেছে জিয়াউর রহমান ফাউন্ডেশন।জিয়াউর রহমান ফাউন্ডেশন এর কো অর্ডিনেটর ডা সাজিদ ইমতিয়াজ, ডা শাওন বিন রহমান,ডা রাফসান জানি আবির গনতন্ত্র পুনরুদ্ধার এর সম্মুখ যোদ্ধা  মামুনের চিকিৎসার সার্বিক তদারকি করছেন",
-    date: "৫ আগস্ট, ২০২৪",
+      "Abdullah Al Mamun, a Master's student in Political Science at Magura Hossain Shaheed Suhrawardy College, was injured by police gunfire during an anti-discrimination student protest on August 5 in Uttara East. He was admitted to Uttara Women's Medical College Hospital in critical condition, and an emergency tracheostomy was performed to save his life. Following the directive of BNP's Acting Chairman and President of Ziaur Rahman Foundation, Mr. Tarique Rahman, the foundation, under the supervision of Executive Director Dr. Farhad Halim Donar and with support from Dr. Shah Muhammad Amanullah and Dr. Parvez Reza Kakon, has taken full responsibility for Mamun’s treatment in ICU. Foundation coordinators Dr. Sajid Imtiaz, Dr. Shaon Bin Rahman, and Dr. Rafsan Jani Abir are overseeing his care as he battles for recovery.",
+    date: "August 5, 2024",
   },
   {
     id: 4,
     image: news4,
     title:
-      "জিয়াউর রহমান ফাউন্ডেশন ও ডক্টরস এসোসিয়েশন অব বাংলাদেশ ড্যাব এর উদ্যোগে মাসব্যাপী বন্যাদুর্গত অঞ্চলে মেডিকেল ক্যাম্প পরিচালিত হচ্ছে।",
+      "A month-long medical camp is being conducted in flood-affected areas by Ziaur Rahman Foundation and Doctors Association of Bangladesh (DAB).",
     description:
-      "বিএনপির ভারপ্রাপ্ত চেয়ারম্যান জনাব তারেক রহমান এর নির্দেশে বাংলাদেশ জাতীয়তাবাদী দল বিএনপির বন্যার্ত অসহায় মানুষের পাশে দাড়ানোর ধারাবাহিকতায় বন্যাদুর্গত ফেনী জেলায় ত্রান সামগ্রী বিতরণ এর উদ্দেশ্যে বিএনপির চেয়ারপারসন এর উপদেষ্টা,জিয়াউর রহমান ফাউন্ডেশন এর নির্বাহী পরিচালক ও ড্যাবের প্রধান উপদেষ্টা অধ্যাপক ডা: ফরহাদ হালিম ডোনার এর নেতৃত্বে জিয়াউর রহমান ফাউন্ডেশন ও ডক্টরস এসোসিয়েশন অব বাংলাদেশ (ড্যাব) এর নেতৃবৃন্দ এর যাত্রা।",
-    date: "২৫ আগস্ট, ২০২৪",
+      "Under the directive of BNP's Acting Chairman, Mr. Tarique Rahman, the Ziaur Rahman Foundation and Doctors Association of Bangladesh (DAB), led by Professor Dr. Farhad Halim Donar, Advisor to the BNP Chairperson and Executive Director of Ziaur Rahman Foundation, are traveling to distribute relief supplies to flood-affected and vulnerable people in Feni district as part of BNP's ongoing support.",
+    date: "August 25, 2024",
   },
 ];
 

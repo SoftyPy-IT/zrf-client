@@ -24,7 +24,7 @@ const GallerySection = () => {
     },
     {
       id: 2,
-      url: "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+      url: "https://youtu.be/dOWL-q-lEzY",
     },
   ];
 
