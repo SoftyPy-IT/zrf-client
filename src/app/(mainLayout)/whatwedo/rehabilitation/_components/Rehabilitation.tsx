@@ -39,30 +39,33 @@ const Rehabilitation = () => {
     <>
       <Banner />
       <Container className="my-20">
-        <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 h-[500px]">
+        <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 h-[1100px] md:h-[900px] lg:h-[500px]">
           {cardData.map((card, index) => (
-            <div className="relative overflow-hidden group border" key={index}>
+            <div
+              className="relative shadow-md overflow-hidden group border"
+              key={index}
+            >
               <Image
-                className="w-full h-[400px] object-cover"
+                className="w-full h-[300px] lg:h-[400px] object-cover"
                 src={card.img}
                 alt={card.title}
               />
               {/* Overlapping content */}
-              <div className="absolute bottom-0 left-0 right-0 p-4 bg-blue-950 border-t border-gray-300 rounded-t-3xl h-[200px]">
+              <div className="absolute bottom-0 left-0 right-0 p-2 md:p-4 lg:p-4 bg-blue-950 border-t border-gray-300 rounded-t-3xl h-[150px] md:h-[200px] lg:h-[200px] mt-28 md:mt-0 lg:mt-0">
                 <h2 className="text-xl text-white">{card.title}</h2>
                 <p className="mt-2 text-white">
                   {card.content.slice(0, 180)} ......
                 </p>
               </div>
               {/* Hover content */}
-              <div className="absolute inset-x-0 bottom-0 bg-green-700 text-[#fff] transition-transform transform translate-y-full group-hover:translate-y-0 duration-500 ease-in-out h-[300px] rounded-t-3xl">
-                <div className="w-full p-6 h-full">
+              <div className="absolute inset-x-0 bottom-0 bg-green-700 text-[#fff] transition-transform transform translate-y-full group-hover:translate-y-0 duration-500 ease-in-out h-[340px] md:h-[300px] lg:h-[300px] rounded-t-3xl">
+                <div className="w-full p-2 md:p-4 lg:p-6 lg:h-full">
                   <div className="space-y-3">
                     <div className="flex items-center gap-3">
                       <h2 className="text-xl ">{card.title.slice(0, 100)}</h2>
                     </div>
                     <p className="text-justify">{card.content.slice(0, 200)}</p>
-                    <Button href={`/whatwedo/rehabilitation/${card.id}`}>
+                    <Button href={`/whatwedo/program/${card.id}`}>
                       Read More
                     </Button>
                   </div>

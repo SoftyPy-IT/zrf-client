@@ -85,7 +85,7 @@ const sidebar = [
 const RecentActivitiesOfZRF = () => {
   return (
     <Container className="my-20">
-      <h1 className="text-3xl font-bold uppercase">Recent Activities of ZRF</h1>
+      <h1 className="lg:text-3xl text-2xl font-bold uppercase">Recent Activities of ZRF</h1>
       <div className="w-28 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-5"></div>
       <div className="lg:flex gap-10">
         {/* Main News Content */}

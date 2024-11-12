@@ -13,30 +13,29 @@ const Header = () => {
   const { language, setLanguage } = useLanguage();
 
   const [open, setOpen] = useState(true);
-  const [mobileMenu, setMobileMenu] = useState(true)
+  const [mobileMenu, setMobileMenu] = useState(true);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const toggleMobileMenu = () => {
-    setOpen((open) => !open)
-  }
+    setOpen((open) => !open);
+  };
 
   const btnStyle = {
-    color: 'black',
-    background: 'white',
-    padding: '0px',
-    boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
-    width: '40px',
-    minWidth: '56px',
-    height: '33px',
-    transition: 'background 0.3s ease',
-    '&:hover': {
-      background: 'linear-gradient(to right, #dc2626, #16a34a)',
-      color: 'white'
-    }
-  }
+    color: "black",
+    background: "white",
+    padding: "0px",
+    boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+    width: "40px",
+    minWidth: "56px",
+    height: "33px",
+    transition: "background 0.3s ease",
+    "&:hover": {
+      background: "linear-gradient(to right, #dc2626, #16a34a)",
+      color: "white",
+    },
+  };
   const dropdown =
     "dropdownMenu absolute flex flex-col justify-center mt-[20px] md:mt-[15px] lg:mt-[30px] xl:mt-[18px] rounded-md bg-white shadow-md border border-t-4 border-t-green-600 invisible opacity-0  origin-top z-50 text-black ";
-
 
   return (
     <div className="sticky top-0 w-full bg-white shadow-md  z-[999999]">
@@ -53,14 +52,18 @@ const Header = () => {
               />
               <Typography component="span" fontWeight={600} color="black">
                 <Box component="span" color="primary.main" fontWeight="bold">
-                  <b className="md:font-bold text-[12px] md:text-[16px]">{language === 'ENG' ? 'Ziaur Rahman' : 'জিয়াউর রহমান'}
-                  </b> <br /><b className="md:font-bold text-[12px] md:text-[20px] "> {language === 'ENG' ? 'Foundation' : ' ফাউন্ডেশন'} </b>
+                  <b className="md:font-bold text-[12px] md:text-[16px]">
+                    {language === "ENG" ? "Ziaur Rahman" : "জিয়াউর রহমান"}
+                  </b>{" "}
+                  <br />
+                  <b className="md:font-bold text-[12px] md:text-[20px] ">
+                    {" "}
+                    {language === "ENG" ? "Foundation" : " ফাউন্ডেশন"}{" "}
+                  </b>
                 </Box>
-
               </Typography>
             </div>
           </Box>
-
 
           <div>
             {open ? (
@@ -81,10 +84,10 @@ const Header = () => {
             )}
 
             <>
-
               <ul
-                className={`lg:w-full xl:w-full lg:py-2 flex justify-center text-sm lg:text-base xl:text-bas  navItems ${open ? "" : "activeMenu z-50"
-                  }`}
+                className={`lg:w-full xl:w-full lg:py-2 flex justify-center text-sm lg:text-base xl:text-bas  navItems ${
+                  open ? "" : "activeMenu z-50"
+                }`}
               >
                 <li className="lg:border-none border-b lg:py-0 py-1">
                   <Link href="/">Home</Link>
@@ -118,7 +121,7 @@ const Header = () => {
                   </Link>
                   <ul className={`w-[240px] submenu  ${dropdown}`}>
                     <li className="lg:border-none border-b lg:py-0 py-2">
-                      <Link href="/education">Our Project</Link>
+                      <Link href="/our-projects">Our Project</Link>
                     </li>
                     <li className="lg:border-none border-b lg:py-0 py-2">
                       <Link href="/education">ZRF Education Program</Link>
@@ -142,13 +145,8 @@ const Header = () => {
                       <Link href="/whatwedo/initiatives">Initiatives</Link>
                     </li>
                     <li>
-                      <Link href="/whatwedo/program">Our Program</Link>
+                      <Link href="/program">Our Program</Link>
                     </li>
-
-
-
-
-
                   </ul>
                 </li>
                 <li className="dropdownMenuWrap relative">
@@ -177,29 +175,26 @@ const Header = () => {
                 <li className="lg:border-none border-b lg:py-0 py-2">
                   <Link href="/news">News</Link>
                 </li>
-
-
               </ul>
             </>
           </div>
           <div className=" xl:block space-x-1 md:space-x-3 mr-[30px] text-center md:mr-8 xl:mr-0 ">
             <button
               onClick={() => setLanguage("ENG")}
-              className={`bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white ${language === "ENG" ? "opacity-100" : "opacity-60"
-                }`}
-
+              className={`bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white ${
+                language === "ENG" ? "opacity-100" : "opacity-60"
+              }`}
             >
               ENG
             </button>
             <button
               onClick={() => setLanguage("BNG")}
-              className={`bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3 rounded text-white ${language === "BNG" ? "opacity-100" : "opacity-60"
-                }`}
-
+              className={`bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3 rounded text-white ${
+                language === "BNG" ? "opacity-100" : "opacity-60"
+              }`}
             >
               বাংলা
             </button>
-
           </div>
         </div>
       </Container>
