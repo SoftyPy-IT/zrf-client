@@ -106,8 +106,10 @@ const OurProjects = () => {
               </div>
               <Slider {...settings}>
                 {cardsData.map((card, index) => (
-                  <div key={index} className="justify-center items-center z-10 p-5">
-
+                  <div
+                    key={index}
+                    className="justify-center items-center z-10 p-5"
+                  >
                     <div className="relative h-[530px] bg-white shadow-lg overflow-hidden group hover:scale-105 transition-transform duration-300 animate-fadeIn rounded-md">
                       <div className="absolute px-6 py-2 font-bold z-30 top-0 right-0 bg-[#E3C80D] text-white ">
                         <b>Education </b>
@@ -137,7 +139,7 @@ const OurProjects = () => {
                           <div className=" mt-5">
                             <Link href={`/our-projects/${card.id}`}>
                               <button className="hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-1 hover:text-white rounded-full uppercase text-sm border">
-                                আরো পড়ুন <EastIcon />
+                                Read More <EastIcon />
                               </button>
                             </Link>
                           </div>
@@ -148,11 +150,10 @@ const OurProjects = () => {
                 ))}
               </Slider>
 
-
               <div className="flex justify-end pb-7 pr-5">
                 <Link href="/our-projects">
                   <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-2 text-white rounded-full uppercase text-sm">
-                    সবগুলো দেখুন <EastIcon />
+                    See All <EastIcon />
                   </button>
                 </Link>
               </div>

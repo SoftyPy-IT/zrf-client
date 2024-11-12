@@ -204,7 +204,7 @@ const Header = () => {
                 </ul>
                 <div>
                   <Button onClick={handleModalOpen} sx={buttonStyle}>
-                    Get Involved{" "}
+                    Join Us{" "}
                   </Button>
                 </div>
               </div>

@@ -106,7 +106,7 @@ const LatestNews = () => {
           <div className="flex lg:justify-end  mt-5 text-center">
             <Link href="/news">
               <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-6 py-2 text-white rounded-full uppercase">
-                সবগুলো দেখুন <EastIcon fontSize="small" />
+                See All <EastIcon fontSize="small" />
               </button>
             </Link>
           </div>

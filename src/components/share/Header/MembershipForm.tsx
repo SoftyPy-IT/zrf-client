@@ -25,15 +25,11 @@ const MembershipForm = () => {
                     <ZRFInput name="address" label="Address" size="medium" fullWidth />
                 </Grid>
                 <Grid item xs={12} sm={12} md={12}>
-                    <ZRFInput name="email" label="Email" size="medium" fullWidth />
+                    <ZRFInput name="phone" label="Phone" size="medium" fullWidth />
                 </Grid>
-                <Grid item xs={12} sm={12} md={12}>
-                    <ZRFInput name="email" label="Email" size="medium" fullWidth />
-                </Grid>
+                
 
-                <Grid item xs={12} sm={12} md={12}>
-                    <ZRFInput name="amount" label="Amount" size="medium" fullWidth />
-                </Grid>
+                
                 <Grid item xs={12} container justifyContent="center">
                     <Button sx={{width:'200px'}} variant="contained">Submit</Button>
                 </Grid>

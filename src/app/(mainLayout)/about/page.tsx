@@ -70,11 +70,8 @@ const AboutUs = () => {
     <div>
       <AboutBanner />
       <Container>
-        <History />
         <HelpingVirtue />
-        <Volunteer/>
-
- 
+        {/* <Volunteer/> */}
         <section className="sectionMargin">
           <h2 className="text-center text-3xl font-bold">উল্লেখযোগ্য কাজ</h2>
           <div className="w-44 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-7 mx-auto"></div>
@@ -91,7 +88,7 @@ const AboutUs = () => {
             ))}
           </div>
         </section>
-
+        <History />
         {/* Call to Action Section */}
         <section className="py-16 my-16 bg-green-600 text-white text-center">
           <h2 className="text-3xl font-bold">আমাদের সাথে যোগ দিন</h2>

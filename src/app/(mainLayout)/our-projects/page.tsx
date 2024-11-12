@@ -63,7 +63,7 @@ const page = () => {
                   <div className="flex justify-end mt-3 absolute bottom-5">
                     <Link href={`/our-projects/${data.id}`}>
                       <button className="hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-1 hover:text-white rounded-full uppercase text-sm border">
-                        সব দেখুন <EastIcon />
+                        Read More <EastIcon />
                       </button>
                     </Link>
                   </div>
