@@ -38,7 +38,14 @@ const Header = () => {
     };
   }, []);
 
-  const buttonStyle = { width: '150px', height: '45px', borderRadius: '50px', color: 'white', background: '#E3C80D', padding: '0px', }
+  const buttonStyle = {
+    width: "150px",
+    height: "45px",
+    borderRadius: "50px",
+    color: "white",
+    background: "#E3C80D",
+    padding: "0px",
+  };
 
   const handleModalOpen = () => setModalOpen(true);
   const handleModalClose = () => setModalOpen(false);
@@ -60,24 +67,27 @@ const Header = () => {
                 </Link>
               </div>
               <h2 className="font-bold text-xl hidden lg:flex">
-
-                {language === 'ENG' ? 'An initiative, a little effort, will bring prosperity, will come to the country self reliance' : " একটি উদ্যোগ, একটু চেষ্টা, এনে দিবে স্বচ্ছলতা, দেশে আসবেস্বনির্ভরতা।"}
+                {language === "ENG"
+                  ? "An initiative, a little effort, will bring prosperity, will come to the country self reliance"
+                  : " একটি উদ্যোগ, একটু চেষ্টা, এনে দিবে স্বচ্ছলতা, দেশে আসবেস্বনির্ভরতা।"}
               </h2>
               {/* Contact Info */}
               <div className="hidden lg:flex space-x-4">
                 <button
                   onClick={() => setLanguage("ENG")}
-                  className={`bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white ${language === "ENG" ? "opacity-100" : "opacity-60"
-                    }`}
-                //  className="bg-gradient-to-r  text-white px-4 py-2 rounded"
+                  className={`bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white ${
+                    language === "ENG" ? "opacity-100" : "opacity-60"
+                  }`}
+                  //  className="bg-gradient-to-r  text-white px-4 py-2 rounded"
                 >
                   ENG
                 </button>
                 <button
                   onClick={() => setLanguage("BNG")}
-                  className={`bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3 rounded text-white ${language === "BNG" ? "opacity-100" : "opacity-60"
-                    }`}
-                // className=" bg-gradient-to-r from-yellow-600 to-green-600 text-white px-4 py-2 rounded"
+                  className={`bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3 rounded text-white ${
+                    language === "BNG" ? "opacity-100" : "opacity-60"
+                  }`}
+                  // className=" bg-gradient-to-r from-yellow-600 to-green-600 text-white px-4 py-2 rounded"
                 >
                   বাংলা
                 </button>
@@ -86,10 +96,11 @@ const Header = () => {
 
             {/* Navbar */}
             <div
-              className={`${isSticky
-                ? "fixed top-0 left-0 w-full bg-white shadow-lg z-50"
-                : "relative"
-                } transition-all duration-300`}
+              className={`${
+                isSticky
+                  ? "fixed top-0 left-0 w-full bg-white shadow-lg z-50"
+                  : "relative"
+              } transition-all duration-300`}
             >
               {open ? (
                 <div onClick={handleClose} className="bar1 z-50">
@@ -110,8 +121,9 @@ const Header = () => {
 
               <div className="flex items-center justify-between absolute z-50 md:w-[1100px] left-1/2 transform -translate-x-1/2  bg-green-700 px-4">
                 <ul
-                  className={`lg:w-full xl:w-full lg:py-2 flex justify-center text-sm lg:text-base xl:text-base text-white  navItems ${open ? "" : "activeMenu z-50"
-                    }`}
+                  className={`lg:w-full xl:w-full lg:py-2 flex justify-center text-sm lg:text-base xl:text-base text-white  navItems ${
+                    open ? "" : "activeMenu z-50"
+                  }`}
                 >
                   <li className="lg:border-none border-b lg:py-0 py-1">
                     <Link href="/">Home</Link>
@@ -189,12 +201,11 @@ const Header = () => {
                   <li className="lg:border-none border-b lg:py-0 py-2">
                     <Link href="/news">News</Link>
                   </li>
-
-
                 </ul>
-                <div >
-
-                  <Button onClick={handleModalOpen} sx={buttonStyle}>Get Involved </Button>
+                <div>
+                  <Button onClick={handleModalOpen} sx={buttonStyle}>
+                    Get Involved{" "}
+                  </Button>
                 </div>
               </div>
             </div>
@@ -202,12 +213,7 @@ const Header = () => {
         </div>
       </Container>
 
-      {
-
-        modalOpen && (
-          <DonationModal onClose={handleModalClose} />
-        )
-      }
+      {modalOpen && <DonationModal onClose={handleModalClose} />}
     </>
   );
 };

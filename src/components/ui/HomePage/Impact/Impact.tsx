@@ -33,9 +33,9 @@ const ImpactSection = () => {
       <Container>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-10 gap-16 items-center mt-10 ">
-          <div className="space-y-3 text-white">
-            <h2 className="text-3xl font-bold ">Helping is Great Virtue for Every Human’s.</h2>
-            <p className="text-white ">It has been determined through research that when we feel to help, and that someone authentically needs our assistance, and that no trick is being played on us, we reliably do intervene. Interestingly, it has been found that we are less likely to help an examination of the intrinsic worth of helping others, transcending cultural, religious, and societal boundaries.</p>
+          <div className="space-y-5 text-white">
+            <h2 className="text-3xl font-bold uppercase">Helping is Great Virtue for Every Human’s.</h2>
+            <p className="text-white text-justify">It has been determined through research that when we feel to help, and that someone authentically needs our assistance, and that no trick is being played on us, we reliably do intervene. Interestingly, it has been found that we are less likely to help an examination of the intrinsic worth of helping others, transcending cultural, religious, and societal boundaries.</p>
             <Button sx={{background:'#E3C80D'}}>Donate Now </Button>
           </div>
           <Image src={programm} alt="Programm" width={1000} height={300} />
