@@ -43,7 +43,7 @@ const Contact = () => {
                 <div className="text-white">
                   <div className="mb-4">
                     <h3 className="text-xl font-semibold">
-                      <LocationOnIcon />
+                      <LocationOnIcon sx={{ marginRight: '5px' }} />
                       Location
                     </h3>
                     <p className="text-white">
@@ -52,14 +52,14 @@ const Contact = () => {
                   </div>
                   <div className="mb-4">
                     <h3 className="text-xl font-semibold">
-                      <CallOutlinedIcon />
+                      <CallOutlinedIcon sx={{ marginRight: '5px' }} />
                       Call Us
                     </h3>
                     <p className="text-white">(123) 456-7890</p>
                   </div>
                   <div className="mb-4">
                     <h3 className="text-xl font-semibold">
-                      <EmailOutlinedIcon />
+                      <EmailOutlinedIcon sx={{ marginRight: '5px' }} />
                       Email Us
                     </h3>
                     <p className="text-white">info@example.com</p>
@@ -87,6 +87,7 @@ const Contact = () => {
                       required
                       label="Name"
                       fullWidth
+                      size="medium"
                     />
                     <ZRFInput
                       type="email"
@@ -94,33 +95,24 @@ const Contact = () => {
                       required
                       label="Email"
                       fullWidth
+                      size="medium"
                     />
                   </div>
                   <div className="lg:flex gap-2">
-                    <ZRFInput type="tel" name="phone" label="Phone" fullWidth />
+                    <ZRFInput type="tel" name="phone" label="Phone" fullWidth size="medium" />
                     <ZRFInput
                       type="text"
                       name="subject"
                       label="Subject"
                       fullWidth
+                      size="medium"
                     />
                   </div>
-                  <div>
+                  <div className="mt-5">
                     <ZRFTextArea
                       name="message"
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          "& fieldset": {
-                            borderColor: "gray",
-                          },
-                          "&:hover fieldset": {
-                            borderColor: "darkgray",
-                          },
-                          "&.Mui-focused fieldset": {
-                            borderColor: "blue",
-                          },
-                        },
-                      }}
+                      minRows={5}
+                      sx={{ border: '1px solid black', borderRadius: '3px', padding: '10px' }}
                       placeholder="Write something..."
                     />
                   </div>

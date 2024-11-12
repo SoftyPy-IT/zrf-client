@@ -1,5 +1,6 @@
-// components/Footer.tsx
-import React from "react";
+'use client'
+
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "../../../assets/images/logo/zfa.png";
@@ -13,44 +14,24 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import XIcon from "@mui/icons-material/X";
+import { Button } from "@mui/material";
+import DonationModal from "../Header/DonationModal";
 
 const Footer = () => {
+  const [open, setOpen] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
   const handleSubmit = () => {
     console.log();
   };
 
-  const quickLinks = [
-    { name: "Home", href: "/" },
-    { name: "About Us", href: "/about" },
-    { name: "Case Studies", href: "/case-studies" },
-    { name: "Services", href: "/services" },
-    { name: "Gallery", href: "/gallery" },
-    { name: "Blog", href: "/blog" },
-  ];
+  const buttonStyle = { width: '100px', height: '30px', borderRadius: '10px', color: 'white', background: '#E3C80D', padding: '0px', }
 
-  const ourServices = [
-    { name: "ZRF Rehavalidation Team", href: "/services" },
-    { name: "Programm", href: "/about" },
-    { name: "Initiativs", href: "/case-studies" },
-    { name: "Covid", href: "/services" },
-  ];
-
-  const latestNews = [
-    {
-      title: "Shawl On A Broomstick You Can Crawl",
-      date: "April 12, 2017",
-      imgSrc: news1,
-    },
-    {
-      title: "Strokes To Move The World",
-      date: "April 12, 2017",
-      imgSrc: news2,
-    },
-  ];
+  const handleModalOpen = () => setModalOpen(true);
+  const handleModalClose = () => setModalOpen(false);
 
   return (
     <>
-      <div className="bg-[#20bd86] relative">
+      <div className="bg-[#20bd86] relative sectionMargin">
         <Container>
           <div className="relative flex flex-col md:flex-row justify-between items-start md:items-center py-8 z-10">
             <div className="w-auto">
@@ -81,11 +62,9 @@ const Footer = () => {
       <footer className="bg-gray-900 text-white pt-12 pb-8">
         <Container>
           <div className="container mx-auto">
-            {/* Top Section */}
 
-            {/* Middle Section */}
             <div className="flex flex-col md:flex-row justify-between items-start mt-8">
-              {/* About */}
+
               <div className="w-full md:w-1/4 mb-8 md:mb-0">
                 <div className="space-y-3 flex flex-col items-center">
                   <Image src={logo} alt="Seville Logo" width={50} height={50} />
@@ -99,35 +78,20 @@ const Footer = () => {
                 <h4 className="font-semibold">Our Address </h4>
                 <p>28/1 VIP Road, Naya Paltan, Dhaka, Bangladesh</p>
               </div>
-              {/* Latest News */}
+              <div className="w-full md:w-1/4 mb-8 md:mb-0 text-center">
+
+                <ul className="space-y-3 ">
+                <li>Contact Us </li>
+                  <li><Button onClick={handleModalOpen} sx={buttonStyle}>Join Us </Button> </li>
+                 
+                </ul>
+              </div>
+
               <div className="w-full md:w-1/4">
-                {/* <h4 className="font-semibold text-center md:text-left lg:text-left xl:text-left">
-                  Latest News
-                </h4> */}
-                {/* <div className="mt-4 space-y-4">
-                  {latestNews.map((news) => (
-                    <div key={news.title} className="flex space-x-4">
-                      <Image
-                        src={news.imgSrc}
-                        alt={news.title}
-                        width={50}
-                        height={50}
-                        className="rounded-full"
-                      />
-                      <div>
-                        <p className="hover:text-white cursor-pointer">
-                          {news.title.slice(0, 25)}
-                        </p>
-                        <span className="text-gray-500 text-sm">
-                          {news.date}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div> */}
+
 
                 <div className=" mt-4 text-center md:text-left lg:text-left xl:text-left">
-                  {/* Social Media Icons */}
+
                   <h4 className="font-semibold text-center">Follow Us</h4>
                   <div className="flex justify-center">
                     <div className="mt-4 flex space-x-4">
@@ -168,7 +132,7 @@ const Footer = () => {
                 </div>
               </div>
             </div>
-            {/* Bottom Section */}
+
             <div className="mt-8 text-center text-gray-500">
               &copy; Copyrights Ziaur Rahman Foundation 2024. All Rights
               Reserved
@@ -176,6 +140,13 @@ const Footer = () => {
           </div>
         </Container>
       </footer>
+
+      {
+
+        modalOpen && (
+          <DonationModal onClose={handleModalClose} />
+        )
+      }
     </>
   );
 };

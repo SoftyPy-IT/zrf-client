@@ -9,6 +9,7 @@ import news1 from "../../../../../src/assets/images/activities/01.jpg";
 import news2 from "../../../../../src/assets/images/activities/02.jpg";
 import news3 from "../../../../../src/assets/images/activities/03.jpg";
 import news4 from "../../../../../src/assets/images/activities/04.jpg";
+import ShareLink from "@/components/share/ShareLink/ShareLink";
 
 const projectData = [
   {
@@ -124,6 +125,8 @@ const ProjectDetailsPage = () => {
             </div>
           </div>
         </div>
+
+        <ShareLink/>
       </Container>
     </div>
   );

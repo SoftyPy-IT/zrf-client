@@ -1,0 +1,163 @@
+.navItems li {
+    padding: 10px;
+    position: relative;
+    transition: all 0.5s cubic-bezier(0.4, 0.43, 0.54, 0.54);
+  }
+  
+  .navItems li::after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 0px;
+    background-image: -webkit-linear-gradient(left, #d97706, #16a34a);
+    transition: all 0.5s cubic-bezier(0.4, 0.43, 0.54, 0.54);
+    color: #fff;
+  }
+  
+  .navItems li:hover::after {
+    width: 100%;
+    color: #fff;
+  }
+  
+  .navItems li:hover a {
+    /* color: #000000; */
+    width: 100%;
+    position: relative;
+    z-index: 99;
+    transition: all 0.5s cubic-bezier(0.4, 0.43, 0.54, 0.54);
+  }
+  .navItems li:hover .dropdownMenu li a {
+    color: white !important;
+  }
+  
+  .navItems li:hover .dropdownMenu li a {
+    color: black !important;
+  }
+  
+  .dropdownMenu {
+    transition: all 0.5s cubic-bezier(0.44, 0.47, 0.64, 0.65);
+    transform: scaleY(0);
+  }
+  
+  .dropdownMenuWrap:hover .dropdownMenu {
+    opacity: 1;
+    transform: scaleY(1);
+    visibility: visible;
+    color: #111;
+  }
+  
+  .dropdownMenu li {
+    border-bottom: 1px solid #ddd;
+    padding: 5px 0;
+  }
+  
+  .dropdownMenu li:last-child {
+    border-bottom: none;
+  }
+  
+  .dropdownMenu li a {
+    padding: 20px 20px;
+    transition: all 0.5s ease-in-out;
+  }
+  
+  .dropdownMenu li a:hover {
+    margin-left: 10px;
+    /* color: red; */
+  }
+  
+  .paymentWrap {
+    width: 292px;
+    height: 160px;
+    box-shadow: 0 1px 2px #3c40434d, 0 1px 3px 1px #3c404326;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+  
+  }
+  
+  .paymentWrap img {
+    width: 70%;
+    height: 70%;
+    object-fit: cover;
+    border-radius: 5px;
+  
+  }
+  
+  @media only screen and (max-width: 1024px) {
+    .navItems {
+      background: #216740;
+      position: absolute;
+      left: -500px;
+      display: block;
+      width: 240px;
+      top: -72px;
+      height: 100vh;
+      padding: 20px;
+      transition: all 0.5s cubic-bezier(0.43, 0.38, 0.68, 0.63);
+      z-index: 999;
+    }
+  
+    .activeMenu {
+      left: -20px;
+      transition: all 0.5s cubic-bezier(0.43, 0.38, 0.68, 0.63);
+      z-index: 999;
+    }
+  
+    .activeBar,
+    .bar1 {
+      width: 20px;
+      height: 40px;
+      position: absolute;
+      top: -34px;
+      right: 6px;
+      transition: all 0.5s cubic-bezier(0.43, 0.38, 0.68, 0.63);
+    }
+  
+    .activeBar span,
+    .bar1 span {
+      width: 25px;
+      height: 2px;
+      background: #111;
+      display: block;
+      margin-bottom: 5px;
+      transition: all 0.5s cubic-bezier(0.43, 0.38, 0.68, 0.63);
+    }
+  
+    @media only screen and (max-width: 500px) {
+      .activeBar,
+      .bar1 {
+        top: -34px;
+        right: 6px;
+      }
+  
+      .bar2 {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        top: -28px;
+        right: -28px;
+        transition: all 0.5s cubic-bezier(0.43, 0.38, 0.68, 0.63);
+      }
+  
+      .activeBar span:nth-child(3) { 
+        rotate: -45deg;
+        top: 0px;
+        position: absolute;
+        transition: all 0.5s cubic-bezier(0.43, 0.38, 0.68, 0.63);
+      }
+  
+      .activeBar span:nth-child(1) {
+        rotate: 45deg;
+        transition: all 0.5s cubic-bezier(0.43, 0.38, 0.68, 0.63);
+      }
+  
+      .activeBar span:nth-child(2) {
+        display: none;
+      }
+    }
+  }
+  

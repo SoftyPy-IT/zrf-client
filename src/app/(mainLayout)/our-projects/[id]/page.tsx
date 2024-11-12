@@ -9,6 +9,7 @@ import image1 from "../../../../../src/assets/images/projects/image1.jpg";
 import image2 from "../../../../../src/assets/images/projects/image2.jpg";
 import image3 from "../../../../../src/assets/images/projects/image3.jpg";
 import image4 from "../../../../../src/assets/images/projects/image4.jpg";
+import ShareLink from "@/components/share/ShareLink/ShareLink";
 
 const projectData = [
   {
@@ -81,7 +82,7 @@ const ProjectDetailsPage = () => {
     <div>
       <Banner />
       <Container>
-        <div className="lg:flex md:flex gap-10 my-16">
+        <div className="lg:flex md:flex gap-10 ">
           <div className="w-full grid grid-cols-1">
             <div className="h-full w-full">
               <div className="relative overflow-hidden">
@@ -98,7 +99,7 @@ const ProjectDetailsPage = () => {
             </div>
           </div>
 
-          {/* Sidebar for additional content */}
+
           <div className="border p-5 rounded lg:w-[600px]">
             <h3 className="text-xl font-bold">Recent Post</h3>
             <hr className="w-16 h-1 bg-gradient-to-r from-yellow-600 to-green-600 border-0 rounded-full mb-5" />
@@ -116,6 +117,7 @@ const ProjectDetailsPage = () => {
             </div>
           </div>
         </div>
+        <ShareLink />
       </Container>
     </div>
   );

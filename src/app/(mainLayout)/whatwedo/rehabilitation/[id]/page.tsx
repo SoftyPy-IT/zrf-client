@@ -22,6 +22,7 @@ import StopIcon from "@mui/icons-material/Stop";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import ShareLink from "@/components/share/ShareLink/ShareLink";
 
 const newsData = [
   {
@@ -156,12 +157,7 @@ const DescriptionPage = () => {
                 <h4>Politics,</h4>
                 <h4>Social Work</h4>
               </div>
-              <div className="flex items-center gap-4">
-                <h1>Share:</h1>
-                <FacebookIcon className="text-gray-600 cursor-pointer" />
-                <LinkedInIcon className="text-gray-600 cursor-pointer" />
-                <XIcon className="text-gray-600 cursor-pointer" />
-              </div>
+              <ShareLink />
             </div>
             <div className="flex justify-between items-center mt-5">
               <a href="#" className="text-green-600">
@@ -171,43 +167,7 @@ const DescriptionPage = () => {
                 Next Post →
               </a>
             </div>
-            {/* user comment */}
-            {/* <div className="p-5 bg-gray-100 mt-5 rounded">
-              <div className="w-16 h-16">
-                <Image
-                  src={profile}
-                  alt="John Doe"
-                  className="rounded-full object-cover w-full h-full border-2 border-green-600"
-                />
-              </div>
-              <div className="w-full">
-                <p className="font-medium mt-2">মো. কামাল</p>
-                <p className="text-xs">April 24, 2024 at 10:59 am</p>
-                <hr className="mt-3" />
-                <p className="mt-3 text-sm text-justify">
-                  তাদের কার্যক্রমের জন্য ধন্যবাদ।
-                </p>
-                <button className="mt-4 text-green-600 text-sm font-medium hover:underline">
-                  Reply
-                </button>
-              </div>
-            </div> */}
 
-            {/* comment section */}
-            {/* <div className="mt-5">
-              <TextField
-                label="Add a comment"
-                variant="outlined"
-                fullWidth
-                multiline
-                rows={4}
-              />
-              <div className="flex justify-end mt-5">
-                <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-7 py-2 text-white font-medium rounded">
-                  Submit
-                </button>
-              </div>
-            </div> */}
           </div>
           <div className="w-full lg:w-[600px] lg:mt-6 md:mt-0 mt-5">
             <div className="bg-gray-100 p-5 rounded mb-5">
@@ -244,114 +204,10 @@ const DescriptionPage = () => {
               </div>
             </div>
 
-            {/* achieves */}
-            {/* <div className="bg-gray-100 p-5 rounded mt-10">
-              <h3>Achieves</h3>
-              <hr className="w-16 h-1 bg-gradient-to-r from-yellow-600 to-green-600 border-0 rounded-full mb-5" />
-              <div>
-                <div className="my-3">
-                  <button className="font-medium text-sm">
-                    <StopIcon fontSize="small" /> May 2024
-                  </button>
-                </div>
 
-                <hr />
-                <div className="my-3">
-                  <button className="font-medium text-sm">
-                    <StopIcon fontSize="small" /> April 2024
-                  </button>
-                </div>
-                <hr />
-                <div className="my-3">
-                  <button className="font-medium text-sm">
-                    <StopIcon fontSize="small" /> June 2024
-                  </button>
-                </div>
-                <hr />
-                <div className="my-3">
-                  <button className="font-medium text-sm">
-                    <StopIcon fontSize="small" /> July 2024
-                  </button>
-                </div>
-              </div>
-            </div> */}
-
-            {/* category */}
-            {/* <div className="bg-gray-100 p-5 rounded mt-10">
-              <h3>Category</h3>
-              <hr className="w-16 h-1 bg-gradient-to-r from-yellow-600 to-green-600 border-0 rounded-full mb-5" />
-              <div>
-                <div className="flex gap-2 my-3">
-                  <button className="font-medium text-sm">
-                    <StopIcon fontSize="small" /> Education
-                  </button>
-                  <span className="block font-medium text-sm">(10)</span>
-                </div>
-
-                <hr />
-                <div className="flex gap-2 my-3">
-                  <button className="font-medium text-sm">
-                    <StopIcon fontSize="small" /> National
-                  </button>
-                  <span className="block font-medium text-sm">(20)</span>
-                </div>
-                <hr />
-                <div className="flex gap-2 my-3">
-                  <button className="font-medium text-sm">
-                    <StopIcon fontSize="small" /> Health
-                  </button>
-                  <span className="block font-medium text-sm">(17)</span>
-                </div>
-                <hr />
-                <div className="flex gap-2 my-3">
-                  <button className="font-medium text-sm">
-                    <StopIcon fontSize="small" /> Sports
-                  </button>
-                  <span className="block font-medium text-sm">(12)</span>
-                </div>
-                <hr />
-                <div className="flex gap-2 my-3">
-                  <button className="font-medium text-sm">
-                    <StopIcon fontSize="small" /> Magazine
-                  </button>
-                  <span className="block font-medium text-sm">(16)</span>
-                </div>
-              </div>
-            </div> */}
-
-            {/* tags */}
-            {/* <div className="bg-gray-100 p-5 rounded mt-10">
-              <h3>Tags</h3>
-              <hr className="w-16 h-1 bg-gradient-to-r from-yellow-600 to-green-600 border-0 rounded-full mb-5" />
-              <div className="flex flex-wrap gap-3">
-                <button className="border hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-2 rounded hover:text-white text-sm">
-                  Fashion
-                </button>
-                <button className="border hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-2 rounded hover:text-white text-sm">
-                  Education
-                </button>
-                <button className="border hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-2 rounded hover:text-white text-sm">
-                  Nation
-                </button>
-                <button className="border hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-2 rounded hover:text-white text-sm">
-                  Study
-                </button>
-                <button className="border hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-2 rounded hover:text-white text-sm">
-                  Health
-                </button>
-                <button className="border hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-2 rounded hover:text-white text-sm">
-                  Food
-                </button>
-                <button className="border hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-2 rounded hover:text-white text-sm">
-                  Travel
-                </button>
-                <button className="border hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-2 rounded hover:text-white text-sm">
-                  Science
-                </button>
-              </div>
-            </div> */}
           </div>
         </div>
+
       </Container>
     </>
   );
