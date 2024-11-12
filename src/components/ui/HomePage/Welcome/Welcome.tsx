@@ -44,36 +44,46 @@ const Welcome = () => {
           <div className="mt-[60px] md:mt-[0px] lg:mt-[0px] xl:mt-[180px] 2xl:mt-[180px] ml-[15px] md:-ml-[45px] lg:ml-[500px] xl:ml-[290px] 2xl:ml-[300px] flex flex-col gap-10">
             <div className="mt-[0px] md:mt-[40px] lg:mt-[100px] xl:-mt-[150px] 2xl:-mt-[180px] xl:-ml-[0px] ">
               <div className="absolute ml-[70px] md:ml-3 lg:-ml-[100px] xl:-ml-[200px] 2xl:-ml-[200px] -mt-[25px] md:mt-[20px] lg:mt-0 xl:mt-0 2xl: ">
-                <div className="absolute bg-blue-500 h-[80px] md:h-[140px] lg:h-[140px] xl: 2xl: w-[80px] md:w-[140px] lg:w-[140px] xl:w-[140px] 2xl:w-[140px] rotate-45 rounded-xl ml-0 md:ml-[240px] lg:-ml-[0px] xl: 2xl: mt-0 md:mt-[0px] lg:-mt-[20px] xl:-mt-[20px] 2xl:-mt-[20px]"></div>
+                <div className="absolute bg-blue-500 h-[80px] md:h-[140px] lg:h-[140px] xl: 2xl: w-[80px] md:w-[140px] lg:w-[140px] xl:w-[140px] 2xl:w-[140px] rotate-45 rounded-xl ml-0 md:ml-[240px] lg:-ml-[0px] xl: 2xl: mt-0 md:mt-[0px] lg:-mt-[20px] xl:-mt-[20px] 2xl:-mt-[20px] rotateDiv"></div>
                 <Image
                   src={envir4}
-                  className="h-[80px] md:h-[140px] lg:h-[140px] xl: 2xl: w-[80px] md:w-[140px] lg:w-[140px] xl: 2xl: rotate-45 rounded-xl ml-0 md:ml-[239px] lg:-ml-[0px] mt-[15px] md:mt-[20px] lg:-mt-[0px] xl: 2xl:"
-                  alt="this is img"
+                  className="h-[80px] md:h-[140px] lg:h-[140px] xl: 2xl: w-[80px] md:w-[140px] lg:w-[140px] xl: 2xl: rotate-45 rounded-xl ml-0 md:ml-[239px] lg:-ml-[0px] mt-[15px] md:mt-[20px] lg:-mt-[0px] xl: 2xl: rotateImg "
+                  alt="this is img "
                 />
               </div>
 
               <div className="ml-[150px] md:ml-0 lg:ml-[60px] xl:-ml-10 2xl:-ml-10 mt-[50px] md:mt-[100px] lg:mt-[40px] xl:mt-[30px] 2xl:mt-[30px]">
-                <div className="absolute bg-yellow-300 h-[100px] md:h-[230px] lg:h-[290px] xl:h-[290px] 2xl:h-[290px] w-[100px] md:w-[230px] lg:w-[290px] xl:w-[290px] 2xl:w-[290px] rotate-45 rounded-xl -ml-[0px] md:ml-[400px] lg:ml-[10px] xl:-ml-[0px] 2xl:ml-[10px] -mt-0 md:-mt-[0px] lg:-mt-[0px] xl:-mt-[0px] 2xl:-mt-[0px]"></div>
+                <div className="absolute bg-yellow-300 h-[100px] md:h-[230px] lg:h-[290px] xl:h-[290px] 2xl:h-[290px] w-[100px] md:w-[230px] lg:w-[290px] xl:w-[290px] 2xl:w-[290px] rotate-45 rounded-xl -ml-[0px] md:ml-[400px] lg:ml-[10px] xl:-ml-[0px] 2xl:ml-[10px] -mt-0 md:-mt-[0px] lg:-mt-[0px] xl:-mt-[0px] 2xl:-mt-[0px] rotateDiv2 "></div>
 
                 <div className="h-[10px] md:h-[230px] lg:h-[290px] xl:h-[290px] 2xl: w-[180px] md:w-[230px] lg:w-[290px] xl:w-[290px] 2xl: rounded-xl">
                   <Image
                     src={envir1}
-                    className=" h-[100px] md:h-[230px] lg:h-[290px] xl:h-[290px] 2xl: w-[100px] md:w-[230px] lg:w-[290px] xl:w-[290px] 2xl:  rotate-45 rounded-xl -ml-[15px] md:ml-[380px] lg:-ml-[10px] xl:-ml-[25px] 2xl:-ml-[15px] mt-0 md:-mt-[0px] lg:-mt-[0px] xl: 2xl: "
+                    className=" rotateImg2 h-[100px] md:h-[230px] lg:h-[290px] xl:h-[290px] 2xl: w-[100px] md:w-[230px] lg:w-[290px] xl:w-[290px] 2xl:  rotate-45 rounded-xl -ml-[15px] md:ml-[380px] lg:-ml-[10px] xl:-ml-[25px] 2xl:-ml-[15px] mt-0 md:-mt-[0px] lg:-mt-[0px] xl: 2xl: "
                     alt="this is img"
                   />
                 </div>
               </div>
             </div>
 
+
+
+
             <div className="mt-[40px] md:-mt-[210px] lg:-mt-[100px] xl:-mt-[150px] 2xl:-mt-[180px] ml-[25px] md:ml-0 lg:-ml-[260px] xl:-ml-[0px] 2xl:-ml-8">
+              
+              
               <div className="-ml-6 md:ml-0 lg:ml-0 xl:-ml-[300px] 2xl: -mt-14 md:-mt-[0px] lg:-mt-[140px] xl:-mt-4 2xl:">
-                <div className="absolute bg-green-600 h-[100px] md:h-[190px] lg:h-[190px] xl:h-[190px] 2xl:h-[190px] w-[100px] md:w-[190px] lg:w-[190px] xl:w-[190px] 2xl:w-[190px] rotate-45 rounded-xl ml-0 md:ml-[90px] lg:ml-[0px] xl:ml-[0px] 2xl:ml-[0px] mt-0 md:-mt-[0px] lg:-mt-[0px] xl: 2xl:"></div>
+                <div className=" rotateDiv4 absolute bg-green-600 h-[100px] md:h-[190px] lg:h-[190px] xl:h-[190px] 2xl:h-[190px] w-[100px] md:w-[190px] lg:w-[190px] xl:w-[190px] 2xl:w-[190px] rotate-45 rounded-xl ml-0 md:ml-[90px] lg:ml-[0px] xl:ml-[0px] 2xl:ml-[0px] mt-0 md:-mt-[0px] lg:-mt-[0px] xl: 2xl:"></div>
                 <Image
                   src={envir3}
-                  className="h-[100px] md:h-[190px] lg:h-[190px] xl:h-[190px] 2xl:h-[190px] w-[100px] md:w-[190px] lg:w-[190px] xl:w-[190px] 2xl:w-[190px] rotate-45 rounded-xl ml-2 md:ml-[110px] lg:ml-[20px] xl:ml-[20px] 2xl:ml-[20px] mt-0 md:-mt-[0px] lg:-mt-[0px] xl: 2xl:"
+                  className="rotateImg4 h-[100px] md:h-[190px] lg:h-[190px] xl:h-[190px] 2xl:h-[190px] w-[100px] md:w-[190px] lg:w-[190px] xl:w-[190px] 2xl:w-[190px] rotate-45 rounded-xl ml-2 md:ml-[110px] lg:ml-[20px] xl:ml-[20px] 2xl:ml-[20px] mt-0 md:-mt-[0px] lg:-mt-[0px] xl: 2xl:"
                   alt="this is img"
                 />
               </div>
+
+
+
+
+
 
               <div className="ml-[70px] md:ml-0 lg:ml-[160px] xl:-ml-[140px] 2xl:-ml-[140px] -mt-6 md:-mt-[0px] lg:-mt-8 xl:-mt-[30px] 2xl:-mt-[30px]">
                 <div className="absolute bg-[#8d5afb] h-[80px] md:h-[225px] lg:h-[225px] xl: 2xl: w-[80px] md:w-[225px] lg:w-[225px] xl: 2xl: rotate-45 rounded-xl ml-[0px] md:ml-[240px] lg:ml-[0px] xl:ml-[0px] 2xl:ml-[0px] mt-[10px] md:mt-[20px] lg:mt-[20px] xl:mt-[20px] 2xl:mt-[20px]"></div>

@@ -17,6 +17,7 @@ import TrustedCharity from "@/components/ui/HomePage/TrustedCharity/TrustedChari
 import HelpingVirtue from "@/components/ui/HomePage/HelpingVirtue/HelpingVirtue";
 import Volunteer from "@/components/ui/HomePage/Volunteer/Volunteer";
 import History from "@/components/ui/HomePage/History/History";
+import ProgrammSection from "../program/_components/ProgrammSection";
 
 
 
@@ -75,18 +76,7 @@ const AboutUs = () => {
         <section className="sectionMargin">
           <h2 className="text-center text-3xl font-bold">উল্লেখযোগ্য কাজ</h2>
           <div className="w-44 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-7 mx-auto"></div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 text-center">
-            {programs.map((program, index) => (
-              <div
-                key={index}
-                className="bg-white p-5 rounded shadow-lg flex flex-col items-center transform transition-transform duration-300 hover:scale-105"
-              >
-                <div className="mb-4">{program.icon}</div>
-                <h3 className="text-xl font-semibold mb-2">{program.title}</h3>
-                <p className="text-gray-600">{program.description}</p>
-              </div>
-            ))}
-          </div>
+          <ProgrammSection />
         </section>
         <History />
         {/* Call to Action Section */}

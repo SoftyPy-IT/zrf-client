@@ -8,7 +8,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 const HelpingVirtue = () => {
   const [activeTab, setActiveTab] = useState("Mission");
 
-  const tabs = ["About Us", "Vision", "Mission", "Slogan"];
+  const tabs = ["About Us"];
 
   return (
     <>
@@ -37,6 +37,7 @@ const HelpingVirtue = () => {
               </button>
             ))}
           </div>
+
 
           <h2 className="text-3xl font-bold text-gray-800 mb-4 mt-5 ">
             Helping is The Great Virtue for Every Human’s
