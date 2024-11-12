@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import bannerImage from "../../../../assets/images/banner/banner.jpeg";
 
+
 const Banner = () => {
   return (
     <div className="relative h-80 md:h-[200px] lg:h-[250px] bg-gray-800 overflow-hidden">
@@ -17,9 +18,7 @@ const Banner = () => {
         <h1 className="text-4xl md:text-6xl font-bold text-center">
          Contact Us
         </h1>
-        {/* <p className="text-lg md:text-2xl mt-3 text-center">
-          Insights, stories, and updates from our team.
-        </p> */}
+        
       </div>
     </div>
   );

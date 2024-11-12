@@ -4,7 +4,7 @@ import "./Header.css";
 import Link from "next/link";
 import Image from "next/image";
 import { Box, Typography } from "@mui/material";
-import logo from "../../../assets/images/logo/logo2.svg";
+import logo from "../../../assets/images/logo/logo.png";
 import Container from "../Container";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useLanguage } from "@/provider/LanguageProvider";
@@ -39,7 +39,7 @@ const Header = () => {
 
 
   return (
-    <div className="sticky top-0 w-full bg-white shadow-md py-3 md:p-3 z-[999999]">
+    <div className="sticky top-0 w-full bg-white shadow-md  z-[999999]">
       <Container>
         <div className="flex justify-between items-center">
           <Box component={Link} href="/">
@@ -48,16 +48,17 @@ const Header = () => {
                 src={logo}
                 alt="logo"
                 className="rounded-full"
-                width={50}
-                height={50}
+                width={80}
+                height={80}
               />
               <Typography component="span" fontWeight={600} color="black">
                 <Box component="span" color="primary.main" fontWeight="bold">
-                  <b className="md:font-bold text-[12px] md:text-[16px]">{language === 'ENG' ? 'Ziaur Rahman' : 'জিয়াউর রহমান'}</b> <br /><b className="md:font-bold text-[12px] md:text-[16px]"> {language === 'ENG' ? 'Foundation' : ' ফাউন্ডেশন'} </b>
+                  <b className="md:font-bold text-[12px] md:text-[16px]">{language === 'ENG' ? 'Ziaur Rahman' : 'জিয়াউর রহমান'}
+                    </b> <br /><b className="md:font-bold text-[12px] md:text-[20px] "> {language === 'ENG' ? 'Foundation' : ' ফাউন্ডেশন'} </b>
                 </Box>
 
               </Typography>
-            </div>
+            </div>    
           </Box>
 
 
@@ -131,7 +132,7 @@ const Header = () => {
                       <Link href="/education">Climate Change</Link>
                     </li>
                     <li className="lg:border-none border-b lg:py-0 py-2">
-                      <Link href="/education">Health Services</Link>
+                      <Link href="/health-services">Health Services</Link>
                     </li>
 
                     <li>
