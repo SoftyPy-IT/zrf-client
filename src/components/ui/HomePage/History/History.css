@@ -144,18 +144,18 @@ body {
 
 
 
-.timeline-article .content-right {
+/* .timeline-article .content-right {
   width: 500px;
-  height: 258px;
+  height: 300px;
   left: 0px;
 
 }
 
 .contentRightImgWrap {
   width: 450px;
-  height: 200px;
+  height: 250px;
 
-}
+} */
 
 .contentRightImgWrap img {
   width: 100%;

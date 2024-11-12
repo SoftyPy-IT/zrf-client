@@ -54,11 +54,11 @@ const Header = () => {
               <Typography component="span" fontWeight={600} color="black">
                 <Box component="span" color="primary.main" fontWeight="bold">
                   <b className="md:font-bold text-[12px] md:text-[16px]">{language === 'ENG' ? 'Ziaur Rahman' : 'জিয়াউর রহমান'}
-                    </b> <br /><b className="md:font-bold text-[12px] md:text-[20px] "> {language === 'ENG' ? 'Foundation' : ' ফাউন্ডেশন'} </b>
+                  </b> <br /><b className="md:font-bold text-[12px] md:text-[20px] "> {language === 'ENG' ? 'Foundation' : ' ফাউন্ডেশন'} </b>
                 </Box>
 
               </Typography>
-            </div>    
+            </div>
           </Box>
 
 
@@ -118,6 +118,9 @@ const Header = () => {
                   </Link>
                   <ul className={`w-[240px] submenu  ${dropdown}`}>
                     <li className="lg:border-none border-b lg:py-0 py-2">
+                      <Link href="/education">Our Project</Link>
+                    </li>
+                    <li className="lg:border-none border-b lg:py-0 py-2">
                       <Link href="/education">ZRF Education Program</Link>
                     </li>
                     <li>
@@ -129,7 +132,7 @@ const Header = () => {
                       <Link href="/whatwedo/covid">Covid</Link>
                     </li>
                     <li className="lg:border-none border-b lg:py-0 py-2">
-                      <Link href="/education">Climate Change</Link>
+                      <Link href="/climate-change">Climate Change</Link>
                     </li>
                     <li className="lg:border-none border-b lg:py-0 py-2">
                       <Link href="/health-services">Health Services</Link>
@@ -143,9 +146,7 @@ const Header = () => {
                     </li>
 
 
-                    <li className="lg:border-none border-b lg:py-0 py-2">
-                      <Link href="/education">Our Project</Link>
-                    </li>
+
 
 
                   </ul>

@@ -61,7 +61,7 @@ const Rehabilitation = () => {
                                             <h2 className="text-xl ">{card.title.slice(0, 100)}</h2>
                                         </div>
                                         <p className="text-justify">{card.content.slice(0, 200)}</p>
-                                        <Button href={`/health-services/${card.id}`}>
+                                        <Button href={`/climate-change/${card.id}`}>
                                             Read More
                                         </Button>
                                     </div>

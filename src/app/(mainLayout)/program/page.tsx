@@ -14,44 +14,49 @@ import ProgramBanner from "./_components/ProgramBanner";
 const page = () => {
   const programs = [
     {
-      title: "সবার জন্য শিক্ষা",
-      description: "অসচ্ছল শিশুদের জন্য শিক্ষার সুযোগ প্রদান।",
+      title: "Education for All",
+      description:
+        "Providing educational opportunities for underprivileged children.",
       icon: <School fontSize="large" className="text-blue-500" />,
     },
     {
-      title: "স্বাস্থ্যসেবা উদ্যোগ",
-      description: "চিকিৎসা সহায়তা এবং স্বাস্থ্যসেবা সুবিধা প্রদান।",
+      title: "Healthcare Initiative",
+      description: "Providing medical assistance and healthcare services.",
       icon: <HealthAndSafety fontSize="large" className="text-green-500" />,
     },
     {
-      title: "স্বেচ্ছাসেবী কর্মসূচি",
-      description: "বিভিন্ন সামাজিক কাজে স্বেচ্ছাসেবীদের অন্তর্ভুক্ত করা।",
+      title: "Volunteer Programs",
+      description: "Engaging volunteers in various social initiatives.",
       icon: <VolunteerActivism fontSize="large" className="text-red-500" />,
     },
     {
-      title: "লাইব্রেরি পরিষেবা",
-      description: "গ্রামীণ এলাকায় লাইব্রেরি ও শিক্ষা সম্পদ তৈরি করা।",
+      title: "Library Services",
+      description:
+        "Establishing libraries and educational resources in rural areas",
       icon: <LocalLibrary fontSize="large" className="text-yellow-500" />,
     },
     {
-      title: "কৃষি উন্নয়ন প্রকল্প",
-      description: "কৃষকদের সহায়তা এবং আধুনিক কৃষি প্রযুক্তি সরবরাহ।",
-      icon: <Agriculture fontSize="large" className="text-green-700" />,
+      title: "Agricultural Development Project",
+      description:
+        "Supporting farmers and providing modern agricultural technology.",
+      icon: <Agriculture fontSize="large" className="text-green-500" />,
     },
     {
-      title: "পানি সংরক্ষণ উদ্যোগ",
-      description: "নিরাপদ পানি সরবরাহ এবং জল সংরক্ষণে উৎসাহ প্রদান।",
+      title: "Water Conservation Initiative ",
+      description:
+        "Ensuring safe water supply and promoting water conservation.",
       icon: <Water fontSize="large" className="text-blue-400" />,
     },
     {
-      title: "বন সংরক্ষণ কর্মসূচি",
-      description: "বন সংরক্ষণ এবং পরিবেশবান্ধব প্রকল্পে অংশগ্রহণ।",
-      icon: <Forest fontSize="large" className="text-green-900" />,
+      title: "Forest Conservation Program",
+      description:
+        "Preserving forests and participating in eco-friendly initiatives",
+      icon: <Forest fontSize="large" className="text-green-500" />,
     },
     {
-      title: "সহযোগিতা কর্মসূচি",
+      title: "Collaboration Program",
       description:
-        "সামাজিক উন্নয়নে বিভিন্ন প্রতিষ্ঠান ও সংগঠনের সাথে সহযোগিতা।",
+        "Partnering with various institutions and organizations for social development.",
       icon: <Handshake fontSize="large" className="text-purple-500" />,
     },
   ];

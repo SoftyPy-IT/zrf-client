@@ -1,8 +1,8 @@
 import Image from "next/image";
-import envir1 from "../../../../assets/images/environment/1-1.jpg";
+import envir1 from "../../../../assets/images/welcome/welcome2.jpeg";
 import envir2 from "../../../../assets/images/environment/3-1.jpg";
-import envir3 from "../../../../assets/images/environment/4-2.jpeg";
-import envir4 from "../../../../assets/images/environment/5.1.jpg";
+import envir3 from "../../../../assets/images/welcome/welcome.jpeg";
+import envir4 from "../../../../assets/images/welcome/welcome3.jpeg";
 import "./Welcome.css";
 import Container from "@/components/share/Container";
 import Link from "next/link";
@@ -10,7 +10,7 @@ import Link from "next/link";
 const Welcome = () => {
   return (
     <Container>
-      <div className=" py-10 lg:py-32 grid xl:grid-cols-2 2xl:grid-cols-2 mt-5 md:mt-14 lg:mt-0 mb-5 md:mb-8 lg:mb-0 text-center md:text-left lg:text-left">
+      <div className=" py-10 lg:pb-28 grid xl:grid-cols-2 2xl:grid-cols-2 mt-5 md:mt-14 lg:mt-0 mb-5 md:mb-8 lg:mb-0 text-center md:text-left lg:text-left">
         <div className="h-full xl:w-[500px] mx-0 md:mx-5 lg:mx-0 mb-4 md:mb-0 lg:mb-0 space-y-3">
           <h4 className="text-2xl md:text-3xl lg:text-3xl font-bold">
             Welcome To
@@ -24,12 +24,13 @@ const Welcome = () => {
 
           <div className="w-44 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-5 hidden lg:block md:block"></div>
           <p className="text-justify lg:my-10">
-            জিয়াউর রহমান ফাউন্ডেশন বাংলাদেশের স্বাধীনতার ঘোষক ও মহান
-            মুক্তিযোদ্ধা শহীদ রাষ্ট্রপতি জিয়াউর রহমানের স্মৃতির উদ্দেশ্যে
-            প্রতিষ্ঠিত একটি মানবিক ও কল্যাণমূলক সংস্থা। এই ফাউন্ডেশনটি সমাজের
-            উন্নয়ন, মুক্তিযুদ্ধের মূলমন্ত্র ও মানুষের কল্যাণে নিবেদিত। তাঁর
-            আদর্শে এবং দেশের প্রতি তাঁর অঙ্গীকারের প্রতি সম্মান জানিয়ে, এই
-            ফাউন্ডেশনটি জাতীয় উন্নয়নে অবদান রাখার জন্য কাজ করছে ।
+            Ziaur Rahman Foundation is a humanitarian and welfare organization
+            established in memory of the declarer of Bangladesh&apos;s
+            Independence and the great freedom fighter, Shaheed President Ziaur
+            Rahman. This foundation is dedicated to social development, the
+            principles of the Liberation War, and the welfare of the people. In
+            honor of his ideals and commitment to the nation, the foundation is
+            working towards contributing to national development.
           </p>
           <Link href="/about">
             <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-6 py-2 rounded-full text-white uppercase text-sm font-semibold mt-5">
@@ -39,21 +40,6 @@ const Welcome = () => {
         </div>
 
         <div className="xl:-mt-0">
-          {/* <div>
-            <Image
-              src={envir5}
-              className="absolute lg:h-auto lg:w-auto ml-0 md:ml-[140px] lg:-ml-[240px] xl:-ml-[300px] 2xl: mt-[20px] md:mt-[120px] lg:mt-[140px] xl:mt-[150px] 2xl:"
-              alt="this is img"
-            />
-          </div>
-          <div>
-            <Image
-              src={envir6}
-              className="absolute lg:h-auto lg:w-auto -mt-[30px] md:mt-[30px] lg:mt-[0px] xl:mt-24 2xl:mt-24 ml-[170px] md:ml-[400px] lg:-ml-[30px] xl:-ml-[40px] 2xl:-ml-[40px]"
-              alt="this is img"
-            />
-          </div> */}
-
           {/* -------------Main Images----------------- */}
           <div className="mt-[60px] md:mt-[0px] lg:mt-[0px] xl:mt-[180px] 2xl:mt-[180px] ml-[15px] md:-ml-[45px] lg:ml-[500px] xl:ml-[290px] 2xl:ml-[300px] flex flex-col gap-10">
             <div className="mt-[0px] md:mt-[40px] lg:mt-[100px] xl:-mt-[150px] 2xl:-mt-[180px] xl:-ml-[0px] ">
@@ -72,7 +58,7 @@ const Welcome = () => {
                 <div className="h-[10px] md:h-[230px] lg:h-[290px] xl:h-[290px] 2xl: w-[180px] md:w-[230px] lg:w-[290px] xl:w-[290px] 2xl: rounded-xl">
                   <Image
                     src={envir1}
-                    className="h-[100px] md:h-[230px] lg:h-[290px] xl:h-[290px] 2xl: w-[100px] md:w-[230px] lg:w-[290px] xl:w-[290px] 2xl:  rotate-45 rounded-xl -ml-[15px] md:ml-[380px] lg:-ml-[10px] xl:-ml-[25px] 2xl:-ml-[15px] mt-0 md:-mt-[0px] lg:-mt-[0px] xl: 2xl: "
+                    className=" h-[100px] md:h-[230px] lg:h-[290px] xl:h-[290px] 2xl: w-[100px] md:w-[230px] lg:w-[290px] xl:w-[290px] 2xl:  rotate-45 rounded-xl -ml-[15px] md:ml-[380px] lg:-ml-[10px] xl:-ml-[25px] 2xl:-ml-[15px] mt-0 md:-mt-[0px] lg:-mt-[0px] xl: 2xl: "
                     alt="this is img"
                   />
                 </div>
@@ -99,22 +85,6 @@ const Welcome = () => {
               </div>
             </div>
           </div>
-          {/* ------------------------------ */}
-
-          {/* <div>
-            <Image
-              src={envir7}
-              className="absolute lg:h-auto lg:w-auto ml-8 md:ml-[130px] lg:-ml-[0px] xl:-ml-[280px] -mt-8 md:-mt-[150px] lg:-mt-[150px]"
-              alt="this is img"
-            />
-          </div>
-          <div>
-            <Image
-              src={envir8}
-              className="absolute lg:h-auto lg:w-auto ml-[200px] md:ml-[520px] lg:ml-[110px] xl:ml-[110px] -mt-[60px] md:-mt-[100px] lg:-mt-[150px] xl:-mt-[150px] "
-              alt="this is img"
-            />
-          </div> */}
         </div>
       </div>
     </Container>
