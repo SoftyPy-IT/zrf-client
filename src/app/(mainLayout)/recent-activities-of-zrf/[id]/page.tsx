@@ -16,37 +16,37 @@ const projectData = [
     id: 1,
     image: news1,
     title:
-      "জিয়াউর রহমান ফাউন্ডেশন ও ডক্টরস এসোসিয়েশন অব বাংলাদেশ ড্যাব এর উদ্যোগে মাসব্যাপী বন্যাদুর্গত অঞ্চলে মেডিকেল ক্যাম্প পরিচালিত হচ্ছে।",
+      "A month-long medical camp is being conducted in flood-affected areas by the Ziaur Rahman Foundation and Doctors Association of Bangladesh (DAB).",
     description:
-      "জিয়াউর রহমান ফাউন্ডেশন ও ডক্টরস এসোসিয়েশন অব বাংলাদেশ ড্যাব এর উদ্যোগে ফেনী জেলায় সহস্রাধিক মানুষের চিকিৎসা সেবা দেবার জন্য মেডিকেল ক্যাম্প আয়োজন করা হয়েছে।আয়োজন প্রস্তুতি টিম ইতিমধ্যে ঔষধ সহ ফেনীতে পৌঁছে গেছে।",
-    date: "১৭ সেপ্টেম্বর,২০২৪",
+      "A medical camp has been organized by the Ziaur Rahman Foundation and Doctors Association of Bangladesh (DAB) in Feni district to provide healthcare services to over a thousand people. The preparation team has already reached Feni with medicines.",
+    date: "September 17, 2024",
   },
   {
     id: 2,
     image: news2,
     title:
-      "জিয়াউর রহমান ফাউন্ডেশন ও ডক্টরস এসোসিয়েশন অব বাংলাদেশ ড্যাব এর উদ্যোগে মাসব্যাপী বন্যাদুর্গত অঞ্চলে মেডিকেল ক্যাম্প পরিচালিত হচ্ছে।",
+      "A month-long medical camp is being conducted in flood-affected areas by the Ziaur Rahman Foundation and Doctors Association of Bangladesh (DAB).",
     description:
-      "বিএনপির ভারপ্রাপ্ত চেয়ারম্যান ও জিয়াউর রহমান ফাউন্ডেশন এর প্রেসিডেন্ট জনাব তারেক রহমান এর নির্দেশে বন্যাদুর্গত ফেনী জেলায় সদর হাসপাতালে জিয়াউর রহমান ফাউন্ডেশন ও ডক্টরস এসোসিয়েশন অব বাংলাদেশ (ড্যাব) এর উদ্যোগে  অসুস্থ রোগীদের জন্য চলমান ধারাবাহিক চিকিৎসা সেবা ও ঔষধ বিতরন কার্যক্রম এর অংশ হিসেবে আজকে চিকিৎসা সেবা প্রদান করেন স্বনামধন্য শিশু বিশেষজ্ঞ ঢাকা শিশু হাসপাতাল এর সহযোগী অধ্যাপক ডা সালাহউদ্দিন মাহমুদ,ডা: এম.আর. হাসান,ডা: মুননাসির জামান রেমো,ডা:ইমাম হাসান,ডা:সৌরভ,ডা: রাকিব",
-    date: "১০ সেপ্টেম্বর,২০২৪",
+      "Under the direction of BNP's Acting Chairman and President of the Ziaur Rahman Foundation, Mr. Tarique Rahman, ongoing medical services and medicine distribution were conducted at the district hospital in flood-affected Feni. Renowned pediatrician Dr. Salahuddin Mahmud, Associate Professor at Dhaka Children's Hospital, along with Dr. M.R. Hasan, Dr. Munnasir Zaman Remo, Dr. Imam Hasan, Dr. Saurav, and Dr. Rakib provided medical services today as part of the continuous healthcare initiative.",
+    date: "September 10, 2024",
   },
   {
     id: 3,
     image: news3,
     title:
-      "জিয়াউর রহমান ফাউন্ডেশন ও ডক্টরস এসোসিয়েশন অব বাংলাদেশ ড্যাব এর উদ্যোগে মাসব্যাপী বন্যাদুর্গত অঞ্চলে মেডিকেল ক্যাম্প পরিচালিত হচ্ছে।",
+      "A month-long medical camp is being conducted in flood-affected areas by the Ziaur Rahman Foundation and Doctors Association of Bangladesh (DAB).",
     description:
-      "আবদুল্লাহ আল মামুন,মাগুরা হোসেন শহীদ সোহরাওয়ার্দী কলেজ এর রাষ্ট্রবিজ্ঞান বিভাগের মাস্টার্স এর ছাত্র।বৈষম্যবিরোধী ছাত্রজনতার আন্দোলনে গত ৫ আগস্ট উত্তরা পূর্ব থানায় পুলিশের গুলিতে আহত হলে মুমূর্ষু অবস্থায় তাকে উত্তরা উইমেন্স মেডিকেল কলেজ হাসপাতাল এ ভর্তি করা হয়।মৃতপ্রায় মামুনকে বাচাতে তার ইমারজেন্সি ট্রাকিওস্টমি করা হয়। বিএনপি ভারপ্রাপ্ত চেয়ারম্যান ও জিয়াউর রহমান ফাউন্ডেশন এর প্রেসিডেন্ট জনাব তারেক রহমান এর নির্দেশে জিয়াউর রহমান ফাউন্ডেশন এর নির্বাহী পরিচালক অধ্যাপক ডা ফরহাদ হালিম ডোনার এর তত্বাবধানে, জেড আর এফ রিহ্যাবিলিটেশন কমিটির আহবায়ক ডা শাহ মুহম্মদ আমান উল্ল্যাহ ও সদস্য সচিব ডা পারভেজ রেজা কাকন এর সার্বিক সহযোগিতায় আই.সি,ইউ তে মৃত্যুর সাথে পাঞ্জা লড়া মামুনের চিকিৎসার সার্বিক ব্যবস্থাপনা ও দায়িত্ব গ্রহণ করেছে জিয়াউর রহমান ফাউন্ডেশন।জিয়াউর রহমান ফাউন্ডেশন এর কো অর্ডিনেটর ডা সাজিদ ইমতিয়াজ, ডা শাওন বিন রহমান,ডা রাফসান জানি আবির গনতন্ত্র পুনরুদ্ধার এর সম্মুখ যোদ্ধা  মামুনের চিকিৎসার সার্বিক তদারকি করছেন",
-    date: "৫ আগস্ট, ২০২৪",
+      "Abdullah Al Mamun, a Master's student in Political Science at Hossain Shaheed Suhrawardy College in Magura, was admitted in critical condition to Uttara Women's Medical College Hospital after being injured by police fire on August 5 in the anti-discrimination student movement. To save his life, an emergency tracheostomy was performed. Under the direction of BNP's Acting Chairman and President of the Ziaur Rahman Foundation, Mr. Tarique Rahman, and with the guidance of Executive Director Professor Dr. Farhad Halim Donar, the foundation took responsibility for Mamun's ICU treatment, coordinated by Dr. Sajid Imtiaz, Dr. Shawon Bin Rahman, and Dr. Rafsan Jani Abir.",
+    date: "August 5, 2024",
   },
   {
     id: 4,
     image: news4,
     title:
-      "জিয়াউর রহমান ফাউন্ডেশন ও ডক্টরস এসোসিয়েশন অব বাংলাদেশ ড্যাব এর উদ্যোগে মাসব্যাপী বন্যাদুর্গত অঞ্চলে মেডিকেল ক্যাম্প পরিচালিত হচ্ছে।",
+      "A month-long medical camp is being conducted in flood-affected areas by the Ziaur Rahman Foundation and Doctors Association of Bangladesh (DAB).",
     description:
-      "বিএনপির ভারপ্রাপ্ত চেয়ারম্যান জনাব তারেক রহমান এর নির্দেশে বাংলাদেশ জাতীয়তাবাদী দল বিএনপির বন্যার্ত অসহায় মানুষের পাশে দাড়ানোর ধারাবাহিকতায় বন্যাদুর্গত ফেনী জেলায় ত্রান সামগ্রী বিতরণ এর উদ্দেশ্যে বিএনপির চেয়ারপারসন এর উপদেষ্টা,জিয়াউর রহমান ফাউন্ডেশন এর নির্বাহী পরিচালক ও ড্যাবের প্রধান উপদেষ্টা অধ্যাপক ডা: ফরহাদ হালিম ডোনার এর নেতৃত্বে জিয়াউর রহমান ফাউন্ডেশন ও ডক্টরস এসোসিয়েশন অব বাংলাদেশ (ড্যাব) এর নেতৃবৃন্দ এর যাত্রা।",
-    date: "২৫ আগস্ট, ২০২৪",
+      "In line with BNP's Acting Chairman Mr. Tarique Rahman's instructions to stand beside flood victims, the Ziaur Rahman Foundation and DAB officials led by BNP Chairperson's advisor, Professor Dr. Farhad Halim Donar, Executive Director of the Ziaur Rahman Foundation, embarked on a journey to Feni for relief distribution to flood-affected areas.",
+    date: "August 25, 2024",
   },
 ];
 
@@ -55,19 +55,19 @@ const recentPost = [
     id: 1,
     date: "November 8, 2023",
     description:
-      "৭ নভেম্বর জাতীয় বিপ্লব ও সংহতি দিবস ক্রোড়পত্র জিয়াউর রহমান ফাউন্ডেশন (জেডআরএফ)",
+      "November 7, National Revolution and Solidarity Day Feature by Ziaur Rahman Foundation (ZRF)",
   },
   {
-    id: 1,
+    id: 2,
     date: "October 21, 2023",
     description:
-      "বৃহস্পতিবার, অক্টোবর ১৯, ২০২৩, জিয়াউর রহমান ফাউন্ডেশন -জেআরএফ এর ২৪তম প্রতিষ্ঠা বার্ষিকী উপলক্ষ্যে গুলশানস্থ বিএনপি চেয়ারপারসন কার্যালয়ে বিশেষ অনুষ্ঠান",
+      "Thursday, October 19, 2023, Special event at the BNP Chairperson's Office in Gulshan on the occasion of the 24th founding anniversary of the Ziaur Rahman Foundation (ZRF)",
   },
   {
-    id: 1,
+    id: 3,
     date: "October 18, 2023",
     description:
-      "জিয়াউর রহমান ফাউন্ডেশন’র ২৪তম প্রতিষ্ঠা বার্ষিকী উপলক্ষে শহিদ প্রেসিডেন্ট জিয়াউর রহমান’র সমাধিতে শ্রদ্ধা নিবেদন।",
+      "Tribute to the grave of Martyred President Ziaur Rahman on the occasion of the 24th founding anniversary of the Ziaur Rahman Foundation.",
   },
 ];
 

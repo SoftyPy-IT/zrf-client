@@ -13,34 +13,34 @@ const newsItems = [
   {
     id: 1,
     image: news1,
-    title: "স্কলারশিপ প্রকল্প",
+    title: "Scholarship Program",
     description:
-      "জিয়াউর রহমান ফাউন্ডেশন বাংলাদেশের স্বাধীনতার ঘোষক ও মহান মুক্তিযোদ্ধা শহীদ রাষ্ট্রপতি জিয়াউর রহমানের স্মৃতির উদ্দেশ্যে প্রতিষ্ঠিত একটি মানবিক ও কল্যাণমূলক সংস্থা।",
-    date: "১০ এপ্রিল ২০২৪",
+      "Ziaur Rahman Foundation is a humanitarian and welfare organization established in memory of the founding father of Bangladesh and the great freedom fighter, the late President Ziaur Rahman.",
+    date: "April 10, 2024",
   },
   {
     id: 2,
     image: news2,
-    title: "শহীদ জিয়াউর রহমান শিশু হাসপাতাল",
+    title: "Shaheed Ziaur Rahman Children's Hospital",
     description:
-      "জিয়াউর রহমান ফাউন্ডেশন বাংলাদেশের স্বাধীনতার ঘোষক ও মহান মুক্তিযোদ্ধা শহীদ রাষ্ট্রপতি জিয়াউর রহমানের স্মৃতির উদ্দেশ্যে প্রতিষ্ঠিত একটি মানবিক ও কল্যাণমূলক সংস্থা।",
-    date: "১০ এপ্রিল ২০২৪",
+      "Ziaur Rahman Foundation is a humanitarian and welfare organization established in memory of the founding father of Bangladesh and the great freedom fighter, the late President Ziaur Rahman.",
+    date: "April 10, 2024",
   },
   {
     id: 3,
     image: news3,
-    title: "আরেকটি খবরের আইটেম",
+    title: "Another News Item",
     description:
-      "জিয়াউর রহমান ফাউন্ডেশন বাংলাদেশের স্বাধীনতার ঘোষক ও মহান মুক্তিযোদ্ধা শহীদ রাষ্ট্রপতি জিয়াউর রহমানের স্মৃতির উদ্দেশ্যে প্রতিষ্ঠিত একটি মানবিক ও কল্যাণমূলক সংস্থা।",
-    date: "১০ এপ্রিল ২০২৪",
+      "Ziaur Rahman Foundation is a humanitarian and welfare organization established in memory of the founding father of Bangladesh and the great freedom fighter, the late President Ziaur Rahman.",
+    date: "April 10, 2024",
   },
   {
     id: 4,
     image: news4,
-    title: "আরেকটি খবরের আইটেম",
+    title: "Another News Item",
     description:
-      "জিয়াউর রহমান ফাউন্ডেশন বাংলাদেশের স্বাধীনতার ঘোষক ও মহান মুক্তিযোদ্ধা শহীদ রাষ্ট্রপতি জিয়াউর রহমানের স্মৃতির উদ্দেশ্যে প্রতিষ্ঠিত একটি মানবিক ও কল্যাণমূলক সংস্থা।",
-    date: "১০ এপ্রিল ২০২৪",
+      "Ziaur Rahman Foundation is a humanitarian and welfare organization established in memory of the founding father of Bangladesh and the great freedom fighter, the late President Ziaur Rahman.",
+    date: "April 10, 2024",
   },
 ];
 
@@ -66,7 +66,7 @@ const page = () => {
                   <p className="text-gray-600">{data.date}</p>
                   <Link href="/news/id">
                     <button className="hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-1 hover:text-white rounded-full uppercase text-xs border">
-                      আরো পড়ুন <EastIcon fontSize="small" />
+                      Read More <EastIcon fontSize="small" />
                     </button>
                   </Link>
                 </div>

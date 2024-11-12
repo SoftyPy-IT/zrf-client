@@ -47,19 +47,19 @@ const recentPost = [
     id: 1,
     date: "November 8, 2023",
     description:
-      "৭ নভেম্বর জাতীয় বিপ্লব ও সংহতি দিবস ক্রোড়পত্র জিয়াউর রহমান ফাউন্ডেশন (জেডআরএফ)",
+      "November 7, National Revolution and Solidarity Day Feature by Ziaur Rahman Foundation (ZRF)",
   },
   {
-    id: 1,
+    id: 2,
     date: "October 21, 2023",
     description:
-      "বৃহস্পতিবার, অক্টোবর ১৯, ২০২৩, জিয়াউর রহমান ফাউন্ডেশন -জেআরএফ এর ২৪তম প্রতিষ্ঠা বার্ষিকী উপলক্ষ্যে গুলশানস্থ বিএনপি চেয়ারপারসন কার্যালয়ে বিশেষ অনুষ্ঠান",
+      "Thursday, October 19, 2023, Special event at the BNP Chairperson's Office in Gulshan on the occasion of the 24th founding anniversary of the Ziaur Rahman Foundation (ZRF)",
   },
   {
-    id: 1,
+    id: 3,
     date: "October 18, 2023",
     description:
-      "জিয়াউর রহমান ফাউন্ডেশন’র ২৪তম প্রতিষ্ঠা বার্ষিকী উপলক্ষে শহিদ প্রেসিডেন্ট জিয়াউর রহমান’র সমাধিতে শ্রদ্ধা নিবেদন।",
+      "Tribute to the grave of Martyred President Ziaur Rahman on the occasion of the 24th founding anniversary of the Ziaur Rahman Foundation.",
   },
 ];
 

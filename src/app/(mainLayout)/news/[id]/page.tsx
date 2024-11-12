@@ -28,22 +28,23 @@ const page = () => {
     {
       id: 1,
       date: "June 30, 2024",
-      description: "তারেক রহমান, বাংলাদেশের অন্যতম রাজনৈতিক ব্যক্তিত্ব ।",
+      description: "Tarique Rahman, one of Bangladesh's prominent political figures.",
       img: media2,
     },
     {
       id: 2,
       date: "June 30, 2024",
-      description: "তারেক রহমান, বাংলাদেশের অন্যতম রাজনৈতিক ব্যক্তিত্ব ।",
+      description: "Tarique Rahman, one of Bangladesh's prominent political figures.",
       img: media3,
     },
     {
       id: 3,
       date: "June 30, 2024",
-      description: "তারেক রহমান, বাংলাদেশের অন্যতম রাজনৈতিক ব্যক্তিত্ব ।",
+      description: "Tarique Rahman, one of Bangladesh's prominent political figures.",
       img: media4,
     },
   ];
+  
 
   return (
     <div>
