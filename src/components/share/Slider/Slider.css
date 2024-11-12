@@ -1,4 +1,4 @@
-/* .swiper-button-prev,
+.swiper-button-prev,
 .swiper-button-next {
   width: 40px;
   height: 40px;
@@ -59,7 +59,7 @@ Slider.css .slider-container {
 
 .swiper-slide-active .overlay {
   opacity: 0.5;
-} */
+}
 
 
 .swiper-slide .content {
