@@ -1,38 +1,28 @@
 import Container from "@/components/share/Container";
 import "./Impact.css";
 import programm from "../../../../../src/assets/images/program/project4.png";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 import Image from "next/image";
 import { Button } from "@mui/material";
-import {
-  VolunteerActivism,
-  HealthAndSafety,
-  AccountBalance,
-} from "@mui/icons-material";
 import React from "react";
 
 const ImpactSection = () => {
   const impactData = [
     {
       id: 1,
-      title: "Give Right Place",
-      description:
-        "The opportunities around you to shape you, sharpen your gifts, and prepare you to do.",
-      icon: VolunteerActivism,
+      title: "Integrated and Pro-People Development Initiatives",
+      icon: CheckCircleIcon,
     },
     {
       id: 2,
-      title: "Save Money & Health",
-      description:
-        "Giving up unhealthy habits such as smoking, drinking sugary soft drinks, or drinking alcohol.",
-      icon: HealthAndSafety,
+      title: "Harnessing Natural and Human Resources",
+      icon: CheckCircleIcon,
     },
     {
       id: 3,
-      title: "Organisation & Programs",
-      description:
-        "A collection of organizational resources that are geared to accomplish a goals.",
-      icon: AccountBalance,
+      title: "Empowering Human Resources for Self-Reliance",
+      icon: CheckCircleIcon,
     },
   ];
 
@@ -48,11 +38,8 @@ const ImpactSection = () => {
             <div className="space-y-5">
               {impactData.map((data) => (
                 <div key={data.id} className="flex items-center gap-x-3">
-                  {React.createElement(data.icon, { sx: { fontSize: "50px" } })}
-                  <div className="space-y-2">
-                    <h3>{data.title}</h3>
-                    <p>{data.description}</p>
-                  </div>
+                  {React.createElement(data.icon, { sx: { fontSize: "30px" } })}
+                  <h3>{data.title}</h3>
                 </div>
               ))}
             </div>

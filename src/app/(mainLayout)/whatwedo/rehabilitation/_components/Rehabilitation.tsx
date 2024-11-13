@@ -6,34 +6,35 @@ import Container from "@/components/share/Container";
 import Banner from "./Banner";
 import { Button } from "@mui/material";
 
-// pages/index.js
+
 const Rehabilitation = () => {
-  // Sample data for the cards
+  
   const cardData = [
     {
       id: 1,
-      title: "বন্যাদুর্গতদের মাঝে চিকিৎসা সেবা ও ঔষধ বিতরন কার্যক্রম",
+      title: "Medical Services and Medicine Distribution Program for Flood Victims",
       content:
-        "১০ সেপ্টেম্বর,২০২৪, বিএনপির ভারপ্রাপ্ত চেয়ারম্যান ও জিয়াউর রহমান ফাউন্ডেশন এর প্রেসিডেন্ট জনাব তারেক রহমান এর নির্দেশে বন্যাদুর্গত ফেনী জেলায় সদর হাসপাতালে জিয়াউর রহমান ফাউন্ডেশন ও ডক্টরস এসোসিয়েশন অব বাংলাদেশ (ড্যাব) এর উদ্যোগে  অসুস্থ রোগীদের জন্য চলমান ধারাবাহিক চিকিৎসা সেবা ও ঔষধ বিতরন কার্যক্রম এর অংশ হিসেবে আজকে চিকিৎসা সেবা প্রদান করেন স্বনামধন্য  শিশু বিশেষজ্ঞ ঢাকা শিশু হাসপাতাল এর সহযোগী অধ্যাপক ডা সালাহউদ্দিন মাহমুদ,ডা: এম.আর. হাসান,ডা: মুননাসির জামান রেমো,ডা:ইমাম হাসান,ডা:সৌরভ,ডা: রাকিব",
+        "On September 10, 2024, under the direction of BNP’s Acting Chairman and President of Ziaur Rahman Foundation, Mr. Tarique Rahman, the Ziaur Rahman Foundation and the Doctors' Association of Bangladesh (DAB) organized a continuous medical service and medicine distribution program for patients at the Sadar Hospital in flood-affected Feni district. Today, prominent pediatricians including Associate Professor Dr. Salahuddin Mahmud from Dhaka Shishu Hospital, Dr. M.R. Hasan, Dr. Munnasir Zaman Remo, Dr. Imam Hasan, Dr. Saurabh, and Dr. Rakib provided medical services as part of this initiative.",
       img: img1,
     },
     {
       id: 2,
       title:
-        "বৈষম্যবিরোধী ছাত্রজনতার আন্দোলনে আহত মামুনের চিকিৎসা সেবা কার্যক্রমে জেড আর এফ।",
+        "ZRF in Medical Services for Mamun, Injured in Anti-Discrimination Student Movement",
       content:
-        "আবদুল্লাহ আল মামুন,মাগুরা হোসেন শহীদ সোহরাওয়ার্দী কলেজ এর রাষ্ট্রবিজ্ঞান বিভাগের মাস্টার্স এর ছাত্র। বৈষম্যবিরোধী ছাত্রজনতার আন্দোলনে গত ৫ আগস্ট উত্তরা পূর্ব থানায় পুলিশের গুলিতে আহত হলে মুমূর্ষু অবস্থায় তাকে উত্তরা উইমেন্স মেডিকেল কলেজ হাসপাতাল এ ভর্তি করা হয়। মৃতপ্রায় মামুনকে বাচাতে তার ইমারজেন্সি ট্রাকিওস্টমি করা হয়। বিএনপি ভারপ্রাপ্ত চেয়ারম্যান ও জিয়াউর রহমান ফাউন্ডেশন এর প্রেসিডেন্ট জনাব তারেক রহমান এর নির্দেশে জিয়াউর রহমান ফাউন্ডেশন এর নির্বাহী পরিচালক অধ্যাপক ডা ফরহাদ হালিম ডোনার এর তত্বাবধানে, জেড আর এফ রিহ্যাবিলিটেশন কমিটির আহবায়ক ডা শাহ মুহম্মদ আমান উল্ল্যাহ ও সদস্য সচিব ডা পারভেজ রেজা কাকন এর সার্বিক সহযোগিতায় আই.সি,ইউ তে মৃত্যুর সাথে পাঞ্জা লড়া মামুনের চিকিৎসার সার্বিক ব্যবস্থাপনা ও দায়িত্ব গ্রহণ করেছে জিয়াউর রহমান ফাউন্ডেশন। জিয়াউর রহমান ফাউন্ডেশন এর কো অর্ডিনেটর ডা সাজিদ ইমতিয়াজ, ডা শাওন বিন রহমান,ডা রাফসান জানি আবির গনতন্ত্র পুনরুদ্ধার এর সম্মুখ যোদ্ধা  মামুনের চিকিৎসার সার্বিক তদারকি করছেন।",
+        "Abdullah Al Mamun, a master's student in the Department of Political Science at Hossain Shaheed Suhrawardy College in Magura, was critically injured in police firing on August 5 during an anti-discrimination student movement in Uttara East Police Station. Admitted to Uttara Women's Medical College Hospital in critical condition, an emergency tracheostomy was performed to save his life. Under the direction of BNP Acting Chairman and ZRF President Mr. Tarique Rahman, Ziaur Rahman Foundation, led by Executive Director Professor Dr. Farhad Halim Donar, with the support of the ZRF Rehabilitation Committee, took over the comprehensive management of Mamun's treatment in the ICU. ZRF Coordinators Dr. Sajid Imtiaz, Dr. Shawon Bin Rahman, and Dr. Rafsan Jani Abir are overseeing the care of Mamun, a frontline fighter for the restoration of democracy.",
       img: img2,
     },
     {
       id: 3,
       title:
-        "বৈষম্যবিরোধী ছাত্রজনতার আন্দোলনে আহত যুবদল নেতা মোঃআমিনুল হকের চিকিৎসা সেবা কার্যক্রমে জেড আর এফ।",
+        "ZRF’s Medical Services for Youth Leader Aminul Haque Injured in Anti-Discrimination Movement",
       content:
-        "বৈষম্যবিরোধী ছাত্রজনতার  আন্দোলনে গত ৪ আগস্ট গাইবান্ধায় যুবদল নেতা মোঃআমিনুল হক গাইবান্ধা পুলিশ সুপার কার্যালয়ের সামনে গুলিবিদ্ধ হন। বিএনপি ভারপ্রাপ্ত চেয়ারম্যান ও জিয়াউর রহমান ফাউন্ডেশন এর প্রেসিডেন্ট জনাব তারেক রহমান এর নির্দেশে জিয়াউর রহমান ফাউন্ডেশন এর নির্বাহী পরিচালক অধ্যাপক ডা ফরহাদ হালিম ডোনার এর তত্বাবধানে, জেড আর এফ রিহ্যাবিলিটেশন কমিটির আহবায়ক ডা শাহ মুহম্মদ আমান উল্ল্যাহ ও সদস্য সচিব ডা পারভেজ রেজা কাকন এর ব্যবস্থাপনায় আমিনুল হকের চিকিৎসার সার্বিক দায়িত্ব গ্রহণ করেছে জিয়াউর রহমান ফাউন্ডেশন।জিয়াউর রহমান ফাউন্ডেশন এর কো অর্ডিনেটর ডা সাজিদ ইমতিয়াজ এর তত্বাবধানে আজকে আমিনুল হকের শরীর থেকে গুলি অপসারন করা হয়",
+        "During the anti-discrimination student movement on August 4 in Gaibandha, Youth Leader Aminul Haque was shot in front of the Gaibandha Superintendent of Police’s office. Following the directives of BNP Acting Chairman and ZRF President Mr. Tarique Rahman, Ziaur Rahman Foundation, led by Executive Director Professor Dr. Farhad Halim Donar, and supported by the ZRF Rehabilitation Committee, took full responsibility for Aminul Haque's treatment. Under the supervision of ZRF Coordinator Dr. Sajid Imtiaz, a bullet was successfully removed from Aminul Haque's body today.",
       img: img3,
     },
   ];
+  
 
   return (
     <>

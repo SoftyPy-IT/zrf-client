@@ -1,15 +1,15 @@
 import React from "react";
-import "./CommitteeBanner.css";
+import "./PresidentBanner.css";
 import Container from "@/components/share/Container";
 
 const NewsBanner = () => {
   return (
-    <div className="committee-banner">
+    <div className="president-banner">
       <Container>
         <div className="content">
           <div className="text-center">
             <h1 className="lg:text-5xl text-3xl font-bold uppercase">
-              Committee Members
+              Message from the Vice President
             </h1>
             <p>Ziaur Rahman Foundation</p>
           </div>
