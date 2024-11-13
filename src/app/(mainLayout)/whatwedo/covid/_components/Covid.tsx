@@ -1,4 +1,3 @@
-// pages/index.js
 import Image from "next/image";
 import img1 from "../../../../../assets/images/covid/c1.jpg";
 import img2 from "../../../../../assets/images/covid/2.jpg";
@@ -7,32 +6,32 @@ import Container from "@/components/share/Container";
 import Banner from "./Banner";
 import { Button } from "@mui/material";
 
-// pages/index.js
+
 const Covid = () => {
-  // Sample data for the cards
   const cardData = [
     {
       id: 1,
-      title: "চিকিৎসকদেরকে পিপিই দিলো জেডআরএফ ও ড্যাব",
+      title: "ZRF and DAB Provided PPE to Doctors",
       content:
-        "বিশ্বব্যাপী মহামারী করোনাভাইরাসের কারণে সৃষ্ট সঙ্কট থেকে বাংলাদেশের মানুষ যাতে দ্রুত বেরিয়ে আসতে পারে সে জন্য নানামুখী উদ্যোগ গ্রহণ করেছে জিয়াউর রহমান ফাউন্ডেশন (জেডআরএফ) ও ডক্টরস অ্যাসোসিয়েশন অব বাংলাদেশ (ড্যাব)। ",
+        "To help Bangladesh recover quickly from the global COVID-19 crisis, the Ziaur Rahman Foundation (ZRF) and the Doctors Association of Bangladesh (DAB) have taken various initiatives.",
       img: img1,
     },
     {
       id: 2,
-      title: "করোনা হেল্প সেল",
+      title: "COVID-19 Help Cell",
       content:
-        "বিএনপির ভারপ্রাপ্ত চেয়ারম্যান দেশনায়ক জনাব তারেক রহমানের নির্দেশনায় বাংলাদেশ জাতীয়তাবাদী দল বিএনপির উদ্যোগে,জিয়াউর রহমান ফাউন্ডেশন ও ডক্টরস এসোসিয়েশন অব বাংলাদেশ (ড্যাব) এর সহযোগিতায় সারা দেশব্যাপী করোনা হেল্প সেন্টার খোলার ধারাবাহিকতায় ২৩ শে জুলাই ২০২১ তারিখ পটুয়াখালী জেলা বি.এন.পি এর করোনা হেল্প সেন্টার এর উদ্বোধন অনুষ্ঠিত হয়৷ উদ্বোধন করেন জেলা বি.এন.পি এর আহবায়ক আলহাজ্জ্ব আবদুর রশিদ চুন্নু মিয়া। ",
+        "Following the directive of BNP Acting Chairman Mr. Tarique Rahman, the Bangladesh Nationalist Party (BNP), in collaboration with the Ziaur Rahman Foundation and the Doctors Association of Bangladesh (DAB), established COVID-19 help centers across the country. On July 23, 2021, the COVID-19 Help Center in Patuakhali District BNP was inaugurated, with BNP District Convenor Alhaj Abdur Rashid Chunnu Mia presiding over the event.",
       img: img2,
     },
     {
       id: 3,
-      title: "পি পি আই বিতরণ কার্যক্রম",
+      title: "PPE Distribution Program",
       content:
-        "দেশনায়ক জনাব তারেক রহমান এর নির্দেশে জিয়াউর রহমান ফাউন্ডেশনের পি পি আই বিতরণ কার্যক্রম কে গতিশীল রাখতে পর্যাপ্ত সুরক্ষা সামগ্রী প্রদানের করা হয়। রাজধানীর গণ স্বাস্থ্য নগর হাসপাতালে সুরক্ষা সামগ্রী প্রদানের করা হয়। বিএনপির সিনিয়র যুগ্ম মহাসচিব রুহুল কবির রিজভী প্রধান অতিথি হিসেবে উপস্থিত থেকে এই কর্মসূচীর আনুষ্ঠানিক উদ্বোধন করেন। ",
+        "Following the instructions of Mr. Tarique Rahman, the Ziaur Rahman Foundation provided sufficient protective equipment to accelerate the PPE distribution program. Protective equipment was provided at Gonoshasthaya Nagar Hospital in the capital. BNP Senior Joint Secretary General Ruhul Kabir Rizvi attended as the chief guest and formally inaugurated the program.",
       img: img3,
     },
   ];
+  
 
   return (
     <>
