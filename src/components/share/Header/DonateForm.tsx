@@ -83,6 +83,7 @@ const DonateForm = () => {
     "&:hover": {
       backgroundImage: "linear-gradient(to right, #1E5D36, #C6A90B)",
     },
+    
   };
 
   return (

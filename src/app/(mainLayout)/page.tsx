@@ -16,7 +16,7 @@ const Home = () => {
     <div>
       <Slider />
       <Featured />
-      <Welcome />
+      {/* <Welcome /> */}
       <Statistics />
       <Impact />
       <RecentActivitiesOfZRF />

@@ -42,7 +42,7 @@ const ImpactSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-10 gap-16 items-center lg:mt-10 mt-20">
           <div className="space-y-5 text-white">
             <h1 className="lg:text-4xl md:text-3xl text-2xl font-bold">
-              We’re So Much Trusted Ziaur Rahman Foundations.
+              We’re So Much Trusted Ziaur Rahman Foundation.
             </h1>
 
             <div className="space-y-5">

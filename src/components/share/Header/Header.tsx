@@ -42,7 +42,7 @@ const Header = () => {
       <Container>
         <div className="flex justify-between items-center py-1 md:py-0">
           <Box component={Link} href="/">
-            <div className="flex items-center gap-2 md:gap-3">
+            <div className="flex items-center md:gap-3">
               <Image
                 src={logo}
                 alt="logo"

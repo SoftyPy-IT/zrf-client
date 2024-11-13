@@ -6,7 +6,7 @@ import Container from "@/components/share/Container";
 import banner from "../../../../assets/images/initiatives/banner.jpeg";
 import image1 from "../../../../../src/assets/images/projects/image1.jpg";
 import image2 from "../../../../../src/assets/images/projects/image2.jpg";
-import image3 from "../../../../../src/assets/images/projects/image3.jpg";
+import image3 from "../../../../../src/assets/images/projects/komol.jpeg";
 import image4 from "../../../../../src/assets/images/projects/image4.jpg";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -24,9 +24,9 @@ const cardsData = [
   {
     id: 2,
     image: image2,
-    title: "Shahid Ziaur Rahman Shishu Hospital",
+    title: "Shaheed Ziaur Rahman Shishu Hospital",
     description:
-      "Shahid Ziaur Rahman Shishu Hospital is committed to providing comprehensive healthcare services to children with the goal of improving pediatric health outcomes. The hospital focuses on offering better medical care and modern facilities, aiming to reduce child morbidity and mortality rates. It is equipped with outpatient services for consultations and treatment, ensuring easy access for families. Additionally, the hospital prioritizes the development of skilled healthcare professionals by organizing specialized training programs for nurses and paramedics.",
+      "Shaheed Ziaur Rahman Shishu Hospital is committed to providing comprehensive healthcare services to children with the goal of improving pediatric health outcomes. The hospital focuses on offering better medical care and modern facilities, aiming to reduce child morbidity and mortality rates. It is equipped with outpatient services for consultations and treatment, ensuring easy access for families. Additionally, the hospital prioritizes the development of skilled healthcare professionals by organizing specialized training programs for nurses and paramedics.",
   },
   {
     id: 3,
@@ -43,6 +43,7 @@ const cardsData = [
       "Bangladesh with its vast natural beauty is a land of green panorama. Apart from exerting beauty trees have multiple benefits as it prevents deforestation, generate income for the owner and protects environment. Ziaur Rahman Foundation undertook program to help people reap the multiple benefits of the mother nature.",
   },
 ];
+
 
 const OurProjects = () => {
   const [slidesToShow, setSlidesToShow] = useState(3);
@@ -69,11 +70,11 @@ const OurProjects = () => {
 
   const settings = {
     infinite: true,
-    speed: 5000,
+    speed: 8000,
     slidesToShow,
     slidesToScroll: slidesToShow,
     autoplay: true,
-    autoplaySpeed: 5000,
+    autoplaySpeed: 8000,
     arrows: false,
     Autoplay: true,
   };
@@ -89,7 +90,7 @@ const OurProjects = () => {
         <div className="absolute inset-0 bg-black bg-opacity-60 z-10 h-[400px] lg:h-full xl:h-[450px]"></div>
         <Container className="px-0">
           <div className="relative z-20 flex items-center justify-center">
-            <div className="w-full -mt-[330px] ">
+            <div className="w-full  md:-mt-[300px] -mt-[350px]  xl:-mt-[330px] ">
               <div className="text-white">
                 <h1 className="text-4xl uppercase text-center font-bold">
                   Our Projects
@@ -97,7 +98,7 @@ const OurProjects = () => {
                 <div className="w-28 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-5 mx-auto"></div>
 
                 <p className="lg:text-center md:text-center text-justify lg:w-[800px] mx-auto mb-10 lg:px-0 md:px-0 px-5 text-[16px]">
-                  Ziaur Rahman Foundations is committed to empowering
+                  Ziaur Rahman Foundation is committed to empowering
                   communities through impactful initiatives, sustainable
                   solutions, and strategic support. We focus on fostering
                   growth, improving lives, and creating lasting change across
@@ -111,9 +112,7 @@ const OurProjects = () => {
                     className="justify-center items-center z-10 p-5"
                   >
                     <div className="relative h-[530px] bg-white shadow-lg overflow-hidden group hover:scale-105 transition-transform duration-300 animate-fadeIn rounded-md">
-                      <div className="absolute px-6 py-2 font-bold z-30 top-0 right-0 bg-[#E3C80D] text-white ">
-                        <b>Education </b>
-                      </div>
+
 
                       {/* Image as Background with Bottom-to-Center Shadow Overlay */}
                       <div
@@ -125,7 +124,7 @@ const OurProjects = () => {
 
                         {/* Content Section */}
                         <div className="absolute bottom-0 p-5 text-white z-20 transition-colors duration-300">
-                         
+
                           <h2 className="text-2xl hover:underline font-bold ">
                             {card.title.slice(0, 70)}
                           </h2>
