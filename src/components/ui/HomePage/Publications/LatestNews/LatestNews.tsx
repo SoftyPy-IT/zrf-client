@@ -72,8 +72,8 @@ const LatestNews = () => {
               key={data.id}
               className="border rounded items-center p-3 shadow-md"
             >
-              <div className="flex flex-col md:flex-row items-center gap-3">
-                <div className="order-4 md:order-0">
+              <div className="flex items-center gap-3">
+                <div>
                   <h4 className="text-sm font-semibold uppercase">
                     {data.title.length > 60 ? (
                       <>{data.title.slice(0, 60)}...</>
@@ -98,7 +98,7 @@ const LatestNews = () => {
                 <Image
                   src={data.image}
                   alt={data.title}
-                  className="md:w-28 md:h-20 object-cover rounded"
+                  className="w-28 h-20 object-cover rounded"
                 />
               </div>
             </div>
