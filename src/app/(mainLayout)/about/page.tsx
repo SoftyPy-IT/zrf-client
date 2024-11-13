@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import Image from "next/image";
 import React from "react";
 import img from "../../../../src/assets/images/tarek-rahman/tarek.jpg";
@@ -67,6 +68,7 @@ const AboutUs = () => {
     },
   ];
 
+
   return (
     <div>
       <AboutBanner />
@@ -74,20 +76,19 @@ const AboutUs = () => {
         <HelpingVirtue />
         {/* <Volunteer/> */}
         <section className="sectionMargin">
-          <h2 className="text-center text-3xl font-bold">উল্লেখযোগ্য কাজ</h2>
+          <h2 className="text-center text-3xl font-bold">Remarkable Work</h2>
           <div className="w-44 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-7 mx-auto"></div>
           <ProgrammSection />
         </section>
         <History />
         {/* Call to Action Section */}
         <section className="py-16 my-16 bg-green-600 text-white text-center">
-          <h2 className="text-3xl font-bold">আমাদের সাথে যোগ দিন</h2>
+          <h2 className="text-3xl font-bold uppercase">Join Us </h2>
           <p className="mt-4">
-            আপনার সহায়তা অনেক মানুষের জীবনে ইতিবাচক পরিবর্তন আনতে পারে। জাতীয়
-            উন্নয়নে আমাদের ফাউন্ডেশনের অংশ হোন।
+            Your support can bring positive change to the lives of many people. Be a part of our foundation's efforts in national development.
           </p>
           <button className="mt-5 px-6 py-2 bg-yellow-600 font-semibold rounded">
-            যুক্ত হোন
+          Join Now
           </button>
         </section>
       </Container>

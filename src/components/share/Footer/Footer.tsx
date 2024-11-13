@@ -76,12 +76,13 @@ const Footer = () => {
 
               <div className="w-full md:w-1/4 mb-8 md:mb-0 text-center">
                 <h4 className="font-semibold">Our Address </h4>
-                <p>28/1 VIP Road, Naya Paltan, Dhaka, Bangladesh</p>
+                <p>House#4, Road#7, Niketon Gate #2, Gulshan-1, Dhaka-1212, Bangladesh.</p>
               </div>
               <div className="w-full md:w-1/4 mb-8 md:mb-0 text-center">
 
                 <ul className="space-y-3 ">
-                  <li><Link href='/contact'>Contact Us</Link> </li>
+
+                  <li><Button component={Link} href='/contact' sx={buttonStyle}>Contact Us </Button> </li>
                   <li><Button onClick={handleModalOpen} sx={buttonStyle}>Join Us </Button> </li>
 
                 </ul>

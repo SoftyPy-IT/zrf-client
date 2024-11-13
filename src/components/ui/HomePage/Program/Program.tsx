@@ -28,7 +28,7 @@ const OurProgramSection = () => {
       icon: <ThunderstormIcon fontSize="large" className="text-blue-500" />,
     },
     {
-      title: "Conserve Water Carefully",
+      title: "Komol Water",
       description:
         "Conserving water means creating awareness about mindful water usage.",
       icon: <WaterIcon fontSize="large" className="text-blue-500" />,

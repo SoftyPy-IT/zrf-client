@@ -15,7 +15,7 @@ const Publication = () => {
   return (
     <Container>
 
-      <div className="lg:flex justify-center mt-44 md:my-40">
+      <div className="xl:flex justify-center xl:space-y-0 space-y-5  mt-44 md:my-40 ">
         <PublicationSlider />
         <LatestNews />
       </div>
