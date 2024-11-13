@@ -30,20 +30,15 @@ Slider.css .slider-container {
 
 .slide-image {
   transition: transform 20s ease-in-out;
-
 }
-
 
 .swiper-slide-active .slide-image {
   transform: scale(2.05);
-
 }
-
 
 .swiper-slide {
   opacity: 0;
   transition: opacity 6s ease-in-out;
-
 }
 
 .swiper-slide-next,
@@ -61,7 +56,6 @@ Slider.css .slider-container {
   opacity: 0.5;
 }
 
-
 .swiper-slide .content {
   z-index: 10;
 }
@@ -72,7 +66,7 @@ Slider.css .slider-container {
   position: absolute;
   z-index: 99999;
   background: black;
-  content: '';
+  content: "";
   opacity: 0.5;
 }
 
@@ -98,7 +92,18 @@ Slider.css .slider-container {
 }
 
 .sliderContent {
-
   width: 557px;
   left: 304px;
+}
+
+@media only screen and (max-width: 768px) {
+  .sliderContent {
+    width: 100%;
+    left: 0px;
+  }
+}
+@media only screen and (max-width: 350px) {
+  .sliderContent {
+    left: 9px !important;
+  }
 }

@@ -22,7 +22,7 @@ const Welcome = () => {
             <span className="block mt-2">Foundation</span>
           </h2>
 
-          <div className="w-44 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-5 hidden lg:block md:block"></div>
+          <div className=" w-full md:w-44 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-5 hidden lg:block md:block"></div>
           <p className="text-justify lg:my-10">
             Ziaur Rahman Foundation is a humanitarian and welfare organization
             established in memory of the declarer of Bangladesh&apos;s

@@ -26,10 +26,10 @@ import "./Slider.css";
 const slides = [
   {
     img: img4,
-    title: "একটি উদ্যোগ, একটু চেষ্টা, এনে দেবে স্বচ্ছলতা, দেশে আসবে স্বনির্ভরতা",
+    title: '"A Small Initiative, A Little Effort—Bringing Prosperity and Self-Reliance to the Nation"',
     description:
-      "আমাদের দেশের প্রতিটি মানুষ যদি ছোট ছোট উদ্যোগ গ্রহণ করেন তাহলে এই দেশে অর্থনৈতিক উন্নতি আসবেই। আমাদের লক্ষ্য সমাজের প্রতিটি মানুষের জন্য সুযোগ সৃষ্টি করা, যাতে তারা নিজের পায়ে দাঁড়াতে পারে এবং দেশকে সমৃদ্ধির দিকে এগিয়ে নিয়ে যেতে পারে।",
-    buttonText: "আরও জানুন",
+      "Our goal is to create opportunities for every individual in society so they can become self-reliant and contribute to driving the nation towards prosperity.",
+    buttonText: "Join Us",
   },
   {
     img: img4,
@@ -45,13 +45,6 @@ const slides = [
       "সামাজিক উন্নয়ন এবং মানুষের কল্যাণে আমাদের প্রচেষ্টা অব্যাহত। আমরা মানুষের জন্য সঠিক পদক্ষেপ নিতে এবং একটি উন্নত সমাজ গড়ে তুলতে কাজ করছি।",
     buttonText: "যোগাযোগ করুন",
   },
-  // {
-  //   img: img4,
-  //   title: "স্বনির্ভরতার দিকে পথ চলা",
-  //   description:
-  //     "আমরা দৃঢ় প্রতিজ্ঞ যে, আমাদের উদ্যোগের মাধ্যমে দেশের প্রতিটি নাগরিককে তাদের স্বপ্ন পূরণের সুযোগ দেবো, এবং তাদের আত্মনির্ভরশীল জীবন গড়ে তুলব।",
-  //   buttonText: "আরও পড়ুন",
-  // },
 ];
 
 const Slider = () => {
@@ -67,9 +60,7 @@ const Slider = () => {
         spaceBetween={0}
         effect={"fade"}
         navigation={true}
-        pagination={{
-          clickable: true,
-        }}
+        pagination={{ clickable: true }}
         zoom={true}
         modules={[Autoplay, EffectFade, Navigation, Pagination, Zoom]}
         onSlideChange={handleSlideChange}
@@ -77,29 +68,32 @@ const Slider = () => {
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index} className="swiper-slide-zoom">
-            <div className="relative w-full h-[400px] lg:h-[700px] sliderWrap">
-              <div className="absolute inset-0 bg-black opacity-50 transition-opacity duration-1000 ease-in-out overlay"></div>
+            <div className="relative w-full h-[300px] md:h-[400px] lg:h-[600px] xl:h-[700px] sliderWrap">
+              {/* Background Overlay */}
+              <div className="absolute inset-0 bg-black opacity-40 transition-opacity duration-1000 ease-in-out overlay"></div>
 
+              {/* Background Image */}
               <Image
                 src={slide.img}
                 alt={`Slide ${index + 1}`}
                 layout="fill"
-                objectFit="cover "
-                className="slide-image w-full h-full object-contain "
+                objectFit="cover"
+                className="w-full h-full object-cover"
               />
 
+              {/* Content Overlay */}
               <div
-                className={`absolute z-[9999999] sliderContent left-10 lg:left-[300px] inset-0 flex justify-start items-center text-left text-white p-4 transition-all duration-1000 ease-in-out ${activeSlide === index
+                className={` z-[999999] sliderContent absolute inset-0 flex justify-start items-center text-left text-white p-4 transition-all duration-1000 ease-in-out ${activeSlide === index
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-28"
                   }`}
               >
-                <div className="max-w-lg lg:max-w-md p-5 rounded-lg bg-opacity-50">
-                  <h2 className="w-[600px] text-2xl lg:text-3xl font-bold mb-4">
+                <div className="max-w-lg lg:max-w-md md:p-5  rounded-lg bg-opacity-50 space-y-2 lg:space-y-3 ">
+                  <h2 className="md:w-[600px] text-[18px] lg:text-3xl font-bold">
                     {slide.title}
                   </h2>
-                  <p className=" w-[600px]  text-sm leading-5 mb-6">{slide.description}</p>
-                  <button className="bg-[#E3C80D] text-white px-6 py-3 rounded-full hover:bg-[#216740] transition duration-300">
+                  <p className="md:w-[600px] text-[12px] md:text-[20px] leading-5 lg:leading-7">{slide.description}</p>
+                  <button className="bg-[#E3C80D] text-white text-sm px-3 md:px-6 py-1 md:py-3 rounded-full hover:bg-[#216740] transition duration-300">
                     {slide.buttonText}
                   </button>
                 </div>

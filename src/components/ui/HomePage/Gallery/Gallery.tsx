@@ -1,10 +1,10 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import img1 from "../../../../../src/assets/images/gallery/gallery (1).jpeg";
-import img2 from "../../../../../src/assets/images/gallery/gallery (2).jpeg";
-import img3 from "../../../../../src/assets/images/gallery/gallery (3).jpeg";
-import img4 from "../../../../../src/assets/images/gallery/gallery (4).jpeg";
+import img1 from "../../../../../src/assets/images/gallery/newGallery.jpeg";
+import img2 from "../../../../../src/assets/images/gallery/newGallery2.jpeg";
+import img3 from "../../../../../src/assets/images/gallery/newGallery3.jpeg";
+import img4 from "../../../../../src/assets/images/gallery/newGallery4.jpeg";
 import Container from "@/components/share/Container";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";

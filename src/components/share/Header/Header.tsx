@@ -40,26 +40,29 @@ const Header = () => {
   return (
     <div className="sticky top-0 w-full bg-white shadow-md  z-[999999]">
       <Container>
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center py-1 md:py-0">
           <Box component={Link} href="/">
             <div className="flex items-center gap-2 md:gap-3">
               <Image
                 src={logo}
                 alt="logo"
-                className="rounded-full"
+                className="rounded-full logo "
                 width={80}
                 height={80}
               />
               <Typography component="span" fontWeight={600} color="black">
                 <Box component="span" color="primary.main" fontWeight="bold">
-                  <b className="md:font-bold text-[12px] md:text-[16px]">
+                  <p className="md:font-bold text-[12px] md:text-[20px]">
                     {language === "ENG" ? "Ziaur Rahman" : "জিয়াউর রহমান"}
-                  </b>{" "}
-                  <br />
-                  <b className="md:font-bold text-[12px] md:text-[20px] ">
-                    {" "}
-                    {language === "ENG" ? "Foundation" : " ফাউন্ডেশন"}{" "}
-                  </b>
+                  </p>
+
+                  <p
+                    className="md:font-bold text-[12px] md:text-[20px]"
+                    style={{ letterSpacing: "0.15em" }}
+                  >
+                    {language === "ENG" ? "Foundation" : " ফাউন্ডেশন"}
+                  </p>
+
                 </Box>
               </Typography>
             </div>
@@ -85,9 +88,8 @@ const Header = () => {
 
             <>
               <ul
-                className={`lg:w-full xl:w-full lg:py-2 flex justify-center text-sm lg:text-base xl:text-bas  navItems ${
-                  open ? "" : "activeMenu z-50"
-                }`}
+                className={`lg:w-full xl:w-full lg:py-2 flex justify-center text-sm lg:text-base xl:text-bas  navItems ${open ? "" : "activeMenu z-50"
+                  }`}
               >
                 <li className="lg:border-none border-b lg:py-0 py-1">
                   <Link href="/">Home</Link>
@@ -178,20 +180,18 @@ const Header = () => {
               </ul>
             </>
           </div>
-          <div className=" xl:block space-x-1 md:space-x-3 mr-[30px] text-center md:mr-8 xl:mr-0 ">
+          <div className=" xl:block space-x-1 md:space-x-3 mr-[30px] text-center lg:mr-20 md:mr-12 xl:mr-0 ">
             <button
               onClick={() => setLanguage("ENG")}
-              className={`bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white ${
-                language === "ENG" ? "opacity-100" : "opacity-60"
-              }`}
+              className={`bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white ${language === "ENG" ? "opacity-100" : "opacity-60"
+                }`}
             >
               ENG
             </button>
             <button
               onClick={() => setLanguage("BNG")}
-              className={`bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3 rounded text-white ${
-                language === "BNG" ? "opacity-100" : "opacity-60"
-              }`}
+              className={`bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3 rounded text-white ${language === "BNG" ? "opacity-100" : "opacity-60"
+                }`}
             >
               বাংলা
             </button>

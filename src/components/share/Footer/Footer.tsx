@@ -81,9 +81,9 @@ const Footer = () => {
               <div className="w-full md:w-1/4 mb-8 md:mb-0 text-center">
 
                 <ul className="space-y-3 ">
-                <li>Contact Us </li>
+                  <li><Link href='/contact-us'>Contact Us</Link> </li>
                   <li><Button onClick={handleModalOpen} sx={buttonStyle}>Join Us </Button> </li>
-                 
+
                 </ul>
               </div>
 

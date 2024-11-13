@@ -12,7 +12,7 @@
   right: 0;
   bottom: 0;
   width: 0px;
-  background-image: -webkit-linear-gradient(right, #216740, #E3C80D);
+  background-image: -webkit-linear-gradient(right, #216740, #e3c80d);
   transition: all 0.5s cubic-bezier(0.4, 0.43, 0.54, 0.54);
   color: #fff;
 }
@@ -42,9 +42,6 @@
   color: white !important;
 }
 
-
-
-
 .dropdownMenu,
 .submenu3 {
   background: #fff;
@@ -55,7 +52,7 @@
   top: 62px;
   box-shadow: 0 5px 15px #00000026;
   transform-origin: top;
-  transition: all .5s cubic-bezier(.44, .47, .64, .65);
+  transition: all 0.5s cubic-bezier(0.44, 0.47, 0.64, 0.65);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -66,20 +63,15 @@
   visibility: hidden;
 }
 
-
 .submenu {
   width: 245px;
   height: 86px;
-
-
 }
 
 .submenu2 {
   width: 352px;
   height: 112px;
 }
-
-
 
 .dropdownMenuWrap {
   position: relative;
@@ -99,12 +91,11 @@
 
 .dropdownMenu li:last-child {
   border-bottom: none;
-
 }
 
 .dropdownMenu li a {
   padding: 20px 20px;
-  transition: all .5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 
 .dropdownMenu li a:hover {
@@ -125,10 +116,15 @@
   width: 243px;
   height: 100px;
 }
-.submenu{
-  height:290px;
+.submenu {
+  height: 290px;
 }
 
+@media only screen and (max-width: 1440px) {
+  .sliderContent {
+    left: 92px !important;
+  }
+}
 
 @media only screen and (max-width: 1024px) {
   .navItems {
@@ -164,8 +160,8 @@
     width: 40px;
     height: 40px;
     position: absolute;
-    top: 50px;
-    right: 14px;
+    top: 31px;
+    right: 27px;
     transition: all 0.5s cubic-bezier(0.43, 0.38, 0.68, 0.63);
   }
 
@@ -203,14 +199,15 @@
   .activeBar span:nth-child(2) {
     display: none;
   }
+  .sliderContent {
+    left: 21px !important;
+  }
 }
 
 @media only screen and (max-width: 768px) {
-
   .activeBar,
   .bar1 {
-
-    top: 34px;
+    top: 32px;
     right: 14px;
   }
 
@@ -219,7 +216,6 @@
     top: 50px;
     left: 0px;
     width: 240px;
-
   }
 
   .navItems {
@@ -227,19 +223,18 @@
   }
 }
 
-@media only screen and (max-width:500px) {
-
+@media only screen and (max-width: 500px) {
   .activeBar,
   .bar1 {
     top: 29px;
     right: 9px;
   }
-
-
+  .logo{
+    width:50px;
+  }
 }
 
-@media only screen and (max-width:375px) {
-
+@media only screen and (max-width: 375px) {
   .activeBar,
   .bar1 {
     top: 29px;
@@ -251,15 +246,12 @@
     top: 24px;
     left: 0px;
     width: 240px;
-
   }
 
   .navItems li {
     padding: 10px 0px;
     border: none;
   }
-
-
 }
 
 .murterDropDown:hover .submenu3 {
@@ -267,10 +259,16 @@
   opacity: 1;
   visibility: visible;
   color: black !important;
-
-
 }
 
 .dropdownMenu li:hover a span {
   color: #111 !important;
+}
+
+
+@media only screen and (max-width:320px){
+  .activeBar, .bar1 {
+    top: 23px;
+    right: -4px;
+}
 }
