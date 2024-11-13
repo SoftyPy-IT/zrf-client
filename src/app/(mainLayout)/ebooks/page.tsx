@@ -1,15 +1,14 @@
 import React from "react";
 import Container from "@/components/share/Container";
 import Image from "next/image";
-import Link from "next/link";
-import EastIcon from "@mui/icons-material/East";
-import book1 from "../../../../src/assets/images/ebooks/e1.jpg";
-import book2 from "../../../../src/assets/images/ebooks/e2.jpg";
-import book3 from "../../../../src/assets/images/ebooks/e3.jpg";
-import book4 from "../../../../src/assets/images/ebooks/e4.jpg";
-import book5 from "../../../../src/assets/images/ebooks/e5.jpg";
-import book6 from "../../../../src/assets/images/ebooks/e6.jpg";
+import book1 from "../../../../src/assets/images/ebooks/ebook.jpeg";
+import book2 from "../../../../src/assets/images/ebooks/ebook2.jpeg";
+import book3 from "../../../../src/assets/images/ebooks/ebook3.jpeg";
+import book4 from "../../../../src/assets/images/ebooks/ebook4.jpeg";
+import book5 from "../../../../src/assets/images/ebooks/ebook5.jpeg";
+import book6 from "../../../../src/assets/images/ebooks/ebook6.jpeg";
 import Ebook from "./_components/Ebook";
+
 
 // Sample eBooks data
 const eBooks = [

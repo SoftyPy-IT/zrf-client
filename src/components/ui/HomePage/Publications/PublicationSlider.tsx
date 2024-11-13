@@ -6,10 +6,12 @@ import "./Publications.css";
 import "swiper/css";
 import "swiper/css/autoplay";
 import "swiper/css/effect-coverflow";
-import book1 from "../../../../../src/assets/images/ebooks/e1.jpg";
-import book2 from "../../../../../src/assets/images/ebooks/e2.jpg";
-import book3 from "../../../../../src/assets/images/ebooks/e3.jpg";
-import book4 from "../../../../../src/assets/images/ebooks/e4.jpg";
+import book1 from "../../../../../src/assets/images/ebooks/ebook.jpeg";
+import book2 from "../../../../../src/assets/images/ebooks/ebook2.jpeg";
+import book3 from "../../../../../src/assets/images/ebooks/ebook3.jpeg";
+import book4 from "../../../../../src/assets/images/ebooks/ebook4.jpeg";
+import book5 from "../../../../../src/assets/images/ebooks/ebook5.jpeg";
+import book6 from "../../../../../src/assets/images/ebooks/ebook6.jpeg";
 import Image from "next/image";
 import Link from "next/link";
 import EastIcon from "@mui/icons-material/East";
@@ -86,6 +88,12 @@ function PublicationSlider() {
         </SwiperSlide>
         <SwiperSlide className="swiperSlide">
           <Image alt="slider" src={book4} />
+        </SwiperSlide>
+        <SwiperSlide className="swiperSlide">
+          <Image alt="slider" src={book5} />
+        </SwiperSlide>
+        <SwiperSlide className="swiperSlide">
+          <Image alt="slider" src={book6} />
         </SwiperSlide>
       </Swiper>
 
