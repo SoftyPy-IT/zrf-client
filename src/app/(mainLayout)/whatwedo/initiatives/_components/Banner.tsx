@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import bannerImage from "../../../../../assets/images/banner/banner.jpeg";
+import bannerImage from "../../../../../assets/images/banner/banner-new.jpg";
 
 const Banner = () => {
   return (
@@ -15,7 +15,7 @@ const Banner = () => {
       <div className="absolute inset-0 bg-gradient-to-r from-black to-transparent opacity-50"></div>
       <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-5">
         <h1 className="text-4xl md:text-6xl font-bold text-center">
-        Initiatives 
+        Initiative
         </h1>
         {/* <p className="text-lg md:text-2xl mt-3 text-center">
           Insights, stories, and updates from our team.
