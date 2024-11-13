@@ -6,12 +6,13 @@ import "./Publications.css";
 import "swiper/css";
 import "swiper/css/autoplay";
 import "swiper/css/effect-coverflow";
-import book1 from "../../../../../src/assets/images/ebooks/ebook.jpeg";
-import book2 from "../../../../../src/assets/images/ebooks/ebook2.jpeg";
-import book3 from "../../../../../src/assets/images/ebooks/ebook3.jpeg";
-import book4 from "../../../../../src/assets/images/ebooks/ebook4.jpeg";
-import book5 from "../../../../../src/assets/images/ebooks/ebook5.jpeg";
-import book6 from "../../../../../src/assets/images/ebooks/ebook6.jpeg";
+import book1 from "../../../../../src/assets/images/ebooks/book.jpeg";
+import book2 from "../../../../../src/assets/images/ebooks/book2.jpeg";
+import book3 from "../../../../../src/assets/images/ebooks/book3.jpeg";
+import book4 from "../../../../../src/assets/images/ebooks/book4.jpeg";
+import book5 from "../../../../../src/assets/images/ebooks/book5.jpeg";
+import book6 from "../../../../../src/assets/images/ebooks/book6.jpeg";
+import book7 from "../../../../../src/assets/images/ebooks/book7.jpeg";
 import Image from "next/image";
 import Link from "next/link";
 import EastIcon from "@mui/icons-material/East";
@@ -94,6 +95,9 @@ function PublicationSlider() {
         </SwiperSlide>
         <SwiperSlide className="swiperSlide">
           <Image alt="slider" src={book6} />
+        </SwiperSlide>
+        <SwiperSlide className="swiperSlide">
+          <Image alt="slider" src={book7} />
         </SwiperSlide>
       </Swiper>
 

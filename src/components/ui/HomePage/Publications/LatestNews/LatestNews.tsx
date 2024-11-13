@@ -67,7 +67,7 @@ const LatestNews = () => {
           </div>
         </div>
         <div className="w-full grid grid-cols-1 lg:grid-cols-1 md:grid-cols-2 items-center gap-4 lg:mt-0 mt-10">
-          {newsData.map((data) => (
+          {newsData.slice(0,3).map((data) => (
             <div
               key={data.id}
               className="border rounded items-center p-3 shadow-md"
