@@ -105,6 +105,11 @@ const Header = () => {
                       </Link>
                     </li>
                     <li>
+                      <Link href="/message-of-vice-president">
+                        Message of Vice President
+                      </Link>
+                    </li>
+                    <li>
                       <Link href="/message-of-director">
                         Message of Executive Director
                       </Link>

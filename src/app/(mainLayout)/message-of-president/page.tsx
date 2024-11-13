@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import image1 from "../../../../src/assets/images/tarek-rahman/tarek.jpg";
+import image1 from "../../../../src/assets/images/tarique.jpg";
 import Container from "@/components/share/Container";
 import PresidentBanner from "./_components/PresidentBanner";
 
