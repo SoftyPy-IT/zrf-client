@@ -43,26 +43,27 @@ const Contact = () => {
                 <div className="text-white">
                   <div className="mb-4">
                     <h3 className="text-xl font-semibold">
-                      <LocationOnIcon sx={{ marginRight: '5px' }} />
+                      <LocationOnIcon sx={{ marginRight: "5px" }} />
                       Location
                     </h3>
                     <p className="text-white">
-                      1234 Street Name, City, State, 12345
+                      House#4, Road#7, Niketon Gate #2, Gulshan-1, Dhaka-1212,
+                      Bangladesh.
                     </p>
                   </div>
                   <div className="mb-4">
                     <h3 className="text-xl font-semibold">
-                      <CallOutlinedIcon sx={{ marginRight: '5px' }} />
+                      <CallOutlinedIcon sx={{ marginRight: "5px" }} />
                       Call Us
                     </h3>
-                    <p className="text-white">(123) 456-7890</p>
+                    <p className="text-white">01819213236</p>
                   </div>
                   <div className="mb-4">
                     <h3 className="text-xl font-semibold">
-                      <EmailOutlinedIcon sx={{ marginRight: '5px' }} />
+                      <EmailOutlinedIcon sx={{ marginRight: "5px" }} />
                       Email Us
                     </h3>
-                    <p className="text-white">info@example.com</p>
+                    <p className="text-white">donaroncolog@gmail.com</p>
                   </div>
                 </div>
               </div>
@@ -99,7 +100,13 @@ const Contact = () => {
                     />
                   </div>
                   <div className="lg:flex gap-2">
-                    <ZRFInput type="tel" name="phone" label="Phone" fullWidth size="medium" />
+                    <ZRFInput
+                      type="tel"
+                      name="phone"
+                      label="Phone"
+                      fullWidth
+                      size="medium"
+                    />
                     <ZRFInput
                       type="text"
                       name="subject"
@@ -112,7 +119,11 @@ const Contact = () => {
                     <ZRFTextArea
                       name="message"
                       minRows={5}
-                      sx={{ border: '1px solid black', borderRadius: '3px', padding: '10px' }}
+                      sx={{
+                        border: "1px solid black",
+                        borderRadius: "3px",
+                        padding: "10px",
+                      }}
                       placeholder="Write something..."
                     />
                   </div>
