@@ -128,7 +128,7 @@ const Header = () => {
                     </li>
                     <li>
                       <Link href="/whatwedo/rehabilitation">
-                        ZRF Rehabilitation Team
+                        ZRF Rehabilitation
                       </Link>
                     </li>
                     <li>

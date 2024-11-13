@@ -1,7 +1,7 @@
 import Image from "next/image";
-import img1 from "../../../../src/assets/images/program/1.jpg";
-import img2 from "../../../../src/assets/images/program/2.jpg";
-import img3 from "../../../../src/assets/images/program/3.jpg";
+import img1 from "../../../../src/assets/images/climate/turkey.jpg";
+import img2 from "../../../../src/assets/images/climate/sylhet.jpg";
+import img3 from "../../../../src/assets/images/climate/netrokona.jpg";
 import Container from "@/components/share/Container";
 
 import { Button } from "@mui/material";
@@ -11,32 +11,33 @@ const Rehabilitation = () => {
   const cardData = [
     {
       id: 1,
-      title: "বন্যাদুর্গতদের মাঝে চিকিৎসা সেবা ও ঔষধ বিতরন কার্যক্রম",
+      title:
+        "Ziaur Rahman Foundation provided assistance to those affected by the earthquake in Turkey.",
       content:
-        "১০ সেপ্টেম্বর,২০২৪, বিএনপির ভারপ্রাপ্ত চেয়ারম্যান ও জিয়াউর রহমান ফাউন্ডেশন এর প্রেসিডেন্ট জনাব তারেক রহমান এর নির্দেশে বন্যাদুর্গত ফেনী জেলায় সদর হাসপাতালে জিয়াউর রহমান ফাউন্ডেশন ও ডক্টরস এসোসিয়েশন অব বাংলাদেশ (ড্যাব) এর উদ্যোগে  অসুস্থ রোগীদের জন্য চলমান ধারাবাহিক চিকিৎসা সেবা ও ঔষধ বিতরন কার্যক্রম এর অংশ হিসেবে আজকে চিকিৎসা সেবা প্রদান করেন স্বনামধন্য  শিশু বিশেষজ্ঞ ঢাকা শিশু হাসপাতাল এর সহযোগী অধ্যাপক ডা সালাহউদ্দিন মাহমুদ,ডা: এম.আর. হাসান,ডা: মুননাসির জামান রেমো,ডা:ইমাম হাসান,ডা:সৌরভ,ডা: রাকিব",
+        "The Ziaur Rahman Foundation extended its support to the victims of the recent earthquake in Turkey by providing humanitarian aid to help with relief efforts and recovery.",
       img: img1,
     },
     {
       id: 2,
       title:
-        "বৈষম্যবিরোধী ছাত্রজনতার আন্দোলনে আহত মামুনের চিকিৎসা সেবা কার্যক্রমে জেড আর এফ।",
+        "Ziaur Rahman Foundation distributed relief materials to flood-affected people in the 30th Ward of Sylhet.",
       content:
-        "আবদুল্লাহ আল মামুন,মাগুরা হোসেন শহীদ সোহরাওয়ার্দী কলেজ এর রাষ্ট্রবিজ্ঞান বিভাগের মাস্টার্স এর ছাত্র। বৈষম্যবিরোধী ছাত্রজনতার আন্দোলনে গত ৫ আগস্ট উত্তরা পূর্ব থানায় পুলিশের গুলিতে আহত হলে মুমূর্ষু অবস্থায় তাকে উত্তরা উইমেন্স মেডিকেল কলেজ হাসপাতাল এ ভর্তি করা হয়। মৃতপ্রায় মামুনকে বাচাতে তার ইমারজেন্সি ট্রাকিওস্টমি করা হয়। বিএনপি ভারপ্রাপ্ত চেয়ারম্যান ও জিয়াউর রহমান ফাউন্ডেশন এর প্রেসিডেন্ট জনাব তারেক রহমান এর নির্দেশে জিয়াউর রহমান ফাউন্ডেশন এর নির্বাহী পরিচালক অধ্যাপক ডা ফরহাদ হালিম ডোনার এর তত্বাবধানে, জেড আর এফ রিহ্যাবিলিটেশন কমিটির আহবায়ক ডা শাহ মুহম্মদ আমান উল্ল্যাহ ও সদস্য সচিব ডা পারভেজ রেজা কাকন এর সার্বিক সহযোগিতায় আই.সি,ইউ তে মৃত্যুর সাথে পাঞ্জা লড়া মামুনের চিকিৎসার সার্বিক ব্যবস্থাপনা ও দায়িত্ব গ্রহণ করেছে জিয়াউর রহমান ফাউন্ডেশন। জিয়াউর রহমান ফাউন্ডেশন এর কো অর্ডিনেটর ডা সাজিদ ইমতিয়াজ, ডা শাওন বিন রহমান,ডা রাফসান জানি আবির গনতন্ত্র পুনরুদ্ধার এর সম্মুখ যোদ্ধা  মামুনের চিকিৎসার সার্বিক তদারকি করছেন।",
+        "On June 25, 2022, the Ziaur Rahman Foundation distributed relief materials to flood-affected people in the 30th Ward of Sylhet city, at the Chandai Government Primary School. Under the guidance of Tarique Rahman and the management of Dr. Farhad Halim Doner, Executive Director of the Foundation, the relief team from Ziaur Rahman Foundation visited the area. The event was presided over by Professor Dr. Engineer M. Iqbal, with Professor Dr. Khairul Islam Rubel as the moderator. The Chief Guest was Dr. Enamul Haq Chowdhury, Adviser to the BNP Chairperson. Special guests included Miftah Siddiqui, Secretary of Sylhet City BNP.",
       img: img2,
     },
     {
       id: 3,
       title:
-        "বৈষম্যবিরোধী ছাত্রজনতার আন্দোলনে আহত যুবদল নেতা মোঃআমিনুল হকের চিকিৎসা সেবা কার্যক্রমে জেড আর এফ।",
+        "Ziaur Rahman Foundation distributed relief and medicines in the flood-affected areas of the Netrokona district",
       content:
-        "বৈষম্যবিরোধী ছাত্রজনতার  আন্দোলনে গত ৪ আগস্ট গাইবান্ধায় যুবদল নেতা মোঃআমিনুল হক গাইবান্ধা পুলিশ সুপার কার্যালয়ের সামনে গুলিবিদ্ধ হন। বিএনপি ভারপ্রাপ্ত চেয়ারম্যান ও জিয়াউর রহমান ফাউন্ডেশন এর প্রেসিডেন্ট জনাব তারেক রহমান এর নির্দেশে জিয়াউর রহমান ফাউন্ডেশন এর নির্বাহী পরিচালক অধ্যাপক ডা ফরহাদ হালিম ডোনার এর তত্বাবধানে, জেড আর এফ রিহ্যাবিলিটেশন কমিটির আহবায়ক ডা শাহ মুহম্মদ আমান উল্ল্যাহ ও সদস্য সচিব ডা পারভেজ রেজা কাকন এর ব্যবস্থাপনায় আমিনুল হকের চিকিৎসার সার্বিক দায়িত্ব গ্রহণ করেছে জিয়াউর রহমান ফাউন্ডেশন।জিয়াউর রহমান ফাউন্ডেশন এর কো অর্ডিনেটর ডা সাজিদ ইমতিয়াজ এর তত্বাবধানে আজকে আমিনুল হকের শরীর থেকে গুলি অপসারন করা হয়",
+        "On July 6, 2022, the Ziaur Rahman Foundation distributed relief and medicines in the flood-affected areas of the Netrokona district, including the villages of Tarachapar, Sukari, and neighboring flood-hit areas of Atpara Upazila, as well as the Nichintapur Union in Barhatta Upazila. The assistance was provided by boat to these areas. The event was attended by the Chief Guest, Babu Gayeshwar Chandra Roy, a member of the National Standing Committee of BNP, and Special Guest, Mr. Imran Saleh Prince, Organizational Secretary of Mymensingh Division, BNP's Central Executive Committee. Other notable attendees included Advocate Wares Ali Mamun, Assistant Organizing Secretary of BNP’s National Executive Committee, and Dr. Anwarul Haq, the Convener of Netrokona District BNP.",
       img: img3,
     },
   ];
 
   return (
     <>
-      <CommonBanner title="Health Services " />
+      <CommonBanner title="Climate Change" />
       <Container className="my-20">
         <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 h-[1100px] md:h-[900px] lg:h-[500px]">
           {cardData.map((card, index) => (
@@ -51,7 +52,7 @@ const Rehabilitation = () => {
               />
               {/* Overlapping content */}
               <div className="absolute bottom-0 left-0 right-0 p-2 md:p-4 lg:p-4 bg-blue-950 border-t border-gray-300 rounded-t-3xl h-[150px] md:h-[200px] lg:h-[200px] mt-28 md:mt-0 lg:mt-0">
-                <h2 className="text-xl text-white">{card.title}</h2>
+                {/* <h2 className="text-xl text-white">{card.title}</h2> */}
                 <p className="mt-2 text-white">
                   {card.content.slice(0, 180)} ......
                 </p>
