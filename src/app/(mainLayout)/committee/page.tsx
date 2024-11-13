@@ -1,15 +1,169 @@
 import React from "react";
 import Image, { StaticImageData } from "next/image";
-import img1 from "../../../../src/assets/images/committee/profile.jpg";
 import Container from "@/components/share/Container";
 import CommitteeBanner from "./_components/CommitteeBanner";
+import img1 from "../../../../src/assets/images/committee/profile.jpg";
+import tarique from "../../../../src/assets/images/committee/tarique.jpeg";
+import zaima from "../../../../src/assets/images/committee/zaima.jpeg";
+import jobaida from "../../../../src/assets/images/committee/jobaida.jpeg";
+import donar from "../../../../src/assets/images/committee/donar.jpeg";
 
 // Define the profiles data
 const profiles = [
+  // Board of Directors Committee
+  {
+    name: "Mr. Tarique Rahman- President",
+    imageSrc: tarique,
+    committee: "Board of Directors Committee",
+  },
+  {
+    name: "Dr. Zubaida Rahman - Vice President",
+    imageSrc: jobaida,
+    committee: "Board of Directors Committee",
+  },
+  {
+    name: "Prof. Dr. Farhad Halim Donar- Executive Director",
+    imageSrc: img1,
+    committee: "Board of Directors Committee",
+  },
+  {
+    name: "Prof. Dr. Morshed Hasan Khan - Director (Admin)",
+    imageSrc: img1,
+    committee: "Board of Directors Committee",
+  },
+
+  {
+    name: "Dr. Syeda Tajneen Waris Simki - Director (Planning)",
+    imageSrc: img1,
+    committee: "Board of Directors Committee",
+  },
+  {
+    name: "Dr. Shah Muhammad Aman Ullah - Director (Program)",
+    imageSrc: img1,
+    committee: "Board of Directors Committee",
+  },
+  {
+    name: "Dr. Mustafa Aziz Sumon - Director (Program)",
+    imageSrc: img1,
+    committee: "Board of Directors Committee",
+  },
+  {
+    name: "Agriculturist Dr. Khandaker Mahfuzul Haque Bacchu - Director (Program)",
+    imageSrc: img1,
+    committee: "Board of Directors Committee",
+  },
+  {
+    name: "Engineer Md. Mahbub Alam - Director (Program)",
+    imageSrc: img1,
+    committee: "Board of Directors Committee",
+  },
+  {
+    name: "Prof. Dr. Md. Lutfor Rahman - Director (Program)",
+    imageSrc: img1,
+    committee: "Board of Directors Committee",
+  },
+  {
+    name: "Advocate Mohammad Ali - Director (Program)",
+    imageSrc: img1,
+    committee: "Board of Directors Committee",
+  },
+  {
+    name: "Amirul Islam Kagoj - Director (Program)",
+    imageSrc: img1,
+    committee: "Board of Directors Committee",
+  },
+  {
+    name: "Barrister Zaima Rahman - Director",
+    imageSrc: zaima,
+    committee: "Board of Directors Committee",
+  },
+  {
+    name: " Prof. Dr. ABM Obaidul Islam- Director ",
+    imageSrc: img1,
+    committee: "Board of Directors Committee",
+  },
+  {
+    name: "Agriculturist Anwarun Nabi Mojumdar Babla- Director ",
+    imageSrc: img1,
+    committee: "Board of Directors Committee",
+  },
+  {
+    name: "Agriculturist Shamimur Rahman Shamim- Director",
+    imageSrc: img1,
+    committee: "Board of Directors Committee",
+  },
+  {
+    name: "Barrister Mir Helal - Director",
+    imageSrc: img1,
+    committee: "Board of Directors Committee",
+  },
+  {
+    name: "Prof. Dr. Sheikh Monir Uddin - Director",
+    imageSrc: img1,
+    committee: "Board of Directors Committee",
+  },
+  {
+    name: "Engineer AKM Zahirul Islam - Director",
+    imageSrc: img1,
+    committee: "Board of Directors Committee",
+  },
+  {
+    name: "Agriculturist Shafiul Alam Didar- Director",
+    imageSrc: img1,
+    committee: "Board of Directors Committee",
+  },
+  {
+    name: "Engineer Umasha Umain Moni Chowdhury - Director",
+    imageSrc: img1,
+    committee: "Board of Directors Committee",
+  },
+  {
+    name: "Journalist Hafiz Al Asad Saiyed Khan - Director",
+    imageSrc: img1,
+    committee: "Board of Directors Committee",
+  },
+
+  //advisor counsilor 
+
+  {
+    name: "Dr. A.S. Haider Parvez- Advisor",
+    imageSrc: img1,
+    committee: "Advisory Council",
+  },
+  {
+    name: "Prof. Dr. Harun Al Rashid- Advisor",
+    imageSrc: img1,
+    committee: "Advisory Council",
+  },
+  {
+    name: "Agriculturist Prof. Dr. Abdul Karim- Advisor",
+    imageSrc: img1,
+    committee: "Advisory Council",
+  },
+  {
+    name: "Prof. Dr. Md. Abdur Rashid- Advisor",
+    imageSrc: img1,
+    committee: "Advisory Council",
+  },
+  {
+    name: "Barrister Nasir Uddin Asim - Advisor",
+    imageSrc: img1,
+    committee: "Advisory Council",
+  },
+  {
+    name: "Prof. Dr. Mohammad Almojadded Al-Fesani - Advisor",
+    imageSrc: img1,
+    committee: "Advisory Council",
+  },
+  {
+    name: "Engineer Alamgir Hasin Ahmed- Advisor",
+    imageSrc: img1,
+    committee: "Advisory Council",
+  },
   // Working Body Committee
   {
     name: "Prof Dr. Forhad Haleem Donar",
-    imageSrc: img1,
+    imageSrc: donar,
     committee: "Working Body Committee",
   },
   {
@@ -138,7 +292,7 @@ const ProfileCard = ({
         />
       </div>
       <div className="p-4 text-center">
-        <h3 className="text-lg font-semibold">{name}</h3>
+        <h3 className="text-[16px] font-semibold">{name}</h3>
         {/* <p className="text-gray-600">{committee}</p> */}
       </div>
     </div>
