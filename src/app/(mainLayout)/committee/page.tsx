@@ -12,253 +12,282 @@ import donar from "../../../../src/assets/images/committee/donar.jpeg";
 const profiles = [
   // Board of Directors Committee
   {
-    name: "Mr. Tarique Rahman- President",
+    name: "Mr. Tarique Rahman ",
     imageSrc: tarique,
     committee: "Board of Directors Committee",
+    designation: 'President'
   },
   {
-    name: "Dr. Zubaida Rahman - Vice President",
+    name: "Dr. Zubaida Rahman",
     imageSrc: jobaida,
     committee: "Board of Directors Committee",
+    designation: 'Vice President'
   },
   {
-    name: "Prof. Dr. Farhad Halim Donar- Executive Director",
-    imageSrc: img1,
-    committee: "Board of Directors Committee",
+    name: "Prof. Dr. Farhad Halim Donar",
+    imageSrc: donar,
+    committee: "",
+    designation: 'Executive Director'
   },
   {
-    name: "Prof. Dr. Morshed Hasan Khan - Director (Admin)",
+    name: "Prof. Dr. Morshed Hasan Khan ",
     imageSrc: img1,
-    committee: "Board of Directors Committee",
+    committee: "",
+    designation: 'Director (Admin)'
   },
 
   {
-    name: "Dr. Syeda Tajneen Waris Simki - Director (Planning)",
+    name: "Dr. Syeda Tajneen Waris Simki",
     imageSrc: img1,
-    committee: "Board of Directors Committee",
+    committee: "",
+    designation: 'Director (Planning)'
   },
   {
-    name: "Dr. Shah Muhammad Aman Ullah - Director (Program)",
+    name: "Dr. Shah Muhammad Aman Ullah",
     imageSrc: img1,
-    committee: "Board of Directors Committee",
+    committee: "",
+    designation: 'Director (Program)'
   },
   {
-    name: "Dr. Mustafa Aziz Sumon - Director (Program)",
+    name: "Dr. Mustafa Aziz Sumon",
     imageSrc: img1,
-    committee: "Board of Directors Committee",
+    committee: "",
+    designation: 'Director (Program)'
   },
   {
-    name: "Agriculturist Dr. Khandaker Mahfuzul Haque Bacchu - Director (Program)",
+    name: "Agriculturist Dr. Khandaker Mahfuzul Haque Bacchu",
     imageSrc: img1,
-    committee: "Board of Directors Committee",
+    committee: "",
+    designation: 'Director (Program)'
   },
   {
-    name: "Engineer Md. Mahbub Alam - Director (Program)",
+    name: "Engineer Md. Mahbub Alam",
     imageSrc: img1,
-    committee: "Board of Directors Committee",
+    committee: "",
+    designation: 'Director (Program)'
   },
   {
-    name: "Prof. Dr. Md. Lutfor Rahman - Director (Program)",
+    name: "Prof. Dr. Md. Lutfor Rahman",
     imageSrc: img1,
-    committee: "Board of Directors Committee",
+    committee: "",
+    designation: 'Director (Program)'
   },
   {
-    name: "Advocate Mohammad Ali - Director (Program)",
+    name: "Advocate Mohammad Ali",
     imageSrc: img1,
-    committee: "Board of Directors Committee",
+    committee: "",
+    designation: 'Director (Program)'
   },
   {
-    name: "Amirul Islam Kagoj - Director (Program)",
+    name: "Amirul Islam Kagoj",
     imageSrc: img1,
-    committee: "Board of Directors Committee",
+    committee: "",
+    designation: 'Director (Program)'
   },
   {
-    name: "Barrister Zaima Rahman - Director",
+    name: "Barrister Zaima Rahman",
     imageSrc: zaima,
-    committee: "Board of Directors Committee",
+    committee: "",
+    designation: 'Director'
   },
   {
-    name: " Prof. Dr. ABM Obaidul Islam- Director ",
+    name: " Prof. Dr. ABM Obaidul Islam",
     imageSrc: img1,
-    committee: "Board of Directors Committee",
+    committee: "",
+    designation: 'Director '
   },
   {
-    name: "Agriculturist Anwarun Nabi Mojumdar Babla- Director ",
+    name: "Agriculturist Anwarun Nabi Mojumdar Babla ",
     imageSrc: img1,
-    committee: "Board of Directors Committee",
+    committee: "",
+    designation: 'Director'
   },
   {
-    name: "Agriculturist Shamimur Rahman Shamim- Director",
+    name: "Agriculturist Shamimur Rahman Shamim",
     imageSrc: img1,
-    committee: "Board of Directors Committee",
+    committee: "",
+    designation: 'Director'
   },
   {
-    name: "Barrister Mir Helal - Director",
+    name: "Barrister Mir Helal",
     imageSrc: img1,
-    committee: "Board of Directors Committee",
+    committee: "",
+    designation: 'Director'
   },
   {
-    name: "Prof. Dr. Sheikh Monir Uddin - Director",
+    name: "Prof. Dr. Sheikh Monir Uddin",
     imageSrc: img1,
-    committee: "Board of Directors Committee",
+    committee: "",
+    designation: 'Director'
   },
   {
-    name: "Engineer AKM Zahirul Islam - Director",
+    name: "Engineer AKM Zahirul Islam",
     imageSrc: img1,
-    committee: "Board of Directors Committee",
+    committee: "",
+    designation: 'Director'
   },
   {
-    name: "Agriculturist Shafiul Alam Didar- Director",
+    name: "Agriculturist Shafiul Alam Didar",
     imageSrc: img1,
-    committee: "Board of Directors Committee",
+    committee: "",
+    designation: 'Director'
   },
   {
-    name: "Engineer Umasha Umain Moni Chowdhury - Director",
+    name: "Engineer Umasha Umain Moni Chowdhury",
     imageSrc: img1,
-    committee: "Board of Directors Committee",
+    committee: "",
+    designation: 'Director'
   },
   {
-    name: "Journalist Hafiz Al Asad Saiyed Khan - Director",
+    name: "Journalist Hafiz Al Asad Saiyed Khan",
     imageSrc: img1,
-    committee: "Board of Directors Committee",
+    committee: "",
+    designation: 'Director'
   },
 
   //advisor counsilor 
 
   {
-    name: "Dr. A.S. Haider Parvez- Advisor",
+    name: "Dr. A.S. Haider Parvez",
     imageSrc: img1,
     committee: "Advisory Council",
-  },
-  {
-    name: "Prof. Dr. Harun Al Rashid- Advisor",
-    imageSrc: img1,
-    committee: "Advisory Council",
-  },
-  {
-    name: "Agriculturist Prof. Dr. Abdul Karim- Advisor",
-    imageSrc: img1,
-    committee: "Advisory Council",
-  },
-  {
-    name: "Prof. Dr. Md. Abdur Rashid- Advisor",
-    imageSrc: img1,
-    committee: "Advisory Council",
-  },
-  {
-    name: "Barrister Nasir Uddin Asim - Advisor",
-    imageSrc: img1,
-    committee: "Advisory Council",
-  },
-  {
-    name: "Prof. Dr. Mohammad Almojadded Al-Fesani - Advisor",
-    imageSrc: img1,
-    committee: "Advisory Council",
-  },
-  {
-    name: "Engineer Alamgir Hasin Ahmed- Advisor",
-    imageSrc: img1,
-    committee: "Advisory Council",
-  },
-  // Working Body Committee
-  {
-    name: "Prof Dr. Forhad Haleem Donar",
-    imageSrc: donar,
-    committee: "Working Body Committee",
-  },
-  {
-    name: "Dr. A S Haider Parveze",
-    imageSrc: img1,
-    committee: "Working Body Committee",
+    designation: 'Advisor'
   },
   {
     name: "Prof. Dr. Harun Al Rashid",
     imageSrc: img1,
-    committee: "Working Body Committee",
+    committee: "Advisory Council",
+    designation: 'Advisor'
   },
   {
-    name: "Dr. Warse Simky",
+    name: "Agriculturist Prof. Dr. Abdul Karim",
     imageSrc: img1,
-    committee: "Working Body Committee",
+    committee: "Advisory Council",
+    designation: 'Advisor'
   },
   {
-    name: "Dr. Shah Mohammad Amanullah",
+    name: "Prof. Dr. Md. Abdur Rashid",
     imageSrc: img1,
-    committee: "Working Body Committee",
+    committee: "Advisory Council",
+    designation: 'Advisor'
   },
   {
-    name: "Prof Dr. Morshed Hasan Khan",
+    name: "Barrister Nasir Uddin Asim",
     imageSrc: img1,
-    committee: "Working Body Committee",
+    committee: "Advisory Council",
+    designation: 'Advisor'
   },
   {
-    name: "Prof. Dr. Al Mozaddedi Al Fasani",
+    name: "Prof. Dr. Mohammad Almojadded Al-Fesani",
     imageSrc: img1,
-    committee: "Working Body Committee",
+    committee: "Advisory Council",
+    designation: 'Advisor'
   },
   {
-    name: "Prof Dr. Abdur Rashid",
+    name: "Engineer Alamgir Hasin Ahmed",
     imageSrc: img1,
-    committee: "Working Body Committee",
+    committee: "Advisory Council",
+    designation: 'Advisor'
   },
-  {
-    name: "Prof. Dr. Motiur Rahman Gazzali",
-    imageSrc: img1,
-    committee: "Working Body Committee",
-  },
-  {
-    name: "Prof. Dr. Abul Hasnat Mohammad Shamim",
-    imageSrc: img1,
-    committee: "Working Body Committee",
-  },
-  {
-    name: "Engr. Md. Mahbub Alam",
-    imageSrc: img1,
-    committee: "Working Body Committee",
-  },
-  {
-    name: "Engr. Alamgir Hasin Ahmed",
-    imageSrc: img1,
-    committee: "Working Body Committee",
-  },
-  {
-    name: "Engr. Ashraf Reza Faridy Zelany",
-    imageSrc: img1,
-    committee: "Working Body Committee",
-  },
-  {
-    name: "Engr. Mahmudur Rahman Manna",
-    imageSrc: img1,
-    committee: "Working Body Committee",
-  },
-  {
-    name: "Engr. Umasha Umayon Moni Chowdhury",
-    imageSrc: img1,
-    committee: "Working Body Committee",
-  },
-  // Rehabilitation Committee
-  {
-    name: "Dr. Shah Mohammad Amanullah - (Convenor)",
-    imageSrc: img1,
-    committee: "Rehabilitation Committee",
-  },
-  // Overseas Committee
-  {
-    name: "Dr. Zobaida Rahman - (Chief Advisor)",
-    imageSrc: img1,
-    committee: "Overseas Committee",
-  },
-  {
-    name: "Prof. Dr. Abdul Karim - (Convenor)",
-    imageSrc: img1,
-    committee: "Overseas Committee",
-  },
-  // Research Committee
-  {
-    name: "Prof. Dr. Abdul Karim - (Convenor)",
-    imageSrc: img1,
-    committee: "Research Committee",
-  },
+  // Working Body Committee
+  // {
+  //   name: "Prof Dr. Forhad Haleem Donar",
+  //   imageSrc: donar,
+  //   committee: "Working Body Committee",
+  // },
+  // {
+  //   name: "Dr. A S Haider Parveze",
+  //   imageSrc: img1,
+  //   committee: "Working Body Committee",
+  // },
+  // {
+  //   name: "Prof. Dr. Harun Al Rashid",
+  //   imageSrc: img1,
+  //   committee: "Working Body Committee",
+  // },
+  // {
+  //   name: "Dr. Warse Simky",
+  //   imageSrc: img1,
+  //   committee: "Working Body Committee",
+  // },
+  // {
+  //   name: "Dr. Shah Mohammad Amanullah",
+  //   imageSrc: img1,
+  //   committee: "Working Body Committee",
+  // },
+  // {
+  //   name: "Prof Dr. Morshed Hasan Khan",
+  //   imageSrc: img1,
+  //   committee: "Working Body Committee",
+  // },
+  // {
+  //   name: "Prof. Dr. Al Mozaddedi Al Fasani",
+  //   imageSrc: img1,
+  //   committee: "Working Body Committee",
+  // },
+  // {
+  //   name: "Prof Dr. Abdur Rashid",
+  //   imageSrc: img1,
+  //   committee: "Working Body Committee",
+  // },
+  // {
+  //   name: "Prof. Dr. Motiur Rahman Gazzali",
+  //   imageSrc: img1,
+  //   committee: "Working Body Committee",
+  // },
+  // {
+  //   name: "Prof. Dr. Abul Hasnat Mohammad Shamim",
+  //   imageSrc: img1,
+  //   committee: "Working Body Committee",
+  // },
+  // {
+  //   name: "Engr. Md. Mahbub Alam",
+  //   imageSrc: img1,
+  //   committee: "Working Body Committee",
+  // },
+  // {
+  //   name: "Engr. Alamgir Hasin Ahmed",
+  //   imageSrc: img1,
+  //   committee: "Working Body Committee",
+  // },
+  // {
+  //   name: "Engr. Ashraf Reza Faridy Zelany",
+  //   imageSrc: img1,
+  //   committee: "Working Body Committee",
+  // },
+  // {
+  //   name: "Engr. Mahmudur Rahman Manna",
+  //   imageSrc: img1,
+  //   committee: "Working Body Committee",
+  // },
+  // {
+  //   name: "Engr. Umasha Umayon Moni Chowdhury",
+  //   imageSrc: img1,
+  //   committee: "Working Body Committee",
+  // },
+  // // Rehabilitation Committee
+  // {
+  //   name: "Dr. Shah Mohammad Amanullah - (Convenor)",
+  //   imageSrc: img1,
+  //   committee: "Rehabilitation Committee",
+  // },
+  // // Overseas Committee
+  // {
+  //   name: "Dr. Zobaida Rahman - (Chief Advisor)",
+  //   imageSrc: img1,
+  //   committee: "Overseas Committee",
+  // },
+  // {
+  //   name: "Prof. Dr. Abdul Karim - (Convenor)",
+  //   imageSrc: img1,
+  //   committee: "Overseas Committee",
+  // },
+  // // Research Committee
+  // {
+  //   name: "Prof. Dr. Abdul Karim - (Convenor)",
+  //   imageSrc: img1,
+  //   committee: "Research Committee",
+  // },
 ];
 
 // Group profiles by committee
@@ -275,14 +304,16 @@ const ProfileCard = ({
   name,
   imageSrc,
   committee,
+  designation,
 }: {
   name: string;
   imageSrc: string | StaticImageData;
   committee: string;
+  designation:string
 }) => {
   return (
-    <div className="bg-white shadow-lg rounded overflow-hidden hover:shadow-xl transform transition-transform duration-300 hover:scale-105 lg:w-64 md:w-60 w-full h-72">
-      <div className="relative w-40 h-40 mx-auto mt-5">
+    <div className="bg-white shadow-lg rounded overflow-hidden hover:shadow-xl transform transition-transform duration-300 hover:scale-105 lg:w-72 md:w-60 w-full h-72">
+      <div className="relative w-48 h-40 mx-auto mt-5">
         <Image
           src={imageSrc}
           alt={name}
@@ -291,8 +322,9 @@ const ProfileCard = ({
           className="rounded-full"
         />
       </div>
-      <div className="p-4 text-center">
+      <div className="p-3 text-center">
         <h3 className="text-[16px] font-semibold">{name}</h3>
+        <h3 className="text-[16px] font-semibold">{designation}</h3>
         {/* <p className="text-gray-600">{committee}</p> */}
       </div>
     </div>
@@ -320,6 +352,8 @@ const Page = () => {
                     name={profile.name}
                     imageSrc={profile.imageSrc}
                     committee={profile.committee}
+                    designation={profile.designation}
+
                   />
                 ))}
               </div>
