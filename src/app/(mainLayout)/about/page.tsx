@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
-import Image from "next/image";
+
 import React from "react";
-import img from "../../../../src/assets/images/tarek-rahman/tarek.jpg";
 import Container from "@/components/share/Container";
 import AboutBanner from "./_components/AboutBanner";
 import {
@@ -14,9 +13,7 @@ import {
   School,
   Campaign,
 } from "@mui/icons-material";
-import TrustedCharity from "@/components/ui/HomePage/TrustedCharity/TrustedCharity";
 import HelpingVirtue from "@/components/ui/HomePage/HelpingVirtue/HelpingVirtue";
-import Volunteer from "@/components/ui/HomePage/Volunteer/Volunteer";
 import History from "@/components/ui/HomePage/History/History";
 import ProgrammSection from "../program/_components/ProgrammSection";
 

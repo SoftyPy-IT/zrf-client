@@ -8,7 +8,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 const HelpingVirtue = () => {
   const [activeTab, setActiveTab] = useState("Mission");
 
-  const tabs = ["About Us"];
+  const tabs = ["About Us","Mission","Vission"];
 
   return (
     <>

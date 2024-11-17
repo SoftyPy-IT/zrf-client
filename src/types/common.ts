@@ -44,4 +44,3 @@ type Option = {
   label: string;
   subCategories?: Option[];
 };
-

@@ -21,7 +21,7 @@ const Footer = () => {
   const [open, setOpen] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const handleSubmit = () => {
-    console.log();
+
   };
 
   const buttonStyle = { width: '100px', height: '30px', borderRadius: '10px', color: 'white', background: '#E3C80D', padding: '0px', }

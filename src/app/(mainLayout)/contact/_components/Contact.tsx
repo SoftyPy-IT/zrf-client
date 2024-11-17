@@ -26,7 +26,7 @@ const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const Contact = () => {
   const handleSubmit = () => {
-    console.log();
+
   };
   return (
     <>

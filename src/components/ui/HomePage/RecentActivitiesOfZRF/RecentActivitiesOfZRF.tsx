@@ -1,170 +1,42 @@
+
+import { useLanguage } from "@/provider/LanguageProvider";
+import RecentActivity from "./RecentActivity";
 import React from "react";
-import Container from "@/components/share/Container";
-import news1 from "../../../../../src/assets/images/activities/01.jpg";
-import news2 from "../../../../../src/assets/images/activities/02.jpg";
-import news3 from "../../../../../src/assets/images/activities/03.jpg";
-import news4 from "../../../../../src/assets/images/activities/04.jpg";
-import Image from "next/image";
-import Link from "next/link";
-import EastIcon from "@mui/icons-material/East";
+import { TActivity } from "@/types/type";
 
-const newsItems = [
-  {
-    id: 1,
-    image: news1,
-    title:
-      "A month-long medical camp is being conducted in flood-affected areas by Ziaur Rahman Foundation and Doctors Association of Bangladesh (DAB).",
-    description:
-      "A medical camp has been organized in Feni district to provide medical services to over a thousand people, under the initiative of Ziaur Rahman Foundation and the Doctors Association of Bangladesh (DAB). The preparation team, along with the necessary medicines, has already arrived in Feni.",
-    date: "September 17, 2024",
-  },
-  {
-    id: 2,
-    image: news2,
-    title:
-      "A month-long medical camp is being conducted in flood-affected areas by Ziaur Rahman Foundation and Doctors Association of Bangladesh (DAB).",
-    description:
-      "Under the directive of BNP’s Acting Chairman and President of Ziaur Rahman Foundation, Mr. Tarique Rahman, ongoing medical services and medicine distribution are being provided for sick patients at the Sadar Hospital in flood-affected Feni district. Today, renowned pediatrician Dr. Salahuddin Mahmood, along with Dr. M.R. Hasan, Dr. Munnasir Zaman Remo, Dr. Imam Hasan, Dr. Saurav, and Dr. Rakib, have provided their services as part of this initiative by Ziaur Rahman Foundation and DAB.",
-    date: "September 10, 2024",
-  },
-  {
-    id: 3,
-    image: news3,
-    title:
-      "A month-long medical camp is being conducted in flood-affected areas by Ziaur Rahman Foundation and Doctors Association of Bangladesh (DAB).",
-    description:
-      "Abdullah Al Mamun, a Master's student in Political Science at Magura Hossain Shaheed Suhrawardy College, was injured by police gunfire during an anti-discrimination student protest on August 5 in Uttara East. He was admitted to Uttara Women's Medical College Hospital in critical condition, and an emergency tracheostomy was performed to save his life. Following the directive of BNP's Acting Chairman and President of Ziaur Rahman Foundation, Mr. Tarique Rahman, the foundation, under the supervision of Executive Director Dr. Farhad Halim Donar and with support from Dr. Shah Muhammad Amanullah and Dr. Parvez Reza Kakon, has taken full responsibility for Mamun’s treatment in ICU. Foundation coordinators Dr. Sajid Imtiaz, Dr. Shaon Bin Rahman, and Dr. Rafsan Jani Abir are overseeing his care as he battles for recovery.",
-    date: "August 5, 2024",
-  },
-  {
-    id: 4,
-    image: news4,
-    title:
-      "A month-long medical camp is being conducted in flood-affected areas by Ziaur Rahman Foundation and Doctors Association of Bangladesh (DAB).",
-    description:
-      "Under the directive of BNP's Acting Chairman, Mr. Tarique Rahman, the Ziaur Rahman Foundation and Doctors Association of Bangladesh (DAB), led by Professor Dr. Farhad Halim Donar, Advisor to the BNP Chairperson and Executive Director of Ziaur Rahman Foundation, are traveling to distribute relief supplies to flood-affected and vulnerable people in Feni district as part of BNP's ongoing support.",
-    date: "August 25, 2024",
-  },
-];
-
-const sidebar = [
-  {
-    id: 1,
-    image: news1,
-    title: "Shaheed Ziaur Rahman Children's Hospital",
-    description:
-      "The Ziaur Rahman Foundation is a humanitarian and welfare organization established in memory of Shaheed President Ziaur Rahman, the proclaimer of Bangladesh's independence and a great freedom fighter.",
-    date: "April 10, 2024",
-  },
-  {
-    id: 2,
-    image: news2,
-    title: "Shaheed Ziaur Rahman Children's Hospital",
-    description:
-      "The Ziaur Rahman Foundation is a humanitarian and welfare organization established in memory of Shaheed President Ziaur Rahman, the proclaimer of Bangladesh's independence and a great freedom fighter.",
-    date: "April 10, 2024",
-  },
-  {
-    id: 3,
-    image: news3,
-    title: "Shaheed Ziaur Rahman Children's Hospital",
-    description:
-      "The Ziaur Rahman Foundation is a humanitarian and welfare organization established in memory of Shaheed President Ziaur Rahman, the proclaimer of Bangladesh's independence and a great freedom fighter.",
-    date: "April 10, 2024",
-  },
-  {
-    id: 4,
-    image: news4,
-    title: "Shaheed Ziaur Rahman Children's Hospital",
-    description:
-      "The Ziaur Rahman Foundation is a humanitarian and welfare organization established in memory of Shaheed President Ziaur Rahman, the proclaimer of Bangladesh's independence and a great freedom fighter.",
-    date: "April 10, 2024",
-  },
-];
 
 const RecentActivitiesOfZRF = () => {
+  const [activityData, setActivityData] = React.useState<TActivity[]>([]);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+  const { language } = useLanguage()
+  React.useEffect(() => {
+    const fetchPrisonData = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/activity?limit=1000`, {
+          cache: 'no-store'
+        });
+        const data = await response.json();
+        setActivityData(data.data?.activities || []);
+
+      } catch (err) {
+        setError('Failed to fetch welcome data.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPrisonData();
+  }, []);
+
+  if (loading) {
+    return <p>Loading</p>;
+  }
+
   return (
-    <Container className="my-20">
-      <h1 className="lg:text-3xl text-2xl font-bold uppercase">Recent Activities of ZRF</h1>
-      <div className="w-28 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-5"></div>
-      <div className="lg:flex gap-10">
-        {/* Main News Content */}
-        <div className="w-full">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:h-[500px]">
-            {newsItems.slice(0, 2).map((data) => (
-              <div
-                key={data.id}
-                className="relative shadow-xl bg-white overflow-hidden group hover:text-white"
-              >
-                <div className="relative">
-                  <Image
-                    src={data.image}
-                    alt={data.title}
-                    className="h-[250px] w-full object-cover transition-transform duration-500 transform group-hover:scale-105"
-                  />
-                </div>
-
-                {/* Gradient overlay with opacity */}
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-green-600 via-yellow-600 to-transparent transition-transform transform translate-y-full group-hover:translate-y-0 duration-1000 ease-in-out h-[340px] md:h-[300px] lg:h-[500px]"></div>
-
-                <div className="p-5 space-y-3 relative z-10">
-                  <h3 className="text-xl font-bold">
-                    {data.title.slice(0, 60)}...
-                  </h3>
-                  <p className="text-justify">
-                    {data.description.slice(0, 150)}...
-                  </p>
-                  <div className="flex justify-between">
-                    <p>{data.date}</p>
-                    <Link href={`/recent-activities-of-zrf/${data.id}`}>
-                      <button className="hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-1 hover:text-white rounded-full uppercase text-xs border border-green-600">
-                        Read More <EastIcon fontSize="small" />
-                      </button>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Sidebar */}
-        <div className=" lg:w-[500px] w-full">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-5 lg:h-[500px] bg-gray-100 p-5 lg:mt-0 md:mt-5 mt-5">
-            {sidebar.map((data) => (
-              <div
-                key={data.id}
-                className="flex items-center gap-5 bg-white p-3 rounded shadow-md transition-transform duration-500 transform hover:scale-105"
-              >
-                <Image
-                  src={data.image}
-                  alt={data.title}
-                  className="w-20 object-cover rounded transition-opacity duration-500"
-                />
-                <div>
-                  <h3 className="text-sm font-bold">{data.title}</h3>
-                  {/* <p className="text-sm text-gray-600">{data.date}</p> */}
-                  <div className="flex justify-end">
-                    <Link href="/recent-activities-of-zrf">
-                      <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-2 text-white rounded-full uppercase text-xs">
-                        <EastIcon />
-                      </button>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="mt-7 flex justify-end">
-            <Link href="/recent-activities-of-zrf">
-              <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-2 text-white rounded-full uppercase text-sm">
-                See All <EastIcon />
-              </button>
-            </Link>
-          </div>
-        </div>
-      </div>
-    </Container>
+    <>
+      <RecentActivity language={language} activityData={activityData} />
+    </>
   );
 };
 

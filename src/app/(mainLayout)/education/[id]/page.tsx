@@ -54,7 +54,7 @@ const newsData = [
 
 const DescriptionPage = () => {
   const handleSubmit = () => {
-    console.log();
+
   };
   return (
     <>
