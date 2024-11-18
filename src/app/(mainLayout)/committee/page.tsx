@@ -290,7 +290,7 @@ const profiles = [
   // },
 ];
 
-// Group profiles by committee
+
 const committees = profiles.reduce((acc, profile) => {
   if (!acc[profile.committee]) {
     acc[profile.committee] = [];
@@ -299,7 +299,7 @@ const committees = profiles.reduce((acc, profile) => {
   return acc;
 }, {} as Record<string, typeof profiles>);
 
-// Single Profile Card Component
+
 const ProfileCard = ({
   name,
   imageSrc,
@@ -325,20 +325,18 @@ const ProfileCard = ({
       <div className="p-3 text-center">
         <h3 className="text-[16px] font-semibold">{name}</h3>
         <h3 className="text-[16px] font-semibold">{designation}</h3>
-        {/* <p className="text-gray-600">{committee}</p> */}
+   
       </div>
     </div>
   );
 };
 
-// Main Profiles Page Component
 const Page = () => {
   return (
     <div>
       <CommitteeBanner />
       <div className="bg-gray-100">
         <Container className="py-16">
-          {/* Loop through each committee */}
           {Object.keys(committees).map((committeeName) => (
             <div key={committeeName} className="mb-16">
               <h2 className="text-3xl font-semibold text-center uppercase">

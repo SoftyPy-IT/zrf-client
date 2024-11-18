@@ -7,7 +7,8 @@ import news4 from "../../../../src/assets/images/activities/04.jpg";
 import Image from "next/image";
 import Link from "next/link";
 import EastIcon from "@mui/icons-material/East";
-import Banner from "./_components/Banner";
+import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
+
 
 const newsItems = [
   {
@@ -51,7 +52,7 @@ const newsItems = [
 const page = () => {
   return (
     <div>
-      <Banner />
+      <CommonBanner title="Programm" />
       <Container className="my-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {newsItems.map((data) => (

@@ -230,4 +230,28 @@ body {
   }
 }
 
-/*===== // Responsive Vertical Timeline =====*/
+.timeline-article {
+  display: flex;
+justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.content-left-container,
+.content-right-container {
+  flex: 1;
+}
+
+.content-left,
+.content-right {
+  padding: 20px;
+}
+
+.contentRightImgWrap {
+  margin-top: 10px;
+}
+
+.meta-date {
+  margin-top: 10px;
+  font-size: 14px;
+  text-align: center;
+}

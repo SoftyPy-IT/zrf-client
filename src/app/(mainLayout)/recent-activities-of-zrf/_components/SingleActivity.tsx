@@ -99,6 +99,7 @@ const renderContent = (content: string) => {
 
 const SingleActivity = ({ singleActivityData, language }: SingleActivityProps) => {
 
+  
   return (
     <div>
       <CommonBanner title={language === 'ENG' ? "Recent Activities of ZRF" : 'জেডআরএফ এর সাম্প্রতিক কার্যক্রম'} />

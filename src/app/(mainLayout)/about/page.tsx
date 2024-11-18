@@ -2,7 +2,6 @@
 
 import React from "react";
 import Container from "@/components/share/Container";
-import AboutBanner from "./_components/AboutBanner";
 import {
   LocalHospital,
   VolunteerActivism,
@@ -13,9 +12,10 @@ import {
   School,
   Campaign,
 } from "@mui/icons-material";
-import HelpingVirtue from "@/components/ui/HomePage/HelpingVirtue/HelpingVirtue";
 import History from "@/components/ui/HomePage/History/History";
 import ProgrammSection from "../program/_components/ProgrammSection";
+import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
+import AboutTopSection from "@/components/ui/HomePage/HelpingVirtue/AboutTopSection";
 
 
 
@@ -68,17 +68,16 @@ const AboutUs = () => {
 
   return (
     <div>
-      <AboutBanner />
+      <CommonBanner title="About Us " />
       <Container>
-        <HelpingVirtue />
-        {/* <Volunteer/> */}
+        <AboutTopSection />
+  
         <section className="sectionMargin">
           <h2 className="text-center text-3xl font-bold">Remarkable Work</h2>
           <div className="w-44 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-7 mx-auto"></div>
           <ProgrammSection />
         </section>
         <History />
-        {/* Call to Action Section */}
         <section className="py-16 my-16 bg-green-600 text-white text-center">
           <h2 className="text-3xl font-bold uppercase">Join Us </h2>
           <p className="mt-4">

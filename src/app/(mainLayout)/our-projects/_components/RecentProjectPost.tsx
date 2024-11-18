@@ -3,25 +3,25 @@ import { useLanguage } from "@/provider/LanguageProvider";
 
 import React from "react";
 import { TActivity } from "@/types/type";
-import LatestNewsFetchData from "./LatestNewsFetchData";
+import RecentPostFetchData from "./RecentPostFetchData";
 
 
-const Programm = () => {
-  const [newsData, setNewsData] = React.useState<TActivity[]>([]);
+const RecentProjectPost = () => {
+  const [projectData, setProjectData] = React.useState<TActivity[]>([]);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
   const { language } = useLanguage()
   React.useEffect(() => {
     const fetchPrisonData = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/activity?limit=1000`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/project?limit=1000`, {
           cache: 'no-store'
         });
         const data = await response.json();
-        setNewsData(data.data?.activities || []);
+        setProjectData(data.data?.projects || []);
 
       } catch (err) {
-        setError('Failed to fetch news data.');
+        setError('Failed to fetch project data.');
       } finally {
         setLoading(false);
       }
@@ -36,10 +36,9 @@ const Programm = () => {
 
   return (
     <>
-      <LatestNewsFetchData language={language} newsData={newsData} />
+      <RecentPostFetchData language={language} projectData={projectData} />
     </>
   );
-
 };
 
-export default Programm;
+export default RecentProjectPost;

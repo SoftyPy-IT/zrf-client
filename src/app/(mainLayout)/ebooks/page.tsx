@@ -1,73 +1,38 @@
+'use client'
 import React from "react";
 import Container from "@/components/share/Container";
 import Image from "next/image";
-import book1 from "../../../../src/assets/images/ebooks/book.jpeg";
-import book2 from "../../../../src/assets/images/ebooks/book2.jpeg";
-import book3 from "../../../../src/assets/images/ebooks/book3.jpeg";
-import book4 from "../../../../src/assets/images/ebooks/book4.jpeg";
-import book5 from "../../../../src/assets/images/ebooks/book5.jpeg";
-import book6 from "../../../../src/assets/images/ebooks/book6.jpeg";
 import Ebook from "./_components/Ebook";
+import { useEbookData } from "@/hooks/useEbookData";
 
+function EBooks() {
+  const { ebookData, loading, error } = useEbookData();
 
-// Sample eBooks data
-const eBooks = [
-  {
-    id: 1,
-    title: "The Liberation War",
-    description: "An in-depth analysis of Bangladesh’s liberation war.",
-    image: book1,
-  },
-  {
-    id: 2,
-    title: "The Ziaur Rahman Legacy",
-    description: "A book about the legacy and impact of Ziaur Rahman.",
-    image: book2,
-  },
-  {
-    id: 3,
-    title: "Healthcare Revolution",
-    description: "A look into the healthcare reforms during the 1980s.",
-    image: book3,
-  },
-  {
-    id: 4,
-    title: "Bangladesh's Growth Story",
-    description: "An economic history of Bangladesh post-independence.",
-    image: book4,
-  },
-  {
-    id: 5,
-    title: "Bangladesh's Growth Story",
-    description: "An economic history of Bangladesh post-independence.",
-    image: book5,
-  },
-  {
-    id: 6,
-    title: "Bangladesh's Growth Story",
-    description: "An economic history of Bangladesh post-independence.",
-    image: book6,
-  },
-];
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
-const EBooks = () => {
   return (
     <div>
       <Ebook />
       <Container>
         <div className="my-20">
-          {/* Grid layout for eBooks */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-            {eBooks.map((book) => (
-              <div key={book.id} className="bg-white p-5 shadow-lg border">
+            {ebookData?.map((book) => (
+              <div key={book._id} className="bg-white p-5 shadow-lg border">
                 <div className="relative w-full h-[450px] overflow-hidden group">
-                  <Image
-                    src={book.image}
-                    alt={book.title}
-                    // layout="fill"
-                    // objectFit="cover"
-                    className="group-hover:scale-110 transition-transform duration-500 ease-in-out"
-                  />
+                  {book.images?.[0] ? (
+                    <Image
+                      src={book.images[0]}
+                      alt={book.title || "E-Book"}
+                      width={300}
+                      height={450}
+                      className="group-hover:scale-110 transition-transform duration-500 ease-in-out"
+                    />
+                  ) : (
+                    <div className="flex items-center justify-center w-full h-full bg-gray-200 text-gray-500">
+                      No Image Available
+                    </div>
+                  )}
                 </div>
               </div>
             ))}

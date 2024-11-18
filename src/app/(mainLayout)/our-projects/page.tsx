@@ -7,7 +7,8 @@ import image4 from "../../../../src/assets/images/projects/image4.jpg";
 import Link from "next/link";
 import Container from "@/components/share/Container";
 import EastIcon from "@mui/icons-material/East";
-import Banner from "./_components/Banner";
+import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
+
 
 const page = () => {
   const cardsData = [
@@ -42,7 +43,7 @@ const page = () => {
   ];
   return (
     <div>
-      <Banner />
+      <CommonBanner title="Our Project" />
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-16">
           {cardsData.map((data, index) => (

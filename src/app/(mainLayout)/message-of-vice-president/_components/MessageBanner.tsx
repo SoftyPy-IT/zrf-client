@@ -2,16 +2,20 @@ import React from "react";
 import "./PresidentBanner.css";
 import Container from "@/components/share/Container";
 
-const NewsBanner = () => {
+type TProps = {
+  title: string,
+  text:string,
+}
+const MessageBanner = ({title, text}:TProps) => {
   return (
     <div className="president-banner">
       <Container>
         <div className="content">
           <div className="text-center">
             <h1 className="lg:text-5xl text-3xl font-bold uppercase">
-              Message from the President
+             {title}
             </h1>
-            <p>Ziaur Rahman Foundation</p>
+            <p>{text}</p>
           </div>
         </div>
       </Container>
@@ -19,4 +23,5 @@ const NewsBanner = () => {
   );
 };
 
-export default NewsBanner;
+export default MessageBanner;
+

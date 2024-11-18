@@ -1,79 +1,37 @@
-import Container from "@/components/share/Container";
-import {
-  School,
-  HealthAndSafety,
-  VolunteerActivism,
-  LocalLibrary,
-  Agriculture,
-  Handshake,
-  Water,
-  Forest,
-} from "@mui/icons-material";
-import ProgramBanner from "./ProgramBanner";
+'use client'
 
+import Container from "@/components/share/Container";
+import { useProgrammData } from "@/hooks/useProgrammData";
+import { TProgramm } from "@/types/type";
+import { School, HealthAndSafety } from "@mui/icons-material";
+import ThunderstormIcon from "@mui/icons-material/Thunderstorm";
+import WaterIcon from "@mui/icons-material/Water";
+import { useLanguage } from "@/provider/LanguageProvider";
 const ProgrammSection = () => {
-  const programs = [
-    {
-      title: "Education for All",
-      description:
-        "Providing educational opportunities for underprivileged children.",
-      icon: <School fontSize="large" className="text-blue-500" />,
-    },
-    {
-      title: "Healthcare Initiative",
-      description: "Providing medical assistance and healthcare services.",
-      icon: <HealthAndSafety fontSize="large" className="text-green-500" />,
-    },
-    {
-      title: "Volunteer Programs",
-      description: "Engaging volunteers in various social initiatives.",
-      icon: <VolunteerActivism fontSize="large" className="text-red-500" />,
-    },
-    {
-      title: "Library Services",
-      description:
-        "Establishing libraries and educational resources in rural areas",
-      icon: <LocalLibrary fontSize="large" className="text-yellow-500" />,
-    },
-    {
-      title: "Agricultural Development Project",
-      description:
-        "Supporting farmers and providing modern agricultural technology.",
-      icon: <Agriculture fontSize="large" className="text-green-500" />,
-    },
-    {
-      title: "Water Conservation Initiative ",
-      description:
-        "Ensuring safe water supply and promoting water conservation.",
-      icon: <Water fontSize="large" className="text-blue-400" />,
-    },
-    {
-      title: "Forest Conservation Program",
-      description:
-        "Preserving forests and participating in eco-friendly initiatives",
-      icon: <Forest fontSize="large" className="text-green-500" />,
-    },
-    {
-      title: "Collaboration Program",
-      description:
-        "Partnering with various institutions and organizations for social development.",
-      icon: <Handshake fontSize="large" className="text-purple-500" />,
-    },
-  ];
+  const { programmData } = useProgrammData()
+  const { language } = useLanguage()
 
   return (
     <div>
-      
+
       <Container className="my-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 text-center">
-          {programs.map((program, index) => (
+          {programmData?.map((program: TProgramm, index: number) => (
             <div
-              key={index}
+              key={program._id}
               className="bg-white p-5 rounded shadow-lg flex flex-col items-center transform transition-transform duration-300 hover:scale-105"
             >
-              <div className="mb-4">{program.icon}</div>
-              <h3 className="text-xl font-semibold mb-2">{program.title}</h3>
-              <p className="text-gray-600">{program.description}</p>
+              <div className="mb-4">
+                {
+                  index === 0 ? <School fontSize="large" className="text-green-500" /> : index === 1 ? <HealthAndSafety fontSize="large" className="text-green-500" /> : index === 2 ? <ThunderstormIcon fontSize="large" className="text-blue-500" /> : index === 3 ? <WaterIcon fontSize="large" className="text-blue-500" /> : null
+                }
+
+              </div>
+              <h3 className="text-xl font-semibold mb-2">
+                {language === 'ENG' ? program.english_title : program.bangla_title}
+
+              </h3>
+              <p className="text-gray-600">{language === 'ENG' ? program.english_short_description : program.bangla_short_description}</p>
             </div>
           ))}
         </div>
