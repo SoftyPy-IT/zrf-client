@@ -1,14 +1,21 @@
+'use client'
+
 import React from 'react';
 import Education from './_components/Education';
 import Banner from './_components/Banner';
+import { useLanguage } from '@/provider/LanguageProvider';
+import { useWhatwedoData } from '@/hooks/useWhatwedoData';
 
-const page = () => {
+const EducationPage = () => {
+    const {language} = useLanguage()
+    const {whatWedoData} = useWhatwedoData()
     return (
         <div>
             <Banner/>
-            <Education/>
+            <Education whatWedoData={whatWedoData} language={language}/>
         </div>
     );
 };
 
-export default page;
+
+export default EducationPage;

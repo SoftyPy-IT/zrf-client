@@ -1,18 +1,19 @@
-'use client'
 import React from 'react';
-
 import { useLanguage } from '@/provider/LanguageProvider';
 import { useWhatwedoData } from '@/hooks/useWhatwedoData';
-import HealthServices from './_components/HealthServices';
 
-const Page = () => {
+import CovidRecentPost from './CovidRecentPost';
+
+const CovidSidebar = () => {
     const { language } = useLanguage()
     const { whatWedoData } = useWhatwedoData()
+
     return (
-        <div>
-            <HealthServices whatWedoData={whatWedoData} language={language} />
-        </div>
+        <>
+            <CovidRecentPost
+                whatWedoData={whatWedoData} language={language} />
+        </>
     );
 };
 
-export default Page;
+export default CovidSidebar;

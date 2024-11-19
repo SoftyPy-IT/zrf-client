@@ -1,178 +1,180 @@
 "use client";
 import Image from "next/image";
-import img1 from "../../../../src/assets/images/ziaur-rahman/image (1).jpg";
-import img2 from "../../../../src/assets/images/ziaur-rahman/image (15).jpg";
-import img3 from "../../../../src/assets/images/ziaur-rahman/image (16).jpg";
-import img4 from "../../../../src/assets/images/ziaur-rahman/image (5).jpg";
-import img5 from "../../../../src/assets/images/ziaur-rahman/image (6).jpg";
-import img6 from "../../../../src/assets/images/ziaur-rahman/army.jpg";
-import img7 from "../../../../src/assets/images/ziaur-rahman/image (8).jpg";
-import img8 from "../../../../src/assets/images/ziaur-rahman/image (9).jpg";
-import img9 from "../../../../src/assets/images/ziaur-rahman/image (14).jpg";
 import img10 from "../../../../src/assets/images/ziaur-rahman/ziaur-rahman.jpg";
 import Container from "@/components/share/Container";
-import { useState } from "react";
+import React, { useState } from "react";
 import Modal from "./_components/Modal";
+import Biography from "./_components/Biography";
+import { useLanguage } from "@/provider/LanguageProvider";
+import { TIntroduction } from "@/types/type";
+import ReactHtmlParser from "react-html-parser";
 
+const renderContent = (content: string) => {
+  const parsedContent = ReactHtmlParser(content);
+
+  return parsedContent.map((element, index) => {
+    if (element.type === "h1") {
+      return (
+        <h1 key={index} className="text-2xl font-bold mb-2 ">
+          {element.props.children}
+        </h1>
+      );
+    } else if (element.type === "h2") {
+      return (
+        <h2 key={index} className="text-xl font-bold mb-2 ">
+          {element.props.children}
+        </h2>
+      );
+    } else if (element.type === "h3") {
+      return (
+        <h3 key={index} className="text-xl font-bold mb-2 ">
+          {element.props.children}
+        </h3>
+      );
+    } else if (element.type === "p") {
+      return (
+        <p key={index} className="mb-2">
+          {element.props.children}
+        </p>
+      );
+    }
+
+
+    else if (
+      element.type === "div" &&
+      element.props.className === "ql-align-center"
+    ) {
+      return (
+        <div key={index} className="text-center mb-2">
+          {element.props.children}
+        </div>
+      );
+    } else if (
+      element.type === "div" &&
+      element.props.className === "ql-align-right"
+    ) {
+      return (
+        <div key={index} className="text-right mb-2">
+          {element.props.children}
+        </div>
+      );
+    } else if (
+      element.type === "div" &&
+      element.props.className === "ql-align-left"
+    ) {
+      return (
+        <div key={index} className="text-left mb-2">
+          {element.props.children}
+        </div>
+      );
+    } else {
+      return null;
+    }
+  });
+};
 const BiographyPage = () => {
-  const biography = [
-    {
-      id: 1,
-      image: img2,
-      title: "পূর্বপুরুষের বাসস্থান",
-      content:
-        "বগুড়া জেলার বাগবাড়ি গ্রাম। তবে প্রকৃতপক্ষে মূল বসতি ছিল একই জেলার গাবতলি উপজেলার মহিষাবান গ্রাম। পূর্বপুরুষের ঠিকানা নিয়ে এই বিভ্রান্তি সৃষ্টি হয়েছিল দুটি কারণে। জিয়ার ভাইদের অনেকেই তাদেরপিতামহী মিসিরুন্নেসার পিত্রালয় বাগবাড়িতে বড় হন। অপর কারণ, রাষ্ট্রপতিহওয়ার পর জিয়া বাগবাড়িতে গেলে গণমাধ্যমে প্রচারিত হত তিনি তার গ্রামের বাড়িতে গেছেন।",
-    },
-    {
-      id: 2,
-      image: img3,
-      title: "শিক্ষাজীবন",
-      content:
-        "তার শিক্ষাজীবনের হাতেখড়ি কলকাতার সবচেয়ে পুরনো ডেভিড হেয়ার স্কুলে। পিতামাতার সঙ্গে করাচি চলে যাওয়ার কারণে সপ্তম শ্রেণীর ছাত্র জিয়া এই স্কুল ছেড়ে যান। করাচি গিয়ে ১লা জুলাই ১৯৪৮ সালে একাডেমি স্কুলে ভর্তি হন। ১৯৫৬ সালে ঐ স্কুলের নতুন নামকরণ হয় ‘তায়েব আলি আল্ভি একাডেমি’। ঐ স্কুল থেকে ১৯৫২ সালে ম্যাট্টিকুলেশন পরীক্ষায় দ্বিতীয় বিভাগে উত্তীর্ণ হয়ে তিনি মাধ্যমিক শিক্ষা শেষ করেন। জিয়া ছিলেন স্কুলের হকি দলের একজন চৌকষ খেলোয়াড়। স্কুলের পড়াশেষে জিয়া ভর্তি হন করাচির ডি জে সাইন্স কলেজে। তার উদ্দেশ্য ছিল বিজ্ঞান বিভাগে উচ্চ মাধ্যমিক শিক্ষা শেষ করা। কিন্তু সে বছরই তিনি কাকুলে পাকিস্তান মিলিটারি একাডেমিতে অফিসার ক্যাডেট হিসেবে যোগ দেন। এ সময়ে জিয়া নিয়মিতিভাবেই পাকিস্তান জাতীয় সংসদের অধিবেশনও দেখতে যেতেন। এ ক্ষেত্রে তার জন্য পাসের ব্যবস্থা করে দিতেন তার আত্মীয়, যশোর থেকে নির্বাচিত জাতীয় পরিষদ সদস্য সিরাজুল ইসলাম।",
-    },
-    {
-      id: 3,
-      image: img4,
-      title: "সামরিক জীবন",
-      content:
-        "ক্লাসের প্রথম ১০ শতাংশের একজন হিসেবে ১৯৫৫ সালে জিয়া পাকিস্তান মিলিটারি একাডেমি থেকে গ্রাজুয়েশন এবং একই বছরে পাকিস্তান সেনাবাহিনীতে সেকেন্ড লেফট্যানেন্ট হিসেবে কমিশন লাভ করেন। ১৯৫৭ সালে তাকে ইস্ট বেঙ্গল রেজিমেন্টে বদলি করা হয়। ১৯৫৯ থেকে ১৯৬৪ সাল পর্যন্ত তিনি কাজ করেছেন তৎকালীন পূর্ব পাকিস্তান সামরিক গোয়েন্দা পরিদপ্তরে। ১৯৬৫ সালে পাক-ভারত যুদ্ধের সময় একজন কোম্পানি কমান্ডার হিসেবে তৎকালীন পশ্চিম পাকিস্তানের খেমকারান সেক্টরে লড়াই করেন জিয়া। এই যুদ্ধে বীরত্বপূর্ণ অবদানের জন্য তার কোম্পানিই সর্বোচ্চসংখ্যক পদকে ভূষিত হয়। জিয়া পিএমএতে প্রশিক্ষক হিসেবে যোগ দেন ১৯৬৬ সালে। পিএমএ থেকে তাকে পাকিস্তানের কোয়েটায় সেনাবাহিনীর স্টাফ কলেজে একটি কমান্ড কোর্সে যোগ দিতে পাঠানো হয়। ১৯৬৯ সালে তিনি ঢাকার অদূরে জয়দেবপুরে সেকেন্ড ইস্ট বেঙ্গল রেজিমেন্টের সেকেন্ড-ইন-কমান্ড হিসেবে যোগ দেন। এরপর একপর্যায়ে পশ্চিম জার্মানিতে উচ্চতর প্রশিক্ষণ গ্রহণ করেন। ১৯৭০ সালে জার্মানি থেকে দেশে ফিরে আসার পর জিয়াকে (তখন তিনি মেজর) চট্টগ্রামে ইস্ট বেঙ্গল রেজিমেন্টে সেকেন্ড-ইন-কমান্ড হিসেবে বদলি করা হয়।",
-    },
-    {
-      id: 4,
-      image: img5,
-      title: "মুক্তিযুদ্ধ",
-      content:
-        "পাকিস্তান সেনাবাহিনীর বিরুদ্ধে জিয়াই সর্বপ্রথম ২৫ মার্চ ১৯৭১ রাতে বিদ্রোহ করেন। এর মাধ্যমে প্রকৃত পক্ষে চট্টগ্রামে তার অধীনস্থ সৈন্যদেরকে নিয়ে স্বাধীনতাযুদ্ধ শুরু করেন তিনি। স্বাধীনতাযুদ্ধ চলাকালে যুদ্ধের পরিকল্পনা ও বাস্তবায়নের ক্ষেত্রেও তিনি অন্যতম প্রধান ভূমিকা পালন করেন। ১৯৭১ সালের জুন পর্যন্ত ১ নম্বর সেক্টরের অধিনায়ক এবং পরে জেড ফোর্সের প্রধান হিসেবে দুঃসাহসী সেনানায়কের একটা আলাদা পরিচয় অর্জন করেন জিয়া এবং বীর উত্তম খেতাব লাভ করেন। সম্প্রতি একাত্তর সালের ২৫শে মার্চের ঘটনাবলি নিয়ে যে বিতর্কের সৃষ্টি হয়েছিল সে ব্যাপারে সমশের মবিন চৌধুরি বীর বিক্রম জানানঃ ‘সত্যি বলতে কি, ২৭ মার্চ কালুরঘাট বেতারকেন্দ্র থেকে দেওয়া মেজর জিয়ার সেই বিখ্যাত স্বাধীনতার ঘোষণা সম্পর্কে নিজের ভাষ্য দিতে গিয়ে প্রত্যেকেই আসল সত্য থেকে দূরে সরে গিয়েছেন। এই সাহসি লোকটির অধীনে চট্টগ্রামে লড়াই করাকালে স্মস্র স্বকর্ণে তা শোনার অভিজ্ঞতা হয়েছিল। একটি গুরুত্বপূর্ণ বিষয় হল, মেজর জিয়ার নির্দেশে ২৮ মার্চ সারাদিন সেই কেন্দ্র থেকেই আমাকে তার ঐতিহাসিক ঘোষণাটি বারবার প্রচার করতে হয়েছিল। আমার সঙ্গে ছিলেন সুবিদ আলি ভুঁইয়া। ১১ এপ্রিল কালুরঘাট ব্রিজের ঐতিহাসিক লড়াইয়ে আহত হয়ে আমি পাক বাহিনীর হাতে বন্দি হওয়ার পর তারা তা ছিড়ে ফেলার আগ পর্যন্ত মূল কপিটি আমার কাছে ছিল।’",
-    },
-    {
-      id: 5,
-      image: img7,
-      title: "বৈবাহিক জীবন ও পরিবার",
-      content:
-        "সেনাবাহিনীর গোয়েন্দা কর্মকর্তা হিসেবে দিনাজপুরে কর্মরত থাকা অবস্থায় ৫ আগস্ট ১৯৬০ জিয়া বিয়ে করেন। কনে খালেদা খানম ছিলেন অল্পবয়সি, সবেমাত্র ম্যাট্টিক পাস করেছেন। বিয়ের ব্যাপারে মূল ভূমিকা পালন করেন জিয়ার মাতামহ মকবুল আহমদ। জিয়ার পিতামহী ও খালেদার মাতামহী ছিলেন পরস্পরের খালাতো বোন। প্রচলিত নিয়মানুযায়ী দিনাজপুরের মুদিপাড়ায় খালেদার পৈত্রিক বাসভবনে এ বিয়ে সম্পন্ন হয়। বিয়ের অনুষ্ঠান ছিল সাদামাটা। জিয়ার কয়েকজন সহকর্মি উপস্থিত ছিলেন বিয়েতে। বছরখানেক পর বিয়ের আনুষ্ঠানিক সংবর্ধনা অনুষ্ঠিত হয় হোটেল শাহবাগে। চাকরির কারণেই জিয়া ও খালেদা জিয়ার দাম্পত্য জীবনের প্রথম চার বছর কাটে দিনাজপুরে। জিয়া এবং বেগম খালেদা জিয়ার দুই ছেলে। বড় ছেলে তারেক রহমান (পিনু)-এর জন্ম ২০ নভেম্বর ১৯৬৫। তিনি বর্তমানে বিএনপির সিনিয়র ভাইস চেয়ারম্যান। ছোট ছেলে আরাফাত রহমান (কোকো)-এর জন্ম ১২ আগস্ট ১৯৭০। ২৪ জানুয়ারি ২০১৫ হৃদরোগে আক্রান্ত হয়ে তিনি মালয়েশিয়ার কুয়ালালামপুরে ন্যাশনাল ইউনিভার্সিটি হাসপাতালে মৃত্যুবরণ করেন।",
-    },
-    {
-      id: 6,
-      image: img6,
-      title: "স্বাংলাদেশে সেনাবাহিনীতে জিয়া",
-      content:
-        "স্বাধীনতার পরপরই কুমিল্লা সেনানিবাসে ৪৪ পদাতিক ডিভিশনের দায়িত্ব গ্রহণের পর সৈনিকদের জীবনযাত্রার মানোন্নয়নে জিয়া নিজেকে নিয়োজিত করেন। সৈনিকদের পরিবারের সদস্যদের শিক্ষার জন্য নৈশ বিদ্যালয় স্থাপনের উদ্দেশ্যে তিনি সিনিয়র আমলা মোকাম্মেল হকের সহায়তা কামনা করেন। জিয়া কর্ণেল পদে উন্নীত হন ২৮ ফেব্রুয়ারি ১৯৭২; ব্রিগেডিয়ার জেনারেল পদে একই বছরের ৬ জুন এবং মেজর জেনারেল পদে ১১ জুন ১৯৭৩। একই দিনে তাকে সেনাবাহিনীর উপ-প্রধান নিযুক্ত করা হয়। ২৪ আগস্ট ১৯৭৫ তিনি সেনাপ্রধান নিযুক্ত হন।",
-    },
-    {
-      id: 7,
-      image: img8,
-      title: "জীবনযাপন",
-      content:
-        "মৃত্যুর পর চট্টগ্রাম সার্কিট হাউজে জিয়ার ব্যক্তিগত যেসব জিনিসপত্র পাওয়া যায় সে সম্পর্কে একটি সংবাদপত্রের প্রতিবেদন প্রকাশ পায়ঃ ‘জিয়ার ব্যক্তিগত মালামালের মধ্যে নিম্নলিখিত জিনিসগুলি পাওয়া যায়ঃ একটি পুরাতন চামড়ার স্যুটকেস। তাহা এত পুরাতন যে, উহার তালাও সঠিক কাজ করে না। একটি পুরাতন অতি সাধারণ টু-ইন-ওয়ান, তালাবদ্ধ একটি পুরাতন ইকোলাক জাতীয় ব্রীফকেস, গায়ের আধ ছেঁড়া গেঞ্জি, ২/৩ টি সাফারি শার্ট, একটি প্যান্ট, একটি ফাউন্টেন পেন, একটি সানগ্লাস। মৃতের মাথার কাছে পড়িয়াছিল কয়েকটি ক্যাসেট, তাহার বিছানার পাশেই পড়িয়াছিল জায়নামাজ ও সাদা গোল টুপি।’ (দৈনিক ইত্তেফাক, ৪ জুন ১৯৮১।)",
-    },
-    {
-      id: 8,
-      image: img9,
-      title: "কর্মবীর জিয়া",
-      content:
-        "জিয়া প্রাসাদ রাজনীতিক ছিলেন না এবং মন্ত্রীসভার বেশ কিছু বৈঠক করেন ঢাকা থেকে দূরে, দেশের বিভিন্ন গুরুত্বপূর্ণ স্থানে। এইরকম প্রথম বৈঠকটি হয়েছিল সিলেটে ১২ অক্টোবর ১৯৭৯। সেনাবাহিনীতে চাকরির অভিজ্ঞতার সুবাদে তিনি দীর্ঘ পথ পায়ে হেঁটে ভ্রমণে অভ্যস্ত ছিলেন। প্রায়ই তিনি গ্রামবাংলার এবড়োথেবড়ো পথ অনায়াসে পাড়ি দিয়েছেন। জিয়া এ ধরণের সফরে যেতেন উন্নয়ন প্রকল্পের অগ্রগতি পরিদর্শন করতে এবং জনগণের মন বুঝতে। জিয়ার এই ‘জানার জন্য হাঁটা’ অনুশীলনের শুরু ২৮ জানুয়ারি ১৯৭৭। সেদিন তিনি সিলেটের হাওড় অঞ্চলের শুকনো এলাকার ২২ মেইল পথ পায়ে হেঁটে অতিক্রম করেন। এই রকম শেষ পদযাত্রাটি ২১ এপ্রিল ১৯৮০ বগুড়া সার্কিটহাউজ থেকে শুরু করে একটানা সাত মেইল পথ অতিক্রম করে। রাজশাহী বিভাগের সকল সংসদ সদস্য সেই কাফেলায় তাদের নেতার সাথে শামিল হয়েছিলেন। অন্য যেভাবে জিয়া নিজেকে জনগণের কাছে নিয়ে গিয়েছেন সেগুলোর মধ্যে ছিল বিশেষ ট্রেনে করে ভ্রমণ। এ ধরণের ট্রেনযাত্রা তিনি শুরু করেন ১৯৮০ সালের শেষ দিকে। ৫ অক্টোবর একটি বিশেষ ট্রেনযোগে ঢাকা থেকে দুই দিনের সফরে উত্তরাঞ্চলের শহর দিনাজপুর যাত্রা করেন জিয়া।",
-    },
-  ];
+
+  const [introductionData, stIntroductionData] = React.useState<TIntroduction[]>([]);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
+  const { language } = useLanguage()
+  React.useEffect(() => {
+    const fetchPrisonData = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/introduction?limit=1000`, {
+          cache: 'no-store'
+        });
+        const data = await response.json();
+        stIntroductionData(data.data?.introductions || []);
+
+      } catch (err) {
+        setError('Failed to fetch introduction data.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPrisonData();
+  }, []);
+
+
+
   const [isOpen, setIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState<{
     title: string;
     content: string;
   } | null>(null);
-  const handleOpen = (title: string, content: string) => {
-    setModalContent({ title, content });
+  const handleOpen = (
+    englishTitle: string,
+    banglaDescription: string,
+    banglaTitle: string,
+    englishDescription: string
+  ) => {
+    setModalContent({
+      title: language === 'ENG' ? englishTitle : banglaTitle,
+      content: language === 'ENG' ? englishDescription : banglaDescription,
+    });
     setIsOpen(true);
   };
+
 
   const handleClose = () => {
     setIsOpen(false);
     setModalContent(null);
   };
+  if (loading) {
+    return <p>Loading</p>;
+  }
+
   return (
     <Container>
       <div className="my-16">
         <div className="text-center mb-10">
           <h1 className="text-3xl font-bold text-gray-800">
-            জিয়াউর রহমানের সংক্ষিপ্ত পরিচিতি
+            {language === 'ENG' ? 'Brief introduction of Ziaur Rahman' : '  জিয়াউর রহমানের সংক্ষিপ্ত পরিচিতি'}
           </h1>
           <p className="text-gray-600 mt-2">
-            বাংলাদেশের মুক্তিযুদ্ধ ও রাজনৈতিক জীবনের নায়ক
+            {language === 'ENG' ? "Hero of Bangladesh's Liberation War and political life" : ' বাংলাদেশের মুক্তিযুদ্ধ ও রাজনৈতিক জীবনের নায়ক'}
+
           </p>
         </div>
-        <div className="lg:flex gap-10 mb-10">
-          <div className="w-[350px] lg:h-[400px] mx-auto">
-            <Image
-              src={img10}
-              alt="Ziaur Rahman"
-              className="rounded w-full lg:h-full object-cover"
-            />
-          </div>
-          <div className="lg:w-[840px]">
-            <h2 className="text-2xl font-semibold text-gray-700 mb-4 lg:mt-0 mt-10">
-              জন্ম ও পরিবার
-            </h2>
-            <p className="text-gray-600 mb-2 text-justify">
-              জন্মঃ ১৯ জানুয়ারি, ১৯৩৬; ডাক নামঃ কমল (পাঁচ ভাইয়ের মধ্যে জিয়া
-              ছিলেন দ্বিতীয়); পিতাঃ মনসুর রহমান (তিনি কলকাতা বিশ্ববিদ্যালয় থেকে
-              রসায়ন শাস্ত্রে এমএসসি ডিগ্রি অর্জন করে কলকাতায় আলীপুর টেস্টিং
-              ল্যাবরেটরিতে চাকুরিতে যোগ দেন।); মাতাঃ জাহানারা খাতুন (তিনি রেডিও
-              পাকিস্তানের করাচি কেন্দ্রের তালিকাভুক্ত নজরুলসংগীত শিল্পী ছিলেন);
-              পিতামহঃ মৌলভি কামাল উদ্দিন; মাতামহঃ আবুল কাশেম (তার জন্ম
-              জলপাইগুড়ির বিখ্যাত টি ফ্যামিলিতে। ব্রিটেনের রাণী ভিক্টোরিয়া তাদের
-              ফ্যামিলিকে এই সম্মাননায় ভূষিত করেন।) অন্যান্য ভাইঃ রেজাউর রহমান
-              বকুল (তিনি এক সময় পাকিস্তান নৌ বাহিনীতে কর্মরত ছিলেন। পূর্ব
-              পাকিস্তানের প্রতি বৈষম্যমূলক আচরণ নিয়ে অবাঙালি সহকর্মীদের সঙ্গে
-              বাদানুবাদের জের ধরে তিনি নৌ বাহিনীর চাকুরি থেকে ইস্তফা দেন। এরপর
-              লন্ডনে তড়িৎ প্রকৌশল বিষয়ে পড়াশুনা করেন এবং আইসিও সহ বিভিন্ন
-              প্রতিষ্ঠানে কর্মরত ছিলেন।), মিজানুর রহমান ববি, খলিলুর রহমান বাবুল
-              এবং আহমেদ কামাল বিলু (তিনি প্রতিষ্ঠাকালে বিএনপির সাথে জড়িত ছিলেন)।
-            </p>
-            <p className="text-gray-600 mb-2 text-justify">
-              ১৯৪৭ সালের দেশভাগের পর জিয়ার পিতা চাকুরির কারণে পরিবারবর্গ নিয়ে
-              করাচি চলে যান। অল্প বয়সে ১৯৫০ সালে জিয়ার মা মারা যান, আর ৬৮ বছর
-              বয়সে ১৯৭০ সালে জিয়ার বাবা হৃদরোগে মারা যান।
-            </p>
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {biography.map((data) => (
-            <div
-              key={data.id}
-              className="rounded shadow-lg p-5 grid grid-cols-1 lg:grid-cols-2 gap-5"
-            >
-              {/* Image section */}
-              <div className="order-1 lg:order-2 lg:h-64">
-                <Image
-                  src={data.image}
-                  alt=""
-                  className="w-full h-full rounded"
-                />
+        {
+          introductionData.slice(0, 1).map((data) => (
+            <div key={data._id} className="lg:flex gap-10 mb-10">
+              <div className="w-[350px] lg:h-[400px] mx-auto">
+                {
+                  data.bng_images.slice(0, 1).map((img) => (
+                    <Image
+                      width={500}
+                      height={500}
+                      key={img}
+                      src={img}
+                      alt="Ziaur Rahman"
+                      className="rounded w-full lg:h-full object-cover"
+                    />
+                  ))
+                }
               </div>
-
-              {/* Text section */}
-              <div className="order-2 lg:order-1">
-                <h2 className="text-xl font-bold mb-3 text-center">
-                  {data.title}
+              <div className="lg:w-[840px]">
+                <h2 className="text-2xl font-semibold text-gray-700 mb-4 lg:mt-0 mt-10">
+                  {language === 'ENG' ? data.english_title : data.bangla_title}
                 </h2>
-                <p className="text-justify">
-                  {data.content.slice(0, 300)}{" "}
-                  <button
-                    className="text-blue-600 text-xs"
-                    onClick={() => handleOpen(data.title, data.content)}
-                  >
-                    ...See All
-                  </button>
-                </p>
+                {
+                  language === 'ENG' ? renderContent(data.english_description) : renderContent(data.bangla_description)
+
+                }
               </div>
             </div>
-          ))}
-        </div>
+          ))
+        }
+        <Biography introductionData={introductionData} language={language} handleOpen={handleOpen} />
         {modalContent && (
           <Modal
             isOpen={isOpen}
             onClose={handleClose}
             title={modalContent.title}
           >
-            <p>{modalContent.content}</p>
+            <p>{renderContent(modalContent.content)}</p>
           </Modal>
         )}
       </div>

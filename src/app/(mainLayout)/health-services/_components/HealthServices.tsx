@@ -10,11 +10,12 @@ interface CovidProps {
     language: string,
 }
 
-const Initiatives: React.FC<CovidProps> = ({ whatWedoData, language }) => {
+
+const HealthServices: React.FC<CovidProps> = ({ whatWedoData, language }) => {
     const covidFilterData = whatWedoData.filter((edu) => edu.category === 'Health Services')
     return (
         <>
-            <CommonBanner title={language == 'ENG' ? 'Initiatives' : 'উদ্যোগ'} />
+            <CommonBanner title={language == 'ENG' ? 'Health Services' : 'স্বাস্থ্য সেবা'} />
             <Container className="my-20">
                 <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 h-[1100px] md:h-[900px] lg:h-[500px]">
                     {covidFilterData.map((data, index) => (
@@ -53,7 +54,7 @@ const Initiatives: React.FC<CovidProps> = ({ whatWedoData, language }) => {
                                             <h2 className="text-xl ">{language == 'ENG' ? data.english_title : data.bangla_title}</h2>
                                         </div>
                                         <p className="text-justify"> {language == 'ENG' ? data.english_short_description.slice(0, 200) : data.bangla_short_description.slice(0, 200)} </p>
-                                        <Button href={`/whatwedo/initiatives/${data._id}`}>
+                                        <Button href={`/health-services/${data._id}`}>
                                             {language == 'ENG' ? ' Read More' : 'আরও পড়ুন'}
                                         </Button>
                                     </div>
@@ -67,4 +68,4 @@ const Initiatives: React.FC<CovidProps> = ({ whatWedoData, language }) => {
     );
 };
 
-export default Initiatives;
+export default HealthServices;
