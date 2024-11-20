@@ -79,7 +79,7 @@ const RecentActivity: React.FC<welcomeProps> = ({ activityData, language }) => {
 
         <div className=" lg:w-[500px]  w-full">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-5 bg-gray-100 p-5 lg:mt-0 md:mt-5 mt-5">
-            {newsFilterData.map((data) => (
+            {activityFilterData.map((data) => (
               <div
                 key={data._id}
                 className="flex items-center gap-5 bg-white lg:h-[100px] p-3 rounded shadow-md transition-transform duration-500 transform hover:scale-105"
@@ -99,10 +99,10 @@ const RecentActivity: React.FC<welcomeProps> = ({ activityData, language }) => {
 
 
                 <div>
-                  <h3 className="text-sm font-bold">{data.english_title}</h3>
+                  <h3 className="text-sm font-bold">{language == 'ENG' ? data.english_title.slice(0, 50) : data.bangla_title.slice(0, 50)}...</h3>
 
                   <div className="flex justify-end">
-                    <Link href={`/news/${data._id}`}>
+                    <Link href={`/recent-activities-of-zrf//${data._id}`}>
                       <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-2 text-white rounded-full uppercase text-xs">
                         <EastIcon />
                       </button>
@@ -115,7 +115,7 @@ const RecentActivity: React.FC<welcomeProps> = ({ activityData, language }) => {
           <div className="mt-7 flex justify-end">
             <Link href="/recent-activities-of-zrf">
               <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-2 text-white rounded-full uppercase text-sm">
-                See All <EastIcon />
+                {language === 'ENG' ? ' See All' : 'সব দেখুন'} <EastIcon />
               </button>
             </Link>
           </div>

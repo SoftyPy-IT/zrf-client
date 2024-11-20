@@ -1,67 +1,52 @@
 "use client";
-import Image from "next/image";
-import img1 from "../../../../assets/images/initiatives/3-1.jpg";
-import img2 from "../../../../assets/images/initiatives/1.jpeg";
-import img3 from "../../../../assets/images/initiatives/1-1.jpg";
 import Container from "@/components/share/Container";
-import Banner from "./Banner";
-import { Button } from "@mui/material";
-import {
-  Grid,
-  Typography,
-  TextField,
-  Checkbox,
-  FormControlLabel,
-  Paper,
-} from "@mui/material";
-import ZRFForm from "@/components/Forms/Form";
-import ZRFInput from "@/components/Forms/Input";
-import ZRFTextArea from "@/components/Forms/TextArea";
-import { pink } from "@mui/material/colors";
+
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CallOutlinedIcon from "@mui/icons-material/CallOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+import ContactForm from "./ContactForm";
+import { useLanguage } from "@/provider/LanguageProvider";
+import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const Contact = () => {
-  const handleSubmit = () => {
+  const { language } = useLanguage()
 
-  };
   return (
     <>
       <div>
-        <Banner />
+        <CommonBanner title={language == 'ENG' ? 'Contact Us' : 'আমাদের সাথে যোগাযোগ করুন'} />
         <Container>
           <div className="container mx-auto lg:px-4 my-20 lg:flex gap-10">
-            {/* Contact Information Section */}
             <div className="lg:w-1/2 mb-12">
               <div className="bg-green-600 p-5">
                 <h2 className="text-2xl font-bold mb-4 text-white font-serif">
-                  Contact Information
+
+                  {language == 'ENG' ? 'Contact Information' : 'যোগাযোগের তথ্য'}
                 </h2>
                 <div className="text-white">
                   <div className="mb-4">
                     <h3 className="text-xl font-semibold">
                       <LocationOnIcon sx={{ marginRight: "5px" }} />
-                      Location
+                      {language == 'ENG' ? 'Location' : 'অবস্থান'}
                     </h3>
                     <p className="text-white">
-                      House#4, Road#7, Niketon Gate #2, Gulshan-1, Dhaka-1212,
-                      Bangladesh.
+
+                      {language == 'ENG' ? ' House#4, Road#7, Niketon Gate #2, Gulshan-1, Dhaka-1212, Bangladesh.' : 'বাড়ি#৪, রোড#৭, নিকেটন গেট#২, গুলশান-১, ঢাকা-১২১২, বাংলাদেশ।'}
                     </p>
                   </div>
                   <div className="mb-4">
                     <h3 className="text-xl font-semibold">
                       <CallOutlinedIcon sx={{ marginRight: "5px" }} />
-                      Call Us
+                      {language == 'ENG' ? 'Location' : 'আমাদের কল করুন'}
                     </h3>
-                    <p className="text-white">01819213236</p>
+                    <p className="text-white">  {language == 'ENG' ? '01819213236' : '01819213236'} </p>
                   </div>
                   <div className="mb-4">
                     <h3 className="text-xl font-semibold">
                       <EmailOutlinedIcon sx={{ marginRight: "5px" }} />
-                      Email Us
+                      {language == 'ENG' ? ' Email Us' : 'আমাদের ইমেল করুন'}
                     </h3>
                     <p className="text-white">donaroncolog@gmail.com</p>
                   </div>
@@ -69,74 +54,16 @@ const Contact = () => {
               </div>
             </div>
 
-            {/* Contact Form Section */}
             <div>
               <div className=" bg-white shadow-md p-5 border">
                 <h2 className="text-2xl font-serif font-bold mb-4">
-                  Let’s Talk!
+                  {language == 'ENG' ? ' Let’s Talk!' : ' আসুন কথা বলি!!'}
                 </h2>
                 <p className="text-gray-700 mb-6">
-                  Contact us to get, consectetur adipisicing elit, sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                  enim ainim veniam.
+                  {language == 'ENG' ? ' Contact us to get, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ainim veniam.' : 'পেতে আমাদের সাথে যোগাযোগ করুন, কনসেক্টেটুর adipisising elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ইউটেনিম অ্যানিম ভেনিয়াম।'}
+
                 </p>
-                <ZRFForm onSubmit={handleSubmit}>
-                  <div className="lg:flex gap-2 w-full">
-                    <ZRFInput
-                      type="text"
-                      name="name"
-                      required
-                      label="Name"
-                      fullWidth
-                      size="medium"
-                    />
-                    <ZRFInput
-                      type="email"
-                      name="email"
-                      required
-                      label="Email"
-                      fullWidth
-                      size="medium"
-                    />
-                  </div>
-                  <div className="lg:flex gap-2">
-                    <ZRFInput
-                      type="tel"
-                      name="phone"
-                      label="Phone"
-                      fullWidth
-                      size="medium"
-                    />
-                    <ZRFInput
-                      type="text"
-                      name="subject"
-                      label="Subject"
-                      fullWidth
-                      size="medium"
-                    />
-                  </div>
-                  <div className="mt-5">
-                    <ZRFTextArea
-                      name="message"
-                      minRows={5}
-                      sx={{
-                        border: "1px solid black",
-                        borderRadius: "3px",
-                        padding: "10px",
-                      }}
-                      placeholder="Write something..."
-                    />
-                  </div>
-
-                  <div className="flex items-center mb-4">
-                    <Checkbox {...label} defaultChecked />I agree to the terms
-                    and privacy policy
-                  </div>
-
-                  <Button type="submit" disableElevation>
-                    Contact Us
-                  </Button>
-                </ZRFForm>
+                <ContactForm />
               </div>
             </div>
           </div>

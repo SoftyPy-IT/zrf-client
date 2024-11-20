@@ -1,6 +1,7 @@
 import { Close } from '@mui/icons-material';
 import React from 'react';
-import DonationTab from './DonationTab';
+import { DonationTab } from './DonationTab';
+
 
 interface DonationModalProps {
     onClose: () => void;
@@ -20,7 +21,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ onClose }) => {
                     className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-2 hover:text-gray-800">
                     <Close />
                 </button>
-                <DonationTab />
+                <DonationTab onClose={onClose} />
             </div>
         </div>
     );

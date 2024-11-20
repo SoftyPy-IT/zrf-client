@@ -1,20 +1,19 @@
 "use client";
 import React from "react";
-import Banner from "../_components/Banner";
+
 import Container from "@/components/share/Container";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import ReactHtmlParser from "react-html-parser";
 import ShareLink from "@/components/share/ShareLink/ShareLink";
-import { TWhatWeDo } from "@/types/type";
+import { TActivity, TWhatWeDo } from "@/types/type";
 import Image from "next/image";
-import CovidSidebar from "./CovidSidebar";
+import RecentNewsSidebar from "./RecentNewsSidebar";
+import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 
-
-type SingleWhatWeDoProps = {
-    whatWedoData: TWhatWeDo,
+type SingleProjectProps = {
+    singleNewsData: TActivity,
     language: string
 }
-
 const renderContent = (content: string) => {
     const parsedContent = ReactHtmlParser(content);
 
@@ -79,19 +78,19 @@ const renderContent = (content: string) => {
     });
 };
 
-const SingleCovid = ({ whatWedoData, language }: SingleWhatWeDoProps) => {
+const SingleRehabilitation = ({ singleNewsData, language }: SingleProjectProps) => {
 
 
     return (
         <>
-            <Banner />
+            <CommonBanner title={language === 'ENG' ? 'News' : 'খবর'} />
             <Container>
                 <div className="h-auto lg:flex gap-5">
                     <div className="w-full mt-2 lg:mt-0 lg:p-6">
                         {/* Top Image */}
                         <div className="relative w-full h-[200px] md:h-[400px] lg:h-[700px] mb-6">
                             {
-                                whatWedoData.bng_Images.slice(0, 1).map((img) => (
+                                singleNewsData.bng_Images.slice(0, 1).map((img) => (
                                     <Image
                                         width={500}
                                         height={500}
@@ -105,12 +104,12 @@ const SingleCovid = ({ whatWedoData, language }: SingleWhatWeDoProps) => {
                             }
                         </div>
 
-                        <h1 className="text-3xl font-bold mb-4">{language === 'ENG' ? whatWedoData.english_title : whatWedoData.bangla_title}
+                        <h1 className="text-3xl font-bold mb-4">{language === 'ENG' ? singleNewsData.english_title : singleNewsData.bangla_title}
                         </h1>
 
                         <p className="text-lg text-gray-800 text-justify">
                             {
-                                language === 'ENG' ? renderContent(whatWedoData.english_description) : renderContent(whatWedoData.bangla_description)
+                                language === 'ENG' ? renderContent(singleNewsData.english_description) : renderContent(singleNewsData.bangla_description)
 
                             }
                         </p>
@@ -119,7 +118,7 @@ const SingleCovid = ({ whatWedoData, language }: SingleWhatWeDoProps) => {
                         <div className=" md:flex lg:flex justify-between items-center mb-8 space-y-3">
                             <div className="flex items-center gap-2">
                                 <BookmarkIcon className="text-gray-600 cursor-pointer" />
-                      
+                               
                                 <h4>{language === 'ENG' ? 'Social Work' : 'সামাজিক কাজ'}  </h4>
                             </div>
                             <div className="flex items-center gap-4">
@@ -139,7 +138,7 @@ const SingleCovid = ({ whatWedoData, language }: SingleWhatWeDoProps) => {
                     </div>
 
                     <div className="w-full lg:w-[600px] lg:mt-6 md:mt-0 mt-5">
-                        <CovidSidebar />
+                        <RecentNewsSidebar />
                     </div>
                 </div>
             </Container>
@@ -147,4 +146,4 @@ const SingleCovid = ({ whatWedoData, language }: SingleWhatWeDoProps) => {
     );
 };
 
-export default SingleCovid;
+export default SingleRehabilitation;

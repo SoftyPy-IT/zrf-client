@@ -155,7 +155,7 @@ const DescriptionPage = () => {
             <div className=" md:flex lg:flex justify-between items-center mb-8 space-y-3">
               <div className="flex items-center gap-2">
                 <BookmarkIcon className="text-gray-600 cursor-pointer" />
-                <h4>Politics,</h4>
+          
                 <h4>Social Work</h4>
               </div>
               <div className="flex items-center">

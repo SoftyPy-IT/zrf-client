@@ -6,8 +6,15 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import DonateForm from './DonateForm';
 import MembershipForm from './MembershipForm';
+import { useLanguage } from '@/provider/LanguageProvider';
 
-export default function DonationTab() {
+interface DonationModalProps {
+    onClose: () => void;
+}
+
+
+export const DonationTab: React.FC<DonationModalProps> = ({ onClose }) => {
+    const { language } = useLanguage()
     const [value, setValue] = React.useState('1');
 
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -40,7 +47,7 @@ export default function DonationTab() {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                px: { xs: 0, sm: 2 }, 
+                px: { xs: 0, sm: 2 },
             }}
         >
             <Box sx={{ width: '100%', maxWidth: 700, }}>
@@ -57,21 +64,21 @@ export default function DonationTab() {
                             }}
                         >
                             <Tab
-                                label="Donate Now"
+                                label={language == 'ENG' ? 'Donate Now' : 'দান করুন'}
                                 value="1"
                                 sx={tabStyle}
                                 disableRipple
                             />
                             <Tab
-                                label="Get Membership"
+                                label={language == 'ENG' ? 'Get Membership' : 'সদস্যপদ পান'}
                                 value="2"
                                 sx={tabStyle}
                                 disableRipple
                             />
                         </TabList>
                     </Box>
-                    <TabPanel value="1"><DonateForm /></TabPanel>
-                    <TabPanel value="2"><MembershipForm /></TabPanel>
+                    <TabPanel value="1"><DonateForm onClose={onClose} /></TabPanel>
+                    <TabPanel value="2"><MembershipForm onClose={onClose} /></TabPanel>
                 </TabContext>
             </Box>
         </Box>

@@ -4,7 +4,7 @@ import "./Header.css";
 import Link from "next/link";
 import Image from "next/image";
 import { Box, Typography } from "@mui/material";
-import logo from "../../../assets/images/logo/logo.png";
+import logo from "../../../assets/images/logo/logo.svg";
 import Container from "../Container";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useLanguage } from "@/provider/LanguageProvider";

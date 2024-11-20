@@ -147,3 +147,36 @@ export type TWhatWeDo = {
   category:string,
 
 };
+export type TCommitte = {
+  _id:string,
+  bangla_name: string;
+  english_name: string;
+  designation_bangla: string;
+  designation_english: string;
+  images: string[];
+  category: string; 
+  date:string,
+  committee:string,
+};
+export type TOverview = {
+  _id:string,
+  year_count_bangla: string;
+  year_count_english: string;
+  year_text_bangla: string;
+  year_text_english: string;
+  donation_count_bangla: string;
+  donation_count_english: string;
+  donation_text_banlga: string;
+  donation_text_english: string;
+  complete_project_count_bangla: string;
+  complete_project_count_english: string;
+  complete_project_text_english: string;
+  complete_project_text_bangla: string;
+  volunteer_count_bangla: string;
+  volunteer_count_english: string;
+  volunteer_text_english: string;
+  volunteer_text_bangla: string;
+  images: string[];
+  description_bangla: string;
+  description_english: string;
+};

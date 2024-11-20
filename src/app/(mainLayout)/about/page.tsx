@@ -4,9 +4,9 @@ import React from "react";
 import Container from "@/components/share/Container";
 import History from "@/components/ui/HomePage/History/History";
 import ProgrammSection from "../program/_components/ProgrammSection";
-import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 import AboutTopSection from "@/components/ui/HomePage/HelpingVirtue/AboutTopSection";
 import JoinUs from "./_components/JoinUs";
+import AboutBanner from "./_components/AboutBanner";
 
 
 
@@ -15,7 +15,7 @@ const AboutUs = () => {
 
   return (
     <div>
-      <CommonBanner title="About Us " />
+      <AboutBanner />
       <Container>
         <AboutTopSection />
 

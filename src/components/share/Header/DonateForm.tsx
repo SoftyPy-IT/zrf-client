@@ -25,10 +25,17 @@ import { useRouter } from "next/navigation";
 import ZRFInput from "@/components/Forms/Input";
 import Container from "../Container";
 import ZRFForm from "@/components/Forms/Form";
-const steps = ["Give Your Information", "Donate Now "];
-import "./Header.css";
 
-const DonateForm = () => {
+import "./Header.css";
+import { useLanguage } from "@/provider/LanguageProvider";
+
+
+
+const DonateForm = ({ onClose }: { onClose: () => void }) => {
+  const { language } = useLanguage()
+  const steps = language === 'ENG'
+    ? ["Give Your Information", "Donate Now"]
+    : ["আপনার তথ্য দিন", "দান করুন"];
   const [phone, setPhone] = useState("");
   const [isPhoneValid, setIsPhoneValid] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
@@ -49,20 +56,26 @@ const DonateForm = () => {
       toast.error("Please verify your phone number");
       return;
     }
+
     try {
       const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/donation`,
+        `${process.env.NEXT_PUBLIC_BASE_API_URL}/donation`,
         { ...data, phone }
       );
       if (res.status === 200 || res.status === 201) {
-        toast.success("Donation pay successfully!");
+        toast.success("Donation pay successfully!", {
+          id: 'success-toast',
+          duration: 1000,
+        });
         router.push("/");
+        onClose()
       }
     } catch (err) {
       toast.error("Something went wrong!!!");
       console.error(err);
     }
   };
+
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -83,7 +96,7 @@ const DonateForm = () => {
     "&:hover": {
       backgroundImage: "linear-gradient(to right, #1E5D36, #C6A90B)",
     },
-    
+
   };
 
   return (
@@ -112,7 +125,7 @@ const DonateForm = () => {
                   <Grid item xs={12}>
                     <ZRFInput
                       name="name"
-                      label="Name"
+                      label={language === 'ENG' ? 'Name' : 'নাম'}
                       size="medium"
                       fullWidth
                     />
@@ -129,21 +142,22 @@ const DonateForm = () => {
                         defaultCountry="bd"
                         value={phone}
                         onChange={(phone) => setPhone(phone)}
-                        name="phone"
+                        name='phone'
+                        placeholder={language === 'ENG' ? 'Phone' : 'ফোন'}
                       />
                       <Button
                         sx={buttonStyle}
                         variant="contained"
                         onClick={handleVerifyPhone}
                       >
-                        Verify
+                        {language === 'ENG' ? 'Verify' : 'যাচাই করুন'}
                       </Button>
                     </div>
                   </Grid>
                   <Grid item xs={12}>
                     <ZRFInput
                       name="email"
-                      label="Email"
+                      label={language === 'ENG' ? 'Email' : 'ইমেইল'}
                       size="medium"
                       fullWidth
                     />
@@ -151,7 +165,7 @@ const DonateForm = () => {
                   <Grid item xs={12}>
                     <ZRFInput
                       name="amount"
-                      label="Amount"
+                      label={language === 'ENG' ? 'Amount' : 'পরিমাণ'}
                       size="medium"
                       fullWidth
                     />
@@ -161,14 +175,15 @@ const DonateForm = () => {
                   <div className="flex items-center">
                     <Checkbox defaultChecked />
                     <Typography>
-                      I certify that above provided information is correct.
+                      {language === 'ENG' ? 'I certify that above provided information is correct.' : 'আমি প্রত্যয়িত করছি যে উপরে প্রদত্ত তথ্য সঠিক।'}
+
                     </Typography>
                   </div>
                   <div className="flex items-center">
                     <Checkbox defaultChecked />
                     <Typography>
-                      I do hereby declare that the contributions are from my
-                      personal fund and also I agree to all policy of ZRF.
+                      {language === 'ENG' ? 'I do hereby declare that the contributions are from my personal fund and also I agree to all policy of ZRF.' : 'আমি এতদ্বারা ঘোষণা করছি যে অবদানগুলি আমার থেকে ব্যক্তিগত তহবিল এবং আমি ZRF এর সমস্ত নীতিতে সম্মত।'}
+
                     </Typography>
                   </div>
                 </Box>
@@ -177,7 +192,7 @@ const DonateForm = () => {
             {activeStep === 1 && (
               <Box marginTop="50px">
                 <Typography marginBottom="20px" variant="h6">
-                  Select Payment Method{" "}
+                  {language === 'ENG' ? 'Select Payment Method' : 'পেমেন্ট পদ্ধতি নির্বাচন করুন'}
                 </Typography>
                 <Box
                   marginTop="20px"
@@ -215,10 +230,18 @@ const DonateForm = () => {
 
             <Box display="flex" justifyContent="space-between" mt={3}>
               <Button disabled={activeStep === 0} onClick={handleBack}>
-                Back
+                {language === 'ENG' ? 'Back' : 'পূর্ববর্তী'}
               </Button>
 
-              <Button type="submit">{isLastStep ? "Submit" : "Next"}</Button>
+              <Button type="submit">
+                {isLastStep
+                  ? language === 'ENG'
+                    ? 'Submit'
+                    : 'জমা দিন'
+                  : language === 'ENG'
+                    ? 'Next'
+                    : 'পরবর্তী'}
+              </Button>
             </Box>
           </ZRFForm>
         </Box>

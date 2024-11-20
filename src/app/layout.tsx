@@ -25,7 +25,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-
+      <head>
+        <link rel="icon" href="/public/favicon.ico" />
+        <link rel="icon" href="/favicon.png" type="image/png" sizes="16x16" />
+        <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32" />
+      </head>
       <Providers>
         <body className={`${inter.className} ${notoSansBengali.className}`}>
 

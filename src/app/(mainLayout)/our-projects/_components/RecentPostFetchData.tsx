@@ -2,10 +2,7 @@ import { TProject } from '@/types/type';
 import React from 'react';
 import ReactHtmlParser from "react-html-parser";
 
-interface welcomeProps {
-    projectData: TProject[];
-    language: string,
-}
+
 
 const renderContent = (content: string) => {
     const parsedContent = ReactHtmlParser(content);
@@ -81,6 +78,10 @@ const formatDate = (dateString: string | number | Date) => {
     return `${day}-${month}-${year}`;
 }
 
+interface welcomeProps {
+    projectData: TProject[];
+    language: string,
+}
 const RecentPostFetchData: React.FC<welcomeProps> = ({ projectData, language }) => {
 
     return (

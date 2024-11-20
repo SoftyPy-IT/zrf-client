@@ -1,11 +1,11 @@
 import React from "react";
 import Image from "next/image";
 import { TextField } from "@mui/material";
-import { TWhatWeDo } from "@/types/type";
+import { TActivity } from "@/types/type";
 import Link from "next/link";
 
 interface EducationProps {
-    whatWedoData: TWhatWeDo[];
+    activityData: TActivity[];
     language: string,
 }
 
@@ -18,8 +18,8 @@ const formatDate = (dateString: string | number | Date) => {
     return `${day}-${month}-${year}`;
 }
 
-const RehabilitationRecentPost: React.FC<EducationProps> = ({ whatWedoData, language }) => {
-    const RehabilitatinFilterData = whatWedoData.filter((edu) => edu.category === 'ZRF Rehabilitation Team')
+const RecentNewsPost: React.FC<EducationProps> = ({ activityData, language }) => {
+    const RehabilitatinFilterData = activityData.filter((edu) => edu.category === 'News')
 
     return (
         <div>
@@ -41,7 +41,7 @@ const RehabilitationRecentPost: React.FC<EducationProps> = ({ whatWedoData, lang
                 <div className="flex flex-col gap-3 mt-5">
                     {RehabilitatinFilterData?.slice(0, 5).map((data) => (
                         <div key={data._id}>
-                            <Link href={`/whatwedo/rehabilitation/${data._id}`}>
+                            <Link href={`/news/${data._id}`}>
                                 <div className="flex gap-5 ">
                                     {
                                         data.bng_Images.slice(0, 1).map((img) => (
@@ -57,7 +57,7 @@ const RehabilitationRecentPost: React.FC<EducationProps> = ({ whatWedoData, lang
                                     }
                                     <div>
                                         <p className="text-xs">{formatDate(data.date)}</p>
-                                        <p className="text-sm">{language === 'ENG' ? data.english_short_description.slice(0,100) : data.bangla_short_description.slice(0,100)}</p>
+                                        <p className="text-sm">{language === 'ENG' ? data.english_short_description.slice(0, 100) : data.bangla_short_description.slice(0, 100)}</p>
                                     </div>
                                 </div>
                             </Link>
@@ -71,4 +71,4 @@ const RehabilitationRecentPost: React.FC<EducationProps> = ({ whatWedoData, lang
     );
 };
 
-export default RehabilitationRecentPost;
+export default RecentNewsPost;
