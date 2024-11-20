@@ -9,7 +9,6 @@ import { useLanguage } from "@/provider/LanguageProvider";
 import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
-
 const Contact = () => {
   const { language } = useLanguage()
 

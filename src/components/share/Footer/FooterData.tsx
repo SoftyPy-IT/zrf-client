@@ -35,11 +35,11 @@ const FooterData = ({ language }: FooterProps) => {
                 <Container>
                     <div className="relative flex flex-col md:flex-row justify-between items-start md:items-center py-8 z-10">
                         <div className="w-auto">
-                            <h1 className="text-3xl text-white font-sans uppercase">
+                            <span className="text-3xl text-white font-sans uppercase">
                                 {
                                     language === 'ENG' ? ' Join Our Newsletter' : 'আমাদের নিউজলেটার যোগদান'
                                 }
-                            </h1>
+                            </span>
                         </div>
                         <div className="w-full lg:w-auto flex justify-center items-center mt-4 md:mt-0 lg:mt-0 xl:mt-0">
                             <div className="relative lg:flex items-center w-full">

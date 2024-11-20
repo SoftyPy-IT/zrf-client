@@ -83,7 +83,7 @@ const MessageVicePresident = ({ language, messageData }: MessageProps) => {
             <Container>
                 {
                     filterPresidentData?.map((message: TMessage) => (
-                        <section className="my-16">
+                        <section key={message._id} className="my-16">
 
                             <div className="sticky lg:top-[75px] top-20 bg-gradient-to-r from-yellow-600 to-green-600">
                                 <div className="flex flex-col md:flex-row items-center justify-center mb-8 py-3">
@@ -91,6 +91,7 @@ const MessageVicePresident = ({ language, messageData }: MessageProps) => {
                                         {
                                             message.bng_Images.slice(0, 1).map((img) => (
                                                 <Image
+                                                key={img}
                                                     src={img}
                                                     alt="President"
                                                     layout="fill"
