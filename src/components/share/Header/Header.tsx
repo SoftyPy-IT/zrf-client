@@ -92,76 +92,85 @@ const Header = () => {
                   }`}
               >
                 <li className="lg:border-none border-b lg:py-0 py-1">
-                  <Link href="/">Home</Link>
+                  <Link href="/"> {language === "ENG" ? "Home" : " প্রচ্ছদ"}</Link>
                 </li>
                 <li className="dropdownMenuWrap relative">
                   <Link href="#">
-                    Who We Are <KeyboardArrowDownIcon />
+                    {language === "ENG" ? "Who We Are" : " আমাদের সম্পর্কে"}  <KeyboardArrowDownIcon />
                   </Link>
                   <ul className={`w-[290px] h-[160px]  ${dropdown}`}>
                     <li>
                       <Link href="/message-of-president">
-                        Message of President
+                        {language === "ENG" ? "Message of President" : "প্রেসিডেন্ট এর বাণী"}
                       </Link>
                     </li>
                     <li>
                       <Link href="/message-of-vice-president">
-                        Message of Vice President
+                        {language === "ENG" ? "Message of Vice President" : "ভাইস প্রেসিডেন্ট এর বাণী"}
                       </Link>
                     </li>
                     <li>
                       <Link href="/message-of-director">
-                        Message of Executive Director
+                        {language === "ENG" ? "Message of Executive Director" : "নির্বাহী পরিচালক এর বাণী"}
                       </Link>
                     </li>
                     <li>
-                      <Link href="/committee">Committee</Link>
+                      <Link href="/committee">  {language === "ENG" ? "Committee" : "কমিটি"}  </Link>
                     </li>
                     <li>
-                      <Link href="/about">About Us</Link>
+                      <Link href="/about">  {language === "ENG" ? "Our History" : "আমাদের ইতিহাস "}   </Link>
                     </li>
                     <li>
-                      <Link href="/volunteer">Our Volunteers </Link>
+                      <Link href="/volunteer">  {language === "ENG" ? "Our Volunteers" : "আমাদের স্বেচ্ছাসেবক "}   </Link>
                     </li>
                   </ul>
                 </li>
                 <li className="dropdownMenuWrap  relative">
                   <Link href="#">
-                    What We Do <KeyboardArrowDownIcon />
+                    {language === "ENG" ? "What We Do" : "আমরা কার্যক্রম  "} <KeyboardArrowDownIcon />
                   </Link>
                   <ul className={`w-[240px] submenu  ${dropdown}`}>
                     <li className="lg:border-none border-b lg:py-0 py-2">
-                      <Link href="/our-projects">Our Project</Link>
+                      <Link href="/our-projects">
+
+                        {language === "ENG" ? "Our Project" : "আমাদের প্রকল্প "} </Link>
                     </li>
                     <li className="lg:border-none border-b lg:py-0 py-2">
-                      <Link href="/education">ZRF Education Program</Link>
+                      <Link href="/education"> {language === "ENG" ? "ZRF Education Program" : "জেডআরএফ শিক্ষা কার্যক্রম  "}  </Link>
                     </li>
                     <li>
                       <Link href="/whatwedo/rehabilitation">
-                        ZRF Rehabilitation
+                        {language === "ENG" ? "ZRF Rehabilitation Program" : "জেডআরএফ পুনর্বাসন কার্যক্রম"}
                       </Link>
                     </li>
                     <li>
-                      <Link href="/whatwedo/covid">Covid</Link>
+                      <Link href="/whatwedo/covid"> {language === "ENG" ? "Covid Programm " : "কোভিড কার্যক্রম"}</Link>
                     </li>
                     <li className="lg:border-none border-b lg:py-0 py-2">
-                      <Link href="/climate-change">Climate Change</Link>
+                      <Link href="/climate-change">
+                        {language === "ENG" ? " Climate Change " : "জলবায়ু পরিবর্তন  "}
+                      </Link>
                     </li>
                     <li className="lg:border-none border-b lg:py-0 py-2">
-                      <Link href="/health-services">Health Services</Link>
+                      <Link href="/health-services">
+                        {language === "ENG" ? "Health Services" : "স্বাস্থ্য সেবা "}
+                      </Link>
                     </li>
 
                     <li>
-                      <Link href="/whatwedo/initiatives">Initiatives</Link>
+                      <Link href="/whatwedo/initiatives">
+                        {language === "ENG" ? "Our Initiatives" : "আমাদের উদ্যোগ "}
+                      </Link>
                     </li>
                     <li>
-                      <Link href="/program">Our Program</Link>
+                      <Link href="/program"> {language === "ENG" ? "Our Program" : "আমাদের কর্মসূচি "} </Link>
                     </li>
                   </ul>
                 </li>
+
                 <li className="dropdownMenuWrap relative">
                   <Link href="/ziaur-rahman">
-                    Biography Of Ziaur Rahman
+                    {language === "ENG" ? "Biography of SP Ziaur Rahman" : "শহীদ রাষ্ট্রপতি জিয়াউর রহমান এর জীবনী "}
                     {/* <KeyboardArrowDownIcon /> */}
                   </Link>
                   {/* <ul className={`w-[220px] h-[160px] ${dropdown}`}>
@@ -181,14 +190,15 @@ const Header = () => {
                 </li>
 
                 <li className="lg:border-none border-b lg:py-0 py-2">
-                  <Link href="/ebooks">E-Books</Link>
+                  <Link href="/ebooks">{language === "ENG" ? "E-Books" : "ই-বুক "} </Link>
                 </li>
                 <li className="lg:border-none border-b lg:py-0 py-2">
-                  <Link href="/news">News</Link>
+                  <Link href="/news"> {language === "ENG" ? "News" : "খবর "} </Link>
                 </li>
               </ul>
             </>
           </div>
+
           <div className=" xl:block space-x-1 md:space-x-3 mr-[30px] text-center lg:mr-20 md:mr-12 xl:mr-0 ">
             <button
               onClick={() => setLanguage("ENG")}

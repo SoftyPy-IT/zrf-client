@@ -11,19 +11,19 @@ const renderContent = (content: string) => {
     return parsedContent.map((element, index) => {
         if (element.type === "h1") {
             return (
-                <h1 key={index} className="text-2xl font-bold mb-2 ">
+                <h1 key={index} className="text-2xl font-bold mb-2">
                     {element.props.children}
                 </h1>
             );
         } else if (element.type === "h2") {
             return (
-                <h2 key={index} className="text-xl font-bold mb-2 ">
+                <h2 key={index} className="text-xl font-bold mb-2">
                     {element.props.children}
                 </h2>
             );
         } else if (element.type === "h3") {
             return (
-                <h3 key={index} className="text-xl font-bold mb-2 ">
+                <h3 key={index} className="text-lg font-bold mb-2">
                     {element.props.children}
                 </h3>
             );
@@ -33,10 +33,7 @@ const renderContent = (content: string) => {
                     {element.props.children}
                 </p>
             );
-        }
-
-
-        else if (
+        } else if (
             element.type === "div" &&
             element.props.className === "ql-align-center"
         ) {
@@ -63,11 +60,30 @@ const renderContent = (content: string) => {
                     {element.props.children}
                 </div>
             );
+        } else if (element.type === "ol") {
+            return (
+                <ol key={index} className="list-decimal pl-4 mb-2">
+                    {element.props.children}
+                </ol>
+            );
+        } else if (element.type === "ul") {
+            return (
+                <ul key={index} className="list-disc pl-4 mb-2">
+                    {element.props.children}
+                </ul>
+            );
+        } else if (element.type === "li") {
+            return (
+                <li key={index} className="mb-1">
+                    {element.props.children}
+                </li>
+            );
         } else {
             return null;
         }
     });
 };
+
 type MessageProps = {
     messageData: TMessage[],
     language: string,

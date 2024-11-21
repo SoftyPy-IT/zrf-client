@@ -55,6 +55,7 @@ const renderContent = (content: string) => {
 };
 
 
+
 const Biography: React.FC<introductionProps> = ({ handleOpen, introductionData, language, }) => {
 
     const filteredData = introductionData.slice(1);

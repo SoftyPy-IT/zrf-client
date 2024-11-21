@@ -85,18 +85,21 @@ const FetchZiaurRahmanData = () => {
           cache: 'no-store'
         });
         const data = await response.json();
-        stIntroductionData(data.data?.introductions || []);
-
+        const sortedData = data.data?.introductions?.sort((a: TIntroduction, b: TIntroduction) => {
+          return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(); // Sort ascending
+        });
+        
+        stIntroductionData(sortedData || []);
       } catch (err) {
         setError('Failed to fetch introduction data.');
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchPrisonData();
   }, []);
-
+  
 
 
   const [isOpen, setIsOpen] = useState(false);
@@ -125,16 +128,17 @@ const FetchZiaurRahmanData = () => {
   if (loading) {
     return <p>Loading</p>;
   }
+  console.log(introductionData)
 
   return (
     <Container>
       <div className="my-16">
         <div className="text-center mb-10">
           <h1 className="text-3xl font-bold text-gray-800">
-            {language === 'ENG' ? 'Brief introduction of Ziaur Rahman' : '  জিয়াউর রহমানের সংক্ষিপ্ত পরিচিতি'}
+            {language === 'ENG' ? 'Biography of Shaheed President Ziaur Rahman' : '  শহীদ প্রেসিডেন্ট জিয়াউর রহমান'}
           </h1>
           <p className="text-gray-600 mt-2">
-            {language === 'ENG' ? "Hero of Bangladesh's Liberation War and political life" : ' বাংলাদেশের মুক্তিযুদ্ধ ও রাজনৈতিক জীবনের নায়ক'}
+            {language === 'ENG' ? "Lieutenant General Ziaur Rahman Bir Uttam (1936-1981) was the founder of Bangladesh Nationalist Party. He was the declarer of independence and a valiant freedom fighter. He was also Chief of Army Staff and later became the elected President of Bangladesh. He opened up multi-party democracy in Bangladesh and defined Bangladeshi Nationalism." : "লেফটেন্যান্ট জেনারেল জিয়াউর রহমান বীর উত্তম (১৯৩৬-১৯৮১) ছিলেন স্বাধীনতার ঘোষক এবং বাংলাদেশের নির্বাচিত রাষ্ট্রপতি। তিনি একজন বীর মুক্তিযোদ্ধা, সেনাপ্রধান এবং বাংলাদেশে বহুদলীয় গণতন্ত্রের প্রতিষ্ঠাতা, সেই সাথে বাংলাদেশী জাতীয়তাবাদ এবং বাংলাদেশ জাতীয়তাবাদী দল-বিএনপি'র প্রতিষ্ঠাতা ছিলেন।"}
 
           </p>
         </div>
@@ -181,5 +185,6 @@ const FetchZiaurRahmanData = () => {
     </Container>
   );
 };
+
 
 export default FetchZiaurRahmanData;

@@ -18,7 +18,8 @@ const Message = () => {
 
   return (
     <div>
-      <MessageBanner title={language === 'ENG' ? 'Message from the Vice President' : 'ভাইস প্রেসিডেন্টের বার্তা'} text={language === 'ENG' ? 'Ziaur Rahman Foundation' : 'জিয়াউর রহমান ফাউন্ডেশন'} />
+      <MessageBanner title={language === 'ENG' ? 'Message of Executive Director' : ''} text={language === 'ENG' ? 'Ziaur Rahman Foundation' : 'জিয়াউর রহমান ফাউন্ডেশন'} />
+
       <MessageDirector messageData={messageData} language={language} />
     </div>
   );

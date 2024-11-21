@@ -123,6 +123,7 @@ export type TIntroduction = {
   english_description: string;
   eng_images:string[],
   bng_images:string[],
+  createdAt:string,
 
 };
 export type TWhatWeDo = {
