@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "../../../assets/images/logo/logo.svg";
+import logo from "../../../assets/images/logo/transparent.png";
 import footer from "../../../assets/images/footer/pattern-2.png";
 import Container from "../Container";
 import EastIcon from "@mui/icons-material/East";
