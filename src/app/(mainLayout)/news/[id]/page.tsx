@@ -40,7 +40,6 @@ const Project = ({ params }: pressId) => {
   return (
     <>
       <>{data && <SingleNews language={language} singleNewsData={data} />}</>
-
     </>
   );
 };

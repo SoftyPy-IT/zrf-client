@@ -86,8 +86,11 @@ const SingleRehabilitation = ({ singleNewsData, language }: SingleProjectProps) 
             <CommonBanner title={language === 'ENG' ? 'News' : 'খবর'} />
             <Container>
                 <div className="h-auto lg:flex gap-5">
+               
                     <div className="w-full mt-2 lg:mt-0 lg:p-6">
-                        {/* Top Image */}
+                    <h1 className="text-3xl font-bold mb-4">{language === 'ENG' ? singleNewsData.english_title : singleNewsData.bangla_title}
+                    </h1>
+                       
                         <div className="relative w-full h-[200px] md:h-[400px] lg:h-[700px] mb-6">
                             {
                                 singleNewsData.bng_Images.slice(0, 1).map((img) => (
@@ -104,8 +107,7 @@ const SingleRehabilitation = ({ singleNewsData, language }: SingleProjectProps) 
                             }
                         </div>
 
-                        <h1 className="text-3xl font-bold mb-4">{language === 'ENG' ? singleNewsData.english_title : singleNewsData.bangla_title}
-                        </h1>
+                       
 
                         <p className="text-lg text-gray-800 text-justify">
                             {
