@@ -31,7 +31,7 @@ const Slider = () => {
 
   const fetchSlides = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/v1/banner");
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/banner`);
       if (!response.ok) throw new Error("Failed to fetch slides data");
       const data = await response.json();
 
