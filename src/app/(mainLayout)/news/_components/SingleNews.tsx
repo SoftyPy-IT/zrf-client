@@ -20,19 +20,19 @@ const renderContent = (content: string) => {
     return parsedContent.map((element, index) => {
         if (element.type === "h1") {
             return (
-                <h1 key={index} className="text-2xl font-bold mb-2 ">
+                <h1 key={index} className="text-2xl font-bold mb-2">
                     {element.props.children}
                 </h1>
             );
         } else if (element.type === "h2") {
             return (
-                <h2 key={index} className="text-xl font-bold mb-2 ">
+                <h2 key={index} className="text-xl font-bold mb-2">
                     {element.props.children}
                 </h2>
             );
         } else if (element.type === "h3") {
             return (
-                <h3 key={index} className="text-xl font-bold mb-2 ">
+                <h3 key={index} className="text-lg font-bold mb-2">
                     {element.props.children}
                 </h3>
             );
@@ -42,10 +42,7 @@ const renderContent = (content: string) => {
                     {element.props.children}
                 </p>
             );
-        }
-
-
-        else if (
+        } else if (
             element.type === "div" &&
             element.props.className === "ql-align-center"
         ) {
@@ -72,6 +69,15 @@ const renderContent = (content: string) => {
                     {element.props.children}
                 </div>
             );
+        } else if (element.type === "img") {
+            return (
+                <Image
+                    key={index}
+                    src={element.props.src}
+                    alt={element.props.alt || "Image"}
+                    className="mb-2 max-w-full"
+                />
+            );
         } else {
             return null;
         }
@@ -80,17 +86,17 @@ const renderContent = (content: string) => {
 
 const SingleRehabilitation = ({ singleNewsData, language }: SingleProjectProps) => {
 
-
+    console.log(singleNewsData)
     return (
         <>
             <CommonBanner title={language === 'ENG' ? 'News' : 'খবর'} />
             <Container>
                 <div className="h-auto lg:flex gap-5">
-               
+
                     <div className="w-full mt-2 lg:mt-0 lg:p-6">
-                    <h1 className="text-3xl font-bold mb-4">{language === 'ENG' ? singleNewsData.english_title : singleNewsData.bangla_title}
-                    </h1>
-                       
+                        <h1 className="text-3xl font-bold mb-4">{language === 'ENG' ? singleNewsData.english_title : singleNewsData.bangla_title}
+                        </h1>
+
                         <div className="relative w-full h-[200px] md:h-[400px] lg:h-[700px] mb-6">
                             {
                                 singleNewsData.bng_Images.slice(0, 1).map((img) => (
@@ -107,7 +113,7 @@ const SingleRehabilitation = ({ singleNewsData, language }: SingleProjectProps) 
                             }
                         </div>
 
-                       
+
 
                         <p className="text-lg text-gray-800 text-justify">
                             {
@@ -120,7 +126,7 @@ const SingleRehabilitation = ({ singleNewsData, language }: SingleProjectProps) 
                         <div className=" md:flex lg:flex justify-between items-center mb-8 space-y-3">
                             <div className="flex items-center gap-2">
                                 <BookmarkIcon className="text-gray-600 cursor-pointer" />
-                               
+
                                 <h4>{language === 'ENG' ? 'Social Work' : 'সামাজিক কাজ'}  </h4>
                             </div>
                             <div className="flex items-center gap-4">

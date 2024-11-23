@@ -170,7 +170,7 @@ const Header = () => {
 
                 <li className="dropdownMenuWrap relative">
                   <Link href="/ziaur-rahman">
-                    {language === "ENG" ? "Biography of SP Ziaur Rahman" : "শহীদ রাষ্ট্রপতি জিয়াউর রহমান এর জীবনী "}
+                    {language === "ENG" ? "Biography Of Ziaur Rahman" : " জিয়াউর রহমান এর জীবনী "}
                     {/* <KeyboardArrowDownIcon /> */}
                   </Link>
                   {/* <ul className={`w-[220px] h-[160px] ${dropdown}`}>

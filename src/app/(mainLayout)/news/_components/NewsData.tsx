@@ -4,7 +4,7 @@ import Link from "next/link";
 import Container from "@/components/share/Container";
 import EastIcon from "@mui/icons-material/East";
 import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
-import { TActivity} from "@/types/type";
+import { TActivity } from "@/types/type";
 import ReactHtmlParser from "react-html-parser";
 
 const renderContent = (content: string) => {
@@ -32,7 +32,7 @@ const renderContent = (content: string) => {
         } else if (element.type === "p") {
             return (
                 <p key={index} className="mb-2">
-                    {element.props.children}
+                    {element.props.children}...
                 </p>
             );
         }
@@ -78,10 +78,10 @@ interface activityProps {
 
 const NewsData: React.FC<activityProps> = ({ activityData, language }) => {
 
-const filterNewsData = activityData.filter((news)=>news.category === 'News')
+    const filterNewsData = activityData.filter((news) => news.category === 'News')
     return (
         <div>
-              <CommonBanner title={language === 'ENG' ? 'News' : 'খবর'} />
+            <CommonBanner title={language === 'ENG' ? 'News' : 'খবর'} />
             <Container>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-16">
                     {filterNewsData.map((data, index: number) => (
@@ -104,7 +104,7 @@ const filterNewsData = activityData.filter((news)=>news.category === 'News')
                                 <div className="p-5">
                                     <h3 className="text-xl font-semibold mb-3">{language === 'ENG' ? data.english_title : data.bangla_title}</h3>
                                     <p className="text-justify">
-                                        {language == 'ENG' ? renderContent(data.english_description.slice(0, 150)) : renderContent(data.bangla_description.slice(0, 150))}...
+                                        {language == 'ENG' ? renderContent(data.english_description.slice(0, 80)) : renderContent(data.bangla_description.slice(0, 80))}
                                     </p>
                                     <div className="flex justify-end mt-3 absolute bottom-5">
                                         <Link href={`/news/${data._id}`}>
