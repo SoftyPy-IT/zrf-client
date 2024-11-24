@@ -100,10 +100,10 @@ const ProjectsFetchData: React.FC<projectProps> = ({ projectData, language }) =>
                         <div className="absolute bottom-0 p-5 text-white z-20 transition-colors duration-300">
 
                           <h2 className="text-2xl hover:underline font-bold ">
-                            {language === 'ENG' ? project.english_title.slice(0, 70) : project.bangla_title.slice(0, 70)}
+                            {language === 'ENG' ? project.english_title?.slice(0, 70) : project.bangla_title?.slice(0, 70)}
                           </h2>
                           <p className="mt-2 text-justify">
-                            {language === 'ENG' ? project.english_short_description.slice(0, 150) : project.bangla_short_description.slice(0, 150)}
+                            {language === 'ENG' ? project.english_short_description?.slice(0, 150) : project.bangla_short_description?.slice(0, 150)}
                             ...
                           </p>
 

@@ -44,7 +44,7 @@ const RecentNewsPost: React.FC<EducationProps> = ({ activityData, language }) =>
                             <Link href={`/news/${data._id}`}>
                                 <div className="flex gap-5 ">
                                     {
-                                        data.bng_Images.slice(0, 1).map((img) => (
+                                        data.bng_Images?.slice(0, 1).map((img) => (
                                             <Image
                                                 key={img}
                                                 src={img}
@@ -57,7 +57,7 @@ const RecentNewsPost: React.FC<EducationProps> = ({ activityData, language }) =>
                                     }
                                     <div>
                                         <p className="text-xs">{formatDate(data.date)}</p>
-                                        <p className="text-sm">{language === 'ENG' ? data.english_short_description.slice(0, 100) : data.bangla_short_description.slice(0, 100)}</p>
+                                        <p className="text-sm">{language === 'ENG' ? data.english_short_description?.slice(0, 100) : data.bangla_short_description?.slice(0, 100)}</p>
                                     </div>
                                 </div>
                             </Link>

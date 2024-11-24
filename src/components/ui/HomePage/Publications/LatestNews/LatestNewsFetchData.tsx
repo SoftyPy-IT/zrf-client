@@ -35,7 +35,7 @@ const LatestNewsFetchData: React.FC<newsProps> = ({ newsData, language }) => {
                     </div>
                 </div>
                 <div className="w-full grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-1  md:grid-cols-2 items-center gap-4 lg:mt-0 mt-10">
-                    {newsData.slice(0, 3).map((data) => (
+                    {newsData?.slice(0, 3).map((data) => (
                         <div
                             key={data._id}
                             className="border rounded items-center p-3 shadow-md"
@@ -43,14 +43,14 @@ const LatestNewsFetchData: React.FC<newsProps> = ({ newsData, language }) => {
                             <div className="flex items-center gap-3">
                                 <div>
                                     <h4 className="text-sm font-semibold uppercase">
-                                        {language === 'ENG' ? data.english_title.slice(0, 60) : data.bangla_title.slice(0, 60)}
+                                        {language === 'ENG' ? data?.english_title?.slice(0, 60) : data?.bangla_title?.slice(0, 60)}
                                         ...
 
                                     </h4>
                                     <p className="text-sm text-justify">
 
                                         <>
-                                            {data.english_short_description.slice(0, 100)} ...
+                                            {data?.english_short_description?.slice(0, 100)} ...
                                             <Link href={`/news/${data._id}`}>
                                                 <button className="text-green-600">  {language === 'ENG' ? 'See more' : 'আরো দেখুন'}  </button>
                                             </Link>

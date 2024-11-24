@@ -1,13 +1,19 @@
 'use client'
+import Loader from '@/components/Loading/Loading';
 import { useAboutData } from '@/hooks/useAboutData';
 import { useLanguage } from '@/provider/LanguageProvider';
 import React from 'react';
 
 const JoinUs = () => {
     const { language } = useLanguage()
-    const { aboutData } = useAboutData()
+    const { aboutData , loading, error} = useAboutData()
     const filterJoinUsData = aboutData.filter((item) => item.category === 'Join Us')
-
+    if (loading) {
+        return <Loader/>
+      }
+      if (error) {
+        return <h2 className='text-center'>Oops!  Something Went Wrong!</h2>
+      }
     return (
         <>
             <section className="py-16 my-16 bg-green-600 text-white text-center">

@@ -12,6 +12,7 @@ import EastIcon from "@mui/icons-material/East";
 import { useLanguage } from "@/provider/LanguageProvider";
 import { TEbook } from "@/types/type";
 import { useEbookData } from "@/hooks/useEbookData";
+import Loader from "@/components/Loading/Loading";
 function PublicationSlider() {
   const [activeIndex, setActiveIndex] = useState(0);
   const swiperRef = useRef<SwiperClass | null>(null);
@@ -38,9 +39,11 @@ function PublicationSlider() {
 
 
 
-
   if (loading) {
-    return <p>Loading</p>;
+    return <Loader/>
+  }
+  if (error) {
+    return <h2 className='text-center'>Oops!  Something Went Wrong!</h2>
   }
 
   return (

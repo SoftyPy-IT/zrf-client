@@ -5,12 +5,13 @@ import Image from "next/image";
 
 import { useEbookData } from "@/hooks/useEbookData";
 import Ebook from "./Ebook";
+import Loader from "@/components/Loading/Loading";
 
 function EbookFetchData() {
     const { ebookData, loading, error } = useEbookData();
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error}</p>;
+    if (loading) return <Loader />;
+    if (error) return <p>Oops Something Went to Wrong! </p>;
 
     return (
         <div>

@@ -93,7 +93,7 @@ const SingleClimateChange = ({ whatWedoData, language }: SingleWhatWeDoProps) =>
                         {/* Top Image */}
                         <div className="relative w-full h-[200px] md:h-[400px] lg:h-[700px] mb-6">
                             {
-                                whatWedoData.bng_Images.slice(0, 1).map((img) => (
+                                whatWedoData.bng_Images?.slice(0, 1).map((img) => (
                                     <Image
                                         width={500}
                                         height={500}
@@ -107,7 +107,7 @@ const SingleClimateChange = ({ whatWedoData, language }: SingleWhatWeDoProps) =>
                             }
                         </div>
 
-                        <h1 className="text-3xl font-bold mb-4">{language === 'ENG' ? whatWedoData.english_title : whatWedoData.bangla_title}
+                        <h1 className="text-3xl font-bold mb-4">{language === 'ENG' ? whatWedoData.english_title : whatWedoData?.bangla_title}
                         </h1>
 
                         <p className="text-lg text-gray-800 text-justify">

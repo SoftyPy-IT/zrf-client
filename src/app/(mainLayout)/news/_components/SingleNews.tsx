@@ -86,7 +86,6 @@ const renderContent = (content: string) => {
 
 const SingleRehabilitation = ({ singleNewsData, language }: SingleProjectProps) => {
 
-    console.log(singleNewsData)
     return (
         <>
             <CommonBanner title={language === 'ENG' ? 'News' : 'খবর'} />
@@ -99,7 +98,7 @@ const SingleRehabilitation = ({ singleNewsData, language }: SingleProjectProps) 
 
                         <div className="relative w-full h-[200px] md:h-[400px] lg:h-[700px] mb-6">
                             {
-                                singleNewsData.bng_Images.slice(0, 1).map((img) => (
+                                singleNewsData.bng_Images?.slice(0, 1).map((img) => (
                                     <Image
                                         width={500}
                                         height={500}

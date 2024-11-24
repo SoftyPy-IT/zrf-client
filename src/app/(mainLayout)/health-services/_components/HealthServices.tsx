@@ -25,7 +25,7 @@ const HealthServices: React.FC<CovidProps> = ({ whatWedoData, language }) => {
                         >
 
                             {
-                                data.bng_Images.slice(0, 1).map((img) => (
+                                data.bng_Images?.slice(0, 1).map((img) => (
                                     <Image
                                         width={500}
                                         height={500}
@@ -43,7 +43,7 @@ const HealthServices: React.FC<CovidProps> = ({ whatWedoData, language }) => {
                             <div className="absolute bottom-0 left-0 right-0 p-2 md:p-4 lg:p-4 bg-blue-950 border-t border-gray-300 rounded-t-3xl h-[150px] md:h-[200px] lg:h-[200px] mt-28 md:mt-0 lg:mt-0">
                                 <h2 className="text-xl text-white">{language == 'ENG' ? data.english_title : data.bangla_title}</h2>
                                 <p className="mt-2 text-white">
-                                    {language == 'ENG' ? data.english_short_description.slice(0, 180) : data.bangla_short_description.slice(0, 180)} ......
+                                    {language == 'ENG' ? data.english_short_description?.slice(0, 180) : data.bangla_short_description?.slice(0, 180)} ......
                                 </p>
                             </div>
                             {/* Hover content */}
@@ -53,7 +53,7 @@ const HealthServices: React.FC<CovidProps> = ({ whatWedoData, language }) => {
                                         <div className="flex items-center gap-3">
                                             <h2 className="text-xl ">{language == 'ENG' ? data.english_title : data.bangla_title}</h2>
                                         </div>
-                                        <p className="text-justify"> {language == 'ENG' ? data.english_short_description.slice(0, 200) : data.bangla_short_description.slice(0, 200)} </p>
+                                        <p className="text-justify"> {language == 'ENG' ? data.english_short_description?.slice(0, 200) : data.bangla_short_description?.slice(0, 200)} </p>
                                         <Button href={`/health-services/${data._id}`}>
                                             {language == 'ENG' ? ' Read More' : 'আরও পড়ুন'}
                                         </Button>

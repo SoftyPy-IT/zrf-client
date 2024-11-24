@@ -9,7 +9,7 @@ interface AboutProps {
     language: string;
 }
 
-const AboutTopSectionData: React.FC<AboutProps> = ({ aboutData, language }) => {
+const AboutTopSectionData: React.FC<AboutProps> = ({ aboutData, language, }) => {
     // const allowedCategories = [language === 'ENG' ? 'About' : 'সম্পর্কে', , language === 'ENG' ? 'Mission' : 'মিশন', , language === 'ENG' ? 'Vission' : 'দৃষ্টি', , language === 'ENG' ? 'Slugan' : 'স্লুগান',];
     const allowedCategories = ["About", "Mission", "Vission", "Slugan"];
 

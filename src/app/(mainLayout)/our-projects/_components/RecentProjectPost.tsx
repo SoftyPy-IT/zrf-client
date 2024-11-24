@@ -4,6 +4,7 @@ import { useLanguage } from "@/provider/LanguageProvider";
 import React from "react";
 import { TActivity } from "@/types/type";
 import RecentPostFetchData from "./RecentPostFetchData";
+import Loader from "@/components/Loading/Loading";
 
 
 const RecentProjectPost = () => {
@@ -11,6 +12,7 @@ const RecentProjectPost = () => {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
   const { language } = useLanguage()
+
   React.useEffect(() => {
     const fetchPrisonData = async () => {
       try {
@@ -31,8 +33,8 @@ const RecentProjectPost = () => {
     fetchPrisonData();
   }, []);
 
-  if (loading) {
-    return <p>Loading</p>;
+  if(loading){
+    return <Loader/>
   }
 
   return (

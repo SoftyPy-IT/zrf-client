@@ -8,6 +8,7 @@ import { TIntroduction } from "@/types/type";
 import ReactHtmlParser from "react-html-parser";
 import Biography from "./Biography";
 import Modal from "./Modal";
+import Loader from "@/components/Loading/Loading";
 
 const renderContent = (content: string) => {
   const parsedContent = ReactHtmlParser(content);
@@ -125,10 +126,9 @@ const FetchZiaurRahmanData = () => {
     setIsOpen(false);
     setModalContent(null);
   };
-  if (loading) {
-    return <p>Loading</p>;
+  if(loading){
+    return <Loader/>
   }
-
 
   return (
     <Container>
@@ -143,11 +143,11 @@ const FetchZiaurRahmanData = () => {
           </p>
         </div>
         {
-          introductionData.slice(0, 1).map((data) => (
+          introductionData?.slice(0, 1).map((data) => (
             <div key={data._id} className="lg:flex gap-10 mb-10">
               <div className="w-[350px] lg:h-[400px] mx-auto">
                 {
-                  data.bng_images.slice(0, 1).map((img) => (
+                  data.bng_images?.slice(0, 1).map((img) => (
                     <Image
                       width={500}
                       height={500}

@@ -55,7 +55,7 @@ const Program = () => {
               <div className="absolute bottom-0 left-0 right-0 p-2 md:p-4 lg:p-4 bg-blue-950 border-t border-gray-300 rounded-t-3xl h-[150px] md:h-[200px] lg:h-[200px] mt-28 md:mt-0 lg:mt-0">
                 <h2 className="text-xl text-white">{card.title}</h2>
                 <p className="mt-2 text-white">
-                  {card.content.slice(0, 180)} ......
+                  {card.content?.slice(0, 180)} ......
                 </p>
               </div>
               {/* Hover content */}
@@ -63,9 +63,9 @@ const Program = () => {
                 <div className="w-full p-2 md:p-4 lg:p-6 lg:h-full">
                   <div className="space-y-3">
                     <div className="flex items-center gap-3">
-                      <h2 className="text-xl ">{card.title.slice(0, 100)}</h2>
+                      <h2 className="text-xl ">{card.title?.slice(0, 100)}</h2>
                     </div>
-                    <p className="text-justify">{card.content.slice(0, 200)}</p>
+                    <p className="text-justify">{card.content?.slice(0, 200)}</p>
                     <Button href={`/whatwedo/program/${card.id}`}>
                       Read More
                     </Button>

@@ -4,6 +4,7 @@ import { useLanguage } from "@/provider/LanguageProvider";
 import React from "react";
 import { TActivity } from "@/types/type";
 import LatestNewsFetchData from "./LatestNewsFetchData";
+import Loader from "@/components/Loading/Loading";
 
 
 const Programm = () => {
@@ -29,9 +30,11 @@ const Programm = () => {
 
     fetchPrisonData();
   }, []);
-
   if (loading) {
-    return <p>Loading</p>;
+    return <Loader />
+  }
+  if (error) {
+    return <h2 className='text-center'>Oops!  Something Went Wrong!</h2>
   }
 
   return (

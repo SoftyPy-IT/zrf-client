@@ -90,7 +90,7 @@ const FeatureSlider: React.FC<projectProps> = ({ projectData, language }) => {
             <div className="lg:relative -top-24 z-10">
                 <div className="bg-white lg:p-2 shadow-md lg:mt-0 mt-10">
                     <Slider {...settings}>
-                        {projectData.map((program, index) => (
+                        {projectData?.map((program, index) => (
                             <div key={index} className="flex justify-center items-center p-2">
                                 <div className="flex gap-5 bg-green-600 p-3  items-center justify-items-center h-[150px]">
                                     <div className="space-y-3 flex-1">
@@ -98,7 +98,7 @@ const FeatureSlider: React.FC<projectProps> = ({ projectData, language }) => {
                                             {language == 'ENG' ? program.english_title : program.bangla_title}
                                         </h3>
                                         <p className="text-xs text-white">
-                                            {language == 'ENG' ? program.english_short_description.slice(0, 50) : program.bangla_short_description.slice(0, 50)}...
+                                            {language == 'ENG' ? program.english_short_description?.slice(0, 50) : program.bangla_short_description?.slice(0, 50)}...
                                         </p>
                                         <Link href={`/our-projects/${program._id}`}>
                                             <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-2 py-1 rounded-full text-white text-xs border mt-3">
@@ -108,7 +108,7 @@ const FeatureSlider: React.FC<projectProps> = ({ projectData, language }) => {
                                     </div>
                                     <div className="flex-none w-28 h-24 overflow-hidden">
                                         {
-                                            program.bng_Images.slice(0, 1).map((img) => (
+                                            program.bng_Images?.slice(0, 1).map((img) => (
                                                 <Image
                                                     key={img}
                                                     src={img}

@@ -109,7 +109,7 @@ const HistoryFetchData: React.FC<AboutProps> = ({ aboutData, language }) => {
                                             <div className="content-right-container">
                                                 <div className="content-right">
                                                     <div className="contentRightImgWrap">
-                                                        {data.images.slice(0, 1).map((img, idx) => (
+                                                        {data.images?.slice(0, 1).map((img, idx) => (
                                                             <Image key={idx} src={img} alt="history" width={500} height={300} />
                                                         ))}
                                                     </div>
@@ -124,7 +124,7 @@ const HistoryFetchData: React.FC<AboutProps> = ({ aboutData, language }) => {
                                             <div className="content-right-container">
                                                 <div className="content-right">
                                                     <div className="contentRightImgWrap">
-                                                        {data.images.slice(0, 1).map((img, idx) => (
+                                                        {data.images?.slice(0, 1).map((img, idx) => (
                                                             <Image key={idx} src={img} alt="history" width={500} height={300} />
                                                         ))}
                                                     </div>

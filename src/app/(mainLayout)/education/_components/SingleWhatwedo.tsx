@@ -91,7 +91,7 @@ const SingleWhatwedo = ({ whatWedoData, language }: SingleWhatWeDoProps) => {
                         {/* Top Image */}
                         <div className="relative w-full h-[200px] md:h-[400px] lg:h-[700px] mb-6">
                             {
-                                whatWedoData.bng_Images.slice(0, 1).map((img) => (
+                                whatWedoData.bng_Images?.slice(0, 1).map((img) => (
                                     <Image
                                         width={500}
                                         height={500}

@@ -31,7 +31,7 @@ const ActivityFetchData: React.FC<EducationProps> = ({ activityData, language })
                         <div key={data._id} className="shadow-xl bg-white overflow-hidden">
                             <div className="relative">
                                 {
-                                    data.bng_Images.slice(0, 1).map((img) => (
+                                    data.bng_Images?.slice(0, 1).map((img) => (
                                         <Image
                                             width={500}
                                             height={500}
@@ -44,9 +44,9 @@ const ActivityFetchData: React.FC<EducationProps> = ({ activityData, language })
                                 }
                             </div>
                             <div className="p-5 space-y-5">
-                                <h3 className="text-xl font-bold">{language == 'ENG' ? data.english_title.slice(0, 60) : data.bangla_title.slice(0, 60)}</h3>
+                                <h3 className="text-xl font-bold">{language == 'ENG' ? data.english_title.slice(0, 60) : data.bangla_title?.slice(0, 60)}</h3>
                                 <p className="text-justify">
-                                    {language == 'ENG' ? data.english_short_description.slice(0, 150) : data.bangla_short_description.slice(0, 150)}...
+                                    {language == 'ENG' ? data.english_short_description?.slice(0, 150) : data.bangla_short_description?.slice(0, 150)}...
                                 </p>
                                 <div className="flex justify-between">
                                     <p className="text-gray-600">{formatDate(data.date)}</p>

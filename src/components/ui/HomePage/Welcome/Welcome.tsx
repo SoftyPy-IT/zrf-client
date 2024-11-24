@@ -5,6 +5,7 @@ import "./Welcome.css";
 import WelcomeData from "./WelcomeData";
 import { useLanguage } from "@/provider/LanguageProvider";
 import { TBanner } from "@/types/type";
+import Loader from "@/components/Loading/Loading";
 
 const Welcome = () => {
   const [welcomeData, setWelcomeData] = React.useState<TBanner[]>([]);
@@ -31,7 +32,8 @@ const Welcome = () => {
   }, []);
 
   if (loading) {
-    return <p>Loading</p>;
+    return <Loader />
+
   }
 
   return (

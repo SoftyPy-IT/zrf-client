@@ -70,7 +70,7 @@ const Biography: React.FC<introductionProps> = ({ handleOpen, introductionData, 
 
                         <div className="order-1 lg:order-2 lg:h-64">
                             {
-                                data.bng_images.slice(0, 1).map((img) => (
+                                data.bng_images?.slice(0, 1).map((img) => (
                                     <Image
                                         width={500}
                                         height={500}
@@ -88,7 +88,7 @@ const Biography: React.FC<introductionProps> = ({ handleOpen, introductionData, 
                                 {language === 'ENG' ? data.english_title : data.bangla_title}
                             </h2>
                             <p className="text-justify">
-                                {language === 'ENG' ? renderContent(data.english_description.slice(0, 300)) : renderContent(data.bangla_description.slice(0, 300))}
+                                {language === 'ENG' ? renderContent(data.english_description?.slice(0, 300)) : renderContent(data.bangla_description?.slice(0, 300))}
                                 <button
                                     className="text-blue-600 text-xs"
                                     onClick={() => handleOpen(data.english_title, data.bangla_description, data.bangla_title, data.english_description)}

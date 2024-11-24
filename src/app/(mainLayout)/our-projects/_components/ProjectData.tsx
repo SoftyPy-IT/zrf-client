@@ -87,12 +87,12 @@ const ProjectData: React.FC<projectProps> = ({ projectData, language }) => {
             <CommonBanner title="Our Project" />
             <Container>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-16">
-                    {projectData.map((data, index: number) => (
+                    {projectData?.map((data, index: number) => (
                         <div key={index}>
                             <div className="shadow-lg lg:h-[500px] md:h-[450px] relative">
                                 <div className="relative h-[250px]">
                                     {
-                                        data.bng_Images.slice(0, 1).map((img) => (
+                                        data.bng_Images?.slice(0, 1).map((img) => (
                                             <Image
                                                 width={500}
                                                 height={500}
@@ -107,7 +107,7 @@ const ProjectData: React.FC<projectProps> = ({ projectData, language }) => {
                                 <div className="p-5">
                                     <h3 className="text-xl font-semibold mb-3">{language === 'ENG' ? data.english_title : data.bangla_title}</h3>
                                     <p className="text-justify">
-                                        {language == 'ENG' ? renderContent(data.english_description.slice(0, 150)) : renderContent(data.bangla_description.slice(0, 150))}...
+                                        {language == 'ENG' ? renderContent(data.english_description?.slice(0, 150)) : renderContent(data.bangla_description?.slice(0, 150))}...
                                     </p>
                                     <div className="flex justify-end mt-3 absolute bottom-5">
                                         <Link href={`/our-projects/${data._id}`}>

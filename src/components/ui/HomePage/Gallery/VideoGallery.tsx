@@ -3,12 +3,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { Pagination, Navigation, Autoplay } from "swiper/modules";
+import {  Navigation,  } from "swiper/modules";
 import Link from "next/link";
 import EastIcon from "@mui/icons-material/East";
 import dynamic from "next/dynamic";
 import { useLanguage } from "@/provider/LanguageProvider";
 import { TVideo } from "@/types/type";
+import Loader from "@/components/Loading/Loading";
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 
 const VideoGallery = () => {
@@ -36,12 +37,11 @@ const VideoGallery = () => {
     }, []);
 
     if (loading) {
-        return <p>Loading...</p>;
-    }
-
-    if (error) {
-        return <p>{error}</p>;
-    }
+        return <Loader/>
+      }
+      if (error) {
+        return <h2 className='text-center'>Oops!  Something Went Wrong!</h2>
+      }
 
     return (
         <>

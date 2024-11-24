@@ -33,7 +33,7 @@ const RecentActivity: React.FC<welcomeProps> = ({ activityData, language }) => {
 
         <div className="w-full">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:h-[500px]">
-            {activityFilterData.slice(0, 2).map((data) => (
+            {activityFilterData?.slice(0, 2).map((data) => (
               <div
                 key={data._id}
                 className="relative shadow-xl bg-white overflow-hidden group hover:text-white"
@@ -56,10 +56,10 @@ const RecentActivity: React.FC<welcomeProps> = ({ activityData, language }) => {
 
                 <div className="p-5 space-y-3 relative z-10">
                   <h3 className="text-xl font-bold">
-                    {language === 'ENG' ? data.english_title.slice(0, 60) : data.bangla_title.slice(0, 60)}
+                    {language === 'ENG' ? data.english_title?.slice(0, 60) : data.bangla_title?.slice(0, 60)}
                   </h3>
                   <p className="text-justify">
-                    {language === 'ENG' ? data.english_short_description.slice(0, 150) : data.bangla_short_description.slice(0, 150)}...
+                    {language === 'ENG' ? data.english_short_description?.slice(0, 150) : data.bangla_short_description?.slice(0, 150)}...
                   </p>
                   <div className="flex justify-between">
                     <p>{formatDate(data.date)}</p>
@@ -99,7 +99,7 @@ const RecentActivity: React.FC<welcomeProps> = ({ activityData, language }) => {
 
 
                 <div>
-                  <h3 className="text-sm font-bold">{language == 'ENG' ? data.english_title.slice(0, 50) : data.bangla_title.slice(0, 50)}...</h3>
+                  <h3 className="text-sm font-bold">{language == 'ENG' ? data.english_title?.slice(0, 50) : data.bangla_title?.slice(0, 50)}...</h3>
 
                   <div className="flex justify-end">
                     <Link href={`/recent-activities-of-zrf//${data._id}`}>

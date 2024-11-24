@@ -1,23 +1,28 @@
-'use client'
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import { useLanguage } from '@/provider/LanguageProvider';
 import SingleProjectData from '../_components/SingleProjectData';
+import Loader from '@/components/Loading/Loading';
 
-interface pressId {
+interface PressId {
   params: {
     id: string;
   };
 }
-const Project = ({ params }: pressId) => {
+
+const Project = ({ params }: PressId) => {
   const { language } = useLanguage();
   const { id } = params;
 
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true); // Start loading
+      setError(null); // Reset error state
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/project/${id}`);
         const result = await res.json();
@@ -28,20 +33,32 @@ const Project = ({ params }: pressId) => {
         }
       } catch (error) {
         setError("An error occurred while fetching data.");
+      } finally {
+        setLoading(false); // End loading
       }
     };
 
     fetchData();
   }, [id]);
 
-  if (error) {
-    return <div>{error}</div>;
+  if (loading) {
+    return (
+      <Loader />
+    );
   }
-  return (
-    <>
-      <>{data && <SingleProjectData language={language} singleProjectData={data} />}</>
 
-    </>
+  if (error) {
+    return (
+      <div className="text-center text-red-600">
+        <h2>Ooops! Something Went Wrong!</h2>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      {data && <SingleProjectData language={language} singleProjectData={data} />}
+    </div>
   );
 };
 

@@ -110,7 +110,7 @@ const RecentEducation: React.FC<EducationProps> = ({ whatWedoData, language }) =
                             <Link href={`/education/${data._id}`}>
                                 <div className="flex">
                                     {
-                                        data.bng_Images.slice(0, 1).map((img) => (
+                                        data.bng_Images?.slice(0, 1).map((img) => (
                                             <Image
                                                 key={img}
                                                 src={img}
@@ -123,7 +123,7 @@ const RecentEducation: React.FC<EducationProps> = ({ whatWedoData, language }) =
                                     }
                                     <div>
                                         <p className="text-xs">{formatDate(data.date)}</p>
-                                        <p className="text-sm">{data.bangla_short_description}</p>
+                                        <p className="text-sm">{data?.bangla_short_description}</p>
                                     </div>
                                 </div>
                             </Link>

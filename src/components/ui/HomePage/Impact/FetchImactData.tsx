@@ -62,7 +62,7 @@ const FetchImactData: React.FC<overviewProps> = ({ overviewData, language }) => 
         <div className="impact-bg py-16">
             <Container>
                 {
-                    overviewData.map((data) => (
+                    overviewData?.map((data) => (
                         <div key={data._id} className="grid grid-cols-1 lg:grid-cols-2 lg:gap-10 gap-16 items-center lg:mt-10 mt-20">
                             <div className="space-y-5 text-white">
                                 {
@@ -73,7 +73,7 @@ const FetchImactData: React.FC<overviewProps> = ({ overviewData, language }) => 
                                 <Button sx={{ background: "#E3C80D" }}>{language == 'ENG' ? 'Donattion Now' : 'এখনই দান করুন'}</Button>
                             </div>
                             {
-                                data.images.slice(0, 1).map((img) => (
+                                data.images?.slice(0, 1).map((img) => (
                                     <Image key={img} src={img} alt="Programm" width={1000} height={300} />
                                 ))
                             }

@@ -75,6 +75,7 @@ export type TEbook = {
 };
 
 export interface TVideo {
+  _id: string,
   video_url: string;
   video_title_bangla: string;
   video_title_english: string;

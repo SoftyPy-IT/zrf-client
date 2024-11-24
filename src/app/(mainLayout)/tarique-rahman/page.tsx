@@ -172,10 +172,10 @@ const BiographyPage = () => {
                   {data.title}
                 </h2>
                 <p className="text-justify">
-                  {data.content.slice(0, 300)}
+                  {data.content?.slice(0, 300)}
                   <button
                     className="text-blue-600 text-xs"
-                    onClick={() => handleOpen(data.title, data.content)}
+                    onClick={() => handleOpen(data?.title, data?.content)}
                   >
                     ...See All
                   </button>

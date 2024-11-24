@@ -7,10 +7,16 @@ import { School, HealthAndSafety } from "@mui/icons-material";
 import ThunderstormIcon from "@mui/icons-material/Thunderstorm";
 import WaterIcon from "@mui/icons-material/Water";
 import { useLanguage } from "@/provider/LanguageProvider";
+import Loader from "@/components/Loading/Loading";
 const ProgrammSection = () => {
-  const { programmData } = useProgrammData()
+  const { programmData, loading,error } = useProgrammData()
   const { language } = useLanguage()
-
+  if (loading) {
+    return <Loader/>
+  }
+  if (error) {
+    return <h2 className='text-center'>Oops!  Something Went Wrong!</h2>
+  }
   return (
     <div>
 

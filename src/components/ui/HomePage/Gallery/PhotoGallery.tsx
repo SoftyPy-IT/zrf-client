@@ -10,6 +10,7 @@ import EastIcon from "@mui/icons-material/East";
 import { TImgGallery, TVideo } from "@/types/type";
 import { useLanguage } from "@/provider/LanguageProvider";
 import Image from "next/image";
+import Loader from "@/components/Loading/Loading";
 
 const PhotoGallery = () => {
   const [galleryData, setGalleryData] = React.useState<TImgGallery[]>([]);
@@ -36,13 +37,11 @@ const PhotoGallery = () => {
   }, []);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <Loader />
   }
-
   if (error) {
-    return <p>{error}</p>;
+    return <h2 className='text-center'>Oops!  Something Went Wrong!</h2>
   }
-
 
   return (
     <>
@@ -67,7 +66,7 @@ const PhotoGallery = () => {
           {galleryData.map((gallery, index) => (
             <SwiperSlide key={gallery._id || index}>
               <div className="relative w-full h-64 md:h-80 bg-gray-200 overflow-hidden">
-                {gallery.thumnailImages.slice(0, 1).map((img, idx) => {
+                {gallery.thumnailImages?.slice(0, 1).map((img, idx) => {
 
                   return (
                     <Image
@@ -91,7 +90,7 @@ const PhotoGallery = () => {
       <div className="flex justify-end mt-5">
         <Link href="/images">
           <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-6 py-2 text-white rounded-full uppercase">
-          {language === 'ENG' ? 'See All' : 'সব দেখুন'} <EastIcon fontSize="small" />
+            {language === 'ENG' ? 'See All' : 'সব দেখুন'} <EastIcon fontSize="small" />
           </button>
         </Link>
       </div>

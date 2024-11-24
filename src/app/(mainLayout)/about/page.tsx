@@ -85,6 +85,7 @@ const AboutUs = () => {
         <History />
         <JoinUs />
       </Container>
+      
     </div>
   );
 };

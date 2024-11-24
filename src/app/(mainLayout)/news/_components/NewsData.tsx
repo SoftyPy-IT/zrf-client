@@ -89,7 +89,7 @@ const NewsData: React.FC<activityProps> = ({ activityData, language }) => {
                             <div className="shadow-lg lg:h-[500px] md:h-[450px] relative">
                                 <div className="relative h-[250px]">
                                     {
-                                        data.bng_Images.slice(0, 1).map((img) => (
+                                        data.bng_Images?.slice(0, 1).map((img) => (
                                             <Image
                                                 width={500}
                                                 height={500}
@@ -104,7 +104,7 @@ const NewsData: React.FC<activityProps> = ({ activityData, language }) => {
                                 <div className="p-5">
                                     <h3 className="text-xl font-semibold mb-3">{language === 'ENG' ? data.english_title : data.bangla_title}</h3>
                                     <p className="text-justify">
-                                        {language == 'ENG' ? renderContent(data.english_description.slice(0, 80)) : renderContent(data.bangla_description.slice(0, 80))}
+                                        {language == 'ENG' ? renderContent(data.english_description?.slice(0, 80)) : renderContent(data.bangla_description?.slice(0, 80))}
                                     </p>
                                     <div className="flex justify-end mt-3 absolute bottom-5">
                                         <Link href={`/news/${data._id}`}>

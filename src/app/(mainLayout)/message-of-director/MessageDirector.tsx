@@ -104,7 +104,7 @@ const MessageDirector = ({ language, messageData }: MessageProps) => {
                                 <div className="flex flex-col md:flex-row items-center justify-center mb-8 py-3">
                                     <div className="relative w-40 h-40 mb-6 md:mb-0">
                                         {
-                                            message.bng_Images.slice(0, 1).map((img) => (
+                                            message.bng_Images?.slice(0, 1).map((img) => (
                                                 <Image
                                                     key={img}
                                                     src={img}

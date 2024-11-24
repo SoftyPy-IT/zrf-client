@@ -190,7 +190,7 @@ const DonateForm = ({ onClose }: { onClose: () => void }) => {
               </>
             )}
             {activeStep === 1 && (
-              <Box marginTop="50px">
+              <Box >
                 <Typography marginBottom="20px" variant="h6">
                   {language === 'ENG' ? 'Select Payment Method' : 'পেমেন্ট পদ্ধতি নির্বাচন করুন'}
                 </Typography>
@@ -201,13 +201,14 @@ const DonateForm = ({ onClose }: { onClose: () => void }) => {
                   alignItems="center"
                 >
                   <div className="paymentWrap">
-                    <Image src={bkash} alt="payment" width={300} height={300} />
+                    <Image src={bkash} alt="payment" width={300} height={200} />
                   </div>
                   <div className="paymentWrap">
-                    <Image src={nagad} alt="payment" width={300} height={300} />
+                    <Image src={nagad} alt="payment" width={300} height={200} />
                   </div>
                 </Box>
                 <Box
+                
                   marginTop="20px"
                   display="flex"
                   justifyContent="space-between"
@@ -218,11 +219,11 @@ const DonateForm = ({ onClose }: { onClose: () => void }) => {
                       src={rocket}
                       alt="payment"
                       width={300}
-                      height={300}
+                      height={200}
                     />
                   </div>
                   <div className="paymentWrap">
-                    <Image src={visa} alt="payment" width={300} height={300} />
+                    <Image src={visa} alt="payment" width={300} height={200} />
                   </div>
                 </Box>
               </Box>

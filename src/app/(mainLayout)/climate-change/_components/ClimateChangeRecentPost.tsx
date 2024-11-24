@@ -46,7 +46,7 @@ const ClimateChangeRecentPost: React.FC<EducationProps> = ({ whatWedoData, langu
                             <Link href={`/climate-change/${data._id}`}>
                                 <div className="flex gap-5 ">
                                     {
-                                        data.bng_Images.slice(0, 1).map((img) => (
+                                        data.bng_Images?.slice(0, 1).map((img) => (
                                             <Image
                                                 key={img}
                                                 src={img}
@@ -59,7 +59,7 @@ const ClimateChangeRecentPost: React.FC<EducationProps> = ({ whatWedoData, langu
                                     }
                                     <div>
                                         <p className="text-xs">{formatDate(data.date)}</p>
-                                        <p className="text-sm">{language === 'ENG' ? data.english_short_description.slice(0, 100) : data.bangla_short_description.slice(0, 100)}</p>
+                                        <p className="text-sm">{language === 'ENG' ? data.english_short_description?.slice(0, 100) : data.bangla_short_description?.slice(0, 100)}</p>
                                     </div>
                                 </div>
                             </Link>

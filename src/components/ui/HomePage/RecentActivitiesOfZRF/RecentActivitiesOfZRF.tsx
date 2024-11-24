@@ -3,6 +3,7 @@ import { useLanguage } from "@/provider/LanguageProvider";
 import RecentActivity from "./RecentActivity";
 import React from "react";
 import { TActivity } from "@/types/type";
+import Loader from "@/components/Loading/Loading";
 
 
 
@@ -29,9 +30,11 @@ const RecentActivitiesOfZRF = () => {
 
     fetchPrisonData();
   }, []);
-
   if (loading) {
-    return <p>Loading</p>;
+    return <Loader />
+  }
+  if (error) {
+    return <h2 className='text-center'>Oops!  Something Went Wrong!</h2>
   }
 
   return (
