@@ -1,4 +1,5 @@
 import { TProject } from '@/types/type';
+import Link from 'next/link';
 import React from 'react';
 import ReactHtmlParser from "react-html-parser";
 
@@ -88,17 +89,21 @@ const RecentPostFetchData: React.FC<welcomeProps> = ({ projectData, language }) 
         <div>
 
             <div className="border p-5 rounded lg:w-[600px]">
-                <h3 className="text-xl font-bold"> {language === 'ENG' ? 'Recent Post' : 'সাম্প্রতিক পোস্ট'} </h3>
+                <h3 className="text-xl font-bold"> {language === 'ENG' ? 'Recent Project' : 'সাম্প্রতিক প্রকল্প'} </h3>
                 <hr className="w-16 h-1 bg-gradient-to-r from-yellow-600 to-green-600 border-0 rounded-full mb-5" />
                 <div className="flex flex-col gap-8 mt-5">
                     {projectData?.slice(0, 3)?.map((data) => (
                         <div key={data._id}>
-                            <div>
-                                <p className="hover:underline cursor-pointer text-justify font-semibold">
-                                    {language === 'ENG' ? renderContent(data?.english_description.slice(0, 100)) : renderContent(data?.bangla_description?.slice(0, 100))}
-                                </p>
-                                <p className="text-sm font-medium mt-2">{formatDate(data?.date)}</p>
-                            </div>
+                            <Link href={`/our-projects/${data._id}`}>
+                                <div key={data._id}>
+                                    <div>
+                                        <p className="hover:underline cursor-pointer text-justify font-semibold">
+                                            {language === 'ENG' ? renderContent(data?.english_description.slice(0, 100)) : renderContent(data?.bangla_description?.slice(0, 100))}
+                                        </p>
+                                        <p className="text-sm font-medium mt-2">{formatDate(data?.date)}</p>
+                                    </div>
+                                </div>
+                            </Link>
                         </div>
                     ))}
                 </div>
