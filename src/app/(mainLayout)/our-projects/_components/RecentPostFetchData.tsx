@@ -98,7 +98,7 @@ const RecentPostFetchData: React.FC<welcomeProps> = ({ projectData, language }) 
                                 <div key={data._id}>
                                     <div>
                                         <p className="hover:underline cursor-pointer text-justify font-semibold">
-                                            {language === 'ENG' ? renderContent(data?.english_description.slice(0, 100)) : renderContent(data?.bangla_description?.slice(0, 100))}
+                                            {language === 'ENG' ? data?.english_short_description.slice(0, 100) : data?.bangla_short_description.slice(0, 100)}
                                         </p>
                                         <p className="text-sm font-medium mt-2">{formatDate(data?.date)}</p>
                                     </div>

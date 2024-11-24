@@ -64,7 +64,7 @@ export const DonationTab: React.FC<DonationModalProps> = ({ onClose }) => {
                             }}
                         >
                             <Tab
-                                label={language == 'ENG' ? 'Donate Now' : 'দান করুন'}
+                                label={language == 'ENG' ? 'Donate' : 'দান করুন'}
                                 value="1"
                                 sx={tabStyle}
                                 disableRipple

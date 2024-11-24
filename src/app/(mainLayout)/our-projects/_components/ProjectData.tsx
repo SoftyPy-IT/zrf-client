@@ -107,7 +107,7 @@ const ProjectData: React.FC<projectProps> = ({ projectData, language }) => {
                                 <div className="p-5">
                                     <h3 className="text-xl font-semibold mb-3">{language === 'ENG' ? data.english_title : data.bangla_title}</h3>
                                     <p className="text-justify">
-                                        {language == 'ENG' ? data.bangla_short_description?.slice(0, 150) : data.english_short_description?.slice(0, 150)}...
+                                        {language == 'ENG' ? data.english_short_description?.slice(0, 150) : data.bangla_short_description?.slice(0, 150)}...
                                     </p>
                                     <div className="flex justify-end mt-3 absolute bottom-5">
                                         <Link href={`/our-projects/${data._id}`}>
