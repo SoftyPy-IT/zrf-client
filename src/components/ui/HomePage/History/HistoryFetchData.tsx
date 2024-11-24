@@ -119,6 +119,7 @@ const HistoryFetchData: React.FC<AboutProps> = ({ aboutData, language }) => {
                                                 <span className="date">{formatDate(data.date)}</span>
                                             </div>
                                         </>
+                                        
                                     ) : (
                                         <>
                                             <div className="content-right-container">

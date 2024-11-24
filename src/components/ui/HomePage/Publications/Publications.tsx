@@ -13,16 +13,17 @@ const Publication = () => {
     <Container>
 
       <div className="grid grid-cols-12 xl:space-y-0 space-y-5  mt-44 md:my-40 ">
-      <div className="col-span-7">
-      <PublicationSlider />
-      </div>
-       <div className="col-span-5">
-       <LatestNews />
-       </div>
+        <div className="col-span-12 lg:col-span-7">
+          <PublicationSlider />
+        </div>
+        <div className="col-span-12 lg:col-span-5">
+          <LatestNews />
+        </div>
       </div>
     </Container>
   );
 };
+
 
 
 

@@ -32,7 +32,7 @@ const Contact = () => {
                     </h3>
                     <p className="text-white">
 
-                      {language == 'ENG' ? ' House#4, Road#7, Niketon Gate #2, Gulshan-1, Dhaka-1212, Bangladesh.' : 'বাড়ি#৪, রোড#৭, নিকেটন গেট#২, গুলশান-১, ঢাকা-১২১২, বাংলাদেশ।'}
+                      {language == 'ENG' ? ' House#4, Road#7, Niketon Gate #2, Gulshan-1, Dhaka-1212, Bangladesh.' : 'বাড়ি#৪, রোড#৭, নিকেতন গেট#২, গুলশান-১, ঢাকা-১২১২, বাংলাদেশ।'}
                     </p>
                   </div>
                   <div className="mb-4">

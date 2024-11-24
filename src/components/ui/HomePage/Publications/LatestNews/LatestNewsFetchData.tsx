@@ -17,7 +17,7 @@ interface newsProps {
 const LatestNewsFetchData: React.FC<newsProps> = ({ newsData, language }) => {
 
 
-
+    console.log(newsData)
     return (
         <>
             <div>
@@ -34,14 +34,14 @@ const LatestNewsFetchData: React.FC<newsProps> = ({ newsData, language }) => {
                         </Marquee>
                     </div>
                 </div>
-                <div className="w-full grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-1  md:grid-cols-2 items-center gap-4 lg:mt-0 mt-10">
+                <div className="w-full grid grid-cols-1  xl:grid-cols-1  md:grid-cols-1 items-center gap-4 lg:mt-5  mt-10 ">
                     {newsData?.slice(0, 3).map((data) => (
                         <div
                             key={data._id}
                             className="border rounded items-center p-3 shadow-md"
                         >
-                            <div className="flex items-center gap-3">
-                                <div>
+                            <div className="flex flex-col md:flex-row  items-center gap-3">
+                                <div className="flex-1 order-3 md:order-1">
                                     <h4 className="text-sm font-semibold uppercase">
                                         {language === 'ENG' ? data?.english_title?.slice(0, 60) : data?.bangla_title?.slice(0, 60)}
                                         ...
@@ -59,7 +59,7 @@ const LatestNewsFetchData: React.FC<newsProps> = ({ newsData, language }) => {
                                     </p>
                                 </div>
                                 <Image
-                                    className="w-28 h-20 object-cover rounded"
+                                    className="md:w-52 h-[200px]   md:h-32 object-fill rounded order-1   md:order-3 "
                                     alt={data.english_title || "E-Book"}
                                     src={data.bng_Images[0] || ''}
                                     width={300}

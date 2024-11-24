@@ -28,9 +28,7 @@ body {
   margin: 0 auto;
 }
 #conference-timeline .timeline-end {
-
   max-width: 15%;
-
 }
 
 #conference-timeline .conference-center-line {
@@ -134,7 +132,6 @@ body {
 
 .timeline-article .meta-date .date {
   font-size: 12px;
-
 }
 
 .timeline-article .meta-date .month {
@@ -142,30 +139,42 @@ body {
   line-height: 10px;
 }
 
-
-
-/* .timeline-article .content-right {
-  width: 500px;
-  height: 300px;
-  left: 0px;
-
-}
-
-.contentRightImgWrap {
-  width: 450px;
-  height: 250px;
-
-} */
-
 .contentRightImgWrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-/*===== Responsive Vertical Timeline =====*/
-@media only screen and (max-width: 830px) {
+.timeline-article {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
 
+.content-left-container,
+.content-right-container {
+  flex: 1;
+}
+
+.content-left,
+.content-right {
+  padding: 20px;
+}
+
+.contentRightImgWrap {
+  margin-top: 10px;
+}
+
+.meta-date {
+  margin-top: 10px;
+  font-size: 14px;
+  text-align: center;
+}
+
+@media only screen and (max-width: 830px) {
+  .timeline-article {
+    flex-direction: column;
+  }
   #conference-timeline .timeline-start,
   #conference-timeline .timeline-end {
     margin: 0;
@@ -214,10 +223,7 @@ body {
   .contentRightImgWrap {
     width: 100%;
     height: 100%;
-
-
   }
-
 }
 
 @media only screen and (max-width: 400px) {
@@ -228,30 +234,30 @@ body {
   .timeline-article p span.article-number {
     display: none;
   }
-}
+  #conference-timeline .conference-center-line {
+    margin-left: 0;
+    left: 0px;
+  }
 
-.timeline-article {
-  display: flex;
-justify-content: space-between;
-  margin-bottom: 20px;
-}
+  .timeline-article .meta-date {
+    left: 0px;
+  }
+  .timeline-article .content-left-container,
+  .timeline-article .content-right-container {
+    margin-left: 17px;
+    min-height: 53px;
+  }
 
-.content-left-container,
-.content-right-container {
-  flex: 1;
-}
-
-.content-left,
-.content-right {
-  padding: 20px;
-}
-
-.contentRightImgWrap {
-  margin-top: 10px;
-}
-
-.meta-date {
-  margin-top: 10px;
-  font-size: 14px;
-  text-align: center;
+  #conference-timeline .conference-timeline-content {
+    padding-top: 0px;
+  }
+  .timeline-article {
+    overflow: visible;
+  }
+  .timeline-article .meta-date {
+    top: -78px;
+  }
+  .timeline-article {
+    margin-top: 81px;
+  }
 }

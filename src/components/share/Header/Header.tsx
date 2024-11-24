@@ -40,15 +40,15 @@ const Header = () => {
   return (
     <div className="sticky top-0 w-full bg-white shadow-md  z-[999999]">
       <Container>
-        <div className="flex justify-between items-center py-1 md:py-0">
+        <div className="flex justify-between items-center py-1 md:py-1">
           <Box component={Link} href="/">
-            <div className="flex items-center md:gap-3">
+            <div className="flex items-center gap-x-1 md:gap-3">
               <Image
                 src={logo}
                 alt="logo"
-                className="rounded-full logo "
-                width={80}
-                height={80}
+                className="rounded-full logo w-12 h-12 md:w-20 md:h-20" // Add responsive width/height
+                width={75} // Use width and height for fallback
+                height={75}
               />
               <Typography component="span" fontWeight={600} color="black">
                 <Box component="span" color="primary.main" fontWeight="bold">
