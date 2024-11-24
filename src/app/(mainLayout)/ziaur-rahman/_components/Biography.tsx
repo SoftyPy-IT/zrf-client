@@ -1,4 +1,5 @@
 import { TIntroduction } from '@/types/type';
+import { Button } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
 
@@ -65,10 +66,10 @@ const Biography: React.FC<introductionProps> = ({ handleOpen, introductionData, 
                 {filteredData.map((data) => (
                     <div
                         key={data._id}
-                        className="rounded shadow-lg p-5 grid grid-cols-1 lg:grid-cols-2 gap-5"
+                        className="rounded shadow-lg p-5 grid grid-cols-1 xl:grid-cols-2 gap-5"
                     >
 
-                        <div className="order-1 lg:order-2 lg:h-64">
+                        <div className="order-1 xl:order-2 md:h-64 object-fill lg:h-64 overflow-hidden">
                             {
                                 data.bng_images?.slice(0, 1).map((img) => (
                                     <Image
@@ -83,7 +84,7 @@ const Biography: React.FC<introductionProps> = ({ handleOpen, introductionData, 
                             }
                         </div>
 
-                        <div className="order-2 lg:order-1">
+                        <div className="order-2 xl:order-1">
                             <h2 className="text-xl font-bold mb-3 text-center">
                                 {language === 'ENG' ? data.english_title : data.bangla_title}
                             </h2>
@@ -92,8 +93,7 @@ const Biography: React.FC<introductionProps> = ({ handleOpen, introductionData, 
                                 <button
                                     className="text-blue-600 text-xs"
                                     onClick={() => handleOpen(data.english_title, data.bangla_description, data.bangla_title, data.english_description)}
-                                >
-                                    ... {language === 'ENG' ? 'See All' : 'সব দেখুন'}
+                                > ... {language === 'ENG' ? 'See All' : 'সব দেখুন'}
                                 </button>
                             </p>
                         </div>
