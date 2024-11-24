@@ -23,14 +23,14 @@ const ClimateChange: React.FC<CovidProps> = ({ whatWedoData, language }) => {
             <CommonBanner title="Climate Change " />
             <Container className="my-20">
                 <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 h-[1100px] md:h-[900px] lg:h-[500px]">
-                    {covidFilterData.map((data, index) => (
+                    {covidFilterData?.map((data, index) => (
                         <div
                             className="relative shadow-md overflow-hidden group border"
                             key={index}
                         >
 
                             {
-                                data.bng_Images.slice(0, 1).map((img) => (
+                                data.bng_Images?.slice(0, 1).map((img) => (
                                     <Image
                                         width={500}
                                         height={500}

@@ -25,7 +25,7 @@ const Education: React.FC<EducationProps> = ({ whatWedoData, language }) => {
             >
               {/* Image */}
               {
-                data.bng_Images.slice(0, 1).map((img) => (
+                data.bng_Images?.slice(0, 1).map((img) => (
                   <Image
                     width={500}
                     height={500}
