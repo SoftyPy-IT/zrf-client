@@ -13,6 +13,7 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import XIcon from "@mui/icons-material/X";
 import { Button } from "@mui/material";
 import DonationModal from "../Header/DonationModal";
+import { YouTube } from "@mui/icons-material";
 
 type FooterProps = {
     language: string,
@@ -24,7 +25,7 @@ const FooterData = ({ language }: FooterProps) => {
 
     };
 
-    const buttonStyle = { width: '120px', height: '30px', borderRadius: '10px', color: 'white', background: '#E3C80D', padding: '0px', }
+    const buttonStyle = { width: '120px', height: '30px', borderRadius: '10px', color: 'white', background: '#FEC909', padding: '0px', }
 
     const handleModalOpen = () => setModalOpen(true);
     const handleModalClose = () => setModalOpen(false);
@@ -115,40 +116,49 @@ const FooterData = ({ language }: FooterProps) => {
                                         language === 'ENG' ? 'Follow Us' : 'আমাদের অনুসরণ করুন'
                                     }   </h4>
                                     <div className="flex justify-center">
-                                        <div className="mt-4 flex space-x-4">
-                                            <a
-                                                href="https://www.facebook.com/zrf.org/"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="text-gray-400 hover:text-white"
-                                            >
-                                                <FacebookIcon />
-                                            </a>
-                                            <a
-                                                href="https://x.com"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="text-gray-400 hover:text-white"
-                                            >
-                                                <XIcon />
-                                            </a>
-                                            <a
-                                                href="https://instagram.com"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="text-gray-400 hover:text-white"
-                                            >
-                                                <InstagramIcon />
-                                            </a>
-                                            <a
-                                                href="https://linkedin.com"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="text-gray-400 hover:text-white"
-                                            >
-                                                <LinkedInIcon />
-                                            </a>
-                                        </div>
+                                    <div className="mt-4 flex space-x-4">
+  <a
+    href="https://www.facebook.com/zrf.org/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:text-white"
+  >
+    <FacebookIcon className="text-blue-600 hover:text-blue-700" /> {/* Facebook color */}
+  </a>
+  <a
+    href="https://x.com"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:text-white"
+  >
+    <YouTube className="text-red-600 hover:text-red-700" /> {/* YouTube color */}
+  </a>
+  <a
+    href="https://x.com"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:text-white"
+  >
+    <XIcon className="text-blue-600 hover:text-blue-700" /> {/* X (formerly Twitter) color */}
+  </a>
+  <a
+    href="https://instagram.com"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:text-white"
+  >
+    <InstagramIcon className="text-pink-500 hover:text-pink-600" /> {/* Instagram color */}
+  </a>
+  <a
+    href="https://linkedin.com"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:text-white"
+  >
+    <LinkedInIcon className="text-blue-700 hover:text-blue-800" /> {/* LinkedIn color */}
+  </a>
+</div>
+
                                     </div>
                                 </div>
                             </div>

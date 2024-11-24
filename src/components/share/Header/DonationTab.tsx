@@ -32,7 +32,7 @@ export const DonationTab: React.FC<DonationModalProps> = ({ onClose }) => {
         marginRight: '2px',
         marginLeft: '2px',
         '&.Mui-selected': {
-            backgroundColor: '#E3C80D',
+            backgroundColor: '#FEC909',
             color: 'white',
             borderBottom: 'none',
         },

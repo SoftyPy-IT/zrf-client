@@ -34,7 +34,7 @@ const WelcomeData: React.FC<welcomeProps> = ({ welcomeData, language }) => {
                                     <span className="text-green-600 text-4xl lg:text-6xl ">
 
                                         {
-                                            language === 'ENG' ? '  Ziaur Rahman' : 'জিয়াউর রহমান ফাউন্ডেশন'
+                                            language === 'ENG' ? '  Ziaur Rahman' : 'জিয়াউর রহমান'
                                         }
                                     </span>
                                     <span className="block mt-2">  {

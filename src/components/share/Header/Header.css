@@ -12,7 +12,7 @@
   right: 0;
   bottom: 0;
   width: 0px;
-  background-image: -webkit-linear-gradient(right, #216740, #e3c80d);
+  background-image: -webkit-linear-gradient(right, #216740, #FEC909);
   transition: all 0.5s cubic-bezier(0.4, 0.43, 0.54, 0.54);
   color: #fff;
 }

@@ -6,6 +6,7 @@ import Videos from "./_components/Videos";
 import Loader from "@/components/Loading/Loading";
 import { useVideoData } from "@/hooks/useVideoData";
 import { useLanguage } from "@/provider/LanguageProvider";
+import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 
 const VideoGallery = () => {
   const { videoData, loading, error } = useVideoData()
@@ -26,8 +27,9 @@ const VideoGallery = () => {
   }
 
   return (
-    <div>
-      <Videos />
+    <div> 
+      <CommonBanner title={language === 'ENG' ? 'Videos Gallery' : 'ভিডিও গ্যালারি'}/>
+     
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-16">
           {videoData.map((video) => (

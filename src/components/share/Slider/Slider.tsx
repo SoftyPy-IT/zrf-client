@@ -110,7 +110,7 @@ const Slider = () => {
                         ? slide.english_short_description
                         : slide.bangla_short_description}
                     </p>
-                    <button className="bg-[#E3C80D] text-white text-sm px-3 md:px-6 py-1 md:py-3 rounded-full hover:bg-[#216740] transition duration-300">
+                    <button className="bg-[#FEC909] text-white text-sm px-3 md:px-6 py-1 md:py-3 rounded-full hover:bg-[#216740] transition duration-300">
                       {language === "ENG" ? " Learn More" : "আরও জানুন"}
                     </button>
                   </div>

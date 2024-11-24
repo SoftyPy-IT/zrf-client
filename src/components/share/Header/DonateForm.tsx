@@ -89,7 +89,7 @@ const DonateForm = ({ onClose }: { onClose: () => void }) => {
     height: "50px",
     fontSize: "12px",
     padding: "0px",
-    backgroundImage: "linear-gradient(to right, #216740, #E3C80D)",
+    backgroundImage: "linear-gradient(to right, #216740, #FEC909)",
     color: "white",
     borderRadius: "5px",
     textTransform: "none",

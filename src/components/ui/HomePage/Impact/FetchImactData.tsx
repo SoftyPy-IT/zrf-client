@@ -70,7 +70,7 @@ const FetchImactData: React.FC<overviewProps> = ({ overviewData, language }) => 
                                 }
 
 
-                                <Button sx={{ background: "#E3C80D" }}>{language == 'ENG' ? 'Donattion Now' : 'এখনই দান করুন'}</Button>
+                                <Button sx={{ background: "#FEC909" }}>{language == 'ENG' ? 'Donate' : 'দান করুন'}</Button>
                             </div>
                             {
                                 data.images?.slice(0, 1).map((img) => (
