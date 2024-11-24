@@ -79,7 +79,7 @@ const RecentActivity: React.FC<welcomeProps> = ({ activityData, language }) => {
 
         <div className=" lg:w-[500px]  w-full">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-5 bg-gray-100 p-5 lg:mt-0 md:mt-5 mt-5">
-            {activityFilterData.map((data) => (
+            {activityFilterData?.slice(0,4).map((data) => (
               <div
                 key={data._id}
                 className="flex items-center gap-5 bg-white lg:h-[100px] p-3 rounded shadow-md transition-transform duration-500 transform hover:scale-105"
