@@ -12,29 +12,29 @@ interface CommitteProps {
 const CommitteeFetchData: React.FC<CommitteProps> = ({ committeeData, language }) => {
     const filterCommitteeData = committeeData.filter((volunteer) => volunteer.category === "Committee");
 
-    // const sortedCommitteeData = filterCommitteeData.sort((a, b) => {
-    //     const committeeA = a.committee.toLowerCase();
-    //     const committeeB = b.committee.toLowerCase();
+    const sortedCommitteeData = filterCommitteeData.sort((a, b) => {
+        const committeeA = a.committee.toLowerCase();
+        const committeeB = b.committee.toLowerCase();
+   
+
+        if (committeeA === "board of directors") return -1;
+        if (committeeB === "board of directors") return 1;
+
+        if (committeeA < committeeB) return -1;
+        if (committeeA > committeeB) return 1;
+
+        if (committeeA === "") return 1;
+        if (committeeB === "") return -1;
+
+        // Sort remaining committees alphabetically
+        if (committeeA < committeeB) return 1;
+        if (committeeA > committeeB) return -1;
+
+        return 0;
+    });
 
 
-    //     // if (committeeA === "board of directors") return 1;
-    //     // if (committeeB === "board of directors") return -1;
-
-    //     // if (committeeA < committeeB) return 1;
-    //     // if (committeeA > committeeB) return -1;
-
-    //     // if (committeeA === "") return 1;
-    //     // if (committeeB === "") return -1;
-
-    //     // // Sort remaining committees alphabetically
-    //     // if (committeeA < committeeB) return 1;
-    //     // if (committeeA > committeeB) return -1;
-
-    //     return 0;
-    // });
-
-
-    const committees = filterCommitteeData.reduce((acc, profile) => {
+    const committees = sortedCommitteeData.reduce((acc, profile) => {
         const committeeName = profile.committee;
         if (!acc[committeeName]) {
             acc[committeeName] = [];
