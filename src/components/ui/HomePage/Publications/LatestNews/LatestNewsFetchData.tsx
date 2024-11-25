@@ -17,7 +17,6 @@ interface newsProps {
 const LatestNewsFetchData: React.FC<newsProps> = ({ newsData, language }) => {
 
 
-    console.log(newsData)
     return (
         <>
             <div>

@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import Banner from "../_components/Banner";
 import Container from "@/components/share/Container";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import ReactHtmlParser from "react-html-parser";
@@ -8,6 +7,7 @@ import ShareLink from "@/components/share/ShareLink/ShareLink";
 import { TWhatWeDo } from "@/types/type";
 import Image from "next/image";
 import RehabilitationSidebar from "./RehabilitationSidebar";
+import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 
 
 type SingleWhatWeDoProps = {
@@ -84,7 +84,7 @@ const SingleRehabilitation = ({ whatWedoData, language }: SingleWhatWeDoProps) =
 
     return (
         <>
-            <Banner />
+            <CommonBanner title="Rehabili" />
             <Container>
                 <div className="h-auto lg:flex gap-5">
                     <div className="w-full mt-2 lg:mt-0 lg:p-6">

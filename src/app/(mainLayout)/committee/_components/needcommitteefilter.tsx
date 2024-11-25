@@ -10,7 +10,7 @@ interface CommitteProps {
 }
 
 const CommitteeFetchData: React.FC<CommitteProps> = ({ committeeData, language }) => {
-    console.log(committeeData)
+
     const filterCommitteeData = committeeData.filter(
         (volunteer) => volunteer.category === "Committee"
     );
