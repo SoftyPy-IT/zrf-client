@@ -11,7 +11,7 @@ interface AboutProps {
 
 const AboutTopSectionData: React.FC<AboutProps> = ({ aboutData, language, }) => {
     // const allowedCategories = [language === 'ENG' ? 'About' : 'সম্পর্কে', , language === 'ENG' ? 'Mission' : 'মিশন', , language === 'ENG' ? 'Vission' : 'দৃষ্টি', , language === 'ENG' ? 'Slugan' : 'স্লুগান',];
-    const allowedCategories = ["About", "Mission", "Vission", "Slugan"];
+    const allowedCategories = ["About", "Mission", "Vision", "Slogan"];
 
     const tabs = aboutData
         .map((item) => item.category)
