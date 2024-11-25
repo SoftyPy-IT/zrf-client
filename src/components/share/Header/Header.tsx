@@ -127,7 +127,7 @@ const Header = () => {
                 </li>
                 <li className="dropdownMenuWrap  relative">
                   <Link href="#">
-                    {language === "ENG" ? "What We Do" : "আমরা কার্যক্রম  "} <KeyboardArrowDownIcon />
+                    {language === "ENG" ? "What We Do" : "আমাদের কার্যক্রম "} <KeyboardArrowDownIcon />
                   </Link>
                   <ul className={`w-[240px] submenu  ${dropdown}`}>
                     <li className="lg:border-none border-b lg:py-0 py-2">
@@ -170,7 +170,7 @@ const Header = () => {
 
                 <li className="dropdownMenuWrap relative">
                   <Link href="/ziaur-rahman">
-                    {language === "ENG" ? "Biography Of Ziaur Rahman" : " জিয়াউর রহমান এর জীবনী "}
+                    {language === "ENG" ? "Shaheed President Ziaur Rahman" : "শহীদ প্রেসিডেন্ট জিয়াউর রহমান "}
                     {/* <KeyboardArrowDownIcon /> */}
                   </Link>
                   {/* <ul className={`w-[220px] h-[160px] ${dropdown}`}>

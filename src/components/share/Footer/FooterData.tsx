@@ -25,7 +25,7 @@ const FooterData = ({ language }: FooterProps) => {
 
     };
 
-    const buttonStyle = { width: '120px', height: '30px', borderRadius: '10px', color: 'white', background: '#FEC909', padding: '0px', }
+    const buttonStyle = { width: '120px', height: '30px', borderRadius: '10px', color: 'white', background: '#216740', padding: '0px', }
 
     const handleModalOpen = () => setModalOpen(true);
     const handleModalClose = () => setModalOpen(false);
