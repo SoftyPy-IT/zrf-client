@@ -10,23 +10,62 @@ interface CommitteProps {
 }
 
 const CommitteeFetchData: React.FC<CommitteProps> = ({ committeeData, language }) => {
-    const filterCommitteeData = committeeData.filter((volunteer) => volunteer.category === "Committee");
-
+    console.log(committeeData)
+    const filterCommitteeData = committeeData.filter(
+        (volunteer) => volunteer.category === "Committee"
+    );
     const sortedCommitteeData = filterCommitteeData.sort((a, b) => {
         const committeeA = a.committee.toLowerCase();
         const committeeB = b.committee.toLowerCase();
-
-
-        if (committeeA === "board of directors ") return 1;
-        if (committeeB === "board of directors") return 1;
-
+    
+        // Handle empty committee values
+        if (!committeeA && !committeeB) {
+            const dateA = new Date(a.createdAt).getTime();
+            const dateB = new Date(b.createdAt).getTime();
+            return dateB - dateA; // Newer entries first
+        }
+        if (!committeeA) return 1; // Empty committee goes last
+        if (!committeeB) return -1; // Empty committee goes first
+    
+        // Sort by category === "committee" and createdAt
+        if (a.category === "Committee" && b.category === "Committee") {
+            const dateA = new Date(a.createdAt).getTime();
+            const dateB = new Date(b.createdAt).getTime();
+            return dateB - dateA; // Newer entries first
+        }
+        if (a.category === "Committee") return -1; // "committee" category goes first
+        if (b.category === "Committee") return 1; // "committee" category goes first
+    
+        // Prioritize "Board of Directors Committee"
+        if (committeeA === "board of directors committee" && committeeB === "board of directors committee") {
+            const dateA = new Date(a.createdAt).getTime();
+            const dateB = new Date(b.createdAt).getTime();
+            return dateB - dateA; // Newer entries first
+        }
+        if (committeeA === "board of directors committee") return -1;
+        if (committeeB === "board of directors committee") return 1;
+    
+        // Special sorting for "Advisory Council" by date
+        if (committeeA === "advisory council" && committeeB === "advisory council") {
+            const dateA = new Date(a.createdAt).getTime();
+            const dateB = new Date(b.createdAt).getTime();
+            return dateB - dateA; // Newer entries first
+        }
+    
+        // Alphabetical sort for other committees
         if (committeeA < committeeB) return -1;
         if (committeeA > committeeB) return 1;
-
-        return 0;
+    
+        // Fallback to sorting by date
+        const dateA = new Date(a.createdAt).getTime();
+        const dateB = new Date(b.createdAt).getTime();
+        return dateB - dateA;
     });
+    
 
-  
+
+
+
     const committees = sortedCommitteeData.reduce((acc, profile) => {
         const committeeName = profile.committee;
         if (!acc[committeeName]) {
@@ -79,9 +118,17 @@ const CommitteeFetchData: React.FC<CommitteProps> = ({ committeeData, language }
                                 {committees[committeeName].map((profile) => (
                                     <ProfileCard
                                         key={profile._id}
-                                        name={language === 'ENG' ? profile.english_name : profile.bangla_name}
+                                        name={
+                                            language === "ENG"
+                                                ? profile.english_name
+                                                : profile.bangla_name
+                                        }
                                         imageSrc={profile.images[0]}
-                                        designation={language === 'ENG' ? profile.designation_english : profile.designation_bangla}
+                                        designation={
+                                            language === "ENG"
+                                                ? profile.designation_english
+                                                : profile.designation_bangla
+                                        }
                                     />
                                 ))}
                             </div>
@@ -94,3 +141,4 @@ const CommitteeFetchData: React.FC<CommitteProps> = ({ committeeData, language }
 };
 
 export default CommitteeFetchData;
+

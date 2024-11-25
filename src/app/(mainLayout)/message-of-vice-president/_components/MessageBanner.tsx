@@ -15,7 +15,7 @@ const MessageBanner = ({title, text}:TProps) => {
             <h1 className="lg:text-5xl text-3xl font-bold uppercase">
              {title}
             </h1>
-            <p>{text}</p>
+            {/* <p>{text}</p> */}
           </div>
         </div>
       </Container>

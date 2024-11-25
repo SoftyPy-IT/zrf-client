@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import {  Navigation,  } from "swiper/modules";
+import { Navigation, } from "swiper/modules";
 import Link from "next/link";
 import EastIcon from "@mui/icons-material/East";
 import dynamic from "next/dynamic";
@@ -37,11 +37,11 @@ const VideoGallery = () => {
     }, []);
 
     if (loading) {
-        return <Loader/>
-      }
-      if (error) {
+        return <Loader />
+    }
+    if (error) {
         return <h2 className='text-center'>Oops!  Something Went Wrong!</h2>
-      }
+    }
 
     return (
         <>
@@ -51,8 +51,8 @@ const VideoGallery = () => {
                 <Swiper pagination={{ clickable: true }} navigation modules={[Navigation]} className="mySwiper">
                     {videos.map((video: TVideo, index: number) => (
                         <SwiperSlide key={index}>
-                            <div className="w-full h-64 md:h-80 bg-gray-200 overflow-hidden">
-                                <ReactPlayer url={video.video_url} width="100%" height="100%" controls />
+                            <div className="w-full h-64 md:h-80  rounded-md overflow-hidden">
+                                <ReactPlayer style={{ padding: '20px' }} url={video.video_url} width="100%" height="100%" controls />
                             </div>
                         </SwiperSlide>
                     ))}

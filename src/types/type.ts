@@ -104,6 +104,7 @@ export type TMessage = {
   category:string,
 };
 export type TAbout = {
+  category_bn: string;
   _id:string,
   title_bangla: string;
   title_english: string;
@@ -159,6 +160,7 @@ export type TCommitte = {
   category: string; 
   date:string,
   committee:string,
+  createdAt:string,
 };
 export type TOverview = {
   _id:string,

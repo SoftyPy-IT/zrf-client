@@ -17,10 +17,7 @@ const Volunteer: React.FC<welcomeProps> = ({ committeeData, language }) => {
         <>
             <CommonBanner title={language === 'ENG' ? ' Our Volunteer' : 'আমাদের স্বেচ্ছাসেবক'} />
             <Container className='sectionMargin'>
-                <div className='text-center'>
-                    <i className='text-[#FEC909]'>{language === 'ENG' ? ' Our Volunteer' : 'আমাদের স্বেচ্ছাসেবক'}  </i>
-                    <h1 className='font-bold text-xl md:text-3xl '>{language === 'ENG' ? 'Meet Our Volunteer' : 'আমাদের স্বেচ্ছাসেবকের সাথে দেখা করুন'}</h1>
-                </div>
+               
 
                 <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10 mt-10 ">
                     {
