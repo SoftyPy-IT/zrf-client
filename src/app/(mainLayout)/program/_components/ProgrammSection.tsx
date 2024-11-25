@@ -20,7 +20,9 @@ const ProgrammSection = () => {
   return (
     <div>
 
-      <Container className="my-20">
+      <Container className="sectionMargin">
+      <h2 className="text-center text-3xl font-bold">{language === 'ENG' ? 'Remarkable Works' : 'উল্লেখযোগ্য কাজ'} </h2>
+      <div className="w-44 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-7 mx-auto"></div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 text-center">
           {programmData?.map((program: TProgramm, index: number) => (
             <div
