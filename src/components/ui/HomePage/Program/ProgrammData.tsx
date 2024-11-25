@@ -41,10 +41,10 @@ const ProgrammData: React.FC<programmProps> = ({ programmData, language }) => {
                     <div>
                         <h2 className="text-3xl font-bold uppercase "> {language === 'ENG' ? 'Our Programm ' : 'আমাদের প্রোগ্রাম'}</h2>
                         <div className="w-28 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-5 "></div>
-                        <p className=" lg:w-[500px]  mb-10">
+                        {/* <p className=" lg:w-[500px]  mb-10">
 
                             {language === 'ENG' ? '   Our program provides expert guidance, innovative strategies, and personalized solutions to help businesses grow and succeed. We focus on delivering measurable results.' : 'আমাদের প্রোগ্রাম বিশেষজ্ঞ নির্দেশিকা প্রদান করে, উদ্ভাবনী কৌশল, এবং ব্যবসার বৃদ্ধি এবং সফল হতে সাহায্য করার জন্য ব্যক্তিগতকৃত সমাধান। আমরা পরিমাপযোগ্য ফলাফল প্রদানের উপর ফোকাস করুন।'}
-                        </p>
+                        </p> */}
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 text-center">
                             {programmData?.slice(0, 4).map((program: TProgramm, index: number) => (
                                 <div

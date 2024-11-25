@@ -17,7 +17,7 @@ const CommitteeFetchData: React.FC<CommitteProps> = ({ committeeData, language }
         const committeeB = b.committee.toLowerCase();
 
 
-        if (committeeA === "board of directors") return 1;
+        if (committeeA === "board of directors") return -1;
         if (committeeB === "board of directors") return 1;
 
         if (committeeA < committeeB) return -1;
