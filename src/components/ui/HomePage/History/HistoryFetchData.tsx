@@ -4,7 +4,7 @@ import Image from "next/image";
 import { TAbout } from "@/types/type";
 import ReactHtmlParser from "react-html-parser";
 
-// Function to render dynamic content from HTML
+
 const renderContent = (content: string) => {
     const parsedContent = ReactHtmlParser(content);
 
@@ -66,7 +66,7 @@ const renderContent = (content: string) => {
     });
 };
 
-// Function to format the date in "Day, Month Year" format
+
 const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
@@ -80,10 +80,10 @@ interface AboutProps {
 
 const HistoryFetchData: React.FC<AboutProps> = ({ aboutData, language }) => {
     const historyFilterData = aboutData.filter((item) => item.category === 'History');
-    const [visibleCount, setVisibleCount] = useState(4); // Track the number of visible items
-
+    const [visibleCount, setVisibleCount] = useState(4); 
+console.log(historyFilterData)
     const loadMore = () => {
-        setVisibleCount(prevCount => prevCount + 4); // Increase the number of visible items by 4
+        setVisibleCount(prevCount => prevCount + 4); 
     };
 
     return (

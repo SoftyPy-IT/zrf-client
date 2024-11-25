@@ -17,7 +17,7 @@ const Committee = () => {
   }
   return (
     <>
-      <CommitteeFetchData language={language} committeeData={committeeData} />
+      {/* <CommitteeFetchData language={language} committeeData={committeeData} /> */}
     </>
   );
 };
