@@ -74,7 +74,7 @@ const ProjectsFetchData: React.FC<projectProps> = ({ projectData, language }) =>
 
                 <p className="lg:text-center md:text-center text-justify lg:w-[800px] mx-auto mb-10 lg:px-0 md:px-0 px-5 text-[16px]">
 
-                  {language === 'ENG' ? ' Ziaur Rahman Foundation is committed to empowering communities through impactful initiatives, sustainable solutions, and strategic support. We focus on fostering growth, improving lives, and creating lasting change across various sectors.' : 'জিয়াউর রহমান ফাউন্ডেশন প্রভাবশালী উদ্যোগ, টেকসই সমাধান এবং কৌশলগত সহায়তার মাধ্যমে সম্প্রদায়ের ক্ষমতায়ন করতে প্রতিশ্রুতিবদ্ধ। আমরা বিভিন্ন সেক্টরে প্রবৃদ্ধি বৃদ্ধি, জীবনের উন্নতি এবং দীর্ঘস্থায়ী পরিবর্তনের উপর ফোকাস করি।'}
+                  {language === 'ENG' ? ' Ziaur Rahman Foundation is committed to empowering communities through impactful initiatives, sustainable solutions, and strategic support. We focus on fostering growth, improving lives, and creating lasting change across various sectors.' : 'জিয়াউর রহমান ফাউন্ডেশন (জেডআরএফ) বাংলাদেশের পিছিয়ে পড়া জনগণের জীবনযাত্রার মান উন্নয়নে একাধিক দারিদ্র্য নির্মূল প্রকল্প শুরু করেছে। টেকসই উন্নয়ন, শিক্ষা, এবং আর্থিক ক্ষমতায়নের উপর গুরুত্ব দিয়ে, জেডআরএফ দেশের সবচেয়ে অবহেলিত জনগণের জন্য কাজ করে চলেছে।'}
                 </p>
               </div>
               <Slider {...settings}>

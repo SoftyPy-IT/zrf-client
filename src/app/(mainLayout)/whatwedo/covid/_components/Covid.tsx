@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Container from "@/components/share/Container";
-import Banner from "./Banner";
 import { Button } from "@mui/material";
 import { TWhatWeDo } from "@/types/type";
 import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
