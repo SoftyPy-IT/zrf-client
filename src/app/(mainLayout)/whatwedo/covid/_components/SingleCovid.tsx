@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import Banner from "../_components/Banner";
 import Container from "@/components/share/Container";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import ShareLink from "@/components/share/ShareLink/ShareLink";
@@ -9,6 +8,7 @@ import Image from "next/image";
 import CovidSidebar from "./CovidSidebar";
 
 import ReactHtmlParser from "react-html-parser";
+import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 
 type SingleWhatWeDoProps = {
     whatWedoData: TWhatWeDo,
@@ -82,9 +82,10 @@ const renderContent = (content: string) => {
 const SingleCovid = ({ whatWedoData, language }: SingleWhatWeDoProps) => {
 
 
+    const title = language === 'ENG' ? whatWedoData.bangla_title : whatWedoData.english_title
     return (
         <>
-            <Banner />
+            <CommonBanner title={title} />
             <Container>
                 <div className="h-auto lg:flex gap-5">
                     <div className="w-full mt-2 lg:mt-0 lg:p-6">

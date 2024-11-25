@@ -83,9 +83,10 @@ const renderContent = (content: string) => {
 const SingleWhatwedo = ({ whatWedoData, language }: SingleWhatWeDoProps) => {
 
 
+    const title = language === 'ENG' ? whatWedoData.english_title : whatWedoData.bangla_title 
     return (
         <>
-            <CommonBanner title="Our Project" />
+            <CommonBanner title={title} />
 
             <Container>
                 <div className="h-auto lg:flex gap-5">
@@ -121,7 +122,7 @@ const SingleWhatwedo = ({ whatWedoData, language }: SingleWhatWeDoProps) => {
                         <div className=" md:flex lg:flex justify-between items-center mb-8 space-y-3">
                             <div className="flex items-center gap-2">
                                 <BookmarkIcon className="text-gray-600 cursor-pointer" />
-                               
+
                                 <h4>{language === 'ENG' ? 'Social Work' : 'সামাজিক কাজ'}  </h4>
                             </div>
                             <div className="flex items-center gap-4">

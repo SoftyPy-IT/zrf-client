@@ -1,4 +1,5 @@
 import { TActivity } from '@/types/type';
+import Link from 'next/link';
 import React from 'react';
 
 
@@ -28,12 +29,16 @@ const RecentActivityPost: React.FC<EducationProps> = ({ activityData, language }
                 <div className="flex flex-col gap-8 mt-5">
                     {ActivityFilterData?.slice(0, 5).map((data) => (
                         <div key={data._id}>
-                            <div>
-                                <p className="hover:underline cursor-pointer text-justify font-semibold">
-                                    {language === 'ENG' ? data.english_short_description?.slice(0, 150) : data.bangla_short_description?.slice(0, 150)}...
-                                </p>
-                                <p className="text-sm mt-2">{formatDate(data.date)}</p>
-                            </div>
+                            <Link href={`/recent-activities-of-zrf/${data._id}`}>
+                                <div>
+                                    <div>
+                                        <p className="hover:underline cursor-pointer text-justify font-semibold">
+                                            {language === 'ENG' ? data.english_short_description?.slice(0, 150) : data.bangla_short_description?.slice(0, 150)}...
+                                        </p>
+                                        <p className="text-sm mt-2">{formatDate(data.date)}</p>
+                                    </div>
+                                </div>
+                            </Link>
                         </div>
                     ))}
                 </div>
@@ -41,5 +46,6 @@ const RecentActivityPost: React.FC<EducationProps> = ({ activityData, language }
         </>
     );
 };
+
 
 export default RecentActivityPost;

@@ -79,12 +79,13 @@ const renderContent = (content: string) => {
     });
 };
 
+
 const SingleRehabilitation = ({ whatWedoData, language }: SingleWhatWeDoProps) => {
 
-
+    const title = language === 'ENG' ? whatWedoData.bangla_title : whatWedoData.english_title
     return (
         <>
-            <CommonBanner title="Rehabili" />
+            <CommonBanner title={title} />
             <Container>
                 <div className="h-auto lg:flex gap-5">
                     <div className="w-full mt-2 lg:mt-0 lg:p-6">
@@ -119,7 +120,7 @@ const SingleRehabilitation = ({ whatWedoData, language }: SingleWhatWeDoProps) =
                         <div className=" md:flex lg:flex justify-between items-center mb-8 space-y-3">
                             <div className="flex items-center gap-2">
                                 <BookmarkIcon className="text-gray-600 cursor-pointer" />
-                        
+
                                 <h4>{language === 'ENG' ? 'Social Work' : 'সামাজিক কাজ'}  </h4>
                             </div>
                             <div className="flex items-center gap-4">
