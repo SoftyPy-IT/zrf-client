@@ -23,12 +23,12 @@ const CommitteeFetchData: React.FC<CommitteProps> = ({ committeeData, language }
         if (committeeA < committeeB) return -1;
         if (committeeA > committeeB) return 1;
 
-        if (committeeA === "") return 1;
-        if (committeeB === "") return -1;
+        if (committeeA === "") return -1;
+        if (committeeB === "") return 1;
 
         // Sort remaining committees alphabetically
-        if (committeeA < committeeB) return 1;
-        if (committeeA > committeeB) return -1;
+        if (committeeA < committeeB) return -1;
+        if (committeeA > committeeB) return 1;
 
         return 0;
     });
