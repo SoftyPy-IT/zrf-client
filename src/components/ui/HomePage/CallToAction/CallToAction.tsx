@@ -38,13 +38,13 @@ const CallToAction = () => {
       <div className="bg-gradient-to-r from-yellow-600 to-green-600 text-center py-16 text-white">
         <h2 className="text-4xl font-bold mb-5 uppercase">আহ্বান</h2>
         <p className="lg:w-[600px] text-center mx-auto mb-5 lg:px-0 px-5">
-          আমাদের ফাউন্ডেশনে যোগদান করুন দান করে, স্বেচ্ছাসেবী হিসেবে বা আমাদের
+          আমাদের ফাউন্ডেশনে যোগসহযোগিতা দান করে, স্বেচ্ছাসেবী হিসেবে বা আমাদের
           মিশন ছড়িয়ে দিয়ে। আপনার অবদান একটি স্থায়ী প্রভাব ফেলতে পারে।
         </p>
 
         <div className="space-x-5 lg:space-y-0 md:space-y-0 space-y-5">
           <button className="bg-gradient-to-r from-green-600 to-yellow-600 border text-white px-6 py-2 rounded uppercase text-sm">
-            দান করুন
+            সহযোগিতা
           </button>
           <button
             onClick={handleClickOpen}

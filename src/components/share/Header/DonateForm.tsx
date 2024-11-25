@@ -34,8 +34,8 @@ import { useLanguage } from "@/provider/LanguageProvider";
 const DonateForm = ({ onClose }: { onClose: () => void }) => {
   const { language } = useLanguage()
   const steps = language === 'ENG'
-    ? ["Give Your Information", "Donate"]
-    : ["আপনার তথ্য দিন", "দান করুন"];
+    ? ["Give Your Information", "Donation "]
+    : ["আপনার তথ্য দিন", "সহযোগিতা"];
   const [phone, setPhone] = useState("");
   const [isPhoneValid, setIsPhoneValid] = useState(false);
   const [activeStep, setActiveStep] = useState(0);

@@ -15,7 +15,7 @@ const Volunteer = () => {
     },
     {
       value: "68+",
-      label: "Monthly Donate",
+      label: "Monthly Donation ",
       icon: <DonationIcon sx={{ fontSize: 60 }} />,
     },
     {

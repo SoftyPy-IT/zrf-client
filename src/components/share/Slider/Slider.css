@@ -65,7 +65,7 @@ Slider.css .slider-container {
   height: 100%;
   position: absolute;
   z-index: 99999;
-  background: black;
+  background: #216740;
   content: "";
   opacity: 0.5;
 }

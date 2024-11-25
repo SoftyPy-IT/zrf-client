@@ -41,7 +41,7 @@ const TrustedCharity = () => {
             />
             <div>
               <h3 className="text-yellow-400 text-2xl italic font-medium mb-5">
-                Why donate us
+                Why Donation  us
               </h3>
               <ul className="list-disc pl-5 space-y-3">
                 <li>We’re So Much Trusted Charity Foundation</li>
