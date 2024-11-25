@@ -2,10 +2,9 @@ import React from "react";
 import "./LatestNews.css";
 import Image from "next/image";
 import Link from "next/link";
-
 import EastIcon from "@mui/icons-material/East";
-import Marquee from "react-fast-marquee";
 import { TActivity } from "@/types/type";
+import Marquee from "react-fast-marquee";
 
 
 interface newsProps {
@@ -27,8 +26,7 @@ const LatestNewsFetchData: React.FC<newsProps> = ({ newsData, language }) => {
                         </h2>
                         <Marquee>
                             <h1>
-                                {language === 'ENG' ? ' This publication dives deep into the contributions of Ziaur Rahman !' : 'এই প্রকাশনাটি জিয়াউর রহমানের অবদানের গভীরে ডুব দেয়'}
-
+                                Ziaur Rahman Foundation Silver Jubilee - 2024 Social Plantation Program by Ziaur Rahman Foundation Board of Directors Committee of Ziaur Rahman Foundation (ZRF)
                             </h1>
                         </Marquee>
                     </div>

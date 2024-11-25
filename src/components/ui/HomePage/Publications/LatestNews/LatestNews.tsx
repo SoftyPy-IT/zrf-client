@@ -5,7 +5,7 @@ import React from "react";
 import { TActivity } from "@/types/type";
 import LatestNewsFetchData from "./LatestNewsFetchData";
 import Loader from "@/components/Loading/Loading";
-
+import './LatestNews.css'
 
 const Programm = () => {
   const [newsData, setNewsData] = React.useState<TActivity[]>([]);
