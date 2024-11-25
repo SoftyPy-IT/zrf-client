@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./History.css";
 import Image from "next/image";
 import { TAbout } from "@/types/type";
@@ -80,77 +80,85 @@ interface AboutProps {
 
 const HistoryFetchData: React.FC<AboutProps> = ({ aboutData, language }) => {
     const historyFilterData = aboutData.filter((item) => item.category === 'History');
+    const [visibleCount, setVisibleCount] = useState(4); // Track the number of visible items
 
+    const loadMore = () => {
+        setVisibleCount(prevCount => prevCount + 4); // Increase the number of visible items by 4
+    };
 
     return (
         <div className="mt-20">
             <div className="mb-10">
-                <h2 className="text-center text-3xl font-bold"> {language === 'ENG' ? 'Our Journey' : 'আমাদের যাত্রা'} </h2>
+                <h2 className="text-center text-3xl font-bold">
+                    {language === 'ENG' ? 'Our Journey' : 'আমাদের যাত্রা'}
+                </h2>
                 <div className="w-44 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-7 mx-auto"></div>
             </div>
             <section id="conference-timeline">
-                <div className="timeline-start">{language === 'ENG' ? 'Start' : 'শুরু'} </div>
+                <div className="timeline-start">{language === 'ENG' ? 'Start' : 'শুরু'}</div>
                 <div className="conference-center-line"></div>
                 <div className="conference-timeline-content">
-                    {
-                        historyFilterData?.map((data, index: number) => (
-                            <div className="timeline-article" key={index}>
-                                {
-                                    index % 2 === 0 ? (
-                                        <>
-                                            <div className="content-left-container">
-                                                <div className="content-left">
-                                                    <h3 className="text-xl font-bold">{language === 'ENG' ? data.title_english : data.title_bangla}</h3>
-                                                    <p className="mt-3 block ">
-                                                        {language === 'ENG' ? renderContent(data.description_enlgish) : renderContent(data.description_banlga)}
-                                                    </p>
-                                                </div>
+                    {historyFilterData?.slice(0, visibleCount).map((data, index: number) => (
+                        <div className="timeline-article" key={index}>
+                            {index % 2 === 0 ? (
+                                <>
+                                    <div className="content-left-container">
+                                        <div className="content-left">
+                                            <h3 className="text-xl font-bold">
+                                                {language === 'ENG' ? data.title_english : data.title_bangla}
+                                            </h3>
+                                            <p className="mt-3 block ">
+                                                {language === 'ENG' ? renderContent(data.description_enlgish) : renderContent(data.description_banlga)}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="content-right-container">
+                                        <div className="content-right">
+                                            <div className="contentRightImgWrap">
+                                                {data.images?.slice(0, 1).map((img, idx) => (
+                                                    <Image key={idx} src={img} alt="history" width={500} height={300} />
+                                                ))}
                                             </div>
-                                            <div className="content-right-container">
-                                                <div className="content-right">
-                                                    <div className="contentRightImgWrap">
-                                                        {data.images?.slice(0, 1).map((img, idx) => (
-                                                            <Image key={idx} src={img} alt="history" width={500} height={300} />
-                                                        ))}
-                                                    </div>
-                                                </div>
+                                        </div>
+                                    </div>
+                                    <div className="meta-date">
+                                        <span className="date">{formatDate(data.date)}</span>
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <div className="content-right-container">
+                                        <div className="content-right">
+                                            <div className="contentRightImgWrap">
+                                                {data.images?.slice(0, 1).map((img, idx) => (
+                                                    <Image key={idx} src={img} alt="history" width={500} height={300} />
+                                                ))}
                                             </div>
-                                            <div className="meta-date">
-                                                <span className="date">{formatDate(data.date)}</span>
-                                            </div>
-                                        </>
-                                        
-                                    ) : (
-                                        <>
-                                            <div className="content-right-container">
-                                                <div className="content-right">
-                                                    <div className="contentRightImgWrap">
-                                                        {data.images?.slice(0, 1).map((img, idx) => (
-                                                            <Image key={idx} src={img} alt="history" width={500} height={300} />
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="content-left-container">
-                                                <div className="content-left">
-                                                    <h3 className="text-xl font-bold">{language === 'ENG' ? data.title_english : data.title_bangla}</h3>
-                                                    <p className="mt-3 block ">
-                                                        {language === 'ENG' ? renderContent(data.description_enlgish) : renderContent(data.description_banlga)}
-                                                    </p>
-                                                </div>
-
-                                            </div>
-                                            <div className="meta-date">
-                                                <span className="date">{formatDate(data.date)}</span>
-                                            </div>
-                                        </>
-                                    )
-                                }
-                            </div>
-                        ))
-                    }
+                                        </div>
+                                    </div>
+                                    <div className="content-left-container">
+                                        <div className="content-left">
+                                            <h3 className="text-xl font-bold">
+                                                {language === 'ENG' ? data.title_english : data.title_bangla}
+                                            </h3>
+                                            <p className="mt-3 block ">
+                                                {language === 'ENG' ? renderContent(data.description_enlgish) : renderContent(data.description_banlga)}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="meta-date">
+                                        <span className="date">{formatDate(data.date)}</span>
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                    ))}
                 </div>
-                <div className="timeline-end">{language === 'ENG' ? 'Load More' : 'আরো লোড'}  </div>
+                <div className="timeline-end">
+                    <button onClick={loadMore}>
+                        {language === 'ENG' ? 'Load More' : 'আরো লোড'}
+                    </button>
+                </div>
             </section>
         </div>
     );
