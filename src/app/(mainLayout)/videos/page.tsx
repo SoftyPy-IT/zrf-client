@@ -28,7 +28,7 @@ const VideoGallery = () => {
 
   return (
     <div> 
-      <CommonBanner title={language === 'ENG' ? 'Videos Gallery' : 'ভিডিও গ্যালারি'}/>
+      <CommonBanner title={language === 'ENG' ? 'Video Gallery' : 'ভিডিও গ্যালারি'}/>
      
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-16">
