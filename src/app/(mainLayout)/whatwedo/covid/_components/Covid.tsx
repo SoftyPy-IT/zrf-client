@@ -3,6 +3,7 @@ import Container from "@/components/share/Container";
 import Banner from "./Banner";
 import { Button } from "@mui/material";
 import { TWhatWeDo } from "@/types/type";
+import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 
 
 interface CovidProps {
@@ -15,11 +16,12 @@ const Covid: React.FC<CovidProps> = ({ whatWedoData, language }) => {
   const covidFilterData = whatWedoData.filter((edu) => edu.category === 'Covid')
 
 
+  const title = language === 'ENG' ? 'Covid' : 'কোভিড'
 
 
   return (
     <>
-      <Banner />
+      <CommonBanner title={title} />
       <Container className="my-20">
         <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 h-[1100px] md:h-[900px] lg:h-[500px]">
           {covidFilterData.map((data, index) => (
@@ -59,7 +61,7 @@ const Covid: React.FC<CovidProps> = ({ whatWedoData, language }) => {
                     </div>
                     <p className="text-justify"> {language == 'ENG' ? data.english_short_description.slice(0, 200) : data.bangla_short_description.slice(0, 200)} </p>
                     <Button href={`/whatwedo/covid/${data._id}`}>
-                      Read More
+                      {language == 'ENG' ? ' Read More' : 'আরও পড়ুন'}
                     </Button>
                   </div>
                 </div>

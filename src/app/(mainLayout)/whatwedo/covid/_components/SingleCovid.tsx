@@ -3,12 +3,12 @@ import React from "react";
 import Banner from "../_components/Banner";
 import Container from "@/components/share/Container";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
-import ReactHtmlParser from "react-html-parser";
 import ShareLink from "@/components/share/ShareLink/ShareLink";
 import { TWhatWeDo } from "@/types/type";
 import Image from "next/image";
 import CovidSidebar from "./CovidSidebar";
 
+import ReactHtmlParser from "react-html-parser";
 
 type SingleWhatWeDoProps = {
     whatWedoData: TWhatWeDo,

@@ -17,10 +17,11 @@ const ClimateChange: React.FC<CovidProps> = ({ whatWedoData, language }) => {
 
 
 
+    const title = language === 'ENG' ? 'Climate Change' : 'জলবায়ু পরিবর্তন '
 
     return (
         <>
-            <CommonBanner title="Climate Change " />
+            <CommonBanner title={title} />
             <Container className="my-20">
                 <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 h-[1100px] md:h-[900px] lg:h-[500px]">
                     {covidFilterData?.map((data, index) => (
