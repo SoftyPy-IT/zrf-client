@@ -39,14 +39,19 @@ const renderContent = (content: string) => {
                     {element.props.children}
                 </ol>
             );
+        } else if (element.type === "ul") {
+            return (
+                <ul key={index} className="list-disc list-inside mb-5">
+                    {element.props.children}
+                </ul>
+            );
         } else if (element.type === "li") {
             return (
                 <li key={index} className="mb-5">
                     {element.props.children}
                 </li>
             );
-        }
-        else {
+        } else {
             return null;
         }
     });

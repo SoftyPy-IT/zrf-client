@@ -12,7 +12,7 @@ const CommitteeBanner = ({ language }: CommitteeProps) => {
         <div className="content">
           <div className="text-center">
             <h1 className="lg:text-5xl text-3xl font-bold uppercase">
-              {language == 'ENG' ? ' Committee ' : 'কমিটির'}
+              {language == 'ENG' ? ' Committee ' : 'কমিটি'}
             </h1>
             
           </div>
