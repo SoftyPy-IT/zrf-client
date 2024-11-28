@@ -56,12 +56,12 @@ const Contact = () => {
             <div>
               <div className=" bg-white shadow-md p-5 border">
                 <h2 className="text-2xl font-serif font-bold mb-4">
-                  {language == 'ENG' ? ' Let’s Talk!' : ' আসুন কথা বলি!!'}
+                  {language == 'ENG' ? 'Contact Us!' : ' যোগাযোগ করুন!'}
                 </h2>
-                <p className="text-gray-700 mb-6">
+                {/* <p className="text-gray-700 mb-6">
                   {language == 'ENG' ? ' Contact us to get, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ainim veniam.' : 'পেতে আমাদের সাথে যোগাযোগ করুন, কনসেক্টেটুর adipisising elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ইউটেনিম অ্যানিম ভেনিয়াম।'}
 
-                </p>
+                </p> */}
                 <ContactForm />
               </div>
             </div>
