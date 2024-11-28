@@ -84,7 +84,7 @@ const ContactForm = () => {
                 </div>
 
                 <Button type="submit" disableElevation>
-                    {language == 'ENG' ? 'Contact Us' : 'আমাদের সাথে যোগাযোগ করুন'}
+                    {language == 'ENG' ? 'Contact Us' : 'যোগাযোগ করুন'}
                 </Button>
             </ZRFForm>
         </>
