@@ -1,4 +1,6 @@
 import { TActivity } from '@/types/type';
+import { TextField } from '@mui/material';
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
@@ -23,29 +25,60 @@ const RecentActivityPost: React.FC<EducationProps> = ({ activityData, language }
 
     return (
         <>
-            <div className="border p-5 rounded lg:w-[600px]">
-                <h3 className="text-xl font-bold">{language === 'ENG' ? 'Recent Post' : 'সাম্প্রতিক পোস্ট'}</h3>
-                <hr className="w-16 h-1 bg-gradient-to-r from-yellow-600 to-green-600 border-0 rounded-full mb-5" />
-                <div className="flex flex-col gap-8 mt-5">
-                    {ActivityFilterData?.slice(0, 5).map((data) => (
-                        <div key={data._id}>
-                            <Link href={`/recent-activities-of-zrf/${data._id}`}>
-                                <div>
-                                    <div>
-                                        <p className="hover:underline cursor-pointer text-justify font-semibold">
-                                            {language === 'ENG' ? data.english_short_description?.slice(0, 150) : data.bangla_short_description?.slice(0, 150)}...
-                                        </p>
-                                        <p className="text-sm mt-2">{formatDate(data.date)}</p>
-                                    </div>
-                                </div>
-                            </Link>
-                        </div>
-                    ))}
+
+
+            <div className='w-full lg:w-[600px]'>
+
+                <div className="bg-gray-100 p-5 rounded mb-5">
+                    <TextField
+                        id="outlined-basic"
+                        label="Search Here"
+                        variant="outlined"
+                        fullWidth
+                        size="small"
+                        className="bg-white"
+                    />
                 </div>
+
+                <div className=" p-5 rounded ">
+                    <h3>{language === 'ENG' ? ' Recent Popular Activity' : 'সাম্প্রতিক জনপ্রিয় কার্যক্রম'} </h3>
+                    <hr className="w-16 h-1 bg-gradient-to-r from-yellow-600 to-green-600 border-0 rounded-full mb-5 " />
+                    <div className="flex flex-col gap-5 ">
+                        {ActivityFilterData?.slice(1, 5).map((data) => (
+                            <div key={data._id}>
+                                <Link href={`/recent-activities-of-zrf/${data._id}`}>
+                                    <div className="flex gap-5  ">
+                                        {
+                                            data.bng_Images?.slice(0, 1).map((img) => (
+                                                <div className='w-56 h-16' key={img}>
+                                                    <Image
+
+                                                        src={img}
+                                                        width={50}
+                                                        height={30}
+                                                        alt=""
+                                                        className="w-full h-full  object-contain"
+                                                    />
+                                                </div>
+                                            ))
+                                        }
+                                        <div>
+                                            <p className="text-xs">{formatDate(data.date)}</p>
+                                            <p className="text-sm">{language === 'ENG' ? data.english_short_description?.slice(0, 100) : data.bangla_short_description?.slice(0, 100)}</p>
+                                        </div>
+                                    </div>
+                                </Link>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
             </div>
+
         </>
     );
 };
+
 
 
 export default RecentActivityPost;

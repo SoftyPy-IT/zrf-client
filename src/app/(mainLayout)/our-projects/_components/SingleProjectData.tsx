@@ -8,6 +8,8 @@ import { TProject } from "@/types/type";
 import ReactHtmlParser from "react-html-parser";
 import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 import RecentProjectPost from "./RecentProjectPost";
+import { TextField } from "@mui/material";
+import Link from "next/link";
 
 
 type SingleProjectProps = {
@@ -89,21 +91,22 @@ const SingleProjectData = ({ singleProjectData, language }: SingleProjectProps) 
                 <div className="lg:flex md:flex gap-10  mt-10 ">
                     <div className="w-full grid grid-cols-1">
                         <div className="h-full w-full">
-                            <div className="relative overflow-hidden">
+                           
+                            <div className="relative w-full h-[200px] md:h-[400px] mb-6">
+                            {
+                                singleProjectData.bng_Images?.slice(0, 1).map((img) => (
+                                    <Image
+                                        width={500}
+                                        height={500}
+                                        key={img}
+                                        src={img}
+                                        alt="Top Image"
 
-                                {singleProjectData.bng_Images?.slice(0, 1).map((img) => (
-                                    <>
-                                        <Image
-                                            src={img}
-                                            alt='activity'
-                                            className="object-cover w-full lg:h-[400px] rounded"
-                                            width={1000}
-                                            height={500}
-                                        />
-                                    </>
-                                ))}
-
-                            </div>
+                                        className="rounded-lg w-full h-full object-cover"
+                                    />
+                                ))
+                            }
+                        </div>
                             <div className="mt-5">
                                 <h3 className="text-2xl font-semibold">{language === 'ENG' ? singleProjectData.english_title : singleProjectData.bangla_title}</h3>
                                 <p className="text-justify mt-5"> {language === 'ENG' ? renderContent(singleProjectData.english_description) : renderContent(singleProjectData.bangla_description)} </p>
@@ -112,8 +115,10 @@ const SingleProjectData = ({ singleProjectData, language }: SingleProjectProps) 
                     </div>
 
 
-                  <RecentProjectPost/>
+                    <RecentProjectPost />
                 </div>
+
+            
                 <ShareLink />
             </Container>
         </div>

@@ -96,7 +96,7 @@ const SingleRehabilitation = ({ singleNewsData, language }: SingleProjectProps) 
                         <h1 className="text-3xl font-bold mb-4">{language === 'ENG' ? singleNewsData.english_title : singleNewsData.bangla_title}
                         </h1>
 
-                        <div className="relative w-full h-[200px] md:h-[400px] lg:h-[700px] mb-6">
+                        <div className="relative w-full h-[200px] md:h-[400px] mb-6">
                             {
                                 singleNewsData.bng_Images?.slice(0, 1).map((img) => (
                                     <Image

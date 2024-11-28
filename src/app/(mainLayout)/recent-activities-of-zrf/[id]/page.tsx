@@ -46,5 +46,6 @@ const Activity = ({ params }: pressId) => {
   );
 };
 
+
 export default Activity;
 

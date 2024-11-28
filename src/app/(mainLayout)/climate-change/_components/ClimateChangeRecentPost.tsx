@@ -38,23 +38,25 @@ const ClimateChangeRecentPost: React.FC<EducationProps> = ({ whatWedoData, langu
             </div>
 
             <div className="bg-gray-100 p-5 rounded mt-10">
-                <h3>Popular Post</h3>
+                <h3>{language === 'ENG' ? 'Recent Post' : 'সাম্প্রতিক পোস্ট'}</h3>
                 <hr className="w-16 h-1 bg-gradient-to-r from-yellow-600 to-green-600 border-0 rounded-full mb-5" />
                 <div className="flex flex-col gap-3 mt-5">
-                    {RehabilitatinFilterData?.slice(0, 5).map((data) => (
+                    {RehabilitatinFilterData?.slice(1, 5).map((data) => (
                         <div key={data._id}>
                             <Link href={`/climate-change/${data._id}`}>
                                 <div className="flex gap-5 ">
                                     {
                                         data.bng_Images?.slice(0, 1).map((img) => (
-                                            <Image
-                                                key={img}
-                                                src={img}
-                                                width={50}
-                                                height={30}
-                                                alt=""
-                                                className="w-56 h-16 object-contain"
-                                            />
+                                            <div className="w-56 h-16" key={img}>
+                                                <Image
+
+                                                    src={img}
+                                                    width={50}
+                                                    height={30}
+                                                    alt=""
+                                                    className="w-full h-full  object-contain"
+                                                />
+                                            </div>
                                         ))
                                     }
                                     <div>

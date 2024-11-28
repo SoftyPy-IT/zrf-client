@@ -21,7 +21,7 @@ const Education: React.FC<EducationProps> = ({ whatWedoData, language }) => {
           {educationFilterData.map((data, index: number) => (
             <div
               key={index}
-              className="relative group w-auto h-[450px] bg-white overflow-hidden transition-transform transform hover:scale-105 border"
+              className="relative group w-auto  h-[300px] md:h-[450px] bg-white overflow-hidden transition-transform transform hover:scale-105 border"
             >
               {/* Image */}
               {
@@ -50,9 +50,7 @@ const Education: React.FC<EducationProps> = ({ whatWedoData, language }) => {
                   </Button>
                 </div>
               </div>
-              {/* Overlay */}
-
-              {/* Card Border */}
+       
               <div className="absolute top-0 left-0 w-full h-full pointer-events-none" />
             </div>
           ))}

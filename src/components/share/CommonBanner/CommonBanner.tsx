@@ -9,7 +9,7 @@ type TProps = {
 }
 const CommonBanner = ({ title }: TProps) => {
     return (
-        <div className="relative h-80 md:h-[200px] lg:h-[250px] bg-gray-800 overflow-hidden">
+        <div className="relative h-[200px] md:h-[200px] lg:h-[250px] bg-gray-800 overflow-hidden">
             <Image
                 src={bannerImage}
                 alt="Blog Banner"

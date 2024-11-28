@@ -1,4 +1,6 @@
 import { TProject } from '@/types/type';
+import { TextField } from '@mui/material';
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import ReactHtmlParser from "react-html-parser";
@@ -88,25 +90,53 @@ const RecentPostFetchData: React.FC<welcomeProps> = ({ projectData, language }) 
     return (
         <div>
 
-            <div className="border p-5 rounded lg:w-[600px]">
-                <h3 className="text-xl font-bold"> {language === 'ENG' ? 'Recent Project' : 'সাম্প্রতিক প্রকল্প'} </h3>
-                <hr className="w-16 h-1 bg-gradient-to-r from-yellow-600 to-green-600 border-0 rounded-full mb-5" />
-                <div className="flex flex-col gap-8 mt-5">
-                    {projectData?.slice(0, 3)?.map((data) => (
-                        <div key={data._id}>
-                            <Link href={`/our-projects/${data._id}`}>
-                                <div key={data._id}>
-                                    <div>
-                                        <p className="hover:underline cursor-pointer text-justify font-semibold">
-                                            {language === 'ENG' ? data?.english_short_description.slice(0, 100) : data?.bangla_short_description.slice(0, 100)}
-                                        </p>
-                                        <p className="text-sm font-medium mt-2">{formatDate(data?.date)}</p>
-                                    </div>
-                                </div>
-                            </Link>
-                        </div>
-                    ))}
+
+            <div className='w-full lg:w-[450px]'>
+
+                <div className="  rounded mb-5">
+                    <TextField
+                        id="outlined-basic"
+                        label="Search Here"
+                        variant="outlined"
+                        fullWidth
+                        size="small"
+                        className="bg-white"
+                    />
                 </div>
+
+                <div className=" rounded mt-10">
+                    <h3>{language === 'ENG' ? 'Recent Project' : 'সাম্প্রতিক প্রকল্প'}</h3>
+                    <hr className="w-16 h-1 bg-gradient-to-r from-yellow-600 to-green-600 border-0 rounded-full mb-5" />
+                    <div className="flex flex-col gap-3 mt-5">
+                        {projectData?.slice(1, 5).map((data) => (
+                            <div key={data._id}>
+                                <Link href={`/our-projects/${data._id}`}>
+                                    <div className="flex  gap-5 ">
+                                        {
+                                            data.bng_Images?.slice(0, 1).map((img) => (
+                                                <div className=' w-56  h-16' key={img}>
+                                                    <Image
+
+                                                        src={img}
+                                                        width={50}
+                                                        height={30}
+                                                        alt=""
+                                                        className="w-full h-full object-contain"
+                                                    />
+                                                </div>
+                                            ))
+                                        }
+                                        <div>
+                                            <p className="text-xs">{formatDate(data.date)}</p>
+                                            <p className="text-sm">{language === 'ENG' ? data.english_short_description?.slice(0, 100) : data.bangla_short_description?.slice(0, 100)}</p>
+                                        </div>
+                                    </div>
+                                </Link>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
             </div>
         </div>
     );

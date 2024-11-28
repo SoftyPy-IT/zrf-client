@@ -50,7 +50,7 @@ function PublicationSlider() {
     <div>
       <div>
         <h2 className="text-3xl font-bold uppercase md:w-[400px]"> {language === 'ENG' ? ' E-Books' : 'ই-বুক'} </h2>
-        <div className="w-28 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-20"></div>
+        <div className="w-28 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-3 "></div>
       </div>
       <Swiper
         effect={"coverflow"}

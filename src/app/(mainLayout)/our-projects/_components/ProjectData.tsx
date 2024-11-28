@@ -21,37 +21,41 @@ const ProjectData: React.FC<projectProps> = ({ projectData, language }) => {
             <Container>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-16">
                     {projectData?.map((data, index: number) => (
-                        <div key={index}>
-                            <div className="shadow-lg lg:h-[500px] md:h-[450px] relative">
-                                <div className="relative h-[250px]">
-                                    {
-                                        data.bng_Images?.slice(0, 1).map((img) => (
-                                            <Image
-                                                width={500}
-                                                height={500}
-                                                key={img}
-                                                src={img}
-                                                alt=""
-                                                className="h-[250px] object-cover"
-                                            />
-                                        ))
-                                    }
-                                </div>
-                                <div className="p-5">
-                                    <h3 className="text-xl font-semibold mb-3">{language === 'ENG' ? data.english_title : data.bangla_title}</h3>
-                                    <p className="text-justify">
-                                        {language == 'ENG' ? data.english_short_description?.slice(0, 150) : data.bangla_short_description?.slice(0, 150)}...
-                                    </p>
-                                    <div className="flex justify-end mt-3 absolute bottom-5">
-                                        <Link href={`/our-projects/${data._id}`}>
-                                            <button className="hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-1 hover:text-white rounded-full uppercase text-sm border">
-                                                {language === 'ENG' ? 'Read More' : 'আরও পড়ুন'} <EastIcon />
-                                            </button>
-                                        </Link>
-                                    </div>
-                                </div>
+                        <div key={index} className="w-full  px-4 mb-6">
+                        <div className="shadow-lg relative rounded-lg overflow-hidden lg:h-[500px] md:h-[450px] h-auto">
+                          <div className="relative h-[200px] md:h-[250px]">
+                            {data.bng_Images?.slice(0, 1).map((img) => (
+                              <Image
+                                key={img}
+                                src={img}
+                                alt=""
+                                className="w-full h-full object-cover"
+                                width={500}
+                                height={500}
+                              />
+                            ))}
+                          </div>
+                          <div className="p-5 flex flex-col h-[calc(100%-250px)]">
+                            <h3 className="text-lg md:text-xl font-semibold mb-3">
+                              {language === "ENG" ? data.english_title : data.bangla_title}
+                            </h3>
+                            <p className="text-sm md:text-base text-justify flex-grow">
+                              {language === "ENG"
+                                ? data.english_short_description?.slice(0, 150)
+                                : data.bangla_short_description?.slice(0, 150)}
+                              ...
+                            </p>
+                            <div className="flex justify-end mt-3">
+                              <Link href={`/our-projects/${data._id}`}>
+                                <button className="hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-1 hover:text-white rounded-full uppercase text-xs md:text-sm border">
+                                  {language === "ENG" ? "Read More" : "আরও পড়ুন"} <EastIcon />
+                                </button>
+                              </Link>
                             </div>
+                          </div>
                         </div>
+                      </div>
+                      
                     ))}
                 </div>
             </Container>

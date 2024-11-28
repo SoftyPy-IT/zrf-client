@@ -53,7 +53,7 @@ const FooterData = ({ language }: FooterProps) => {
                                 />
                                 <button className="absolute right-0 py-1 lg:py-4 px-2 lg:px-8 mx-2  my-2 bg-green-600 text-white rounded-full font-semibold hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
                                     {
-                                        language === 'ENG' ? 'Subscribe' : 'সদস্যতা'
+                                        language === 'ENG' ? 'Subscribe' : 'সাবসক্রাইব'
                                     }  <EastIcon />
                                 </button>
                             </div>

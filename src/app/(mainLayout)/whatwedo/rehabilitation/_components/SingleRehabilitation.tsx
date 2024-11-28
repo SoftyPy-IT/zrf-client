@@ -21,7 +21,7 @@ const renderContent = (content: string) => {
     return parsedContent.map((element, index) => {
         if (element.type === "h1") {
             return (
-                <h1 key={index} className="text-2xl font-bold mb-2 ">
+                <h1 key={index} className=" text-xl md:text-2xl font-bold mb-2 ">
                     {element.props.children}
                 </h1>
             );
@@ -33,7 +33,7 @@ const renderContent = (content: string) => {
             );
         } else if (element.type === "h3") {
             return (
-                <h3 key={index} className="text-xl font-bold mb-2 ">
+                <h3 key={index} className=" md:text-xl font-bold mb-2 ">
                     {element.props.children}
                 </h3>
             );
@@ -82,7 +82,7 @@ const renderContent = (content: string) => {
 
 const SingleRehabilitation = ({ whatWedoData, language }: SingleWhatWeDoProps) => {
 
-    const title = language === 'ENG' ? whatWedoData.bangla_title : whatWedoData.english_title
+    const title = language === "ENG" ? "ZRF Rehabilitation Program" : "জেডআরএফ পুনর্বাসন কার্যক্রম"
     return (
         <>
             <CommonBanner title={title} />
@@ -90,7 +90,7 @@ const SingleRehabilitation = ({ whatWedoData, language }: SingleWhatWeDoProps) =
                 <div className="h-auto lg:flex gap-5">
                     <div className="w-full mt-2 lg:mt-0 lg:p-6">
                         {/* Top Image */}
-                        <div className="relative w-full h-[200px] md:h-[400px] lg:h-[700px] mb-6">
+                        <div className="relative w-full h-[200px] md:h-[400px]  mb-6">
                             {
                                 whatWedoData.bng_Images.slice(0, 1).map((img) => (
                                     <Image
@@ -106,7 +106,7 @@ const SingleRehabilitation = ({ whatWedoData, language }: SingleWhatWeDoProps) =
                             }
                         </div>
 
-                        <h1 className="text-3xl font-bold mb-4">{language === 'ENG' ? whatWedoData.english_title : whatWedoData.bangla_title}
+                        <h1 className="text-xl md:text-3xl font-bold mb-4">{language === 'ENG' ? whatWedoData.english_title : whatWedoData.bangla_title}
                         </h1>
 
                         <p className="text-lg text-gray-800 text-justify">
