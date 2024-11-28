@@ -43,7 +43,7 @@ const FetchStatisticData: React.FC<OverviewProps> = ({ overviewData, language })
     return (
         <Container>
             <div className="-mb-[100px] z-[99] relative">
-                <div className="bg-white p-10 shadow-xl">
+                <div className="bg-white p-5 md:p-10 shadow-xl">
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                         {impactData?.map((stat, index) => (
                             <div
