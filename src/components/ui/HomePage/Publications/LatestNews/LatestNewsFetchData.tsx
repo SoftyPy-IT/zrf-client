@@ -25,9 +25,15 @@ const LatestNewsFetchData: React.FC<newsProps> = ({ newsData, language }) => {
                             {language === 'ENG' ? ' News' : 'খবর'}
                         </h2>
                         <Marquee>
-                            <h1>
-                                Ziaur Rahman Foundation Silver Jubilee - 2024 Social Plantation Program by Ziaur Rahman Foundation Board of Directors Committee of Ziaur Rahman Foundation (ZRF)
-                            </h1>
+                            <div className="flex items-center">
+                                {
+                                    newsData.map((title) => (
+                                        <h2 key={title._id} className="capitalize">
+                                            {language === 'ENG' ? title.english_title : title.bangla_title}
+                                        </h2>
+                                    ))
+                                }
+                            </div>
                         </Marquee>
                     </div>
                 </div>
@@ -47,7 +53,7 @@ const LatestNewsFetchData: React.FC<newsProps> = ({ newsData, language }) => {
                                     <p className="text-sm text-justify mt-2 ">
 
                                         <>
-                                            {data?.english_short_description?.slice(0, 100)} ...
+                                            {language === 'ENG' ? data?.english_short_description?.slice(0, 100) : data?.bangla_short_description?.slice(0, 100)} ...
                                             <Link href={`/news/${data._id}`}>
                                                 <button className="text-green-600">  {language === 'ENG' ? 'See more' : 'আরো দেখুন'}  </button>
                                             </Link>
@@ -75,6 +81,7 @@ const LatestNewsFetchData: React.FC<newsProps> = ({ newsData, language }) => {
                             </button>
                         </Link>
                     </div>
+
                 </div>
             </div>
         </>
