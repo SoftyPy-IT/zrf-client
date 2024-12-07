@@ -1,5 +1,5 @@
 import { TActivity } from '@/types/type';
-import { TextField } from '@mui/material';
+import { Paper, TextField } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -27,18 +27,9 @@ const RecentActivityPost: React.FC<EducationProps> = ({ activityData, language }
         <>
 
 
-            <div className='w-full lg:w-[600px]'>
+            <Paper className='p-3 ' >
 
-                <div className="bg-gray-100 p-5 rounded mb-5">
-                    <TextField
-                        id="outlined-basic"
-                        label="Search Here"
-                        variant="outlined"
-                        fullWidth
-                        size="small"
-                        className="bg-white"
-                    />
-                </div>
+               
 
                 <div className=" p-5 rounded ">
                     <h3>{language === 'ENG' ? ' Recent Popular Activity' : 'সাম্প্রতিক জনপ্রিয় কার্যক্রম'} </h3>
@@ -73,7 +64,7 @@ const RecentActivityPost: React.FC<EducationProps> = ({ activityData, language }
                     </div>
                 </div>
 
-            </div>
+            </Paper>
 
         </>
     );

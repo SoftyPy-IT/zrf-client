@@ -63,6 +63,7 @@ const PhotoGallery = () => {
           loop={true}
           className="mySwiper"
         >
+          
           {galleryData.map((gallery, index) => (
             <SwiperSlide key={gallery._id || index}>
               <div className="relative w-full h-64 md:h-80 bg-gray-200 overflow-hidden">

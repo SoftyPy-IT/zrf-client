@@ -6,7 +6,6 @@ import Link from "next/link";
 import logo from "../../../assets/images/logo/transparent.png";
 import footer from "../../../assets/images/footer/pattern-2.png";
 import Container from "../Container";
-import EastIcon from "@mui/icons-material/East";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
@@ -14,6 +13,7 @@ import XIcon from "@mui/icons-material/X";
 import { Button } from "@mui/material";
 import DonationModal from "../Header/DonationModal";
 import { YouTube } from "@mui/icons-material";
+import Subscribe from "./Subscribe";
 
 type FooterProps = {
     language: string,
@@ -21,9 +21,7 @@ type FooterProps = {
 const FooterData = ({ language }: FooterProps) => {
     const [open, setOpen] = useState(true);
     const [modalOpen, setModalOpen] = useState(false);
-    const handleSubmit = () => {
 
-    };
 
     const buttonStyle = { width: '120px', height: '30px', borderRadius: '10px', color: 'white', background: '#216740', padding: '0px', }
 
@@ -36,27 +34,15 @@ const FooterData = ({ language }: FooterProps) => {
                 <Container>
                     <div className="relative flex flex-col md:flex-row justify-between items-start md:items-center py-8 z-10">
                         <div className="w-auto">
-                            <span className="text-3xl text-white font-sans uppercase">
+                            <span className="md:text-3xl text-white font-sans uppercase">
                                 {
                                     language === 'ENG' ? ' Join Our Newsletter' : 'আমাদের নিউজলেটার যোগদান'
                                 }
                             </span>
                         </div>
                         <div className="w-full lg:w-auto flex justify-center items-center mt-4 md:mt-0 lg:mt-0 xl:mt-0">
-                            <div className="relative lg:flex items-center w-full">
-                                <input
-                                    type="text"
-                                    placeholder={
-                                        language === 'ENG' ? 'Enter your email' : 'আপনার ইমেইল লিখুন'
-                                    }
-                                    className="w-full lg:w-[500px] py-3 lg:py-6 px-4 border border-gray-300 rounded-full text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                />
-                                <button className="absolute right-0 py-1 lg:py-4 px-2 lg:px-8 mx-2  my-2 bg-green-600 text-white rounded-full font-semibold hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                    {
-                                        language === 'ENG' ? 'Subscribe' : 'সাবসক্রাইব'
-                                    }  <EastIcon />
-                                </button>
-                            </div>
+                           
+                           <Subscribe/>
                         </div>
                     </div>
                 </Container>

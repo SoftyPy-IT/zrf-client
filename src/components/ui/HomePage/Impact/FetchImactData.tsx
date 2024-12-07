@@ -5,10 +5,14 @@ import { Button } from "@mui/material";
 import React from "react";
 import { TOverview } from "@/types/type";
 import ReactHtmlParser from "react-html-parser";
+import DonationModal from "@/components/share/Header/DonationModal";
 
 interface overviewProps {
     overviewData: TOverview[];
-    language: string,
+    language: string;
+    handleModalOpen: () => void;
+    modalOpen: boolean;
+    handleModalClose: () => void;
 }
 
 const renderContent = (content: string) => {
@@ -57,12 +61,7 @@ const renderContent = (content: string) => {
     });
 };
 
-
-
-
-const FetchImactData: React.FC<overviewProps> = ({ overviewData, language }) => {
-
-
+const FetchImactData: React.FC<overviewProps> = ({ overviewData, language, handleModalOpen, modalOpen, handleModalClose }) => {
     return (
         <div className="impact-bg py-16">
             <Container>
@@ -71,11 +70,10 @@ const FetchImactData: React.FC<overviewProps> = ({ overviewData, language }) => 
                         <div key={data._id} className="grid grid-cols-1 lg:grid-cols-2 lg:gap-10 gap-16 items-center lg:mt-10 mt-20">
                             <div className="space-y-5 text-white">
                                 {
-                                    language == 'ENG' ? renderContent(data.description_english) : renderContent(data.description_bangla)
+                                    language === 'ENG' ? renderContent(data.description_english) : renderContent(data.description_bangla)
                                 }
 
-
-                                <Button sx={{ background: "#FEC909" }}>{language == 'ENG' ? 'Donation ' : 'সহযোগিতা'}</Button>
+                                <Button onClick={handleModalOpen} sx={{ background: "#FEC909" }}>{language === 'ENG' ? 'Donation ' : 'সহযোগিতা'}</Button>
                             </div>
                             {
                                 data.images?.slice(0, 1).map((img) => (
@@ -86,9 +84,14 @@ const FetchImactData: React.FC<overviewProps> = ({ overviewData, language }) => 
                     ))
                 }
             </Container>
+
+            {
+                modalOpen && (
+                    <DonationModal onClose={handleModalClose} />
+                )
+            }
         </div>
     );
-
 };
 
 export default FetchImactData;

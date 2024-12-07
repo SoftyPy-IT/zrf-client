@@ -91,19 +91,20 @@ Slider.css .slider-container {
   transform: translateY(10px);
 }
 
-.sliderContent {
+.sliderContents {
   width: 557px;
   left: 304px;
 }
 
 @media only screen and (max-width: 768px) {
-  .sliderContent {
+  .sliderContents {
     width: 100%;
     left: 0px;
   }
 }
 @media only screen and (max-width: 350px) {
-  .sliderContent {
-    left: 9px !important;
-  }
+
+  .sliderContents {
+    left: 3px !important;
+}
 }

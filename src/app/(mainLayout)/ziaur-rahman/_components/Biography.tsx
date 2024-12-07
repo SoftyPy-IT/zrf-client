@@ -66,7 +66,7 @@ const Biography: React.FC<introductionProps> = ({ handleOpen, introductionData, 
                 {filteredData.map((data) => (
                     <div
                         key={data._id}
-                        className="rounded shadow-lg p-5 grid grid-cols-1 xl:grid-cols-2 gap-5"
+                        className="rounded shadow-lg p-3 grid grid-cols-1 xl:grid-cols-2 gap-5"
                     >
 
                         <div className="order-1 xl:order-2 md:h-64 object-fill lg:h-64 overflow-hidden">
@@ -85,10 +85,10 @@ const Biography: React.FC<introductionProps> = ({ handleOpen, introductionData, 
                         </div>
 
                         <div className="order-2 xl:order-1">
-                            <h2 className="text-xl font-bold mb-3 text-center">
+                            <h2 className="text-2xl mb-2 text-[#216740] font-bold ">
                                 {language === 'ENG' ? data.english_title : data.bangla_title}
                             </h2>
-                            <p className="text-justify">
+                            <p>
                                 {language === 'ENG' ? renderContent(data.english_description?.slice(0, 300)) : renderContent(data.bangla_description?.slice(0, 300))}
                                 <button
                                     className="text-blue-600 text-xs"

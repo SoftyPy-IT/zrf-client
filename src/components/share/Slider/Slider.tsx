@@ -20,6 +20,7 @@ import "./Slider.css";
 import { TBanner } from "@/types/type";
 import { useLanguage } from "@/provider/LanguageProvider";
 import Loader from "@/components/Loading/Loading";
+import Link from "next/link";
 
 const Slider = () => {
   const [slides, setSlides] = useState<TBanner[]>([]);
@@ -61,8 +62,8 @@ const Slider = () => {
         </>
       ) : error ? (
         <>
-        <Loader />
-      </>
+          <Loader />
+        </>
       ) : filteredSlides.length === 0 ? (
         <div className="text-center text-gray-500">
           {/* No Data Found */}
@@ -94,9 +95,9 @@ const Slider = () => {
                   />
                 ))}
                 <div
-                  className={`z-[999999] sliderContent absolute inset-0 flex justify-start items-center text-left text-white p-4 transition-all duration-1000 ease-in-out ${activeSlide === index
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-0 translate-y-28"
+                  className={`z-[999999] sliderContents absolute inset-0 flex justify-start items-center text-left text-white p-4 transition-all duration-1000 ease-in-out ${activeSlide === index
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-28"
                     }`}
                 >
                   <div className="max-w-lg lg:max-w-md md:p-5 rounded-lg bg-opacity-50 space-y-2 lg:space-y-3">
@@ -105,14 +106,14 @@ const Slider = () => {
                         ? slide.english_title
                         : slide.bangla_title}
                     </h2>
-                    <p className="md:w-[600px] text-[12px] md:text-[20px] leading-5 lg:leading-7">
+                    <p className="md:w-[600px] block text-[12px] md:text-[20px] leading-5 lg:leading-7">
                       {language === "ENG"
                         ? slide.english_short_description
                         : slide.bangla_short_description}
                     </p>
-                    <button className="bg-[#FEC909] text-white text-sm px-3 md:px-6 py-1 md:py-3 rounded-full hover:bg-[#216740] transition duration-300">
+                    <Link href='/about'><button className="bg-[#FEC909] text-white text-sm px-3 md:px-6 py-1 md:py-3 rounded-full hover:bg-[#216740] transition duration-300">
                       {language === "ENG" ? " Learn More" : "আরও জানুন"}
-                    </button>
+                    </button></Link>
                   </div>
                 </div>
               </div>

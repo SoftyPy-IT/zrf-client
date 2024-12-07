@@ -1,5 +1,5 @@
 import { TProject } from '@/types/type';
-import { TextField } from '@mui/material';
+import { Paper, TextField } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -93,50 +93,42 @@ const RecentPostFetchData: React.FC<welcomeProps> = ({ projectData, language }) 
 
             <div className='w-full lg:w-[450px]'>
 
-                <div className="  rounded mb-5">
-                    <TextField
-                        id="outlined-basic"
-                        label="Search Here"
-                        variant="outlined"
-                        fullWidth
-                        size="small"
-                        className="bg-white"
-                    />
-                </div>
+                <Paper className='p-3 '>
 
-                <div className=" rounded mt-10">
-                    <h3>{language === 'ENG' ? 'Recent Project' : 'সাম্প্রতিক প্রকল্প'}</h3>
-                    <hr className="w-16 h-1 bg-gradient-to-r from-yellow-600 to-green-600 border-0 rounded-full mb-5" />
-                    <div className="flex flex-col gap-3 mt-5">
-                        {projectData?.slice(1, 5).map((data) => (
-                            <div key={data._id}>
-                                <Link href={`/our-projects/${data._id}`}>
-                                    <div className="flex  gap-5 ">
-                                        {
-                                            data.bng_Images?.slice(0, 1).map((img) => (
-                                                <div className=' w-56  h-16' key={img}>
-                                                    <Image
-
-                                                        src={img}
-                                                        width={50}
-                                                        height={30}
-                                                        alt=""
-                                                        className="w-full h-full object-contain"
-                                                    />
-                                                </div>
-                                            ))
-                                        }
-                                        <div>
-                                            <p className="text-xs">{formatDate(data.date)}</p>
-                                            <p className="text-sm">{language === 'ENG' ? data.english_short_description?.slice(0, 100) : data.bangla_short_description?.slice(0, 100)}</p>
+                    <div className=" rounded ">
+                        <h3>{language === 'ENG' ? 'Recent Project' : 'সাম্প্রতিক প্রকল্প'}</h3>
+                        <hr className="w-16 h-1 bg-gradient-to-r from-yellow-600 to-green-600 border-0 rounded-full mb-5" />
+                        <div className="flex flex-col gap-3 mt-5">
+                            {projectData?.slice(1, 5).map((data) => (
+                                <div key={data._id} className="bg-white p-3 rounded-lg  hover:shadow-xl transition-shadow duration-300">
+                                    <Link href={`/our-projects/${data._id}`}>
+                                        <div className="flex gap-5">
+                                            {
+                                                data.bng_Images?.slice(0, 1).map((img) => (
+                                                    <div className='w-56 h-16' key={img}>
+                                                        <Image
+                                                            src={img}
+                                                            width={50}
+                                                            height={30}
+                                                            alt=""
+                                                            className="w-full h-full object-contain rounded-lg"
+                                                        />
+                                                    </div>
+                                                ))
+                                            }
+                                            <div>
+                                                <p className="text-xs text-gray-500">{formatDate(data.date)}</p>
+                                                <p className="text-sm font-medium text-gray-700">{language === 'ENG' ? data.english_short_description?.slice(0, 100) : data.bangla_short_description?.slice(0, 100)}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </Link>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+                                    </Link>
+                                </div>
+                            ))}
+                        </div>
 
+                    </div>
+
+                </Paper>
             </div>
         </div>
     );

@@ -112,7 +112,11 @@ const SingleActivity = ({ singleActivityData, language }: SingleActivityProps) =
           </div>
 
 
-          <ActivitySidebar />
+          <div>
+            <div className="sticky top-32 w-full lg:w-[450px]">
+              <ActivitySidebar />
+            </div>
+          </div>
         </div>
 
         <ShareLink />

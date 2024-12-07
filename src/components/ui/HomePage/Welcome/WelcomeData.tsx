@@ -60,7 +60,7 @@ const WelcomeData: React.FC<welcomeProps> = ({ welcomeData, language }) => {
                     ))
                 }
 
-                <div className="xl:-mt-0">
+                <div className="xl:-mt-0 hidden md:block ">
                     {/* -------------Main Images----------------- */}
                     <div className="mt-[60px] md:mt-[0px] lg:mt-[0px] xl:mt-[180px] 2xl:mt-[180px] ml-[15px] md:-ml-[5px] lg:ml-[450px] xl:ml-[290px] 2xl:ml-[300px] flex flex-col gap-10">
                         <div className="mt-[0px] md:mt-[40px] lg:mt-[100px] xl:-mt-[150px] 2xl:-mt-[180px] xl:-ml-[0px] ">

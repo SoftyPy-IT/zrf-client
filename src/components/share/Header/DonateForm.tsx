@@ -235,13 +235,7 @@ const DonateForm = ({ onClose }: { onClose: () => void }) => {
               </Button>
 
               <Button type="submit">
-                {isLastStep
-                  ? language === 'ENG'
-                    ? 'Submit'
-                    : 'জমা দিন'
-                  : language === 'ENG'
-                    ? 'Next'
-                    : 'পরবর্তী'}
+                {isLastStep  ? language === 'ENG' ? 'Submit' : 'জমা দিন': language === 'ENG'   ? 'Next': 'পরবর্তী'}
               </Button>
             </Box>
           </ZRFForm>

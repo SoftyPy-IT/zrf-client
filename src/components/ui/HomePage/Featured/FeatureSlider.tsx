@@ -2,18 +2,10 @@ import Container from "@/components/share/Container";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
-
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Link from "next/link";
-
-import image1 from "../../../../../src/assets/images/featured/forest.jpg";
-import image2 from "../../../../../src/assets/images/projects/image2.jpg";
-import image3 from "../../../../../src/assets/images/projects/image3.jpg";
-import image4 from "../../../../../src/assets/images/projects/image4.jpg";
 import { TProject } from "@/types/type";
-
-
 interface projectProps {
     projectData: TProject[];
     language: string,
@@ -46,7 +38,7 @@ const FeatureSlider: React.FC<projectProps> = ({ projectData, language }) => {
     }, []);
 
     const settings = {
-        infinite: true,
+        infinite: false, 
         speed: 500,
         slidesToShow,
         slidesToScroll: 1,
@@ -55,36 +47,7 @@ const FeatureSlider: React.FC<projectProps> = ({ projectData, language }) => {
     };
 
 
-    const cardsData = [
-        {
-            id: 1,
-            image: image1,
-            title: "Social Forestry Projects",
-            description:
-                "Social Forestry Projects focus on community-based tree planting and forest management initiatives. These projects aim to enhance environmental sustainability, improve livelihoods, and increase green cover by involving local communities in the cultivation and protection of forests. The primary goals include soil conservation, biodiversity preservation, and providing economic benefits to rural populations through sustainable resource use.",
-        },
-        {
-            id: 2,
-            image: image2,
-            title: "Shaheed Ziaur Rahman Shishu Hospital",
-            description:
-                "Shaheed Ziaur Rahman Shishu Hospital is committed to providing comprehensive healthcare services to children with the goal of improving pediatric health outcomes. The hospital focuses on offering better medical care and modern facilities, aiming to reduce child morbidity and mortality rates. It is equipped with outpatient services for consultations and treatment, ensuring easy access for families. Additionally, the hospital prioritizes the development of skilled healthcare professionals by organizing specialized training programs for nurses and paramedics.",
-        },
-        {
-            id: 3,
-            image: image3,
-            title: "Komol Project",
-            description:
-                "The farmers of our country contribute a major part in our economy. The unbelievable fact is that 5% of this farmer use quality seed, which is a mandatory requirement for booming production. Parallel to government no significant initiative was taken in private sector to explore this huge requirements.",
-        },
-        {
-            id: 4,
-            image: image4,
-            title: "Scholarship Project",
-            description:
-                "Bangladesh with its vast natural beauty is a land of green panorama. Apart from exerting beauty trees have multiple benefits as it prevents deforestation, generate income for the owner and protects environment. Ziaur Rahman Foundation undertook program to help people reap the multiple benefits of the mother nature.",
-        },
-    ];
+
     return (
         <Container>
             <div className="lg:relative -top-24 z-10">
@@ -92,9 +55,9 @@ const FeatureSlider: React.FC<projectProps> = ({ projectData, language }) => {
                     <Slider {...settings}>
                         {projectData?.map((program, index) => (
                             <div key={index} className="flex justify-center items-center p-2">
-                                <div className="flex gap-5 bg-green-600 p-3  items-center justify-items-center h-[150px]">
-                                    <div className="space-y-3 flex-1">
-                                        <h3 className="text-xs font-bold text-white">
+                                <div className="flex flex-col md:flex-row  gap-3 bg-green-600 p-5  items-center justify-items-center md:h-[180px]">
+                                    <div className="space-y-3 flex-1 order-2 md:order-1">
+                                        <h3 className="xl:text-[18px] font-bold text-white">
                                             {language == 'ENG' ? program.english_title : program.bangla_title}
                                         </h3>
                                         <p className="text-xs text-white">
@@ -106,7 +69,7 @@ const FeatureSlider: React.FC<projectProps> = ({ projectData, language }) => {
                                             </button>
                                         </Link>
                                     </div>
-                                    <div className="flex-none w-28 h-24 overflow-hidden">
+                                    <div className="flex-none order-1 md:order-2 md:w-32 md:h-28 overflow-hidden">
                                         {
                                             program.bng_Images?.slice(0, 1).map((img) => (
                                                 <Image

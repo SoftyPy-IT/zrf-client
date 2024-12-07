@@ -12,7 +12,7 @@ import Head from "next/head";
 const AboutUs = () => {
   return (
     <div>
-       <Head>
+      <Head>
         <title>About Us | Ziaur Rahman Foundation</title>
         <meta
           name="description"
@@ -77,14 +77,11 @@ const AboutUs = () => {
       <AboutBanner />
       <Container>
         <AboutTopSection />
-    
-         
-          <ProgrammSection />
-
+        <ProgrammSection />
         <History />
         <JoinUs />
       </Container>
-      
+
     </div>
   );
 };

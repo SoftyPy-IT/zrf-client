@@ -11,7 +11,7 @@ import { useLanguage } from "@/provider/LanguageProvider";
 import { TVideo } from "@/types/type";
 import Loader from "@/components/Loading/Loading";
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
-
+import './Gallery.css'
 const VideoGallery = () => {
     const [videos, setVideos] = React.useState<TVideo[]>([]);
     const [loading, setLoading] = React.useState(true);
@@ -45,18 +45,51 @@ const VideoGallery = () => {
 
     return (
         <>
+
+
+            {/* <div className="grid grid-cols-1 gap-y-5 xl:grid-cols-2 gap-5 mt-10 ">
+                {videoData.length > 0 ? (
+                    videoData.slice(0, 2).map((video: TVideo) => (
+                        <div key={video._id} className="videoCard">
+                            <div className="videoWraper">
+                                <ReactPlayer
+                                    url={video.video_url}
+                                    width="100%"
+                                    height="100%"
+                                    controls
+                                />
+                            </div>
+                            <h3 className="p-3 text-sm md:text-xl ">{language === 'ENG' ? video.video_title_english : video.video_title_bangla}</h3>
+                        </div>
+                    ))
+                ) : (
+                    <div>No videos available</div>
+                )}
+            </div> */}
             <div>
                 <h2 className="lg:text-3xl text-2xl font-bold uppercase">{language === 'ENG' ? 'Video Gallery ' : 'ভিডিও গ্যালারি'}</h2>
                 <div className="w-28 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-5"></div>
-                <Swiper pagination={{ clickable: true }} navigation modules={[Navigation]} className="mySwiper">
-                    {videos.map((video: TVideo, index: number) => (
-                        <SwiperSlide key={index}>
-                            <div className="w-full h-64 md:h-80  rounded-md overflow-hidden">
-                                <ReactPlayer style={{ padding: '20px' }} url={video.video_url} width="100%" height="100%" controls />
+               
+                <div className="grid grid-cols-1 gap-y-5  gap-5  ">
+                    {videos.length > 0 ? (
+                        videos.slice(0, 1).map((video: TVideo) => (
+                            <div key={video._id} className="videoCard">
+                                <div className="videoWraper">
+                                    <ReactPlayer
+                                        url={video.video_url}
+                                        width="100%"
+                                        height="100%"
+                                        controls
+                                    />
+                                </div>
+                                <h3 className="p-3 text-sm md:text-xl ">{language === 'ENG' ? video.video_title_english : video.video_title_bangla}</h3>
                             </div>
-                        </SwiperSlide>
-                    ))}
-                </Swiper>
+                        ))
+                    ) : (
+                        <div>No videos available</div>
+                    )}
+                </div>
+
             </div>
             <div className="mt-5">
                 <Link href="/videos">

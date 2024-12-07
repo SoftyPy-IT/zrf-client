@@ -43,11 +43,11 @@ const ProjectsFetchData: React.FC<projectProps> = ({ projectData, language }) =>
 
   const settings = {
     infinite: true,
-    speed: 8000,
+    speed: 5000,  
     slidesToShow,
-    slidesToScroll: slidesToShow,
+    slidesToScroll: 1,  
     autoplay: true,
-    autoplaySpeed: 8000,
+    autoplaySpeed: 8000,  
     arrows: false,
     Autoplay: true,
   };

@@ -145,7 +145,9 @@ const SingleRehabilitation = ({ singleNewsData, language }: SingleProjectProps) 
                     </div>
 
                     <div className="w-full lg:w-[600px] lg:mt-6 md:mt-0 mt-5">
-                        <RecentNewsSidebar />
+                        <div className="sticky top-28">
+                            <RecentNewsSidebar />
+                        </div>
                     </div>
                 </div>
             </Container>

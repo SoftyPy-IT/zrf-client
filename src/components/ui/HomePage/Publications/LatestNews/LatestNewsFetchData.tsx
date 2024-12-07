@@ -24,15 +24,24 @@ const LatestNewsFetchData: React.FC<newsProps> = ({ newsData, language }) => {
                         <h2 className="text-2xl font-bold uppercase bg-gradient-to-r from-yellow-600 to-green-600 text-white px-6 py-2">
                             {language === 'ENG' ? ' News' : 'খবর'}
                         </h2>
-                        <Marquee>
-                            <div className="flex items-center">
-                                {
-                                    newsData.map((title) => (
-                                        <h2 key={title._id} className="capitalize">
-                                            {language === 'ENG' ? title.english_title : title.bangla_title}
-                                        </h2>
-                                    ))
-                                }
+                        <Marquee
+                            pauseOnHover={true}
+                            className="w-full"
+                            speed={50}
+                        >
+                            <div className="flex items-center space-x-4">
+                                {newsData.map((title) => (
+                                    <>
+                                        <Link href={`/news/${title._id}`}>
+                                            <h2
+                                                key={title._id}
+                                                className="capitalize text-nowrap px-4"
+                                            >
+                                                {language === 'ENG' ? title.english_title : title.bangla_title}
+                                            </h2>
+                                        </Link>
+                                    </>
+                                ))}
                             </div>
                         </Marquee>
                     </div>

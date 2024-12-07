@@ -79,10 +79,10 @@ const RecentActivity: React.FC<welcomeProps> = ({ activityData, language }) => {
 
         <div className=" lg:w-[500px]  w-full">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-5 bg-gray-100 p-5 lg:mt-0 md:mt-5 mt-5">
-            {activityFilterData?.slice(1,4).map((data) => (
+            {activityFilterData?.slice(1, 4).map((data) => (
               <div
                 key={data._id}
-                className="flex items-center gap-5 bg-white lg:h-[100px] p-3 rounded shadow-md transition-transform duration-500 transform hover:scale-105"
+                className="flex items-center gap-5 flex-col md:flex-row bg-white lg:h-[100px] p-3 rounded shadow-md transition-transform duration-500 transform hover:scale-105"
               >
 
                 {data.bng_Images?.slice(0, 1).map((img) => (
@@ -90,7 +90,7 @@ const RecentActivity: React.FC<welcomeProps> = ({ activityData, language }) => {
                     <Image
                       src={img}
                       alt='news'
-                      className="w-20 object-cover rounded transition-opacity duration-500"
+                      className="w-full object-fill md:w-20  rounded transition-opacity duration-500"
                       width={50}
                       height={50}
                     />

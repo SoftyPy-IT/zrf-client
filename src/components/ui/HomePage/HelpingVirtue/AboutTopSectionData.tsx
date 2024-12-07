@@ -10,7 +10,7 @@ interface AboutProps {
 }
 
 const AboutTopSectionData: React.FC<AboutProps> = ({ aboutData, language, }) => {
-    // const allowedCategories = [language === 'ENG' ? 'About' : 'সম্পর্কে', , language === 'ENG' ? 'Mission' : 'মিশন', , language === 'ENG' ? 'Vission' : 'দৃষ্টি', , language === 'ENG' ? 'Slugan' : 'স্লুগান',];
+
     const allowedCategories = ["About", "Mission", "Vision", "Slogan"];
 
     const tabs = aboutData
@@ -52,36 +52,37 @@ const AboutTopSectionData: React.FC<AboutProps> = ({ aboutData, language, }) => 
     };
 
     return (
-        <div className="flex flex-col lg:flex-row bg-white p-10 shadow-md mt-20 items-center border">
-            <div className="lg:w-1/2 mb-8 lg:mb-0 flex justify-center">
-                <Image
-                    height={500}
-                    width={500}
-                    src={aboutData[0]?.images?.[0] || ""}
-                    alt="Foundation Overview"
-                    className="object-cover w-80 h-full"
-                />
-            </div>
-
-            <div className="lg:w-1/2 text-gray-800">
-                {/* Tab buttons */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
-                    {tabs.map((tab) => (
-                        <button
-                            key={tab}
-                            onClick={() => setActiveTab(tab)}
-                            className={`font-semibold ${activeTab === tab
-                                ? "bg-green-500 text-white px-4 py-2"
-                                : "bg-gray-100 px-4 py-2"
-                                }`}
-                        >
-                            {tab}
-                        </button>
-                    ))}
-                </div>
-                {renderContent()}
-            </div>
+        <div className="flex flex-col lg:flex-row bg-white p-10 shadow-md mt-20 r border">
+        <div className="lg:w-1/2 mb-8 lg:mb-0 flex justify-center">
+            <Image
+                height={500}
+                width={500}
+                src={aboutData[0]?.images?.[0] || ""}
+                alt="Foundation Overview"
+                className="object-cover w-80 h-full"
+            />
         </div>
+    
+        <div className="lg:w-1/2 text-gray-800 flex flex-col justify-start items-start">
+            {/* Tab buttons */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
+                {tabs.map((tab) => (
+                    <button
+                        key={tab}
+                        onClick={() => setActiveTab(tab)}
+                        className={`font-semibold ${activeTab === tab
+                            ? "bg-green-500 text-white px-4 py-2"
+                            : "bg-gray-100 px-4 py-2"
+                            }`}
+                    >
+                        {tab}
+                    </button>
+                ))}
+            </div>
+            {renderContent()}
+        </div>
+    </div>
+    
     );
 };
 

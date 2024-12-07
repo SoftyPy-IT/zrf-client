@@ -13,26 +13,30 @@ const CommitteeFetchData: React.FC<CommitteProps> = ({ committeeData, language }
     const filterCommitteeData = committeeData.filter((volunteer) => volunteer.category === "Committee");
 
     const sortedCommitteeData = filterCommitteeData.sort((a, b) => {
+        const dateA = new Date(a.createdAt).getTime();
+        const dateB = new Date(b.createdAt).getTime();
+        
+        return dateB - dateA; 
+    }).sort((a, b) => {
         const committeeA = a.committee.toLowerCase();
         const committeeB = b.committee.toLowerCase();
-   
-
+    
         if (committeeA === "board of directors") return -1;
         if (committeeB === "board of directors") return 1;
-
+    
         if (committeeA < committeeB) return -1;
         if (committeeA > committeeB) return 1;
-
+    
         if (committeeA === "") return -1;
         if (committeeB === "") return 1;
-
+    
         // Sort remaining committees alphabetically
         if (committeeA < committeeB) return -1;
         if (committeeA > committeeB) return 1;
-
+    
         return 0;
     });
-
+    
 
     const committees = sortedCommitteeData.reduce((acc, profile) => {
         const committeeName = profile.committee;
