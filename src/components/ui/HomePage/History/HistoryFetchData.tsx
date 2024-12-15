@@ -80,10 +80,9 @@ interface AboutProps {
 
 const HistoryFetchData: React.FC<AboutProps> = ({ aboutData, language }) => {
     const historyFilterData = aboutData.filter((item) => item.category === 'History');
-    const [visibleCount, setVisibleCount] = useState(4); 
-console.log(historyFilterData)
+    const [visibleCount, setVisibleCount] = useState(4);
     const loadMore = () => {
-        setVisibleCount(prevCount => prevCount + 4); 
+        setVisibleCount(prevCount => prevCount + 4);
     };
 
     return (
@@ -149,6 +148,7 @@ console.log(historyFilterData)
                                     <div className="meta-date">
                                         <span className="date">{formatDate(data.date)}</span>
                                     </div>
+          
                                 </>
                             )}
                         </div>

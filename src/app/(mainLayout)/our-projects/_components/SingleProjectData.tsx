@@ -19,100 +19,134 @@ const renderContent = (content: string) => {
     const parsedContent = ReactHtmlParser(content);
 
     return parsedContent.map((element, index) => {
-        if (!element || !element.type) return null;
+        if (element.type === "h1") {
+            return (
+                <h1 key={index} className="text-2xl font-bold mb-2">
+                    {element.props.children}
+                </h1>
+            );
+        } else if (element.type === "h2") {
+            return (
+                <h2 key={index} className="text-xl font-bold mb-2">
+                    {element.props.children}
+                </h2>
+            );
+        }else if (element.type === "h4") {
+            return (
+                <h2 key={index} className=" font-bold mb-2">
+                    {element.props.children}
+                </h2>
+            );
+        } else if (element.type === "h3") {
+            return (
+                <h3 key={index} className="text-lg font-bold mb-2">
+                    {element.props.children}
+                </h3>
+            );
+        } else if (element.type === "b") {
+            return (
+                <b key={index} className="font-bold">
+                    {element.props.children}
+                </b>
 
-        switch (element.type) {
-            case "h1":
-                return (
-                    <h1 key={index} className="text-2xl font-bold mb-2">
-                        {element.props.children}
-                    </h1>
-                );
-            case "h2":
-                return (
-                    <h2 key={index} className="text-xl font-bold mb-2">
-                        {element.props.children}
-                    </h2>
-                );
-            case "h3":
-                return (
-                    <h3 key={index} className="text-lg font-bold mb-2">
-                        {element.props.children}
-                    </h3>
-                );
-            case "h4":
-                return (
-                    <h4 key={index} className="text-md font-semibold mb-2">
-                        {element.props.children}
-                    </h4>
-                );
-            case "h5":
-                return (
-                    <h5 key={index} className="text-sm font-medium mb-2">
-                        {element.props.children}
-                    </h5>
-                );
-            case "p":
-                return (
-                    <p key={index} className="mb-2 text-justify">
-                        {element.props.children}
-                    </p>
-                );
-            case "blockquote":
-                return (
-                    <blockquote key={index} className="border-l-4 border-gray-300 pl-4 italic mb-4">
-                        {element.props.children}
-                    </blockquote>
-                );
-            case "ul":
-                return (
-                    <ul key={index} className="list-disc ml-5 mb-2">
-                        {element.props.children}
-                    </ul>
-                );
-            case "ol":
-                return (
-                    <ol key={index} className="list-decimal ml-5 mb-2">
-                        {element.props.children}
-                    </ol>
-                );
-            case "li":
-                return (
-                    <li key={index} className="mb-1">
-                        {element.props.children}
-                    </li>
-                );
-            case "b":
-                return (
-                    <b key={index} className="font-bold">
-                        {element.props.children}
-                    </b>
-                );
-            case "small":
-                return (
-                    <small key={index} className="text-xs text-gray-600">
-                        {element.props.children}
-                    </small>
-                );
-            case "div":
-                const alignmentClass =
-                    element.props.className === "ql-align-center"
-                        ? "text-center"
-                        : element.props.className === "ql-align-right"
-                            ? "text-right"
-                            : "text-left";
-                return (
-                    <div key={index} className={`${alignmentClass} mb-2`}>
-                        {element.props.children}
-                    </div>
-                );
-            default:
-                // Render unhandled tags as-is
-                return React.createElement(
-                    element.type,
-                    { ...element.props, key: index },
-                    element.props.children
-                );
+            );
+        }else if (element.type === "b") {
+            return (
+                <small key={index} className="text-sm">
+                    {element.props.children}
+                </small>
+
+            );
+        }else if (element.type === "b") {
+            return (
+                <span key={index} className="inline-block">
+                    {element.props.children}
+                </span>
+
+            );
+        } else if (element.type === "img") {
+            return (
+                <div key={index} className="w-[700px] h-[400px]">
+                    <img
+
+                        src={element.props.src}
+                        alt="this is image"
+                        className="mb-2"
+                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    />
+                </div>
+            );
+        } else if (element.type === "ol") {
+            return (
+                <ol key={index} className="list-decimal list-inside mb-5">
+                    {element.props.children}
+                </ol>
+            );
+        } else if (element.type === "ul") {
+            return (
+                <ul key={index} className="list-disc list-inside mb-5">
+                    {element.props.children}
+                </ul>
+            );
+        }
+        else if (element.type === "p") {
+            return (
+                <p key={index} className="mb-2">
+                    {element.props.children}
+                </p>
+            );
+        } else if (element.type === "video") {
+            return (
+                <video
+                    key={index}
+                    className="w-full h-auto mb-4"
+                    controls
+                    src={element.props.src}
+                >
+                    Your browser does not support the video tag.
+                </video>
+            );
+        } else if (element.type === "iframe") {
+            return (
+                <iframe
+                    key={index}
+                    className="w-full h-[500px] mb-4"
+                    src={element.props.src}
+                    title={`iframe-${index}`}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                ></iframe>
+            );
+        } else if (
+            element.type === "div" &&
+            element.props.className === "ql-align-center"
+        ) {
+            return (
+                <div key={index} className="text-center mb-2">
+                    {element.props.children}
+                </div>
+            );
+        } else if (
+            element.type === "div" &&
+            element.props.className === "ql-align-right"
+        ) {
+            return (
+                <div key={index} className="text-right mb-2">
+                    {element.props.children}
+                </div>
+            );
+        } else if (
+            element.type === "div" &&
+            element.props.className === "ql-align-left"
+        ) {
+            return (
+                <div key={index} className="text-left mb-2">
+                    {element.props.children}
+                </div>
+            );
+        } else {
+            return null;
         }
     });
 };

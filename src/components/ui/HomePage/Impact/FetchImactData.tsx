@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Container from "@/components/share/Container";
 import "./Impact.css";
 import Image from "next/image";
@@ -48,6 +49,41 @@ const renderContent = (content: string) => {
                 <ul key={index} className="list-disc list-inside mb-5">
                     {element.props.children}
                 </ul>
+            );
+        } else if (element.type === "video") {
+            return (
+                <video
+                    key={index}
+                    className="w-full h-auto mb-4"
+                    controls
+                    src={element.props.src}
+                >
+                    Your browser does not support the video tag.
+                </video>
+            );
+        } else if (element.type === "img") {
+            return (
+                <div key={index} className="w-[700px] h-[400px]">
+                    <img
+
+                        src={element.props.src}
+                        alt="this is image"
+                        className="mb-2"
+                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    />
+                </div>
+            );
+        } else if (element.type === "iframe") {
+            return (
+                <iframe
+                    key={index}
+                    className="w-full h-[500px] mb-4"
+                    src={element.props.src}
+                    title={`iframe-${index}`}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                ></iframe>
             );
         } else if (element.type === "li") {
             return (

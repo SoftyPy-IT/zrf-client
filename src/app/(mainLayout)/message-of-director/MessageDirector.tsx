@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
 import React from "react";
 import Container from "@/components/share/Container";
@@ -27,11 +28,47 @@ const renderContent = (content: string) => {
                     {element.props.children}
                 </h3>
             );
-        } else if (element.type === "p") {
+        } else if (element.type === "img") {
+            return (
+                <div key={index} className="w-[700px] h-[400px]">
+                    <img
+
+                        src={element.props.src}
+                        alt="this is image"
+                        className="mb-2"
+                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    />
+                </div>
+            );
+        }
+        else if (element.type === "p") {
             return (
                 <p key={index} className="mb-2">
                     {element.props.children}
                 </p>
+            );
+        } else if (element.type === "video") {
+            return (
+                <video
+                    key={index}
+                    className="w-full h-auto mb-4"
+                    controls
+                    src={element.props.src}
+                >
+                    Your browser does not support the video tag.
+                </video>
+            );
+        } else if (element.type === "iframe") {
+            return (
+                <iframe
+                    key={index}
+                    className="w-full h-[500px] mb-4"
+                    src={element.props.src}
+                    title={`iframe-${index}`}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                ></iframe>
             );
         } else if (
             element.type === "div" &&
@@ -59,24 +96,6 @@ const renderContent = (content: string) => {
                 <div key={index} className="text-left mb-2">
                     {element.props.children}
                 </div>
-            );
-        } else if (element.type === "ol") {
-            return (
-                <ol key={index} className="list-decimal pl-4 mb-2">
-                    {element.props.children}
-                </ol>
-            );
-        } else if (element.type === "ul") {
-            return (
-                <ul key={index} className="list-disc pl-4 mb-2">
-                    {element.props.children}
-                </ul>
-            );
-        } else if (element.type === "li") {
-            return (
-                <li key={index} className="mb-1">
-                    {element.props.children}
-                </li>
             );
         } else {
             return null;
