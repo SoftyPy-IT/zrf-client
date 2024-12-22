@@ -16,6 +16,11 @@ const ProgrammSection = () => {
   if (error) {
     return <h2 className='text-center'>Oops!  Something Went Wrong!</h2>
   }
+  const sortedProgrammData = programmData?.sort((a: TProgramm, b: TProgramm) => {
+    const dateA = new Date(a.createdAt).getTime();
+    const dateB = new Date(b.createdAt).getTime();
+    return dateB - dateA;
+  });
   return (
     <div>
 
@@ -23,7 +28,7 @@ const ProgrammSection = () => {
         <h2 className="text-center text-3xl font-bold">{language === 'ENG' ? 'Remarkable Works' : 'উল্লেখযোগ্য কাজ'} </h2>
         <div className="w-44 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-7 mx-auto"></div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 text-center">
-          {programmData?.map((program: TProgramm, index: number) => (
+          {sortedProgrammData?.map((program: TProgramm, index: number) => (
             <div
               key={program._id}
               className="bg-white p-5 rounded shadow-lg flex flex-col items-center transform transition-transform duration-300 hover:scale-105"

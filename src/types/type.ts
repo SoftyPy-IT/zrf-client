@@ -32,6 +32,7 @@ export type TActivity = {
 export type TProgramm = {
   _id: string;
   admin_name: string;
+  createdAt:string;
   date: string;
   bangla_title: string;
   english_title: string;
