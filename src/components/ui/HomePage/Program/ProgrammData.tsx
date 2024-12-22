@@ -9,7 +9,7 @@ import programm2 from "../../../../assets/images/program/smallChild.png";
 import Image from "next/image";
 import "./Programm.css";
 import { TProgramm } from "@/types/type";
-
+import logo from '../../../../../src/assets/images/logo/1.png'
 interface programmProps {
     programmData: TProgramm[];
     language: string,
@@ -51,11 +51,8 @@ const ProgrammData: React.FC<programmProps> = ({ programmData, language }) => {
                                     key={program._id}
                                     className="bg-white p-5 rounded shadow-lg flex flex-col items-center transform transition-transform duration-300 hover:scale-105"
                                 >
-                                    <div className="mb-4">
-                                        {
-                                            index === 0 ? <School fontSize="large" className="text-green-500" /> : index === 1 ? <HealthAndSafety fontSize="large" className="text-green-500" /> : index === 2 ? <ThunderstormIcon fontSize="large" className="text-blue-500" /> : index === 3 ? <WaterIcon fontSize="large" className="text-blue-500" /> : null
-                                        }
-
+                                    <div className="mb-4 w-14 ">
+                                        <Image className="w-full object-cover " src={logo} alt="logo" />
                                     </div>
                                     <h3 className="text-xl font-semibold mb-2">
                                         {language === 'ENG' ? program.english_title : program.bangla_title}

@@ -73,25 +73,25 @@ const Slider = () => {
         <Swiper
           spaceBetween={0}
           effect={"fade"}
-          navigation={true}
-          pagination={{ clickable: true }}
-          zoom={true}
-          modules={[Autoplay, EffectFade, Navigation, Pagination, Zoom]}
+          // navigation={true}
+          // pagination={{ clickable: true }}
+          // zoom={true}
+          // modules={[Autoplay, EffectFade, Navigation, Pagination, Zoom]}
           onSlideChange={handleSlideChange}
           className="mySwiper"
         >
           {filteredSlides.map((slide, index) => (
             <SwiperSlide key={slide._id} className="swiper-slide-zoom">
               <div className="relative w-full h-[300px] md:h-[400px] lg:h-[600px] xl:h-[700px] sliderWrap">
-                <div className="absolute inset-0 bg-black opacity-40 transition-opacity duration-1000 ease-in-out overlay"></div>
+                {/* <div className="absolute inset-0 bg-black opacity-40 transition-opacity duration-1000 ease-in-out overlay"></div> */}
                 {slide.thumnailImages?.map((img, imgIndex) => (
                   <Image
                     key={imgIndex}
                     src={img}
                     alt={`Banner ${index + 1}`}
-                    layout="fill"
+               width={1000} height={500}
                     objectFit="cover"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full  object-contain"
                   />
                 ))}
                 <div

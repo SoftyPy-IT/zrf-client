@@ -31,6 +31,7 @@ const VideoGallery = () => {
     return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
   }
 
+  
   return (
     <div>
       <CommonBanner

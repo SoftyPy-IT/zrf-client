@@ -82,19 +82,20 @@ const RecentActivity: React.FC<welcomeProps> = ({ activityData, language }) => {
             {activityFilterData?.slice(1, 4).map((data) => (
               <div
                 key={data._id}
-                className="flex items-center gap-5 flex-col md:flex-row bg-white lg:h-[100px] p-3 rounded shadow-md transition-transform duration-500 transform hover:scale-105"
+                className="flex items-center gap-5 flex-col md:flex-row bg-white  lg:h-[100px] p-3 rounded shadow-md transition-transform duration-500 transform hover:scale-105"
               >
 
+
                 {data.bng_Images?.slice(0, 1).map((img) => (
-                  <>
-                    <Image
-                      src={img}
-                      alt='news'
-                      className="w-full object-fill md:w-20  rounded transition-opacity duration-500"
-                      width={50}
-                      height={50}
-                    />
-                  </>
+                  <Image
+                    key={img}
+                    src={img}
+                    alt="news"
+                    className="w-full h-auto  md:w-20  object-cover rounded transition-opacity duration-500"
+                    width={0}
+                    height={0}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
                 ))}
 
 
