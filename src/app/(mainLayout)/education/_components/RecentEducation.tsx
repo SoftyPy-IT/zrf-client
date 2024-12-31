@@ -35,7 +35,7 @@ const renderContent = (content: string) => {
         } else if (element.type === "img") {
             return (
                 <div key={index} className="w-[700px] h-[400px]">
-                    <img
+                    <Image
 
                         src={element.props.src}
                         alt="this is image"

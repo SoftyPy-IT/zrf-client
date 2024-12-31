@@ -1,10 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Header.css";
 import Link from "next/link";
 import Image from "next/image";
 import { Box, Typography } from "@mui/material";
-import logo from "../../../assets/images/logo/logo.svg";
+import logo from "../../../assets/images/logo/logo3.svg";
 import Container from "../Container";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useLanguage } from "@/provider/LanguageProvider";
@@ -24,6 +24,32 @@ const Header = () => {
   const dropdown =
     "dropdownMenu absolute flex flex-col justify-center mt-[20px] md:mt-[15px] lg:mt-[30px] xl:mt-[18px] rounded-md bg-white shadow-md border border-t-4 border-t-green-600 invisible opacity-0  origin-top z-50 text-black ";
 
+
+  useEffect(() => {
+    const checkZoom = () => {
+      const zoomLevel = Math.round(window.devicePixelRatio * 100);
+      const menu = document.querySelector('.navItems') as HTMLElement | null; 
+
+      if (menu) {
+        if (zoomLevel >= 175) {
+          menu.style.display = 'none';
+        } else {
+          menu.style.display = 'flex';
+        }
+      }
+    };
+
+
+    checkZoom();
+
+    window.addEventListener('resize', checkZoom);
+
+    return () => {
+      window.removeEventListener('resize', checkZoom);
+    };
+  }, []);
+
+
   return (
     <div className="sticky top-0 w-full bg-white shadow-md  z-[999999]">
       <Container>
@@ -34,11 +60,12 @@ const Header = () => {
                 <Image
                   src={logo}
                   alt="logo"
-                  className="rounded-full logo w-full h-full  "
-                  width={75}
-                  height={75}
+                  className="w-full h-full object-contain"
+                  width={65}
+                  height={65}
                 />
               </div>
+
               <Typography component="span" fontWeight={600} color="black">
                 <Box component="span" color="primary.main" fontWeight="bold">
                   <p className="md:font-bold text-[12px] md:text-[20px]">
@@ -94,7 +121,7 @@ const Header = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link  onClick={toggleMobileMenu} href="/message-of-vice-president">
+                      <Link onClick={toggleMobileMenu} href="/message-of-vice-president">
                         {language === "ENG" ? "Message of Vice President" : "ভাইস প্রেসিডেন্ট এর বাণী"}
                       </Link>
                     </li>
@@ -115,7 +142,7 @@ const Header = () => {
                   </ul>
                 </li>
                 <li className="dropdownMenuWrap  relative">
-                  <Link  href="#">
+                  <Link href="#">
                     {language === "ENG" ? "What We Do" : "আমাদের কার্যক্রম "} <KeyboardArrowDownIcon />
                   </Link>
                   <ul className={`w-[240px] submenu  ${dropdown}`}>

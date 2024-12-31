@@ -3,7 +3,7 @@
 import Container from "@/components/share/Container";
 import { useProgrammData } from "@/hooks/useProgrammData";
 import { TProgramm } from "@/types/type";
-import logo from '../../../../../src/assets/images/logo/1.png'
+import logo from '../../../../../src/assets/images/logo/logo2.svg'
 import { useLanguage } from "@/provider/LanguageProvider";
 import Loader from "@/components/Loading/Loading";
 import Image from "next/image";
@@ -34,10 +34,17 @@ const ProgrammSection = () => {
               className="bg-white p-5 rounded shadow-lg flex flex-col items-center transform transition-transform duration-300 hover:scale-105"
             >
               <div className="mb-4">
-                <div className="mb-4 w-14 ">
-                  <Image className="w-full object-cover " src={logo} alt="logo" />
+                <div className="w-20 h-20 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32  rounded-full p-2 flex items-center justify-center shadow-lg transform transition-transform duration-300 hover:scale-110">
+                  <Image
+                    className="w-auto h-auto max-w-full max-h-full object-contain"
+                    src={logo}
+                    alt="logo"
+                  />
                 </div>
               </div>
+
+
+
               <h3 className="text-xl font-semibold mb-2">
                 {language === 'ENG' ? program.english_title : program.bangla_title}
 

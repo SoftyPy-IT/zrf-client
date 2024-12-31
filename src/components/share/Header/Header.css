@@ -1,9 +1,11 @@
+/* General styling for the navigation items */
 .navItems li {
   padding: 18px;
   position: relative;
   transition: all 0.5s cubic-bezier(0.4, 0.43, 0.54, 0.54);
 }
 
+/* After pseudo-element for navigation items */
 .navItems li::after {
   position: absolute;
   content: "";
@@ -11,17 +13,17 @@
   left: 0;
   right: 0;
   bottom: 0;
-  width: 0px;
+  width: 0;
   background-image: -webkit-linear-gradient(right, #216740, #fec909);
   transition: all 0.5s cubic-bezier(0.4, 0.43, 0.54, 0.54);
-  color: #fff;
 }
 
+/* Hover effect for navigation items */
 .navItems li:hover::after {
   width: 100%;
-  color: #fff;
 }
 
+/* Hover effect for links inside navigation items */
 .navItems li:hover a {
   color: #fff;
   width: 100%;
@@ -30,18 +32,16 @@
   transition: all 0.5s cubic-bezier(0.4, 0.43, 0.54, 0.54);
 }
 
+/* Dropdown menu items hover */
 .navItems li:hover .dropdownMenu li a {
   color: white !important;
-}
-
-.navItems li:hover .dropdownMenu li a {
-  color: black !important;
 }
 
 .dropdownMenu li:hover a span {
   color: white !important;
 }
 
+/* Dropdown menus and submenu styles */
 .dropdownMenu,
 .submenu3 {
   background: #fff;
@@ -77,13 +77,14 @@
   position: relative;
 }
 
+/* Show dropdown menu on hover */
 .dropdownMenuWrap:hover .dropdownMenu {
   opacity: 1;
   transform: scaleY(1);
   visibility: visible;
-  color: #111;
 }
 
+/* Dropdown menu list items */
 .dropdownMenu li {
   border-bottom: 1px solid #ddd;
   padding: 5px 0;
@@ -94,7 +95,7 @@
 }
 
 .dropdownMenu li a {
-  padding: 20px 20px;
+  padding: 20px;
   transition: all 0.5s ease-in-out;
 }
 
@@ -103,29 +104,35 @@
   color: red;
 }
 
+/* Submenu 3 styling */
 .murterDropDown {
   position: relative;
 }
 
 .submenu3 {
   left: 290px;
-  top: 0px;
+  top: 0;
   transform: scaleY(0);
   opacity: 0;
   visibility: hidden;
   width: 243px;
   height: 100px;
 }
+
 .submenu {
   height: 290px;
 }
 
+/* Media Queries for responsiveness */
+
+/* Large screens (1440px and below) */
 @media only screen and (max-width: 1440px) {
   .sliderContent {
     left: 92px !important;
   }
 }
 
+/* Medium screens (1024px and below) */
 @media only screen and (max-width: 1024px) {
   .navItems {
     background: #216740;
@@ -133,7 +140,7 @@
     left: -400px;
     display: block;
     width: 220px;
-    top: 0px;
+    top: 0;
     height: 100vh;
     padding: 20px;
     transition: all 0.5s cubic-bezier(0.43, 0.38, 0.68, 0.63);
@@ -142,13 +149,11 @@
 
   .navItems li {
     padding-bottom: 16px;
-    border-bottom: none;
   }
 
   .activeMenu {
     left: 0px;
     transition: all 0.5s cubic-bezier(0.43, 0.38, 0.68, 0.63);
-    z-index: 999;
   }
 
   .navItems li {
@@ -162,7 +167,6 @@
     position: absolute;
     top: 31px;
     right: 27px;
-    transition: all 0.5s cubic-bezier(0.43, 0.38, 0.68, 0.63);
   }
 
   .bar2 {
@@ -171,7 +175,6 @@
     position: absolute;
     top: 56px;
     right: 10px;
-    transition: all 0.5s cubic-bezier(0.43, 0.38, 0.68, 0.63);
   }
 
   .activeBar span,
@@ -179,31 +182,27 @@
     width: 25px;
     height: 2px;
     background: #111;
-    display: block;
     margin-bottom: 5px;
-    transition: all 0.5s cubic-bezier(0.43, 0.38, 0.68, 0.63);
   }
 
   .activeBar span:nth-child(3) {
     rotate: -45deg;
-    top: 0px;
-    position: absolute;
-    transition: all 0.5s cubic-bezier(0.43, 0.38, 0.68, 0.63);
   }
 
   .activeBar span:nth-child(1) {
     rotate: 45deg;
-    transition: all 0.5s cubic-bezier(0.43, 0.38, 0.68, 0.63);
   }
 
   .activeBar span:nth-child(2) {
     display: none;
   }
+
   .sliderContent {
     left: 21px !important;
   }
 }
 
+/* Small screens (768px and below) */
 @media only screen and (max-width: 768px) {
   .activeBar,
   .bar1 {
@@ -214,7 +213,7 @@
   .dropdownMenu,
   .submenu3 {
     top: 50px;
-    left: 0px;
+    left: 0;
     width: 240px;
   }
 
@@ -223,20 +222,24 @@
   }
 }
 
+/* Extra small screens (500px and below) */
 @media only screen and (max-width: 500px) {
   .activeBar,
   .bar1 {
     top: 18px;
     right: 4px;
   }
+
   .logo {
     width: 50px;
   }
+
   .submenu {
     height: 319px;
   }
 }
 
+/* Very small screens (375px and below) */
 @media only screen and (max-width: 375px) {
   .activeBar,
   .bar1 {
@@ -247,35 +250,27 @@
   .dropdownMenu,
   .submenu3 {
     top: 24px;
-    left: 0px;
+    left: 0;
     width: 240px;
   }
 
   .navItems li {
-    padding: 10px 0px;
-    border: none;
-  }
-  .activeBar,
-  .bar1 {
-    top: 22px;
+    padding: 10px 0;
   }
 }
 
-.murterDropDown:hover .submenu3 {
-  transform: scaleY(1);
-  opacity: 1;
-  visibility: visible;
-  color: black !important;
-}
-
-.dropdownMenu li:hover a span {
-  color: #111 !important;
-}
-
+/* Ultra-small screens (320px and below) */
 @media only screen and (max-width: 320px) {
   .activeBar,
   .bar1 {
     top: 18px;
     right: -4px;
   }
+}
+
+/* Submenu 3 appearance on hover */
+.murterDropDown:hover .submenu3 {
+  transform: scaleY(1);
+  opacity: 1;
+  visibility: visible;
 }
