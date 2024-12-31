@@ -3,7 +3,7 @@
 import Container from "@/components/share/Container";
 import { useProgrammData } from "@/hooks/useProgrammData";
 import { TProgramm } from "@/types/type";
-import logo from '../../../../../src/assets/images/logo/logo2.svg'
+import logo from '../../../../../src/assets/images/logo/16 by 16.svg'
 import { useLanguage } from "@/provider/LanguageProvider";
 import Loader from "@/components/Loading/Loading";
 import Image from "next/image";
@@ -34,7 +34,7 @@ const ProgrammSection = () => {
               className="bg-white p-5 rounded shadow-lg flex flex-col items-center transform transition-transform duration-300 hover:scale-105"
             >
               <div className="mb-4">
-                <div className="w-20 h-20 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32  rounded-full p-2 flex items-center justify-center shadow-lg transform transition-transform duration-300 hover:scale-110">
+                <div className="w-16 h-16  md:h-20 md:w-20  rounded-full p-2 flex items-center justify-center shadow-lg transform transition-transform duration-300 hover:scale-110">
                   <Image
                     className="w-auto h-auto max-w-full max-h-full object-contain"
                     src={logo}

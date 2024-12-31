@@ -101,6 +101,11 @@ Slider.css .slider-container {
     left: 70px;
   }
 }
+@media only screen and (max-width: 1024px) {
+  .sliderContents {
+    left: 0px;
+  }
+}
 @media only screen and (max-width: 768px) {
   .sliderContents {
     width: 100%;
@@ -109,8 +114,7 @@ Slider.css .slider-container {
 }
 
 @media only screen and (max-width: 350px) {
-
   .sliderContents {
     left: 3px !important;
-}
+  }
 }
