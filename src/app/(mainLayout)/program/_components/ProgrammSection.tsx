@@ -19,7 +19,7 @@ const ProgrammSection = () => {
   const sortedProgrammData = programmData?.sort((a: TProgramm, b: TProgramm) => {
     const dateA = new Date(a.createdAt).getTime();
     const dateB = new Date(b.createdAt).getTime();
-    return dateB - dateA;
+    return dateA - dateB;
   });
   return (
     <div>

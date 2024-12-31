@@ -2,13 +2,13 @@
 import { useLanguage } from "@/provider/LanguageProvider";
 
 import React from "react";
-import { TActivity } from "@/types/type";
+import { TActivity, TProject } from "@/types/type";
 import RecentPostFetchData from "./RecentPostFetchData";
 import Loader from "@/components/Loading/Loading";
 
 
 const RecentProjectPost = () => {
-  const [projectData, setProjectData] = React.useState<TActivity[]>([]);
+  const [projectData, setProjectData] = React.useState<TProject[]>([]);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
   const { language } = useLanguage()
