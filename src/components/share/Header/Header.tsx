@@ -25,29 +25,29 @@ const Header = () => {
     "dropdownMenu absolute flex flex-col justify-center mt-[20px] md:mt-[15px] lg:mt-[30px] xl:mt-[18px] rounded-md bg-white shadow-md border border-t-4 border-t-green-600 invisible opacity-0  origin-top z-50 text-black ";
 
 
-  useEffect(() => {
-    const checkZoom = () => {
-      const zoomLevel = Math.round(window.devicePixelRatio * 100);
-      const menu = document.querySelector('.navItems') as HTMLElement | null; 
+  // useEffect(() => {
+  //   const checkZoom = () => {
+  //     const zoomLevel = Math.round(window.devicePixelRatio * 100);
+  //     const menu = document.querySelector('.navItems') as HTMLElement | null; 
 
-      if (menu) {
-        if (zoomLevel >= 175) {
-          menu.style.display = 'none';
-        } else {
-          menu.style.display = 'flex';
-        }
-      }
-    };
+  //     if (menu) {
+  //       if (zoomLevel >= 175) {
+  //         menu.style.display = 'none';
+  //       } else {
+  //         menu.style.display = 'flex';
+  //       }
+  //     }
+  //   };
 
 
-    checkZoom();
+  //   checkZoom();
 
-    window.addEventListener('resize', checkZoom);
+  //   window.addEventListener('resize', checkZoom);
 
-    return () => {
-      window.removeEventListener('resize', checkZoom);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener('resize', checkZoom);
+  //   };
+  // }, []);
 
 
   return (
