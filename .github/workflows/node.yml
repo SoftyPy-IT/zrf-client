@@ -16,20 +16,7 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            set -e
 
-            # Variables
-            PROJECT_DIR="/var/www/html/zrf/client"
-            client_CONF="/etc/nginx/sites-available/client.zrf.info"
-            PROJECT_CONF="$PROJECT_DIR/nginx.conf"
-
-            # Navigate to project directory
-            cd $PROJECT_DIR
-
-            # Clone the repository if not exists
-            if [ ! -d ".git" ]; then
-              git clone git@github.com:SoftyPy-IT/ziaurrahmanfoundation.git .
-            fi
 
             # Fetch latest changes and reset to main branch
             git fetch --all
@@ -40,27 +27,6 @@ jobs:
 
             npm install --legacy-peer-deps
             npm run build
-
-            # Deploy NGINX Configuration Conditionally
-            if ! diff -q "$PROJECT_CONF" "$client_CONF" > /dev/null; then
-              echo "NGINX configuration has changed. Updating..."
-              sudo cp "$PROJECT_CONF" "$client_CONF"
-              sudo ln -sf "$client_CONF" /etc/nginx/sites-enabled/client.zrf.info
-
-            # Ensure symbolic link exists in sites-enabled
-              if [ ! -f "/etc/nginx/sites-enabled/client.zrf.info" ]; then
-              sudo ln -sf "$client_CONF" /etc/nginx/sites-enabled/client.zrf.info
-              fi
-
-              # Test and reload NGINX
-              sudo nginx -t && sudo systemctl reload nginx
-            else
-              echo "NGINX configuration is unchanged. Skipping update."
-            fi
-
-            # Manage SSL using Certbot
-
-              sudo certbot --nginx -d zrf.info -d www.zrf.info --non-interactive --agree-tos --register-unsafely-without-email
 
             # Manage PM2 process
             if pm2 list | grep -q "zrf-client"; then

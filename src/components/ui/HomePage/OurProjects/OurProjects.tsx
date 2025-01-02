@@ -1,5 +1,4 @@
-
-'use client'
+"use client";
 
 import React from "react";
 
@@ -7,18 +6,20 @@ import { TProject } from "@/types/type";
 import { useLanguage } from "@/provider/LanguageProvider";
 import ProjectsFetchData from "./ProjectsFetchData";
 import { useProjectdata } from "@/hooks/useProjectdata";
-import Loader from "@/components/Loading/Loading";
-
+import dynamic from "next/dynamic";
+const Loader = dynamic(() => import("@/components/Loading/Loading"), {
+  ssr: false,
+});
 
 const OurProjects = () => {
-  const { language } = useLanguage()
-  const {projectData, loading, error} = useProjectdata()
+  const { language } = useLanguage();
+  const { projectData, loading, error } = useProjectdata();
 
   if (loading) {
-    return <Loader/>
+    return <Loader />;
   }
   if (error) {
-    return <h2 className='text-center'>Oops!  Something Went Wrong!</h2>
+    return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
   }
 
   return (
@@ -26,8 +27,6 @@ const OurProjects = () => {
       <ProjectsFetchData language={language} projectData={projectData} />
     </>
   );
-  
 };
 
 export default OurProjects;
-

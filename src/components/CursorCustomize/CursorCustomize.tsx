@@ -1,13 +1,25 @@
-'use client';
-import React, { useEffect } from 'react';
+"use client";
+import React, { useEffect, useState } from "react";
 
 const CursorCustomize = () => {
-  useEffect(() => {
-    const cursorDot = document.querySelector(".cursor-dot") as HTMLElement;
-    const cursorOutline = document.querySelector(".cursor-outline") as HTMLElement;
+  const [isClient, setIsClient] = useState(false);
 
-    let mouseX = 0, mouseY = 0;
-    let outlineX = 0, outlineY = 0;
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isClient) return;
+
+    const cursorDot = document.querySelector(".cursor-dot") as HTMLElement;
+    const cursorOutline = document.querySelector(
+      ".cursor-outline",
+    ) as HTMLElement;
+
+    let mouseX = 0,
+      mouseY = 0;
+    let outlineX = 0,
+      outlineY = 0;
 
     const handleMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX;
@@ -19,7 +31,7 @@ const CursorCustomize = () => {
     };
 
     const animateOutline = () => {
-      outlineX += (mouseX - outlineX) * 0.05; 
+      outlineX += (mouseX - outlineX) * 0.05;
       outlineY += (mouseY - outlineY) * 0.05;
 
       if (cursorOutline) {
@@ -36,7 +48,9 @@ const CursorCustomize = () => {
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, []);
+  }, [isClient]);
+
+  if (!isClient) return null; // Prevents rendering on the server side
 
   return (
     <div>

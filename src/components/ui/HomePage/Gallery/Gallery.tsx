@@ -1,19 +1,12 @@
-import React from "react";
-import dynamic from "next/dynamic";
 import Container from "@/components/share/Container";
-import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import "swiper/css/pagination";
 import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 import PhotoGallery from "./PhotoGallery";
 import VideoGallery from "./VideoGallery";
 
-
 const GallerySection = () => {
-
-
-
   return (
     <Container>
       <div className="my-16">
@@ -29,7 +22,5 @@ const GallerySection = () => {
     </Container>
   );
 };
-
-
 
 export default GallerySection;

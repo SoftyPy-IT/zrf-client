@@ -1,10 +1,12 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import { useLanguage } from '@/provider/LanguageProvider';
-import SingleClimateChange from '../_components/SingleClimateChange';
-import Loader from '@/components/Loading/Loading';
-
+import React, { useEffect, useState } from "react";
+import { useLanguage } from "@/provider/LanguageProvider";
+import SingleClimateChange from "../_components/SingleClimateChange";
+import dynamic from "next/dynamic";
+const Loader = dynamic(() => import("@/components/Loading/Loading"), {
+  ssr: false,
+});
 interface ParamsId {
   params: {
     id: string;
@@ -24,7 +26,9 @@ const Rehabilitation = ({ params }: ParamsId) => {
       setLoading(true);
       setError(null);
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo/${id}`);
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo/${id}`,
+        );
         const result = await res.json();
         if (result?.data) {
           setData(result.data);
@@ -50,7 +54,11 @@ const Rehabilitation = ({ params }: ParamsId) => {
   }
 
   if (error) {
-    return <div className="text-center text-red-600"><h2>Oops! Something Went Wrong!</h2></div>;
+    return (
+      <div className="text-center text-red-600">
+        <h2>Oops! Something Went Wrong!</h2>
+      </div>
+    );
   }
 
   return (

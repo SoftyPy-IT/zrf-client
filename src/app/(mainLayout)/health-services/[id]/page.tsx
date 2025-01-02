@@ -1,9 +1,12 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import { useLanguage } from '@/provider/LanguageProvider';
-import SingleHeathService from '../_components/SingleHeathService';
-import Loader from '@/components/Loading/Loading';
+import React, { useEffect, useState } from "react";
+import { useLanguage } from "@/provider/LanguageProvider";
+import SingleHeathService from "../_components/SingleHeathService";
+import dynamic from "next/dynamic";
+const Loader = dynamic(() => import("@/components/Loading/Loading"), {
+  ssr: false,
+});
 
 interface ParamsId {
   params: {
@@ -22,9 +25,11 @@ const Rehabilitation = ({ params }: ParamsId) => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      setError(null); 
+      setError(null);
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo/${id}`);
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo/${id}`,
+        );
         const result = await res.json();
         if (result?.data) {
           setData(result.data);
@@ -42,13 +47,15 @@ const Rehabilitation = ({ params }: ParamsId) => {
   }, [id]);
 
   if (loading) {
-    return (
-      <Loader />
-    );
+    return <Loader />;
   }
 
   if (error) {
-    return <div className="text-center text-red-600"><h2>Oops! Something Went Wrong!</h2></div>;
+    return (
+      <div className="text-center text-red-600">
+        <h2>Oops! Something Went Wrong!</h2>
+      </div>
+    );
   }
 
   return (

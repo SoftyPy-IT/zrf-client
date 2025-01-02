@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React, { useState } from "react";
 import Image from "next/image";
@@ -16,158 +16,159 @@ import { YouTube } from "@mui/icons-material";
 import Subscribe from "./Subscribe";
 
 type FooterProps = {
-    language: string,
-}
+  language: string;
+};
 const FooterData = ({ language }: FooterProps) => {
-    const [open, setOpen] = useState(true);
-    const [modalOpen, setModalOpen] = useState(false);
+  const [open, setOpen] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
 
+  const buttonStyle = {
+    width: "120px",
+    height: "30px",
+    borderRadius: "10px",
+    color: "white",
+    background: "#216740",
+    padding: "0px",
+  };
 
-    const buttonStyle = { width: '120px', height: '30px', borderRadius: '10px', color: 'white', background: '#216740', padding: '0px', }
+  const handleModalOpen = () => setModalOpen(true);
+  const handleModalClose = () => setModalOpen(false);
 
-    const handleModalOpen = () => setModalOpen(true);
-    const handleModalClose = () => setModalOpen(false);
-
-    return (
-        <>
-            <div className="bg-[#20bd86] relative sectionMargin">
-                <Container>
-                    <div className="relative flex flex-col md:flex-row justify-between items-start md:items-center py-8 z-10">
-                        <div className="w-auto">
-                            <span className="md:text-3xl text-white font-sans uppercase">
-                                {
-                                    language === 'ENG' ? ' Join Our Newsletter' : 'আমাদের নিউজলেটার যোগদান'
-                                }
-                            </span>
-                        </div>
-                        <div className="w-full lg:w-auto flex justify-center items-center mt-4 md:mt-0 lg:mt-0 xl:mt-0">
-                           
-                           <Subscribe/>
-                        </div>
-                    </div>
-                </Container>
-                <Image
-                    src={footer}
-                    alt="Descriptive text"
-                    className="absolute inset-0 object-cover w-full h-full "
-                />
+  return (
+    <>
+      <div className="bg-[#20bd86] relative sectionMargin">
+        <Container>
+          <div className="relative flex flex-col md:flex-row justify-between items-start md:items-center py-8 z-10">
+            <div className="w-auto">
+              <span className="md:text-3xl text-white font-sans uppercase">
+                {language === "ENG"
+                  ? " Join Our Newsletter"
+                  : "আমাদের নিউজলেটার যোগদান"}
+              </span>
             </div>
-            <footer className="bg-gray-900 text-white pt-12 pb-8">
-                <Container>
-                    <div className="container mx-auto">
+            <div className="w-full lg:w-auto flex justify-center items-center mt-4 md:mt-0 lg:mt-0 xl:mt-0">
+              <Subscribe />
+            </div>
+          </div>
+        </Container>
+        <Image
+          src={footer}
+          alt="Descriptive text"
+          className="absolute inset-0 object-cover w-full h-full "
+        />
+      </div>
+      <footer className="bg-gray-900 text-white pt-12 pb-8">
+        <Container>
+          <div className="container mx-auto">
+            <div className="flex flex-col md:flex-row justify-between items-start mt-8">
+              <div className="w-full md:w-1/4 mb-8 md:mb-0">
+                <div className="space-y-3 flex flex-col items-center">
+                  <Image src={logo} alt="Seville Logo" width={50} height={50} />
+                  <h3 className="font-bold text-lg text-center">
+                    {language === "ENG"
+                      ? "Ziaur Rahman Foundation"
+                      : "জিয়াউর রহমান ফাউন্ডেশন"}
+                  </h3>
+                </div>
+              </div>
 
-                        <div className="flex flex-col md:flex-row justify-between items-start mt-8">
+              <div className="w-full md:w-1/4 mb-8 md:mb-0 text-center">
+                <h4 className="font-semibold">
+                  {" "}
+                  {language === "ENG" ? "Our Address" : "আমাদের ঠিকানা"}{" "}
+                </h4>
+                <p>
+                  {" "}
+                  {language === "ENG"
+                    ? "House#4, Road#7, Niketon Gate #2, Gulshan-1, Dhaka-1212, Bangladesh."
+                    : "বাড়ি#৪, রোড#৭, নিকেতন গেট#২, গুলশান-১, ঢাকা-১২১২, বাংলাদেশ।"}{" "}
+                </p>
+              </div>
+              <div className="w-full md:w-1/4 mb-8 md:mb-0 text-center">
+                <ul className="space-y-3 ">
+                  <li>
+                    <Button component={Link} href="/contact" sx={buttonStyle}>
+                      {language === "ENG" ? "Contact Us" : " যোগাযোগ করুন"}{" "}
+                    </Button>{" "}
+                  </li>
+                  <li>
+                    <Button onClick={handleModalOpen} sx={buttonStyle}>
+                      {" "}
+                      {language === "ENG" ? "Join Us" : "যোগ দিন"}
+                    </Button>{" "}
+                  </li>
+                </ul>
+              </div>
 
-                            <div className="w-full md:w-1/4 mb-8 md:mb-0">
-                                <div className="space-y-3 flex flex-col items-center">
-                                    <Image src={logo} alt="Seville Logo" width={50} height={50} />
-                                    <h3 className="font-bold text-lg text-center">
-                                        {
-                                            language === 'ENG' ? 'Ziaur Rahman Foundation' : 'জিয়াউর রহমান ফাউন্ডেশন'
-                                        }
-                                    </h3>
-                                </div>
-                            </div>
-
-                            <div className="w-full md:w-1/4 mb-8 md:mb-0 text-center">
-                                <h4 className="font-semibold"> {
-                                    language === 'ENG' ? 'Our Address' : 'আমাদের ঠিকানা'
-                                }  </h4>
-                                <p> {
-                                    language === 'ENG' ? 'House#4, Road#7, Niketon Gate #2, Gulshan-1, Dhaka-1212, Bangladesh.' : 'বাড়ি#৪, রোড#৭, নিকেতন গেট#২, গুলশান-১, ঢাকা-১২১২, বাংলাদেশ।'
-                                } </p>
-                            </div>
-                            <div className="w-full md:w-1/4 mb-8 md:mb-0 text-center">
-
-                                <ul className="space-y-3 ">
-
-                                    <li><Button component={Link} href='/contact' sx={buttonStyle}>
-                                        {
-                                            language === 'ENG' ? 'Contact Us' : ' যোগাযোগ করুন'
-                                        }  </Button> </li>
-                                    <li><Button onClick={handleModalOpen} sx={buttonStyle}> {
-                                        language === 'ENG' ? 'Join Us' : 'যোগ দিন'
-                                    }
-                                    </Button> </li>
-
-                                </ul>
-                            </div>
-
-                            <div className="w-full md:w-1/4">
-
-
-                                <div className=" mt-4 text-center md:text-left lg:text-left xl:text-left">
-
-                                    <h4 className="font-semibold text-center"> {
-                                        language === 'ENG' ? 'Follow Us' : 'আমাদের অনুসরণ করুন'
-                                    }   </h4>
-                                    <div className="flex justify-center">
-                                        <div className="mt-4 flex space-x-4">
-                                            <a
-                                                href="https://www.facebook.com/zrf.org/"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="hover:text-white"
-                                            >
-                                                <FacebookIcon className="text-blue-600 hover:text-blue-700" />
-                                            </a>
-                                            <a
-                                                href="https://www.youtube.com/@ZiaurRahmanFoundationZRF"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="hover:text-white"
-                                            >
-                                                <YouTube className="text-red-600 hover:text-red-700" /> 
-                                            </a>
-                                            <a
-                                                href="https://x.com"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="hover:text-white"
-                                            >
-                                                <XIcon className="text-blue-600 hover:text-blue-700" /> 
-                                            </a>
-                                            <a
-                                                href="https://instagram.com"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="hover:text-white"
-                                            >
-                                                <InstagramIcon className="text-pink-500 hover:text-pink-600" />
-                                            </a>
-                                            <a
-                                                href="https://linkedin.com"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="hover:text-white"
-                                            >
-                                                <LinkedInIcon className="text-blue-700 hover:text-blue-800" /> 
-                                            </a>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="mt-8 text-center text-gray-500">
-                            &copy; {
-                                language === 'ENG' ? ' Copyrights Ziaur Rahman Foundation 2024. All Rights Reserved ' : 'কপিরাইট জিয়াউর রহমান ফাউন্ডেশন 2024. সর্বস্বত্ব সংরক্ষিত'
-                            }
-
-                        </div>
+              <div className="w-full md:w-1/4">
+                <div className=" mt-4 text-center md:text-left lg:text-left xl:text-left">
+                  <h4 className="font-semibold text-center">
+                    {" "}
+                    {language === "ENG"
+                      ? "Follow Us"
+                      : "আমাদের অনুসরণ করুন"}{" "}
+                  </h4>
+                  <div className="flex justify-center">
+                    <div className="mt-4 flex space-x-4">
+                      <a
+                        href="https://www.facebook.com/zrf.org/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-white"
+                      >
+                        <FacebookIcon className="text-blue-600 hover:text-blue-700" />
+                      </a>
+                      <a
+                        href="https://www.youtube.com/@ZiaurRahmanFoundationZRF"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-white"
+                      >
+                        <YouTube className="text-red-600 hover:text-red-700" />
+                      </a>
+                      <a
+                        href="https://x.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-white"
+                      >
+                        <XIcon className="text-blue-600 hover:text-blue-700" />
+                      </a>
+                      <a
+                        href="https://instagram.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-white"
+                      >
+                        <InstagramIcon className="text-pink-500 hover:text-pink-600" />
+                      </a>
+                      <a
+                        href="https://linkedin.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-white"
+                      >
+                        <LinkedInIcon className="text-blue-700 hover:text-blue-800" />
+                      </a>
                     </div>
-                </Container>
-            </footer>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-            {
+            <div className="mt-8 text-center text-gray-500">
+              &copy;{" "}
+              {language === "ENG"
+                ? " Copyrights Ziaur Rahman Foundation 2024. All Rights Reserved "
+                : "কপিরাইট জিয়াউর রহমান ফাউন্ডেশন 2024. সর্বস্বত্ব সংরক্ষিত"}
+            </div>
+          </div>
+        </Container>
+      </footer>
 
-                modalOpen && (
-                    <DonationModal onClose={handleModalClose} />
-                )
-            }
-        </>
-    );
+      {modalOpen && <DonationModal onClose={handleModalClose} />}
+    </>
+  );
 };
 
 export default FooterData;

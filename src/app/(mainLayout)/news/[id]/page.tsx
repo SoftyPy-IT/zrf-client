@@ -1,8 +1,8 @@
-'use client'
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import { useLanguage } from '@/provider/LanguageProvider';
-import SingleNews from '../_components/SingleNews';
+import React, { useEffect, useState } from "react";
+import { useLanguage } from "@/provider/LanguageProvider";
+import SingleNews from "../_components/SingleNews";
 
 interface pressId {
   params: {
@@ -19,7 +19,9 @@ const Project = ({ params }: pressId) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/activity/${id}`);
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/activity/${id}`,
+        );
         const result = await res.json();
         if (result?.data) {
           setData(result.data);

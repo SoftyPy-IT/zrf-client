@@ -1,20 +1,21 @@
-'use client'
+"use client";
 
 import { useLanguage } from "@/provider/LanguageProvider";
-
-import React from "react";
-import { TActivity } from "@/types/type";
-import ProgrammData from "./ProgrammData";
 import { useProgrammData } from "@/hooks/useProgrammData";
-import Loader from "@/components/Loading/Loading";
+import dynamic from "next/dynamic";
+import ProgrammData from "./ProgrammData";
+const Loader = dynamic(() => import("@/components/Loading/Loading"), {
+  ssr: false,
+});
+
 const Programm = () => {
-  const { programmData, loading, error } = useProgrammData()
-  const { language } = useLanguage()
+  const { programmData, loading, error } = useProgrammData();
+  const { language } = useLanguage();
   if (loading) {
-    return <Loader />
+    return <Loader />;
   }
   if (error) {
-    return <h2 className='text-center'>Oops!  Something Went Wrong!</h2>
+    return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
   }
 
   return (
@@ -22,8 +23,6 @@ const Programm = () => {
       <ProgrammData language={language} programmData={programmData} />
     </>
   );
-
 };
-
 
 export default Programm;

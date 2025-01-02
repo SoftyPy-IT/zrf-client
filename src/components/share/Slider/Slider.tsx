@@ -1,26 +1,19 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { useEffect, useState } from "react";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import "swiper/css/zoom";
-
-import {
-  EffectFade,
-  Autoplay,
-  Navigation,
-  Pagination,
-  Zoom,
-} from "swiper/modules";
-
-import Image from "next/image";
-import "./Slider.css";
-import { TBanner } from "@/types/type";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { useLanguage } from "@/provider/LanguageProvider";
-import Loader from "@/components/Loading/Loading";
+import { TBanner } from "@/types/type";
+import dynamic from "next/dynamic";
+import Image from "next/image";
 import Link from "next/link";
+import "./Slider.css";
+const Loader = dynamic(() => import("@/components/Loading/Loading"), {
+  ssr: false,
+});
 
 const Slider = () => {
   const [slides, setSlides] = useState<TBanner[]>([]);
@@ -37,7 +30,9 @@ const Slider = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/banner`);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_API_URL}/banner`,
+      );
       if (!response.ok) throw new Error("Failed to fetch slides data");
       const data = await response.json();
       setSlides(data.data.banners);
@@ -75,13 +70,13 @@ const Slider = () => {
           effect={"fade"}
           // navigation={true}
           // pagination={{ clickable: true }}
-          // zoom={true}
+          zoom={false}
           // modules={[Autoplay, EffectFade, Navigation, Pagination, Zoom]}
           onSlideChange={handleSlideChange}
           className="mySwiper"
         >
           {filteredSlides.map((slide, index) => (
-            <SwiperSlide key={slide._id} className="swiper-slide-zoom">
+            <SwiperSlide key={slide._id} className="">
               <div className="relative w-full h-[300px] md:h-[400px] lg:h-[600px] xl:h-[700px] sliderWrap">
                 {/* <div className="absolute inset-0 bg-black opacity-40 transition-opacity duration-1000 ease-in-out overlay"></div> */}
                 {slide.thumnailImages?.map((img, imgIndex) => (
@@ -89,16 +84,18 @@ const Slider = () => {
                     key={imgIndex}
                     src={img}
                     alt={`Banner ${index + 1}`}
-               width={1000} height={500}
+                    width={1000}
+                    height={500}
                     objectFit="cover"
                     className="w-full h-full  object-contain"
                   />
                 ))}
                 <div
-                  className={`z-[999999] sliderContents absolute inset-0 flex justify-start items-center text-left text-white p-4 transition-all duration-1000 ease-in-out ${activeSlide === index
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-28"
-                    }`}
+                  className={`z-[999999] sliderContents absolute inset-0 flex justify-start items-center text-left text-white p-4 transition-all duration-1000 ease-in-out ${
+                    activeSlide === index
+                      ? "opacity-100 translate-y-0"
+                      : "opacity-0 translate-y-28"
+                  }`}
                 >
                   <div className="max-w-lg lg:max-w-md md:p-5 rounded-lg bg-opacity-50 space-y-2 lg:space-y-3">
                     <h2 className="md:w-[600px] text-[18px] lg:text-3xl font-bold">
@@ -111,9 +108,11 @@ const Slider = () => {
                         ? slide.english_short_description
                         : slide.bangla_short_description}
                     </p>
-                    <Link href='/about'><button className="bg-[#FEC909] text-white text-sm px-3 md:px-6 py-1 md:py-3 rounded-full hover:bg-[#216740] transition duration-300">
-                      {language === "ENG" ? " Learn More" : "আরও জানুন"}
-                    </button></Link>
+                    <Link href="/about">
+                      <button className="bg-[#FEC909] text-white text-sm px-3 md:px-6 py-1 md:py-3 rounded-full hover:bg-[#216740] transition duration-300">
+                        {language === "ENG" ? " Learn More" : "আরও জানুন"}
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>

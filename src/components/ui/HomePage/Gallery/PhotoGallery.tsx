@@ -10,7 +10,9 @@ import EastIcon from "@mui/icons-material/East";
 import { TImgGallery, TVideo } from "@/types/type";
 import { useLanguage } from "@/provider/LanguageProvider";
 import Image from "next/image";
-import Loader from "@/components/Loading/Loading";
+const Loader = dynamic(() => import("@/components/Loading/Loading"), {
+  ssr: false,
+});
 
 const PhotoGallery = () => {
   const [galleryData, setGalleryData] = React.useState<TImgGallery[]>([]);
@@ -21,9 +23,12 @@ const PhotoGallery = () => {
   React.useEffect(() => {
     const fetchGalleryData = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/image-gallery?limit=1000`, {
-          cache: "no-store",
-        });
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/image-gallery?limit=1000`,
+          {
+            cache: "no-store",
+          },
+        );
         const data = await response.json();
         setGalleryData(data.data?.galleries || []);
       } catch (err) {
@@ -37,17 +42,17 @@ const PhotoGallery = () => {
   }, []);
 
   if (loading) {
-    return <Loader />
+    return <Loader />;
   }
   if (error) {
-    return <h2 className='text-center'>Oops!  Something Went Wrong!</h2>
+    return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
   }
 
   return (
     <>
       <div>
         <h2 className="lg:text-3xl text-2xl font-bold uppercase">
-          {language === 'ENG' ? ' Photo Gallery' : 'ফটো গ্যালারি'}
+          {language === "ENG" ? " Photo Gallery" : "ফটো গ্যালারি"}
         </h2>
         <div className="w-28 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-5"></div>
         <Swiper
@@ -63,12 +68,10 @@ const PhotoGallery = () => {
           loop={true}
           className="mySwiper"
         >
-          
           {galleryData.map((gallery, index) => (
             <SwiperSlide key={gallery._id || index}>
               <div className="relative w-full h-64 md:h-80 bg-gray-200 overflow-hidden">
                 {gallery.thumnailImages?.slice(0, 1).map((img, idx) => {
-
                   return (
                     <Image
                       key={idx}
@@ -81,8 +84,6 @@ const PhotoGallery = () => {
                     />
                   );
                 })}
-
-
               </div>
             </SwiperSlide>
           ))}
@@ -91,7 +92,8 @@ const PhotoGallery = () => {
       <div className="flex justify-end mt-5">
         <Link href="/gallery">
           <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-6 py-2 text-white rounded-full uppercase">
-            {language === 'ENG' ? 'See All' : 'সব দেখুন'} <EastIcon fontSize="small" />
+            {language === "ENG" ? "See All" : "সব দেখুন"}{" "}
+            <EastIcon fontSize="small" />
           </button>
         </Link>
       </div>
