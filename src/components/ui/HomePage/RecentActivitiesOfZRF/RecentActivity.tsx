@@ -4,17 +4,20 @@ import Image from "next/image";
 import Link from "next/link";
 import EastIcon from "@mui/icons-material/East";
 import { TActivity } from "@/types/type";
-
+import truncateText from "@/utils/truncate";
 
 interface welcomeProps {
   activityData: TActivity[];
-  language: string,
+  language: string;
 }
 
-
 const RecentActivity: React.FC<welcomeProps> = ({ activityData, language }) => {
-  const activityFilterData = activityData?.filter((welcome: any) => welcome.category === 'Activity')
-  const newsFilterData = activityData?.filter((welcome: any) => welcome.category === 'News')
+  const activityFilterData = activityData?.filter(
+    (welcome: any) => welcome.category === "Activity",
+  );
+  const newsFilterData = activityData?.filter(
+    (welcome: any) => welcome.category === "News",
+  );
 
   const formatDate = (dateString: string | number | Date) => {
     const date = new Date(dateString);
@@ -22,15 +25,16 @@ const RecentActivity: React.FC<welcomeProps> = ({ activityData, language }) => {
     const month = (date.getMonth() + 1).toString().padStart(2, "0");
     const year = date.getFullYear();
     return `${day}-${month}-${year}`;
-  }
+  };
   return (
     <Container className="my-20">
-      <h1 className="lg:text-3xl text-2xl font-bold uppercase">{
-        language === 'ENG' ? "Recent Activities of ZRF" : "জেডআরএফ এর সাম্প্রতিক কার্যক্রম"
-      }</h1>
+      <h1 className="lg:text-3xl text-2xl font-bold uppercase">
+        {language === "ENG"
+          ? "Recent Activities of ZRF"
+          : "জেডআরএফ এর সাম্প্রতিক কার্যক্রম"}
+      </h1>
       <div className="w-28 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-5"></div>
       <div className="lg:flex gap-10">
-
         <div className="w-full">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:h-[500px]">
             {activityFilterData?.slice(0, 2).map((data) => (
@@ -45,7 +49,7 @@ const RecentActivity: React.FC<welcomeProps> = ({ activityData, language }) => {
                         width={500}
                         height={500}
                         src={img}
-                        alt='activity'
+                        alt="activity"
                         className="h-[250px] w-full object-cover transition-transform duration-500 transform group-hover:scale-105"
                       />
                     </>
@@ -56,18 +60,21 @@ const RecentActivity: React.FC<welcomeProps> = ({ activityData, language }) => {
 
                 <div className="p-5 space-y-3 relative z-10">
                   <h3 className="text-xl font-bold">
-                    {language === 'ENG' ? data.english_title?.slice(0, 60) : data.bangla_title?.slice(0, 60)}
+                    {language === "ENG"
+                      ? truncateText(data.english_title, 60)
+                      : truncateText(data.bangla_title, 60)}
                   </h3>
-                  <p className="text-justify">
-                    {language === 'ENG' ? data.english_short_description?.slice(0, 150) : data.bangla_short_description?.slice(0, 150)}...
+                  <p className="text-">
+                    {language === "ENG"
+                      ? truncateText(data.english_short_description, 90)
+                      : truncateText(data.bangla_short_description, 90)}
                   </p>
                   <div className="flex justify-between">
                     <p>{formatDate(data.date)}</p>
                     <Link href={`/recent-activities-of-zrf/${data._id}`}>
                       <button className="hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-1 hover:text-white rounded-full uppercase text-xs border border-green-600">
-                        {
-                          language === 'ENG' ? " Learn More" : "আরও জানুন"
-                        } <EastIcon fontSize="small" />
+                        {language === "ENG" ? " Learn More" : "আরও জানুন"}{" "}
+                        <EastIcon fontSize="small" />
                       </button>
                     </Link>
                   </div>
@@ -84,8 +91,6 @@ const RecentActivity: React.FC<welcomeProps> = ({ activityData, language }) => {
                 key={data._id}
                 className="flex items-center gap-5 flex-col md:flex-row bg-white  lg:h-[100px] p-3 rounded shadow-md transition-transform duration-500 transform hover:scale-105"
               >
-
-
                 {data.bng_Images?.slice(0, 1).map((img) => (
                   <Image
                     key={img}
@@ -98,9 +103,12 @@ const RecentActivity: React.FC<welcomeProps> = ({ activityData, language }) => {
                   />
                 ))}
 
-
                 <div>
-                  <h3 className="text-sm font-bold">{language == 'ENG' ? data.english_title?.slice(0, 50) : data.bangla_title?.slice(0, 50)}...</h3>
+                  <h3 className="text-sm font-bold">
+                    {language === "ENG"
+                      ? truncateText(data.english_title, 60)
+                      : truncateText(data.bangla_title, 60)}
+                  </h3>
 
                   <div className="flex justify-end">
                     <Link href={`/recent-activities-of-zrf//${data._id}`}>
@@ -116,7 +124,7 @@ const RecentActivity: React.FC<welcomeProps> = ({ activityData, language }) => {
           <div className="mt-7 flex justify-end">
             <Link href="/recent-activities-of-zrf">
               <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-2 text-white rounded-full uppercase text-sm">
-                {language === 'ENG' ? ' See All' : 'সব দেখুন'} <EastIcon />
+                {language === "ENG" ? " See All" : "সব দেখুন"} <EastIcon />
               </button>
             </Link>
           </div>

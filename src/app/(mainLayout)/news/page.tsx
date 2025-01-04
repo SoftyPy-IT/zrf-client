@@ -1,6 +1,6 @@
-import React from 'react';
-import Head from 'next/head';
-import News from './_components/News';
+import React from "react";
+import Head from "next/head";
+import News from "./_components/News";
 
 const NewsPage = () => {
   return (
@@ -18,19 +18,25 @@ const NewsPage = () => {
         <meta name="author" content="Ziaur Rahman Foundation" />
         <meta name="robots" content="index, follow" />
 
-        <meta property="og:title" content="Latest News | Stay Informed with Updates" />
+        <meta
+          property="og:title"
+          content="Latest News | Stay Informed with Updates"
+        />
         <meta
           property="og:description"
           content="Explore the latest updates, news, and announcements. Stay informed about recent happenings."
         />
         <meta property="og:image" content="/news-og-image.png" />
-        <meta property="og:url" content="https://www.ziaurrahmanfoundation.com/news" />
+        <meta
+          property="og:url"
+          content="https://www.ziaurrahmanfoundation.com/news"
+        />
         <meta property="og:type" content="website" />
 
-
-
-        <link rel="canonical" href="https://www.ziaurrahmanfoundation.com/news" />
-
+        <link
+          rel="canonical"
+          href="https://www.ziaurrahmanfoundation.com/news"
+        />
 
         <script
           type="application/ld+json"

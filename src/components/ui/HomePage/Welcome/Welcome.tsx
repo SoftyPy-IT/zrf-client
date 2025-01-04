@@ -1,28 +1,33 @@
-'use client'
+"use client";
 
 import React from "react";
 import "./Welcome.css";
 import WelcomeData from "./WelcomeData";
 import { useLanguage } from "@/provider/LanguageProvider";
 import { TBanner } from "@/types/type";
-import Loader from "@/components/Loading/Loading";
+import dynamic from "next/dynamic";
+const Loader = dynamic(() => import("@/components/Loading/Loading"), {
+  ssr: false,
+});
 
 const Welcome = () => {
   const [welcomeData, setWelcomeData] = React.useState<TBanner[]>([]);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
-  const { language } = useLanguage()
+  const { language } = useLanguage();
   React.useEffect(() => {
     const fetchPrisonData = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/banner?limit=1000`, {
-          cache: 'no-store'
-        });
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/banner?limit=1000`,
+          {
+            cache: "no-store",
+          },
+        );
         const data = await response.json();
         setWelcomeData(data.data?.banners || []);
-
       } catch (err) {
-        setError('Failed to fetch welcome data.');
+        setError("Failed to fetch welcome data.");
       } finally {
         setLoading(false);
       }
@@ -32,8 +37,7 @@ const Welcome = () => {
   }, []);
 
   if (loading) {
-    return <Loader />
-
+    return <Loader />;
   }
 
   return (

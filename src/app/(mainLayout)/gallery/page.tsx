@@ -22,12 +22,12 @@ const Page = () => {
       try {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_BASE_API_URL}/image-gallery?limit=10000`,
-          { cache: 'no-store' }
+          { cache: "no-store" },
         );
         const data = await response.json();
         setGalleryData(data.data?.galleries || []);
       } catch (err) {
-        setError('Failed to fetch gallery data.');
+        setError("Failed to fetch gallery data.");
       } finally {
         setLoading(false);
       }
@@ -45,10 +45,10 @@ const Page = () => {
     setCurrentIndex((currentIndex + 1) % galleryData.length);
   const prevImage = () =>
     setCurrentIndex(
-      (currentIndex + galleryData.length - 1) % galleryData.length
+      (currentIndex + galleryData.length - 1) % galleryData.length,
     );
 
-  const title = language === 'ENG' ? 'Image Gallery' : 'ইমেজ গ্যালারি'
+  const title = language === "ENG" ? "Image Gallery" : "ইমেজ গ্যালারি";
 
   return (
     <>
@@ -62,7 +62,6 @@ const Page = () => {
                 className="cursor-pointer"
                 onClick={() => openLightbox(index)}
               >
-
                 {data.thumnailImages.length > 0 && (
                   <Image
                     className="w-full h-[300px] object-cover transition-transform duration-300 transform group-hover:scale-110"
@@ -83,7 +82,8 @@ const Page = () => {
         <Lightbox
           mainSrc={galleryData[currentIndex].thumnailImages[0]}
           nextSrc={
-            galleryData[(currentIndex + 1) % galleryData.length].thumnailImages[0]
+            galleryData[(currentIndex + 1) % galleryData.length]
+              .thumnailImages[0]
           }
           prevSrc={
             galleryData[

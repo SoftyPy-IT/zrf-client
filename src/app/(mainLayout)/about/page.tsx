@@ -25,23 +25,35 @@ const AboutUs = () => {
         <meta name="author" content="Ziaur Rahman Foundation" />
         <meta name="robots" content="index, follow" />
 
-        <meta property="og:title" content="About Us | Ziaur Rahman Foundation" />
+        <meta
+          property="og:title"
+          content="About Us | Ziaur Rahman Foundation"
+        />
         <meta
           property="og:description"
           content="Discover the mission, vision, and programs of the Ziaur Rahman Foundation, dedicated to empowering communities through social services."
         />
         <meta property="og:image" content="/about-us-og-image.png" />
-        <meta property="og:url" content="https://www.ziaurrahmanfoundation.com/about-us" />
+        <meta
+          property="og:url"
+          content="https://www.ziaurrahmanfoundation.com/about-us"
+        />
         <meta property="og:type" content="website" />
 
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="About Us | Ziaur Rahman Foundation" />
+        <meta
+          name="twitter:title"
+          content="About Us | Ziaur Rahman Foundation"
+        />
         <meta
           name="twitter:description"
           content="Learn about the Ziaur Rahman Foundation, our history, and our remarkable programs that empower communities through social services and humanitarian work."
         />
         <meta name="twitter:image" content="/about-us-twitter-image.png" />
-        <link rel="canonical" href="https://www.ziaurrahmanfoundation.com/about-us" />
+        <link
+          rel="canonical"
+          href="https://www.ziaurrahmanfoundation.com/about-us"
+        />
 
         <script
           type="application/ld+json"
@@ -81,7 +93,6 @@ const AboutUs = () => {
         <History />
         <JoinUs />
       </Container>
-
     </div>
   );
 };

@@ -1,9 +1,12 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import { useLanguage } from '@/provider/LanguageProvider';
-import SingleProjectData from '../_components/SingleProjectData';
-import Loader from '@/components/Loading/Loading';
+import React, { useEffect, useState } from "react";
+import { useLanguage } from "@/provider/LanguageProvider";
+import SingleProjectData from "../_components/SingleProjectData";
+import dynamic from "next/dynamic";
+const Loader = dynamic(() => import("@/components/Loading/Loading"), {
+  ssr: false,
+});
 
 interface PressId {
   params: {
@@ -24,7 +27,9 @@ const Project = ({ params }: PressId) => {
       setLoading(true); // Start loading
       setError(null); // Reset error state
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/project/${id}`);
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/project/${id}`,
+        );
         const result = await res.json();
         if (result?.data) {
           setData(result.data);
@@ -42,9 +47,7 @@ const Project = ({ params }: PressId) => {
   }, [id]);
 
   if (loading) {
-    return (
-      <Loader />
-    );
+    return <Loader />;
   }
 
   if (error) {
@@ -57,7 +60,9 @@ const Project = ({ params }: PressId) => {
 
   return (
     <div>
-      {data && <SingleProjectData language={language} singleProjectData={data} />}
+      {data && (
+        <SingleProjectData language={language} singleProjectData={data} />
+      )}
     </div>
   );
 };

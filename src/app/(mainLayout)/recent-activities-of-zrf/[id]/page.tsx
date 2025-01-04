@@ -1,9 +1,8 @@
-'use client'
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import { useLanguage } from '@/provider/LanguageProvider';
-import SingleActivity from '../_components/SingleActivity';
-
+import React, { useEffect, useState } from "react";
+import { useLanguage } from "@/provider/LanguageProvider";
+import SingleActivity from "../_components/SingleActivity";
 
 interface pressId {
   params: {
@@ -20,7 +19,9 @@ const Activity = ({ params }: pressId) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/activity/${id}`);
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/activity/${id}`,
+        );
         const result = await res.json();
         if (result?.data) {
           setData(result.data);
@@ -40,12 +41,13 @@ const Activity = ({ params }: pressId) => {
   }
   return (
     <>
-      <>{data && <SingleActivity language={language} singleActivityData={data} />}</>
-
+      <>
+        {data && (
+          <SingleActivity language={language} singleActivityData={data} />
+        )}
+      </>
     </>
   );
 };
 
-
 export default Activity;
-

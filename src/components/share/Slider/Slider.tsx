@@ -3,8 +3,13 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import "./Slider.css";
 import { useLanguage } from "@/provider/LanguageProvider";
-import Loader from "@/components/Loading/Loading";
+import { TBanner } from "@/types/type";
+import dynamic from "next/dynamic";
 import Link from "next/link";
+import "./Slider.css";
+const Loader = dynamic(() => import("@/components/Loading/Loading"), {
+  ssr: false,
+});
 
 const Slider = () => {
   const [bannerData, setBannerData] = useState([]);

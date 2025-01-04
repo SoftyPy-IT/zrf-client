@@ -1,13 +1,18 @@
-@import '~font-awesome/css/font-awesome.min.css';
+@import "~font-awesome/css/font-awesome.min.css";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .sectionMargin {
   margin-top: 80px;
 }
-
 
 .cursor-dot,
 .cursor-outline {
@@ -20,16 +25,16 @@
 .cursor-dot {
   width: 8px;
   height: 8px;
-  background-color: #FEC909;
+  background-color: #fec909;
   border-radius: 50%;
 }
 
 .cursor-outline {
   width: 40px;
   height: 40px;
-  border: 1px solid #FEC909;
+  border: 1px solid #fec909;
   border-radius: 50%;
-  transition: transform 0.2s ease-out; 
+  transition: transform 0.2s ease-out;
 }
 .react-international-phone-input-container .react-international-phone-input {
   width: 474px !important;
@@ -37,20 +42,142 @@
   border-top-right-radius: 5px !important;
   border-bottom-right-radius: 5px !important;
 }
-.react-international-phone-input-container .react-international-phone-country-selector-button {
-
+.react-international-phone-input-container
+  .react-international-phone-country-selector-button {
   height: 50px !important;
   width: 54px !important;
 }
-@media only screen and (max-width:768px){
+@media only screen and (max-width: 768px) {
   .react-international-phone-input-container .react-international-phone-input {
     width: 100% !important;
     height: 50px !important;
   }
-  .react-international-phone-input-container .react-international-phone-country-selector-button {
-  
+  .react-international-phone-input-container
+    .react-international-phone-country-selector-button {
     height: 50px !important;
     width: 54px !important;
   }
-  
+}
+
+/* slider */
+.swiper-button-prev,
+.swiper-button-next {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border-radius: 50%;
+}
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  font-size: 16px;
+  color: #fff;
+}
+
+Slider.css .slider-container {
+  position: relative !important;
+  z-index: 1;
+  width: 1300px !important;
+  overflow: hidden;
+}
+
+.mySwiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide-zoom {
+  overflow: hidden;
+}
+
+.slide-image {
+  transform: none !important; /* Disable any scaling */
+  transition: none !important; /* Disable any transition effects */
+}
+
+.swiper-slide-active .slide-image {
+  transform: none !important;
+}
+
+.swiper-slide {
+  opacity: 0;
+  transition: opacity 6s ease-in-out;
+}
+
+.swiper-slide-next,
+.swiper-slide-prev,
+.swiper-slide-active {
+  opacity: 1;
+}
+
+.overlay {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.swiper-slide-active .overlay {
+  opacity: 0.5;
+}
+
+.swiper-slide .content {
+  z-index: 10;
+}
+
+/* .sliderWrap:after {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 99999;
+  background: #216740;
+  content: "";
+  opacity: 0.3;
+} */
+
+.overlay {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+/* Content transition for slide-up animation */
+.swiper-slide .slide-content {
+  transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+}
+
+.swiper-slide-active .slide-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.swiper-slide-prev .slide-content,
+.swiper-slide-next .slide-content {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.sliderContents {
+  width: 557px;
+  left: 304px;
+}
+
+@media only screen and (max-width: 1440px) {
+  .sliderContents {
+    left: 70px;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .sliderContents {
+    left: 0px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .sliderContents {
+    width: 100%;
+    left: 0px;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  .sliderContents {
+    left: 3px !important;
+  }
 }

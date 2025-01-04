@@ -9,16 +9,17 @@ import "slick-carousel/slick/slick-theme.css";
 import Link from "next/link";
 import EastIcon from "@mui/icons-material/East";
 import { TProject } from "@/types/type";
-
+import truncateText from "@/utils/truncate";
 
 interface projectProps {
   projectData: TProject[];
-  language: string,
+  language: string;
 }
 
-
-const ProjectsFetchData: React.FC<projectProps> = ({ projectData, language }) => {
-
+const ProjectsFetchData: React.FC<projectProps> = ({
+  projectData,
+  language,
+}) => {
   const [slidesToShow, setSlidesToShow] = useState(3);
 
   useEffect(() => {
@@ -43,16 +44,14 @@ const ProjectsFetchData: React.FC<projectProps> = ({ projectData, language }) =>
 
   const settings = {
     infinite: true,
-    speed: 5000,  
+    speed: 5000,
     slidesToShow,
-    slidesToScroll: 1,  
+    slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 8000,  
+    autoplaySpeed: 8000,
     arrows: false,
     Autoplay: true,
   };
-
-
 
   return (
     <div className="h-[800px] lg:h-[800px] sectionMargin ">
@@ -68,13 +67,14 @@ const ProjectsFetchData: React.FC<projectProps> = ({ projectData, language }) =>
             <div className="w-full  md:-mt-[300px] -mt-[350px]  xl:-mt-[330px] ">
               <div className="text-white">
                 <h1 className="text-4xl uppercase text-center font-bold">
-                  {language === 'ENG' ? '  Our Projects ' : 'আমাদের প্রকল্প'}
+                  {language === "ENG" ? "  Our Projects " : "আমাদের প্রকল্প"}
                 </h1>
                 <div className="w-28 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-5 mx-auto"></div>
 
                 <p className="lg:text-center md:text-center text-justify lg:w-[800px] mx-auto mb-10 lg:px-0 md:px-0 px-5 text-[16px]">
-
-                  {language === 'ENG' ? ' Ziaur Rahman Foundation is committed to empowering communities through impactful initiatives, sustainable solutions, and strategic support. We focus on fostering growth, improving lives, and creating lasting change across various sectors.' : 'জিয়াউর রহমান ফাউন্ডেশন (জেডআরএফ) বাংলাদেশের পিছিয়ে পড়া জনগণের জীবনযাত্রার মান উন্নয়নে একাধিক দারিদ্র্য নির্মূল প্রকল্প শুরু করেছে। টেকসই উন্নয়ন, শিক্ষা, এবং আর্থিক ক্ষমতায়নের উপর গুরুত্ব দিয়ে, জেডআরএফ দেশের সবচেয়ে অবহেলিত জনগণের জন্য কাজ করে চলেছে।'}
+                  {language === "ENG"
+                    ? " Ziaur Rahman Foundation is committed to empowering communities through impactful initiatives, sustainable solutions, and strategic support. We focus on fostering growth, improving lives, and creating lasting change across various sectors."
+                    : "জিয়াউর রহমান ফাউন্ডেশন (জেডআরএফ) বাংলাদেশের পিছিয়ে পড়া জনগণের জীবনযাত্রার মান উন্নয়নে একাধিক দারিদ্র্য নির্মূল প্রকল্প শুরু করেছে। টেকসই উন্নয়ন, শিক্ষা, এবং আর্থিক ক্ষমতায়নের উপর গুরুত্ব দিয়ে, জেডআরএফ দেশের সবচেয়ে অবহেলিত জনগণের জন্য কাজ করে চলেছে।"}
                 </p>
               </div>
               <Slider {...settings}>
@@ -84,33 +84,39 @@ const ProjectsFetchData: React.FC<projectProps> = ({ projectData, language }) =>
                     className="justify-center items-center z-10 p-5"
                   >
                     <div className="relative h-[530px] bg-white shadow-lg overflow-hidden group hover:scale-105 transition-transform duration-300 animate-fadeIn rounded-md">
-
-
-
                       <div
                         className="relative h-full w-full bg-cover bg-center"
                         style={{
-                          backgroundImage: `url(${project.bng_Images?.[0] || ''})`,
+                          backgroundImage: `url(${
+                            project.bng_Images?.[0] || ""
+                          })`,
                         }}
                       >
-
                         <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
 
-
                         <div className="absolute bottom-0 p-5 text-white z-20 transition-colors duration-300">
-
                           <h2 className="text-2xl hover:underline font-bold ">
-                            {language === 'ENG' ? project.english_title?.slice(0, 70) : project.bangla_title?.slice(0, 70)}
+                            {language === "ENG"
+                              ? truncateText(project.english_title, 70)
+                              : truncateText(project.bangla_title, 70)}
                           </h2>
-                          <p className="mt-2 text-justify">
-                            {language === 'ENG' ? project.english_short_description?.slice(0, 150) : project.bangla_short_description?.slice(0, 150)}
-                            ...
+                          <p className="mt-2 ">
+                            {language === "ENG"
+                              ? truncateText(
+                                  project.english_short_description,
+                                  130,
+                                )
+                              : truncateText(
+                                  project.bangla_short_description,
+                                  130,
+                                )}
                           </p>
 
                           <div className=" mt-5">
                             <Link href={`/our-projects/${project._id}`}>
                               <button className="hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-1 hover:text-white rounded-full uppercase text-sm border">
-                                {language === 'ENG' ? 'Read More' : 'আরও পড়ুন'}  <EastIcon />
+                                {language === "ENG" ? "Read More" : "আরও পড়ুন"}{" "}
+                                <EastIcon />
                               </button>
                             </Link>
                           </div>
@@ -124,7 +130,7 @@ const ProjectsFetchData: React.FC<projectProps> = ({ projectData, language }) =>
               <div className="flex justify-end pb-7 pr-5">
                 <Link href="/our-projects">
                   <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-2 text-white rounded-full uppercase text-sm">
-                    {language === 'ENG' ? 'See All' : 'সব দেখুন'}   <EastIcon />
+                    {language === "ENG" ? "See All" : "সব দেখুন"} <EastIcon />
                   </button>
                 </Link>
               </div>

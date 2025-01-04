@@ -2,19 +2,22 @@
 import React, { useEffect, useState } from "react";
 import Container from "@/components/share/Container";
 import ReactPlayer from "react-player";
-import Loader from "@/components/Loading/Loading";
 import { useVideoData } from "@/hooks/useVideoData";
 import { useLanguage } from "@/provider/LanguageProvider";
 import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 import { Button } from "@mui/material";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+import dynamic from "next/dynamic";
+const Loader = dynamic(() => import("@/components/Loading/Loading"), {
+  ssr: false,
+});
 
 const VideoGallery = () => {
   const { videoData, loading, error } = useVideoData();
   const { language } = useLanguage();
 
   const [mounted, setMounted] = useState(false);
-  const [visibleCount, setVisibleCount] = useState(6); 
+  const [visibleCount, setVisibleCount] = useState(6);
 
   const loadMore = () => {
     setVisibleCount((prevCount) => prevCount + 5);
@@ -31,7 +34,6 @@ const VideoGallery = () => {
     return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
   }
 
-  
   return (
     <div>
       <CommonBanner
@@ -60,13 +62,15 @@ const VideoGallery = () => {
           ))}
         </div>
         {visibleCount < videoData.length && (
-
           <div className="flex items-center justify-center mt-5 ">
-            <Button onClick={loadMore} className="bg-gradient-to-r from-[#216740] to-[#FEC909]">
-              {language === "ENG" ? "Load More" : "আরো লোড"}<ArrowRightAltIcon />
+            <Button
+              onClick={loadMore}
+              className="bg-gradient-to-r from-[#216740] to-[#FEC909]"
+            >
+              {language === "ENG" ? "Load More" : "আরো লোড"}
+              <ArrowRightAltIcon />
             </Button>
           </div>
-
         )}
       </Container>
     </div>
