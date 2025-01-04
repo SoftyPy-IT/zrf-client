@@ -42,9 +42,6 @@ const ProgrammSection = () => {
                   />
                 </div>
               </div>
-
-
-
               <h3 className="text-xl font-semibold mb-2">
                 {language === 'ENG' ? program.english_title : program.bangla_title}
 
