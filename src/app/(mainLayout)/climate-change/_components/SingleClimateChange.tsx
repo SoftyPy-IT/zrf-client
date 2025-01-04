@@ -34,7 +34,7 @@ const renderContent = (content: string) => {
                     {element.props.children}
                 </h2>
             );
-        }else if (element.type === "h4") {
+        } else if (element.type === "h4") {
             return (
                 <h2 key={index} className=" font-bold mb-2">
                     {element.props.children}
@@ -53,14 +53,14 @@ const renderContent = (content: string) => {
                 </b>
 
             );
-        }else if (element.type === "b") {
+        } else if (element.type === "b") {
             return (
                 <small key={index} className="text-sm">
                     {element.props.children}
                 </small>
 
             );
-        }else if (element.type === "b") {
+        } else if (element.type === "b") {
             return (
                 <span key={index} className="inline-block">
                     {element.props.children}
@@ -167,7 +167,17 @@ const SingleClimateChange = ({ whatWedoData, language }: SingleWhatWeDoProps) =>
                         {/* Top Image */}
                         <div className="relative w-full h-[200px] md:h-[400px] lg:h-[500px] mb-6">
                             {
-                                whatWedoData.bng_Images?.slice(0, 1).map((img) => (
+                                language === 'BNG' ? whatWedoData.bng_Images?.slice(0, 1).map((img) => (
+                                    <Image
+                                        width={500}
+                                        height={500}
+                                        key={img}
+                                        src={img}
+                                        alt="Top Image"
+
+                                        className="rounded-lg w-full h-full object-cover"
+                                    />
+                                )) : whatWedoData.eng_images?.slice(0, 1).map((img) => (
                                     <Image
                                         width={500}
                                         height={500}
@@ -180,6 +190,7 @@ const SingleClimateChange = ({ whatWedoData, language }: SingleWhatWeDoProps) =>
                                 ))
                             }
                         </div>
+
 
                         <h1 className="text-2xl md:text-3xl font-bold mb-4">{language === 'ENG' ? whatWedoData.english_title : whatWedoData?.bangla_title}
                         </h1>

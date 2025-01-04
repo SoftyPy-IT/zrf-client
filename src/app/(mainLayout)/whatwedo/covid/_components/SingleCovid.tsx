@@ -82,7 +82,7 @@ const renderContent = (content: string) => {
 const SingleCovid = ({ whatWedoData, language }: SingleWhatWeDoProps) => {
 
 
-    const title = language === 'ENG' ? whatWedoData.english_title : whatWedoData.bangla_title
+    const title = language === 'ENG' ? 'Covid Program' : 'কোভিড কার্যক্রম'
     return (
         <>
             <CommonBanner title={title} />
@@ -91,8 +91,19 @@ const SingleCovid = ({ whatWedoData, language }: SingleWhatWeDoProps) => {
                     <div className="w-full mt-2 lg:mt-0 lg:p-6">
                         {/* Top Image */}
                         <div className="relative w-full h-[200px] md:h-[400px] lg:h-[500px] mb-6">
+
                             {
-                                whatWedoData.bng_Images?.slice(0, 1).map((img) => (
+                                language === 'BNG' ? whatWedoData.bng_Images?.slice(0, 1).map((img) => (
+                                    <Image
+                                        width={500}
+                                        height={500}
+                                        key={img}
+                                        src={img}
+                                        alt="Top Image"
+
+                                        className="rounded-lg w-full h-full object-cover"
+                                    />
+                                )) : whatWedoData.eng_images?.slice(0, 1).map((img) => (
                                     <Image
                                         width={500}
                                         height={500}

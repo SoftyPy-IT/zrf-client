@@ -7,6 +7,10 @@ import logo from "../../../../../src/assets/images/logo/16 by 16.svg";
 import { useLanguage } from "@/provider/LanguageProvider";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { useState } from "react";
+import { Button } from "@mui/material";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 const Loader = dynamic(() => import("@/components/Loading/Loading"), {
   ssr: false,
 });
@@ -14,12 +18,9 @@ const Loader = dynamic(() => import("@/components/Loading/Loading"), {
 const ProgrammSection = () => {
   const { programmData, loading, error } = useProgrammData();
   const { language } = useLanguage();
-  if (loading) {
-    return <Loader />;
-  }
-  if (error) {
-    return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
-  }
+
+  const patname = usePathname()
+
   const sortedProgrammData = programmData?.sort(
     (a: TProgramm, b: TProgramm) => {
       const dateA = new Date(a.createdAt).getTime();
@@ -27,18 +28,32 @@ const ProgrammSection = () => {
       return dateA - dateB;
     },
   );
+
+  const [visibleCount, setVisibleCount] = useState(8);
+  const loadMore = () => {
+    setVisibleCount((prevCount) => prevCount + 8);
+  };
+  if (loading) {
+    return <Loader />;
+  }
+  if (error) {
+    return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
+  }
+
+  console.log('current path', patname)
+
   return (
     <div>
       <Container className="sectionMargin">
         <h2 className="text-center text-3xl font-bold">
-          {language === "ENG" ? "Remarkable Works" : "উল্লেখযোগ্য কাজ"}{" "}
+          {language === "ENG" ? "Remarkable Works" : "উল্লেখযোগ্য কাজ"}
         </h2>
         <div className="w-44 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-7 mx-auto"></div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 text-center">
-          {sortedProgrammData?.map((program: TProgramm, index: number) => (
+          {sortedProgrammData?.slice(0, visibleCount)?.map((program: TProgramm, index: number) => (
             <div
               key={program._id}
-              className="bg-white p-5 rounded flex flex-col items-center transform transition-transform duration-300 hover:scale-105"
+              className="bg-white p-5 rounded shadow-lg flex flex-col items-center transform transition-transform duration-300 hover:scale-105"
             >
               <div className="mb-4">
                 <div className="w-16 h-16  md:h-20 md:w-20  rounded-full p-2 flex items-center justify-center shadow-lg transform transition-transform duration-300 hover:scale-110">
@@ -49,18 +64,32 @@ const ProgrammSection = () => {
                   />
                 </div>
               </div>
+
               <h3 className="text-xl font-semibold mb-2">
-                {language === "ENG"
-                  ? program.english_title
-                  : program.bangla_title}
+                {language === 'ENG' ? program.english_title : program.bangla_title}
+
               </h3>
-              <p className="text-gray-600">
-                {language === "ENG"
-                  ? program.english_short_description
-                  : program.bangla_short_description}
-              </p>
+              <p className="text-gray-600">{language === 'ENG' ? program.english_short_description : program.bangla_short_description}</p>
             </div>
           ))}
+
+
+        </div>
+        <div className="flex items-center justify-center mt-8 ">
+          {
+            patname === '/about' ? (
+              <Link href='/program'>
+                <Button className="bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white">
+                  {language === "ENG" ? "See More" : "আরো দেখুন"}
+                </Button>
+              </Link>
+            ) : (
+
+              <Button onClick={loadMore} className="bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white">
+                {language === "ENG" ? "Load More" : "আরো লোড"}
+              </Button>
+            )
+          }
         </div>
       </Container>
     </div>

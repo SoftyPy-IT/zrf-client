@@ -30,9 +30,6 @@ const ProgrammData: React.FC<programmProps> = ({ programmData, language }) => {
                             />
                         </div>
 
-
-
-
                     </div>
                     <div>
                         <h2 className="text-3xl font-bold uppercase "> {language === 'ENG' ? 'Our Programm ' : 'আমাদের প্রোগ্রাম'}</h2>
@@ -65,7 +62,7 @@ const ProgrammData: React.FC<programmProps> = ({ programmData, language }) => {
                         <div className="flex justify-end mt-7">
                             <Link href="/program">
                                 <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-6 py-2 text-white rounded-full uppercase text-sm">
-                                    See All <EastIcon />
+                                    {language === 'ENG' ? ' See All' : 'সব দেখুন'} <EastIcon />
                                 </button>
                             </Link>
                         </div>

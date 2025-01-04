@@ -25,7 +25,7 @@ const renderContent = (content: string) => {
                     {element.props.children}
                 </h2>
             );
-        }else if (element.type === "h4") {
+        } else if (element.type === "h4") {
             return (
                 <h2 key={index} className=" font-bold mb-2">
                     {element.props.children}
@@ -44,14 +44,14 @@ const renderContent = (content: string) => {
                 </b>
 
             );
-        }else if (element.type === "b") {
+        } else if (element.type === "b") {
             return (
                 <small key={index} className="text-sm">
                     {element.props.children}
                 </small>
 
             );
-        }else if (element.type === "b") {
+        } else if (element.type === "b") {
             return (
                 <span key={index} className="inline-block">
                     {element.props.children}
@@ -145,56 +145,66 @@ const renderContent = (content: string) => {
     });
 };
 type SingleActivityProps = {
-  singleActivityData: TActivity,
-  language: string
+    singleActivityData: TActivity,
+    language: string
 }
 
 
 const SingleActivity = ({ singleActivityData, language }: SingleActivityProps) => {
 
 
-  return (
-    <div>
-      <CommonBanner title={language === 'ENG' ? "Recent Activities of ZRF" : 'জেডআরএফ এর সাম্প্রতিক কার্যক্রম'} />
-      <Container>
-        <div className="lg:flex md:flex gap-10 my-16">
-          <div className="w-full grid grid-cols-1">
-            <div className="h-full w-full">
-              <div className="relative overflow-hidden">
+    return (
+        <div>
+            <CommonBanner title={language === 'ENG' ? "Recent Activities of ZRF" : 'জেডআরএফ এর সাম্প্রতিক কার্যক্রম'} />
+            <Container>
+                <div className="lg:flex md:flex gap-10 my-16">
+                    <div className="w-full grid grid-cols-1">
+                        <div className="h-full w-full">
+                            <div className="relative overflow-hidden">
+                                {
+                                    language === 'BNG' ? singleActivityData.bng_Images?.slice(0, 1).map((img) => (
+                                        <Image
+                                            width={500}
+                                            height={500}
+                                            key={img}
+                                            src={img}
+                                            alt="Top Image"
+
+                                            className="rounded-lg w-full h-full object-cover"
+                                        />
+                                    )) : singleActivityData.eng_images?.slice(0, 1).map((img) => (
+                                        <Image
+                                            width={500}
+                                            height={500}
+                                            key={img}
+                                            src={img}
+                                            alt="Top Image"
+
+                                            className="rounded-lg w-full h-full object-cover"
+                                        />
+                                    ))
+                                }
+                            </div>
+                            <div className="mt-5">
+                                <h3 className="text-2xl font-semibold">{language === 'ENG' ? singleActivityData.english_title : singleActivityData.bangla_title}</h3>
+                                <p className="text-justify mt-5"> {language === 'ENG' ? renderContent(singleActivityData.english_description) : renderContent(singleActivityData.bangla_description)}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
 
 
-                {singleActivityData.bng_Images?.slice(0, 1).map((img) => (
-                  <>
-                    <Image
-                      src={img}
-                      alt='activity'
-                      className="object-cover w-full lg:h-[400px] rounded"
-                      width={1000}
-                      height={500}
-                    />
-                  </>
-                ))}
-              </div>
-              <div className="mt-5">
-                <h3 className="text-2xl font-semibold">{language === 'ENG' ? singleActivityData.english_title : singleActivityData.bangla_title}</h3>
-                <p className="text-justify mt-5"> {language === 'ENG' ? renderContent(singleActivityData.english_description) : renderContent(singleActivityData.bangla_description)}
-                </p>
-              </div>
-            </div>
-          </div>
+                    <div>
+                        <div className="sticky top-32 w-full lg:w-[450px]">
+                            <ActivitySidebar />
+                        </div>
+                    </div>
+                </div>
 
-
-          <div>
-            <div className="sticky top-32 w-full lg:w-[450px]">
-              <ActivitySidebar />
-            </div>
-          </div>
+                <ShareLink />
+            </Container>
         </div>
-
-        <ShareLink />
-      </Container>
-    </div>
-  );
+    );
 };
 
 export default SingleActivity;

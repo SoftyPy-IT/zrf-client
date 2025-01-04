@@ -31,7 +31,7 @@ const renderContent = (content: string) => {
                     {element.props.children}
                 </h2>
             );
-        }else if (element.type === "h4") {
+        } else if (element.type === "h4") {
             return (
                 <h2 key={index} className=" font-bold mb-2">
                     {element.props.children}
@@ -50,14 +50,14 @@ const renderContent = (content: string) => {
                 </b>
 
             );
-        }else if (element.type === "b") {
+        } else if (element.type === "b") {
             return (
                 <small key={index} className="text-sm">
                     {element.props.children}
                 </small>
 
             );
-        }else if (element.type === "b") {
+        } else if (element.type === "b") {
             return (
                 <span key={index} className="inline-block">
                     {element.props.children}
@@ -164,7 +164,17 @@ const SingleProjectData = ({ singleProjectData, language }: SingleProjectProps) 
 
                             <div className="relative w-full h-[200px] md:h-[400px] mb-6">
                                 {
-                                    singleProjectData.bng_Images?.slice(0, 1).map((img) => (
+                                    language === 'BNG' ? singleProjectData.bng_Images?.slice(0, 1).map((img) => (
+                                        <Image
+                                            width={500}
+                                            height={500}
+                                            key={img}
+                                            src={img}
+                                            alt="Top Image"
+
+                                            className="rounded-lg w-full h-full object-cover"
+                                        />
+                                    )) : singleProjectData.eng_images?.slice(0, 1).map((img) => (
                                         <Image
                                             width={500}
                                             height={500}

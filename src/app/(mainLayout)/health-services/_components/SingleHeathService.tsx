@@ -87,15 +87,27 @@ const SingleHeathService = ({ whatWedoData, language }: SingleWhatWeDoProps) => 
 
     return (
         <>
-           
-           <CommonBanner title={language == 'ENG' ? 'Health Services' : 'স্বাস্থ্য সেবা'} />
+
+            <CommonBanner title={language == 'ENG' ? 'Health Services Program ' : 'স্বাস্থ্য সেবা কার্যক্রম'} />
             <Container>
                 <div className="h-auto lg:flex gap-5">
                     <div className="w-full mt-2 lg:mt-0 lg:p-6">
-                        {/* Top Image */}
+                 
                         <div className="relative w-full h-[200px] md:h-[400px] lg:h-[400px] mb-6">
+
+
                             {
-                                whatWedoData.bng_Images?.slice(0, 1).map((img) => (
+                                language === 'BNG' ? whatWedoData.bng_Images?.slice(0, 1).map((img) => (
+                                    <Image
+                                        width={500}
+                                        height={500}
+                                        key={img}
+                                        src={img}
+                                        alt="Top Image"
+
+                                        className="rounded-lg w-full h-full object-cover"
+                                    />
+                                )) : whatWedoData.eng_images?.slice(0, 1).map((img) => (
                                     <Image
                                         width={500}
                                         height={500}
@@ -107,7 +119,7 @@ const SingleHeathService = ({ whatWedoData, language }: SingleWhatWeDoProps) => 
                                     />
                                 ))
                             }
-                            
+
                         </div>
 
                         <h1 className="text-2xl md:text-3xl font-bold mb-4">{language === 'ENG' ? whatWedoData.english_title : whatWedoData.bangla_title}
@@ -124,7 +136,7 @@ const SingleHeathService = ({ whatWedoData, language }: SingleWhatWeDoProps) => 
                         <div className=" md:flex lg:flex justify-between items-center mb-8 space-y-3">
                             <div className="flex items-center gap-2">
                                 <BookmarkIcon className="text-gray-600 cursor-pointer" />
-                        
+
                                 <h4>{language === 'ENG' ? 'Social Work' : 'সামাজিক কাজ'}  </h4>
                             </div>
                             <div className="flex items-center gap-4">

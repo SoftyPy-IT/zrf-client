@@ -11,7 +11,7 @@ interface EducationProps {
 
 
 const Education: React.FC<EducationProps> = ({ whatWedoData, language }) => {
-  const educationFilterData = whatWedoData.filter((edu) => edu.category === 'ZRF Education Programm')
+  const educationFilterData = whatWedoData.filter((edu) => edu.category === 'ZRF Education Program')
 
   return (
     <>

@@ -15,13 +15,17 @@ const Covid: React.FC<CovidProps> = ({ whatWedoData, language }) => {
   const covidFilterData = whatWedoData.filter((edu) => edu.category === 'Covid')
 
 
-  const title = language === 'ENG' ? 'Covid' : 'কোভিড'
+  const title = language === 'ENG' ? 'Covid Program' : 'কোভিড কার্যক্রম'
   const buttonStyle = {
     paddingY: { xs: 1, md: 2 },
-    paddingX: { xs: 2, md: 4 },
+    paddingX: { xs: 2, md: 2 },
     fontSize: { xs: '0.75rem', md: '1rem' },
     borderRadius: 2,
     textTransform: 'none',
+    height: {
+      md: '40px',
+      xs: '20px'
+    },
   }
 
   return (
@@ -54,7 +58,7 @@ const Covid: React.FC<CovidProps> = ({ whatWedoData, language }) => {
               <div className="absolute bottom-0 left-0 right-0 p-2 md:p-4 lg:p-4 bg-blue-950 border-t border-gray-300 rounded-t-3xl h-[150px] md:h-[200px] lg:h-[200px] mt-28 md:mt-0 lg:mt-0">
                 <h2 className="text-xl text-white">{language == 'ENG' ? data.english_title : data.bangla_title}</h2>
                 <p className="mt-2 text-white">
-                  {language == 'ENG' ? data.english_short_description.slice(0, 180) : data.bangla_short_description.slice(0, 180)} ......
+                  {language == 'ENG' ? data.english_short_description.slice(0, 180) : data.bangla_short_description.slice(0, 180)} ...
                 </p>
               </div>
               {/* Hover content */}
@@ -64,7 +68,7 @@ const Covid: React.FC<CovidProps> = ({ whatWedoData, language }) => {
                     <div className="flex items-center gap-3">
                       <h2 className="text-xl ">{language == 'ENG' ? data.english_title : data.bangla_title}</h2>
                     </div>
-                    <p className="text-justify"> {language == 'ENG' ? data.english_short_description.slice(0, 200) : data.bangla_short_description.slice(0, 200)} </p>
+                    <p className="text-justify"> {language == 'ENG' ? data.english_short_description.slice(0, 200) : data.bangla_short_description.slice(0, 200)}... </p>
                     <Button sx={buttonStyle} href={`/whatwedo/covid/${data._id}`}>
                       {language == 'ENG' ? ' Read More' : 'আরও পড়ুন'}
                     </Button>
