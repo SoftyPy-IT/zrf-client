@@ -43,12 +43,18 @@ const FeatureSlider: React.FC<projectProps> = ({ projectData, language }) => {
     arrows: true,
   };
 
+  const sortedProjectData = projectData?.sort((a: TProject, b: TProject) => {
+    const dateA = new Date(a.date).getTime();
+    const dateB = new Date(b.date).getTime();
+    return dateB - dateA;
+  });
+
   return (
     <Container>
       <div className="lg:relative -top-24 z-10">
         <div className="bg-white lg:p-2 shadow-md lg:mt-0 mt-10">
           <Slider {...settings}>
-            {projectData?.map((program, index) => (
+            {sortedProjectData?.map((program, index) => (
               <div key={index} className="flex justify-center items-center p-2">
                 <div className="flex flex-col md:flex-row  gap-3 bg-green-600 p-5  items-center justify-items-center md:h-[180px]">
                   <div className="space-y-3 flex-1 order-2 md:order-1">
@@ -61,9 +67,9 @@ const FeatureSlider: React.FC<projectProps> = ({ projectData, language }) => {
                       {language === "ENG"
                         ? truncateText(program.english_short_description, 100)
                         : truncateText(
-                            program.bangla_short_description,
-                            80,
-                          )}{" "}
+                          program.bangla_short_description,
+                          80,
+                        )}{" "}
                     </p>
                     <Link href={`/our-projects/${program._id}`}>
                       <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-2 py-1 rounded-full text-white text-xs border mt-3">

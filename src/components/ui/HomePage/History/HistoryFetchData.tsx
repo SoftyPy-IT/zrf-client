@@ -3,6 +3,7 @@ import "./History.css";
 import Image from "next/image";
 import { TAbout } from "@/types/type";
 import ReactHtmlParser from "react-html-parser";
+import { Button } from "@mui/material";
 
 const renderContent = (content: string) => {
   const parsedContent = ReactHtmlParser(content);
@@ -181,11 +182,9 @@ const HistoryFetchData: React.FC<AboutProps> = ({ aboutData, language }) => {
               </div>
             ))}
         </div>
-        <div className="timeline-end">
-          <button onClick={loadMore}>
-            {language === "ENG" ? "Load More" : "আরো লোড"}
-          </button>
-        </div>
+        <Button onClick={loadMore} className="bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white">
+          {language === "ENG" ? "Load More" : "আরো লোড"}
+        </Button>
       </section>
     </div>
   );

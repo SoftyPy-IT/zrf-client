@@ -1,4 +1,8 @@
-const truncateText = (text: string, limit: number): string => {
+const truncateText = (text: string | undefined | null, limit: number): string => {
+  if (!text || typeof text !== "string") {
+    return ""; // Return an empty string if text is null, undefined, or not a string
+  }
+
   if (text.length <= limit) {
     return text; // No need to truncate
   }

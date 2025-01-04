@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/share/Container";
@@ -8,6 +8,7 @@ import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 import { TActivity } from "@/types/type";
 import ReactHtmlParser from "react-html-parser";
 import truncateText from "@/utils/truncate";
+import { Button } from "@mui/material";
 
 const renderContent = (content: string) => {
   const parsedContent = ReactHtmlParser(content);
@@ -112,12 +113,24 @@ const NewsData: React.FC<activityProps> = ({ activityData, language }) => {
   const filterNewsData = activityData.filter(
     (news) => news.category === "News",
   );
+  const sortedNewsData = filterNewsData?.sort(
+    (a: TActivity, b: TActivity) => {
+      const dateA = new Date(a.date).getTime();
+      const dateB = new Date(b.date).getTime();
+      return dateB - dateA;
+    },
+  );
+  const [visibleCount, setVisibleCount] = useState(6);
+  const loadMore = () => {
+    setVisibleCount((prevCount) => prevCount + 6);
+  };
+
   return (
     <div>
       <CommonBanner title={language === "ENG" ? "News" : "খবর"} />
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-16">
-          {filterNewsData.map((data, index: number) => (
+          {sortedNewsData?.slice(0, visibleCount).map((data, index: number) => (
             <div key={index}>
               <div className="shadow-lg  bg-gray-100  lg:h-[500px] md:h-[450px] relative">
                 <div className="relative h-[250px]">
@@ -132,24 +145,29 @@ const NewsData: React.FC<activityProps> = ({ activityData, language }) => {
                     />
                   ))}
                 </div>
-                <div className="p-5 ">
-                  <h3 className="text-xl font-semibold mb-3">
-                    {language === "ENG"
-                      ? truncateText(data.english_title, 80)
-                      : truncateText(data.bangla_title, 80)}
-                  </h3>
-                  <p className="mt-7">
-                    {language == "ENG"
-                      ? renderContent(
-                          truncateText(data.english_description, 100),
+                <div className="p-3  flex flex-col justify-between  ">
+                  <div>
+                    <h3 className="text-xl font-semibold">
+                      {language === "ENG"
+                        ? truncateText(data?.english_title, 80)
+                        : truncateText(data?.bangla_title, 80)}
+                    </h3>
+                    <p className="mt-2">
+                      {language == "ENG"
+                        ? renderContent(
+                          truncateText(data?.english_description, 100),
                         )
-                      : renderContent(
-                          truncateText(data.bangla_description, 100),
+                        : renderContent(
+                          truncateText(data?.bangla_description, 100),
                         )}
-                  </p>
-                  <div className="flex justify-end mt-3absolute bottom-5">
+                    </p>
+                  </div>
+                  <div className="flex justify-between mt-3 ">
+                    <b>
+                      {data.date}
+                    </b>
                     <Link href={`/news/${data._id}`}>
-                      <button className="hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-1 hover:text-white rounded-full uppercase text-sm border">
+                      <button className=" text-white bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-1 hover:text-white rounded-full uppercase text-sm border">
                         {language === "ENG" ? "Read More" : "আরও পড়ুন"}{" "}
                         <EastIcon />
                       </button>
@@ -160,6 +178,12 @@ const NewsData: React.FC<activityProps> = ({ activityData, language }) => {
             </div>
           ))}
         </div>
+        {visibleCount < sortedNewsData?.length && (<div className="flex items-center justify-center">
+          <Button onClick={loadMore} className="bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white">
+            {language === "ENG" ? "Load More" : "আরো লোড"}
+          </Button>
+        </div>)}
+
       </Container>
     </div>
   );

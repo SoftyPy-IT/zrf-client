@@ -1,25 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import Container from "@/components/share/Container";
 import Image from "next/image";
 import Link from "next/link";
 import EastIcon from "@mui/icons-material/East";
 import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 import { TActivity } from "@/types/type";
+import { formatDate } from "@/utils/formateDate";
+import { Button } from "@mui/material";
 
 interface EducationProps {
     activityData: TActivity[];
     language: string,
 }
-const formatDate = (dateString: string | number | Date) => {
-    const date = new Date(dateString);
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
-}
+
 
 const ActivityFetchData: React.FC<EducationProps> = ({ activityData, language }) => {
     const activityFilterData = activityData.filter((activity) => activity.category === 'Activity')
+    const [visibleCount, setVisibleCount] = useState(6);
+    const loadMore = () => {
+        setVisibleCount((prevCount) => prevCount + 6);
+    };
+    const sortedActivityData = activityFilterData?.sort((a: TActivity, b: TActivity) => {
+        const dateA = new Date(a.date).getTime();
+        const dateB = new Date(b.date).getTime();
+        return dateB - dateA;
+    });
 
 
     return (
@@ -27,7 +32,7 @@ const ActivityFetchData: React.FC<EducationProps> = ({ activityData, language })
             <CommonBanner title={language === 'ENG' ? 'Recent Activities of ZRF' : 'জেডআরএফ এর সাম্প্রতিক কার্যক্রম'} />
             <Container className="my-16">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                    {activityFilterData.map((data) => (
+                    {sortedActivityData?.slice(0, visibleCount).map((data) => (
                         <div key={data._id} className="shadow-xl bg-white overflow-hidden">
                             <div className="relative">
                                 {
@@ -60,6 +65,11 @@ const ActivityFetchData: React.FC<EducationProps> = ({ activityData, language })
                         </div>
                     ))}
                 </div>
+                {visibleCount < sortedActivityData?.length && (<div className="flex items-center justify-center mt-5 ">
+                    <Button onClick={loadMore} className="bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white">
+                        {language === "ENG" ? "Load More" : "আরো লোড"}
+                    </Button>
+                </div>)}
             </Container>
         </div>
     );

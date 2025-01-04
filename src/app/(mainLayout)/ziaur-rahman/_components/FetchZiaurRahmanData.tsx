@@ -9,7 +9,7 @@ import { TIntroduction } from "@/types/type";
 import ReactHtmlParser from "react-html-parser";
 import Biography from "./Biography";
 import Modal from "./Modal";
-import { Paper, Typography } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 import dynamic from "next/dynamic";
 const Loader = dynamic(() => import("@/components/Loading/Loading"), {
   ssr: false,
@@ -166,7 +166,7 @@ const FetchZiaurRahmanData = () => {
           (a: TIntroduction, b: TIntroduction) => {
             return (
               new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-            ); 
+            );
           },
         );
 
@@ -211,8 +211,15 @@ const FetchZiaurRahmanData = () => {
     <Container>
       <div className="my-5  md:my-16">
         <Container>
-          <Paper elevation={3} className=" p-3 md:p-5  md:px-14">
-            <div className="text-center mb-10 ">
+          <Paper elevation={3} className=" md:px-14 h-auto p-3  md:h-[220px] flex flex-col items-center justify-center ">
+            <Box
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              textAlign="center"
+
+            >
               <Typography
                 variant="h4"
                 color="#216740"
@@ -237,7 +244,7 @@ const FetchZiaurRahmanData = () => {
                   ? "Lieutenant General Ziaur Rahman Bir Uttam (1936-1981) was the founder of Bangladesh Nationalist Party. He was the declarer of independence and a valiant freedom fighter. He was also Chief of Army Staff and later became the elected President of Bangladesh. He opened up multi-party democracy in Bangladesh and defined Bangladeshi Nationalism."
                   : "লেফটেন্যান্ট জেনারেল জিয়াউর রহমান বীর উত্তম (১৯৩৬-১৯৮১) ছিলেন স্বাধীনতার ঘোষক এবং বাংলাদেশের নির্বাচিত রাষ্ট্রপতি। তিনি একজন বীর মুক্তিযোদ্ধা, সেনাপ্রধান এবং বাংলাদেশে বহুদলীয় গণতন্ত্রের প্রতিষ্ঠাতা, সেই সাথে বাংলাদেশী জাতীয়তাবাদ এবং বাংলাদেশ জাতীয়তাবাদী দল-বিএনপি'র প্রতিষ্ঠাতা ছিলেন."}
               </Typography>
-            </div>
+            </Box>
           </Paper>
         </Container>
 

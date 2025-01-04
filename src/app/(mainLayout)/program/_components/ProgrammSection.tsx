@@ -23,8 +23,8 @@ const ProgrammSection = () => {
 
   const sortedProgrammData = programmData?.sort(
     (a: TProgramm, b: TProgramm) => {
-      const dateA = new Date(a.createdAt).getTime();
-      const dateB = new Date(b.createdAt).getTime();
+      const dateA = new Date(a.date).getTime();
+      const dateB = new Date(b.date).getTime();
       return dateA - dateB;
     },
   );
@@ -39,8 +39,6 @@ const ProgrammSection = () => {
   if (error) {
     return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
   }
-
-  console.log('current path', patname)
 
   return (
     <div>

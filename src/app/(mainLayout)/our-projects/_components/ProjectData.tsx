@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/share/Container";
 import EastIcon from "@mui/icons-material/East";
 import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 import { TProject } from "@/types/type";
+import { Button } from "@mui/material";
 
 
 interface projectProps {
@@ -17,16 +18,22 @@ const ProjectData: React.FC<projectProps> = ({ projectData, language }) => {
   const title = language === 'ENG' ? 'Our Project' : 'আমাদের প্রকল্প'
 
   const sortedProjectData = projectData?.sort((a: TProject, b: TProject) => {
-    const dateA = new Date(a.createdAt).getTime();
-    const dateB = new Date(b.createdAt).getTime();
-    return dateA - dateB;
+    const dateA = new Date(a.date).getTime();
+    const dateB = new Date(b.date).getTime();
+    return dateB - dateA;
   });
+
+  const [visibleCount, setVisibleCount] = useState(6);
+  const loadMore = () => {
+    setVisibleCount((prevCount) => prevCount + 6);
+  };
+
   return (
     <div>
       <CommonBanner title={title} />
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-16">
-          {sortedProjectData?.map((data, index: number) => (
+          {sortedProjectData?.slice(0, visibleCount)?.map((data, index: number) => (
             <div key={index} className="w-full  px-4 mb-6">
               <div className="shadow-lg relative rounded-lg overflow-hidden lg:h-[500px] md:h-[450px] h-auto">
                 <div className="relative h-[200px] md:h-[250px]">
@@ -51,19 +58,30 @@ const ProjectData: React.FC<projectProps> = ({ projectData, language }) => {
                       : data.bangla_short_description?.slice(0, 150)}
                     ...
                   </p>
-                  <div className="flex justify-end mt-3">
+                  <div className="flex justify-between mt-3 ">
+                    <b>
+                      {data.date}
+                    </b>
                     <Link href={`/our-projects/${data._id}`}>
-                      <button className="hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-1 hover:text-white rounded-full uppercase text-xs md:text-sm border">
-                        {language === "ENG" ? "Read More" : "আরও পড়ুন"} <EastIcon />
+                      <button className=" text-white bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-1 hover:text-white rounded-full uppercase text-sm border">
+                        {language === "ENG" ? "Read More" : "আরও পড়ুন"}{" "}
+                        <EastIcon />
                       </button>
                     </Link>
                   </div>
+
                 </div>
               </div>
             </div>
 
           ))}
         </div>
+
+        {visibleCount < sortedProjectData?.length && (<div className="flex items-center justify-center">
+          <Button onClick={loadMore} className="bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white">
+            {language === "ENG" ? "Load More" : "আরো লোড"}
+          </Button>
+        </div>)}
       </Container>
     </div>
   );

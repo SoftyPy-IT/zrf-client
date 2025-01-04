@@ -5,6 +5,7 @@ import Link from "next/link";
 import EastIcon from "@mui/icons-material/East";
 import { TActivity } from "@/types/type";
 import truncateText from "@/utils/truncate";
+import { formatDate } from "@/utils/formateDate";
 
 interface welcomeProps {
   activityData: TActivity[];
@@ -15,17 +16,12 @@ const RecentActivity: React.FC<welcomeProps> = ({ activityData, language }) => {
   const activityFilterData = activityData?.filter(
     (welcome: any) => welcome.category === "Activity",
   );
-  const newsFilterData = activityData?.filter(
-    (welcome: any) => welcome.category === "News",
-  );
 
-  const formatDate = (dateString: string | number | Date) => {
-    const date = new Date(dateString);
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
-  };
+  const sortedActivityData = activityFilterData?.sort((a: TActivity, b: TActivity) => {
+    const dateA = new Date(a.date).getTime();
+    const dateB = new Date(b.date).getTime();
+    return dateB - dateA;
+  });
   return (
     <Container className="my-20">
       <h1 className="lg:text-3xl text-2xl font-bold uppercase">
@@ -37,7 +33,7 @@ const RecentActivity: React.FC<welcomeProps> = ({ activityData, language }) => {
       <div className="lg:flex gap-10">
         <div className="w-full">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:h-[500px]">
-            {activityFilterData?.slice(0, 2).map((data) => (
+            {sortedActivityData?.slice(0, 2).map((data) => (
               <div
                 key={data._id}
                 className="relative shadow-xl bg-white overflow-hidden group hover:text-white"

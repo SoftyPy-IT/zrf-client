@@ -7,12 +7,29 @@ import Image from "next/image";
 import "./Programm.css";
 import { TProgramm } from "@/types/type";
 import logo from '../../../../../src/assets/images/logo/16 by 16.svg'
+import { useState } from "react";
 interface programmProps {
     programmData: TProgramm[];
     language: string,
 }
+
+
 const ProgrammData: React.FC<programmProps> = ({ programmData, language }) => {
+
+    const sortedProgrammData = programmData?.sort(
+        (a: TProgramm, b: TProgramm) => {
+            const dateA = new Date(a.date).getTime();
+            const dateB = new Date(b.date).getTime();
+            return dateA - dateB;
+        },
+    );
+
+    const [visibleCount, setVisibleCount] = useState(8);
+    const loadMore = () => {
+        setVisibleCount((prevCount) => prevCount + 8);
+    };
     return (
+
         <div className="my-20">
             <Container>
                 <div className="grid grid-cols-1 xl:grid-cols-2  gap-y-10 xl:gap-y-0  justify-items-center">
@@ -36,7 +53,7 @@ const ProgrammData: React.FC<programmProps> = ({ programmData, language }) => {
                         <div className="w-28 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-5 "></div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 text-center">
-                            {programmData?.slice(0, 4).map((program: TProgramm, index: number) => (
+                            {sortedProgrammData?.slice(0, 4).map((program: TProgramm, index: number) => (
                                 <div
                                     key={program._id}
                                     className="bg-white p-5 rounded shadow-lg flex flex-col items-center transform transition-transform duration-300 hover:scale-105"

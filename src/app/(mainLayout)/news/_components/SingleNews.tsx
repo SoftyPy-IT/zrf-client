@@ -164,7 +164,7 @@ const SingleRehabilitation = ({
             </h1>
 
             <div className="relative w-full h-[200px] md:h-[400px] mb-6">
-             
+
 
               {
                 language === 'BNG' ? singleNewsData.bng_Images?.slice(0, 1).map((img) => (
