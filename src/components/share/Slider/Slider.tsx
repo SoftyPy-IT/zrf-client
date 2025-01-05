@@ -6,13 +6,23 @@ import { useLanguage } from "@/provider/LanguageProvider";
 import { TBanner } from "@/types/type";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import "./Slider.css";
+
 const Loader = dynamic(() => import("@/components/Loading/Loading"), {
   ssr: false,
 });
 
+type Banner = {
+  _id: string;
+  category: string;
+  thumnailImages: string[];
+  english_title: string;
+  bangla_title: string;
+  english_short_description: string;
+  bangla_short_description: string;
+};
+
 const Slider = () => {
-  const [bannerData, setBannerData] = useState([]);
+  const [bannerData, setBannerData] = useState<Banner[]>([]); // Specify the type here
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { language } = useLanguage();
@@ -26,7 +36,7 @@ const Slider = () => {
       );
       if (!response.ok) throw new Error("Failed to fetch slides data");
       const data = await response.json();
-      setBannerData(data.data.banners);
+      setBannerData(data.data.banners); 
     } catch (err: any) {
       setError(err.message || "Something went wrong");
     } finally {
@@ -41,18 +51,15 @@ const Slider = () => {
   if (loading) return <Loader />;
   if (error) return <p className="text-red-500">{error}</p>;
 
-
-
-  const filterBannerData = bannerData.filter((item) => item.category === "Banner");
+  const filterBannerData = bannerData.filter(
+    (item) => item.category === "Banner"
+  );
 
   return (
     <div className="slider-container">
-      {filterBannerData?.slice(0, 1)?.map((data: any) => (
-        <div
-          key={data._id}
-          className="sliderWrap"
-        >
-          {data.thumnailImages?.map((img: string, imgIndex: number) => (
+      {filterBannerData?.slice(0, 1)?.map((data) => (
+        <div key={data._id} className="sliderWrap">
+          {data.thumnailImages?.map((img, imgIndex) => (
             <Image
               key={imgIndex}
               src={img}
