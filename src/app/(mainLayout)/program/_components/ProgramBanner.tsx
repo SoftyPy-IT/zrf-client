@@ -12,7 +12,7 @@ const ProgramBanner = () => {
       <Container>
         <div className="content">
           <h1 className="text-5xl font-bold uppercase">
-            {language === "ENG" ? " Our Program" : "আমাদের প্রোগ্রাম"}{" "}
+            {language === "ENG" ? " Our Programs" : "আমাদের প্রোগ্রাম"}{" "}
           </h1>
         </div>
       </Container>

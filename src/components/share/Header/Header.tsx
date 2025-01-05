@@ -20,6 +20,11 @@ const Header = () => {
     setOpen((open) => !open);
   };
 
+  // Close the mobile menu when clicking any menu item
+  const closeMobileMenu = () => {
+    setOpen(true);
+  };
+
   const btnStyle = {
     color: "black",
     background: "white",
@@ -91,86 +96,112 @@ const Header = () => {
                   }`}
               >
                 <li className="lg:border-none border-b lg:py-0 py-1">
-                  <Link href="/"> {language === 'ENG' ? 'Home' : 'প্রচ্ছদ'}</Link>
+                  <Link href="/" onClick={closeMobileMenu}> 
+                    {language === 'ENG' ? 'Home' : 'প্রচ্ছদ'}
+                  </Link>
                 </li>
                 <li className="dropdownMenuWrap relative">
                   <Link href="#">
-                    {language === 'ENG' ? 'Who We Are' : 'আমাদের সম্পর্কে'}   <KeyboardArrowDownIcon />
+                    {language === 'ENG' ? 'Who We Are' : 'আমাদের সম্পর্কে'}   
+                    <KeyboardArrowDownIcon />
                   </Link>
                   <ul className={`w-[290px] h-[160px]  ${dropdown}`}>
                     <li>
-                      <Link href="/message-of-president">
+                      <Link href="/message-of-president" onClick={closeMobileMenu}>
                         {language === 'ENG' ? 'Message of President' : 'প্রেসিডেন্ট এর বাণী'}
                       </Link>
                     </li>
                     <li>
-                      <Link href="/message-of-vice-president">
+                      <Link href="/message-of-vice-president" onClick={closeMobileMenu}>
                         {language === 'ENG' ? 'Message of Vice President' : 'ভাইস প্রেসিডেন্ট এর বাণী'}
                       </Link>
                     </li>
                     <li>
-                      <Link href="/message-of-director">
+                      <Link href="/message-of-director" onClick={closeMobileMenu}>
                         {language === 'ENG' ? 'Message of Executive Director' : 'নির্বাহী পরিচালক এর বাণী'}
                       </Link>
                     </li>
                     <li>
-                      <Link href="/committee">{language === 'ENG' ? 'Committee' : 'কমিটি'} </Link>
-                    </li>
-                    <li>
-                      <Link href="/about">{language === 'ENG' ? 'About Us' : 'আমাদের সম্পর্কে'}</Link>
-                    </li>
-                    <li>
-                      <Link href="/volunteer">{language === 'ENG' ? 'Our Volunteers' : 'আমাদের স্বেচ্ছাসেবক'}  </Link>
-                    </li>
-                  </ul>
-                </li>
-                <li className="dropdownMenuWrap  relative">
-                  <Link href="#">
-                    {language === 'ENG' ? 'What We Do' : 'আমাদের কার্যক্রম'}  <KeyboardArrowDownIcon />
-                  </Link>
-                  <ul className={`w-[240px] submenu  ${dropdown}`}>
-                    <li className="lg:border-none border-b lg:py-0 py-2">
-                      <Link href="/our-projects">  {language === 'ENG' ? 'Our Project' : 'আমাদের প্রকল্প'} </Link>
-                    </li>
-                    <li className="lg:border-none border-b lg:py-0 py-2">
-                      <Link href="/education">  {language === 'ENG' ? 'ZRF Education Program' : 'জেডআরএফ শিক্ষা কার্যক্রম'}</Link>
-                    </li>
-                    <li>
-                      <Link href="/whatwedo/rehabilitation">
-                        {language === 'ENG' ? 'ZRF Rehabilitation Program' : 'জেডআরএফ পুনর্বাসন কার্যক্রম'}
+                      <Link href="/committee" onClick={closeMobileMenu}>
+                        {language === 'ENG' ? 'Committee' : 'কমিটি'} 
                       </Link>
                     </li>
                     <li>
-                      <Link href="/whatwedo/covid"> {language === 'ENG' ? 'Covid Program ' : 'কোভিড কার্যক্রম'} </Link>
-                    </li>
-                    <li className="lg:border-none border-b lg:py-0 py-2">
-                      <Link href="/climate-change">{language === 'ENG' ? 'Climate Change Program ' : 'জলবায়ু পরিবর্তন কার্যক্রম'} </Link>
-                    </li>
-                    <li className="lg:border-none border-b lg:py-0 py-2">
-                      <Link href="/health-services">{language === 'ENG' ? 'Health Services Program ' : ' স্বাস্থ্য সেবা  কার্যক্রম'}</Link>
-                    </li>
-
-                    <li>
-                      <Link href="/whatwedo/initiatives">{language === 'ENG' ? 'Our Initiatives' : 'আমাদের উদ্যোগ'}</Link>
+                      <Link href="/about" onClick={closeMobileMenu}>
+                        {language === 'ENG' ? 'About Us' : 'আমাদের সম্পর্কে'}
+                      </Link>
                     </li>
                     <li>
-                      <Link href="/program">{language === 'ENG' ? 'Our Program' : 'আমাদের কর্মসূচি'} </Link>
+                      <Link href="/volunteer" onClick={closeMobileMenu}>
+                        {language === 'ENG' ? 'Our Volunteers' : 'আমাদের স্বেচ্ছাসেবক'}  
+                      </Link>
                     </li>
                   </ul>
                 </li>
                 <li className="dropdownMenuWrap relative">
-                  <Link href="/ziaur-rahman">
-                    {language === 'ENG' ? 'Biography Of Ziaur Rahman' : 'জিয়াউর রহমান এর জীবনী'}
-                    {/* <KeyboardArrowDownIcon /> */}
+                  <Link href="#" >
+                    {language === 'ENG' ? 'What We Do' : 'আমাদের কার্যক্রম'}  
+                    <KeyboardArrowDownIcon />
                   </Link>
+                  <ul className={`w-[240px] submenu  ${dropdown}`}>
+                    <li className="lg:border-none border-b lg:py-0 py-2">
+                      <Link href="/our-projects" onClick={closeMobileMenu}>  
+                        {language === 'ENG' ? 'Our Project' : 'আমাদের প্রকল্প'} 
+                      </Link>
+                    </li>
+                    <li className="lg:border-none border-b lg:py-0 py-2">
+                      <Link href="/education" onClick={closeMobileMenu}>  
+                        {language === 'ENG' ? 'ZRF Education Programs' : 'জেডআরএফ শিক্ষা কার্যক্রম'}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/whatwedo/rehabilitation" onClick={closeMobileMenu}>
+                        {language === 'ENG' ? 'ZRF Rehabilitation Programs' : 'জেডআরএফ পুনর্বাসন কার্যক্রম'}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/whatwedo/covid" onClick={closeMobileMenu}> 
+                        {language === 'ENG' ? 'Covid Programs ' : 'কোভিড কার্যক্রম'} 
+                      </Link>
+                    </li>
+                    <li className="lg:border-none border-b lg:py-0 py-2">
+                      <Link href="/climate-change" onClick={closeMobileMenu}>
+                        {language === 'ENG' ? 'Climate Change Programs ' : 'জলবায়ু পরিবর্তন কার্যক্রম'} 
+                      </Link>
+                    </li>
+                    <li className="lg:border-none border-b lg:py-0 py-2">
+                      <Link href="/health-services" onClick={closeMobileMenu}>
+                        {language === 'ENG' ? 'Health Services Programs ' : ' স্বাস্থ্য সেবা  কার্যক্রম'}
+                      </Link>
+                    </li>
 
+                    <li>
+                      <Link href="/whatwedo/initiatives" onClick={closeMobileMenu}>
+                        {language === 'ENG' ? 'Our Initiatives' : 'আমাদের উদ্যোগ'}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/Programs" onClick={closeMobileMenu}>
+                        {language === 'ENG' ? 'Our Programs' : 'আমাদের কর্মসূচি'} 
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+                <li className="dropdownMenuWrap relative">
+                  <Link href="/ziaur-rahman" onClick={closeMobileMenu}>
+                    {language === 'ENG' ? 'Biography Of Ziaur Rahman' : 'জিয়াউর রহমান এর জীবনী'}
+                  </Link>
                 </li>
 
                 <li className="lg:border-none border-b lg:py-0 py-2">
-                  <Link href="/ebooks"> {language === 'ENG' ? 'E-Books' : 'ই-বুক'} </Link>
+                  <Link href="/ebooks" onClick={closeMobileMenu}> 
+                    {language === 'ENG' ? 'E-Books' : 'ই-বুক'} 
+                  </Link>
                 </li>
                 <li className="lg:border-none border-b lg:py-0 py-2">
-                  <Link href="/news"> {language === 'ENG' ? 'News' : 'খবর'}</Link>
+                  <Link href="/news" onClick={closeMobileMenu}> 
+                    {language === 'ENG' ? 'News' : 'খবর'}
+                  </Link>
                 </li>
               </ul>
             </>

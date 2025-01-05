@@ -20,7 +20,7 @@ const EducationPage = () => {
     return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
   }
   const title =
-    language === "ENG" ? " ZRF Education Program" : "জেডআরএফ শিক্ষা কার্যক্রম";
+    language === "ENG" ? " ZRF Education Programs" : "জেডআরএফ শিক্ষা কার্যক্রম";
 
   return (
     <div>

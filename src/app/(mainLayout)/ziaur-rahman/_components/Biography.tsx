@@ -1,4 +1,5 @@
 import { TIntroduction } from '@/types/type';
+import truncateText from '@/utils/truncate';
 import { Button } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
@@ -88,14 +89,36 @@ const Biography: React.FC<introductionProps> = ({ handleOpen, introductionData, 
                             <h2 className="text-2xl mb-2 text-[#216740] font-bold ">
                                 {language === 'ENG' ? data.english_title : data.bangla_title}
                             </h2>
-                            <p>
-                                {language === 'ENG' ? renderContent(data.english_description?.slice(0, 300)) : renderContent(data.bangla_description?.slice(0, 300))}
+                            <p className=" ">
+                                <span onClick={() =>
+                                    handleOpen(
+                                        data.english_title,
+                                        data.bangla_description,
+                                        data.bangla_title,
+                                        data.english_description
+                                    )
+                                } className=' '>
+                                    {language === 'ENG'
+                                        ? renderContent(truncateText(data.english_description, 320))
+                                        : renderContent(truncateText(data.bangla_description, 320))}
+
+
+                                </span>
                                 <button
-                                    className="text-blue-600 text-xs"
-                                    onClick={() => handleOpen(data.english_title, data.bangla_description, data.bangla_title, data.english_description)}
-                                > ... {language === 'ENG' ? 'See All' : 'সব দেখুন'}
+                                    className="bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3 rounded text-white"
+                                    onClick={() =>
+                                        handleOpen(
+                                            data.english_title,
+                                            data.bangla_description,
+                                            data.bangla_title,
+                                            data.english_description
+                                        )
+                                    }
+                                >{language === 'ENG' ? 'See All' : 'সব দেখুন'}
                                 </button>
+
                             </p>
+
                         </div>
                     </div>
                 ))}

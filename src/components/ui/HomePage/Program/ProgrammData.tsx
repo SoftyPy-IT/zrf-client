@@ -35,7 +35,7 @@ const ProgrammData: React.FC<programmProps> = ({ programmData, language }) => {
                 <div className="grid grid-cols-1 xl:grid-cols-2  gap-y-10 xl:gap-y-0  justify-items-center">
                     <div className="ImgWrap">
                         <div className="programmBigImg ">
-                            <Image src={programm} width={1000} height={500} alt="programm" />
+                            <Image src={programm} width={1000} height={500} alt="programms" />
                         </div>
                         <div className="programmSmallImg hidden xl:block ">
                             <Image
@@ -49,7 +49,7 @@ const ProgrammData: React.FC<programmProps> = ({ programmData, language }) => {
 
                     </div>
                     <div>
-                        <h2 className="text-3xl font-bold uppercase "> {language === 'ENG' ? 'Our Programm ' : 'আমাদের প্রোগ্রাম'}</h2>
+                        <h2 className="text-3xl font-bold uppercase "> {language === 'ENG' ? 'Our Programs ' : 'আমাদের প্রোগ্রাম'}</h2>
                         <div className="w-28 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-5 "></div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 text-center">

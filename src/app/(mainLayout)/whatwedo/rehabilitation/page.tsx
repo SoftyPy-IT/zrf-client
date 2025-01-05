@@ -9,7 +9,7 @@ import CommonBanner from '@/components/share/CommonBanner/CommonBanner';
 const EducationPage = () => {
     const { language } = useLanguage()
     const { whatWedoData } = useWhatwedoData()
-    const title = language === 'ENG' ? ' ZRF Rehabilitation Program' : 'জেডআরএফ পুনর্বাসন কার্যক্রম'
+    const title = language === 'ENG' ? ' ZRF Rehabilitation Programs' : 'জেডআরএফ পুনর্বাসন কার্যক্রম'
 
     return (
         <div>

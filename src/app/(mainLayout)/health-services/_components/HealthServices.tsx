@@ -34,7 +34,7 @@ const HealthServices: React.FC<CovidProps> = ({ whatWedoData, language }) => {
     });
     return (
         <>
-            <CommonBanner title={language == 'ENG' ? 'Health Services' : 'স্বাস্থ্য সেবা'} />
+            <CommonBanner title={language == 'ENG' ? 'Health Services Programs' : 'স্বাস্থ্য সেবা কার্যক্রম'} />
             <Container className="my-20">
                 <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
                     {sortedHealtherviceData?.slice(0, visibleCount).map((data, index) => (

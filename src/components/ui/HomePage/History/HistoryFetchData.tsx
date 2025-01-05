@@ -182,9 +182,11 @@ const HistoryFetchData: React.FC<AboutProps> = ({ aboutData, language }) => {
               </div>
             ))}
         </div>
-        <Button onClick={loadMore} className="bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white">
-          {language === "ENG" ? "Load More" : "আরো লোড"}
-        </Button>
+        <div className="flex items-center justify-center">
+          <Button onClick={loadMore} className="bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white">
+            {language === "ENG" ? "See More" : "আরো দেখুন"}
+          </Button>
+        </div>
       </section>
     </div>
   );

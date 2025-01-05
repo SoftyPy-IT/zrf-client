@@ -19,7 +19,7 @@ interface CovidProps {
 const ClimateChange: React.FC<CovidProps> = ({ whatWedoData, language }) => {
     const climateFilterData = whatWedoData.filter((edu) => edu.category === 'Climate Change')
 
-    const title = language === 'ENG' ? 'Climate Change' : 'জলবায়ু পরিবর্তন '
+    const title = language === 'ENG' ? 'Climate Change Programs' : 'জলবায়ু পরিবর্তন কার্যক্রম'
 
     const [visibleCount, setVisibleCount] = useState(6);
     const loadMore = () => {

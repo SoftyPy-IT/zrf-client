@@ -64,8 +64,8 @@
 }
 
 .submenu {
-  width: 251px;
-  height: 86px;
+  width: 258px;
+  height: 295px;
 }
 
 .submenu2 {
@@ -115,9 +115,6 @@
   visibility: hidden;
   width: 243px;
   height: 100px;
-}
-.submenu {
-  height: 290px;
 }
 
 @media only screen and (max-width: 1440px) {
@@ -199,12 +196,14 @@
   .activeBar span:nth-child(2) {
     display: none;
   }
+
   .sliderContent {
     left: 21px !important;
   }
 }
 
 @media only screen and (max-width: 768px) {
+
   .activeBar,
   .bar1 {
     top: 32px;
@@ -224,17 +223,20 @@
 }
 
 @media only screen and (max-width: 500px) {
+
   .activeBar,
   .bar1 {
     top: 29px;
     right: 9px;
   }
-  .logo{
-    width:50px;
+
+  .logo {
+    width: 50px;
   }
 }
 
 @media only screen and (max-width: 375px) {
+
   .activeBar,
   .bar1 {
     top: 29px;
@@ -249,13 +251,14 @@
   }
 
   .navItems li {
-    padding: 10px 0px;
+    padding: 6px 0px;
     border: none;
   }
-  .activeBar, .bar1 {
+
+  .activeBar,
+  .bar1 {
     top: 22px;
-   
-}
+  }
 }
 
 .murterDropDown:hover .submenu3 {
@@ -269,10 +272,11 @@
   color: #111 !important;
 }
 
+@media only screen and (max-width: 320px) {
 
-@media only screen and (max-width:320px){
-  .activeBar, .bar1 {
+  .activeBar,
+  .bar1 {
     top: 23px;
     right: -4px;
-}
+  }
 }

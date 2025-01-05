@@ -11,14 +11,12 @@ import truncateText from "@/utils/truncate";
 import { buttonStyle } from "@/utils/btnStyle";
 
 interface CovidProps {
-  whatWedoData: TWhatWeDo[];
+  covidData: TWhatWeDo[];
   language: string,
 }
 
 
-const Covid: React.FC<CovidProps> = ({ whatWedoData, language }) => {
-  const covidFilterData = whatWedoData.filter((edu) => edu.category === 'Covid')
-
+const Covid: React.FC<CovidProps> = ({ covidData, language }) => {
 
   const title = language === 'ENG' ? 'Covid Program' : 'কোভিড কার্যক্রম'
 
@@ -27,7 +25,7 @@ const Covid: React.FC<CovidProps> = ({ whatWedoData, language }) => {
     setVisibleCount((prevCount) => prevCount + 6);
   };
 
-  const sortedCovidData = covidFilterData?.sort((a: TWhatWeDo, b: TWhatWeDo) => {
+  const sortedCovidData = covidData?.sort((a: TWhatWeDo, b: TWhatWeDo) => {
     const dateA = new Date(a.date).getTime();
     const dateB = new Date(b.date).getTime();
     return dateB - dateA;

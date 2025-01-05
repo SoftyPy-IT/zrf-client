@@ -1,6 +1,5 @@
 "use client";
-import React, { useState } from "react";
-
+import React, { useState, useCallback } from "react";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
 import Image from "next/image";
@@ -8,6 +7,18 @@ import { useLanguage } from "@/provider/LanguageProvider";
 import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 import { TImgGallery } from "@/types/type";
 import Container from "@/components/share/Container";
+import CloseIcon from "@mui/icons-material/Close";
+
+const CustomCloseButton = ({ onClose }: { onClose: () => void }) => (
+  <button
+    type="button"
+    className="closeIcon absolute top-[0%]  right-[50%] z-[10000] p-2 bg-red-600 rounded-full text-white hover:bg-red-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+    onClick={onClose}
+    aria-label="Close lightbox"
+  >
+    <CloseIcon style={{ fontSize: '24px' }} />
+  </button>
+);
 
 const Page = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,19 +47,26 @@ const Page = () => {
     fetchAffiliationData();
   }, []);
 
-  const openLightbox = (index: number) => {
+  const openLightbox = useCallback((index: number) => {
     setCurrentIndex(index);
     setIsOpen(true);
-  };
+  }, []);
 
-  const nextImage = () =>
-    setCurrentIndex((currentIndex + 1) % galleryData.length);
-  const prevImage = () =>
-    setCurrentIndex(
-      (currentIndex + galleryData.length - 1) % galleryData.length,
+  const closeLightbox = useCallback(() => {
+    setIsOpen(false);
+  }, []);
+
+  const nextImage = useCallback(() => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % galleryData.length);
+  }, [galleryData]);
+
+  const prevImage = useCallback(() => {
+    setCurrentIndex((prevIndex) =>
+      (prevIndex + galleryData.length - 1) % galleryData.length
     );
+  }, [galleryData]);
 
-  const title = language === "ENG" ? "Image Gallery" : "ইমেজ গ্যালারি";
+  const title = language === "ENG" ? "Image Gallery" : "ফটো গ্যালারি";
 
   return (
     <>
@@ -77,26 +95,24 @@ const Page = () => {
         </Container>
       </div>
 
-      {/* Lightbox for full-screen image viewing */}
-      {isOpen && galleryData[currentIndex].thumnailImages.length > 0 && (
-        <Lightbox
-          mainSrc={galleryData[currentIndex].thumnailImages[0]}
-          nextSrc={
-            galleryData[(currentIndex + 1) % galleryData.length]
-              .thumnailImages[0]
-          }
-          prevSrc={
-            galleryData[
-              (currentIndex + galleryData.length - 1) % galleryData.length
-            ].thumnailImages[0]
-          }
-          onCloseRequest={() => setIsOpen(false)}
-          onMovePrevRequest={prevImage}
-          onMoveNextRequest={nextImage}
-        />
+      {isOpen && galleryData[currentIndex]?.thumnailImages?.length > 0 && (
+        <div className="relative">
+          <CustomCloseButton onClose={closeLightbox} />
+          <Lightbox
+            mainSrc={galleryData[currentIndex].thumnailImages[0]}
+            nextSrc={galleryData[(currentIndex + 1) % galleryData.length]?.thumnailImages[0]}
+            prevSrc={galleryData[(currentIndex + galleryData.length - 1) % galleryData.length]?.thumnailImages[0]}
+            onCloseRequest={closeLightbox}
+            onMovePrevRequest={prevImage}
+            onMoveNextRequest={nextImage}
+            enableZoom={false}
+
+          />
+        </div>
       )}
     </>
   );
 };
 
 export default Page;
+
