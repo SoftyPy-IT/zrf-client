@@ -53,6 +53,13 @@ const ProjectsFetchData: React.FC<projectProps> = ({
     Autoplay: true,
   };
 
+  const sortedProjectData = projectData?.sort((a: TProject, b: TProject) => {
+    const dateA = new Date(a.date).getTime();
+    const dateB = new Date(b.date).getTime();
+    return dateB - dateA;
+  });
+
+
   return (
     <div className="h-[800px] lg:h-[800px] sectionMargin ">
       <div className="relative w-full lg:h-[600px]">
@@ -78,7 +85,7 @@ const ProjectsFetchData: React.FC<projectProps> = ({
                 </p>
               </div>
               <Slider {...settings}>
-                {projectData.map((project: TProject, index) => (
+                {sortedProjectData.map((project: TProject, index) => (
                   <div
                     key={index}
                     className="justify-center items-center z-10 p-5"
@@ -87,9 +94,8 @@ const ProjectsFetchData: React.FC<projectProps> = ({
                       <div
                         className="relative h-full w-full bg-cover bg-center"
                         style={{
-                          backgroundImage: `url(${
-                            project.bng_Images?.[0] || ""
-                          })`,
+                          backgroundImage: `url(${project.bng_Images?.[0] || ""
+                            })`,
                         }}
                       >
                         <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent"></div>
@@ -103,13 +109,13 @@ const ProjectsFetchData: React.FC<projectProps> = ({
                           <p className="mt-2 ">
                             {language === "ENG"
                               ? truncateText(
-                                  project.english_short_description,
-                                  130,
-                                )
+                                project.english_short_description,
+                                130,
+                              )
                               : truncateText(
-                                  project.bangla_short_description,
-                                  130,
-                                )}
+                                project.bangla_short_description,
+                                130,
+                              )}
                           </p>
 
                           <div className=" mt-5">

@@ -12,6 +12,12 @@ interface newsProps {
 }
 
 const LatestNewsFetchData: React.FC<newsProps> = ({ newsData, language }) => {
+  const sortedNewsData = newsData?.sort((a: TActivity, b: TActivity) => {
+    const dateA = new Date(a.date).getTime();
+    const dateB = new Date(b.date).getTime();
+    return dateB - dateA;
+  });
+
   return (
     <>
       <div>
@@ -22,7 +28,7 @@ const LatestNewsFetchData: React.FC<newsProps> = ({ newsData, language }) => {
             </h2>
             <Marquee pauseOnHover={true} className="w-full" speed={50}>
               <div className="flex items-center space-x-4">
-                {newsData.map((title) => (
+                {sortedNewsData.map((title) => (
                   <>
                     <Link href={`/news/${title._id}`}>
                       <h2
@@ -41,7 +47,7 @@ const LatestNewsFetchData: React.FC<newsProps> = ({ newsData, language }) => {
           </div>
         </div>
         <div className="w-full grid grid-cols-1  xl:grid-cols-1  md:grid-cols-1 items-center gap-4 lg:mt-5  mt-10 ">
-          {newsData?.slice(0, 3).map((data) => (
+          {sortedNewsData?.slice(0, 3).map((data) => (
             <div
               key={data._id}
               className="border rounded items-center p-2 md:h-40 shadow-md"
