@@ -181,7 +181,7 @@ const Header = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link href="/Programs" onClick={closeMobileMenu}>
+                      <Link href="/program" onClick={closeMobileMenu}>
                         {language === 'ENG' ? 'Our Programs' : 'আমাদের কর্মসূচি'} 
                       </Link>
                     </li>

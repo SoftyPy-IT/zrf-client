@@ -157,7 +157,7 @@
     width: 40px;
     height: 40px;
     position: absolute;
-    top: 31px;
+    top: 36px;
     right: 27px;
     transition: all 0.5s cubic-bezier(0.43, 0.38, 0.68, 0.63);
   }
@@ -203,11 +203,10 @@
 }
 
 @media only screen and (max-width: 768px) {
-
   .activeBar,
   .bar1 {
-    top: 32px;
-    right: 14px;
+    top: 36px;
+    right: 11px;
   }
 
   .dropdownMenu,
@@ -223,20 +222,23 @@
 }
 
 @media only screen and (max-width: 500px) {
-
   .activeBar,
   .bar1 {
-    top: 29px;
-    right: 9px;
+    top: 26px;
+    right: 3px;
   }
 
   .logo {
     width: 50px;
   }
+  .sliderContents {
+
+    left: 9px;
+    padding: 0 7px;
+}
 }
 
 @media only screen and (max-width: 375px) {
-
   .activeBar,
   .bar1 {
     top: 29px;
@@ -257,9 +259,10 @@
 
   .activeBar,
   .bar1 {
-    top: 22px;
+    top: 26px;
   }
 }
+
 
 .murterDropDown:hover .submenu3 {
   transform: scaleY(1);
@@ -273,10 +276,13 @@
 }
 
 @media only screen and (max-width: 320px) {
-
   .activeBar,
   .bar1 {
-    top: 23px;
+    top: 26px;
     right: -4px;
   }
+  .sliderContents {
+    left: 9px !important;
+
+}
 }

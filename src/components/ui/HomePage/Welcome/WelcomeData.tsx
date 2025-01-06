@@ -19,7 +19,7 @@ const WelcomeData: React.FC<welcomeProps> = ({ welcomeData, language }) => {
     const welcomeFilterData = welcomeData.filter((welcome: any) => welcome.category === 'Welcome')
     return (
         <Container>
-            <div className=" py-10 lg:pb-28 grid xl:grid-cols-2 2xl:grid-cols-2 mt-5 md:mt-14 lg:mt-0 mb-5 md:mb-8 lg:mb-0 text-center md:text-left lg:text-left place-items-center">
+            <div className=" py-10 lg:pb-28 grid xl:grid-cols-2 2xl:grid-cols-2 mt-5 md:mt-14 lg:mt-0 mb-5 md:mb-8 lg:mb-0 text-center md:text-left xl:text-left lg:place-items-center">
                 {
                     welcomeFilterData?.map((data: TBanner) => (
                         <div key={data._id}>

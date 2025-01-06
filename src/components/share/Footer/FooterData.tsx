@@ -38,17 +38,13 @@ const FooterData = ({ language }: FooterProps) => {
     <>
       <div className="bg-[#20bd86] relative sectionMargin">
         <Container>
-          <div className="relative flex flex-col md:flex-row justify-between items-start md:items-center py-8 z-10">
-            <div className="w-auto">
-              <span className="md:text-3xl text-white font-sans uppercase">
-                {language === "ENG"
-                  ? " Join Our Newsletter"
-                  : "আমাদের নিউজলেটার যোগদান"}
-              </span>
-            </div>
-            <div className="w-full lg:w-auto flex justify-center items-center mt-4 md:mt-0 lg:mt-0 xl:mt-0">
-              <Subscribe />
-            </div>
+          <div className="relative md:gap-0 gap-y-3 flex flex-col md:flex-row justify-between items-start md:items-center py-8 z-10">
+            <p className="text-xl  lg:text-3xl text-white font-sans uppercase">
+              {language === "ENG"
+                ? " Join Our Newsletter"
+                : "আমাদের নিউজলেটার যোগদান"}
+            </p>
+            <Subscribe />
           </div>
         </Container>
         <Image

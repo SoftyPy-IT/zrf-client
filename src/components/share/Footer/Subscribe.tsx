@@ -25,7 +25,7 @@ const Subscribe = () => {
     };
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="relative  lg:flex items-center w-full">
+            <div className="relative  xl:flex items-center w-full">
                 <input
                     type="text"
                     placeholder={placeholder}
@@ -36,9 +36,9 @@ const Subscribe = () => {
                             message: 'Invalid email address'
                         }
                     })}
-                    className="w-[200px] lg:w-[500px] p-3 md:py-3 lg:py-6 px-2 md:px-4 border border-gray-300 rounded-full text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 text-[11px]"
+                    className="w-[250px] md:w-[250px] lg:w-[500px] p-3 md:py-3 lg:py-6 px-2 md:px-4 border border-gray-300 rounded-full text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 text-[14px]"
                 />
-                <button className="text-[10px] absolute right-0 py-1 lg:py-4 px-1 lg:px-8 mx-1 md:mx-2  my-2 bg-green-600 text-white rounded-full font-semibold hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button className="text-[12px] absolute right-0 py-1 lg:py-4 px-1 lg:px-8 mx-1 md:mx-2  my-2 bg-green-600 text-white rounded-full font-semibold hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
                     {
                         language === 'ENG' ? 'Subscribe' : 'সাবসক্রাইব'
                     }  <EastIcon sx={{ fontSize: '20px' }} />
