@@ -66,18 +66,12 @@ const Initiatives: React.FC<CovidProps> = ({ whatWedoData, language }) => {
                                         </div>
                                         <p className="text-justify  text-sm "> {language == 'ENG' ? data.english_short_description?.slice(0, 200) : data.bangla_short_description?.slice(0, 200)}... </p>
 
-                                        {/* <Button
-                                            href={`/whatwedo/initiatives/${data._id}`}
-                                            className="hover:bg-blue-700 text-white rounded"
-                                            sx={buttonStyle}
-                                        >
-                                            {language === 'ENG' ? 'Details' : 'বিস্তারিত'}
-                                        </Button> */}
+                                        
                                         <div className="flex justify-between mt-3 w-full items-center ">
                                             <b>
                                                 {formatDate(data.date)}
                                             </b>
-                                            <Link href={`/climate-change/${data._id}`}>
+                                            <Link href={`/whatwedo/initiatives/${data._id}`}>
                                                 <Button sx={buttonStyle}>
                                                     {language === "ENG" ? "Read More" : "আরও পড়ুন"}{" "}
                                                     <EastIcon sx={{ fontSize: { md: '20px', xs: '20px' } }} />

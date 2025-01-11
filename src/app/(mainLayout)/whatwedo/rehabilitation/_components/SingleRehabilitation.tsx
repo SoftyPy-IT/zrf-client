@@ -91,7 +91,7 @@ const SingleRehabilitation = ({ whatWedoData, language }: SingleWhatWeDoProps) =
                     <div className="w-full mt-2 lg:mt-0 lg:p-6">
                         {/* Top Image */}
                         <div className="relative w-full h-[200px] md:h-[400px]  mb-6">
-                            
+
                             {
                                 language === 'BNG' ? whatWedoData.bng_Images?.slice(0, 1).map((img) => (
                                     <Image
@@ -147,7 +147,7 @@ const SingleRehabilitation = ({ whatWedoData, language }: SingleWhatWeDoProps) =
                                 {language === 'ENG' ? 'Next Post' : 'পরবর্তী পোস্ট'}   →
                             </a>
                         </div>
-
+                        
                     </div>
 
                     <div className="w-full lg:w-[600px] lg:mt-6 md:mt-0 mt-5">

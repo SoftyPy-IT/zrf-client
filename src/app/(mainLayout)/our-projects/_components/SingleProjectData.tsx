@@ -156,7 +156,7 @@ const SingleProjectData = ({ singleProjectData, language }: SingleProjectProps) 
 
     return (
         <div>
-            <CommonBanner title={language === 'ENG' ? 'Our Project' : 'আমাদের প্রকল্প'} />
+            <CommonBanner title={language === 'ENG' ? 'Our Projects' : 'আমাদের প্রকল্প'} />
             <Container>
                 <div className="lg:flex md:flex gap-10  mt-10 ">
                     <div className="w-full grid grid-cols-1">

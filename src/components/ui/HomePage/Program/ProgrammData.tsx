@@ -8,6 +8,7 @@ import "./Programm.css";
 import { TProgramm } from "@/types/type";
 import logo from '../../../../../src/assets/images/logo/16 by 16.svg'
 import { useState } from "react";
+import truncateText from "@/utils/truncate";
 interface programmProps {
     programmData: TProgramm[];
     language: string,
@@ -52,14 +53,14 @@ const ProgrammData: React.FC<programmProps> = ({ programmData, language }) => {
                         <h2 className="text-3xl font-bold uppercase "> {language === 'ENG' ? 'Our Programs ' : 'আমাদের প্রোগ্রাম'}</h2>
                         <div className="w-28 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-5 "></div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 text-center">
+                        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-5 text-center">
                             {sortedProgrammData?.slice(0, 4).map((program: TProgramm, index: number) => (
                                 <div
                                     key={program._id}
-                                    className="bg-white p-5 rounded shadow-lg flex flex-col items-center transform transition-transform duration-300 hover:scale-105"
+                                    className="bg-white p-2 md:p-5 rounded shadow-lg flex flex-col items-center transform transition-transform duration-300 hover:scale-105 h-[180px] lg:h-auto "
                                 >
                                     <div className="mb-4">
-                                        <div className="w-16 h-16  md:h-20 md:w-20  rounded-full p-2 flex items-center justify-center shadow-lg transform transition-transform duration-300 hover:scale-110">
+                                        <div className="w-12 h-12  md:h-20 md:w-20  rounded-full p-2 flex items-center justify-center shadow-lg transform transition-transform duration-300 hover:scale-110">
                                             <Image
                                                 className="w-auto h-auto max-w-full max-h-full object-contain"
                                                 src={logo}
@@ -68,11 +69,11 @@ const ProgrammData: React.FC<programmProps> = ({ programmData, language }) => {
                                         </div>
                                     </div>
 
-                                    <h3 className="text-xl font-semibold mb-2">
+                                    <h3 className="text-[12px] md:text-xl font-semibold md:mb-2">
                                         {language === 'ENG' ? program.english_title : program.bangla_title}
 
                                     </h3>
-                                    <p className="text-gray-600">{language === 'ENG' ? program.english_short_description : program.bangla_short_description}</p>
+                                    <p className="text-[10px] md:text-sm text-gray-600">{language === 'ENG' ? truncateText(program.english_short_description, 80) : truncateText(program.bangla_short_description, 80)}</p>
                                 </div>
                             ))}
                         </div>

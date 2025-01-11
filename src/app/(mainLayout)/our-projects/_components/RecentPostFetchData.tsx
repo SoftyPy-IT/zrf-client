@@ -33,7 +33,7 @@ const RecentPostFetchData: React.FC<welcomeProps> = ({ projectData, language }) 
                 <Paper className='p-3 '>
 
                     <div className=" rounded ">
-                        <h3>{language === 'ENG' ? 'Recent Project' : 'সাম্প্রতিক প্রকল্প'}</h3>
+                        <h3>{language === 'ENG' ? 'Recent Projects' : 'সাম্প্রতিক প্রকল্প'}</h3>
                         <hr className="w-16 h-1 bg-gradient-to-r from-yellow-600 to-green-600 border-0 rounded-full mb-5" />
                         <div className="flex flex-col gap-3 mt-5">
                             {projectData?.slice(1, 5).map((data) => (

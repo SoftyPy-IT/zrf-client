@@ -34,6 +34,7 @@ const Home = () => {
       <Publications />
       <GallerySection />
     </div>
+
   );
 };
 

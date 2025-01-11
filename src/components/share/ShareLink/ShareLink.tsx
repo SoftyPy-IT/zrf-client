@@ -34,7 +34,7 @@ const ShareLink = () => {
                     <div className="flex gap-5 p-5">
                         <span onClick={handleOpen} className='cursor-pointer'><Share /> </span>
                         <span>Share</span>
-                        {/* <span className="cursor-pointer">
+                        <span className="cursor-pointer">
                             <Link href='https://www.facebook.com/webnpfamily'>
                                 <FacebookIcon fontSize="small" />
                             </Link>
@@ -50,7 +50,7 @@ const ShareLink = () => {
                         </span>
                         <span className="cursor-pointer">
                             <LinkedInIcon fontSize="small" />
-                        </span> */}
+                        </span>
                     </div>
                 </div>
             </div>

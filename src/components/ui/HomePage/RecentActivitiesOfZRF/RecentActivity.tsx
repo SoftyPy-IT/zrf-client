@@ -6,6 +6,7 @@ import EastIcon from "@mui/icons-material/East";
 import { TActivity } from "@/types/type";
 import truncateText from "@/utils/truncate";
 import { formatDate } from "@/utils/formateDate";
+import RecentActivityRightSide from "./RecentActivityRightSide";
 
 interface welcomeProps {
   activityData: TActivity[];
@@ -22,6 +23,10 @@ const RecentActivity: React.FC<welcomeProps> = ({ activityData, language }) => {
     const dateB = new Date(b.date).getTime();
     return dateB - dateA;
   });
+
+
+
+  
   return (
     <Container className="my-20">
       <h1 className="lg:text-3xl text-2xl font-bold uppercase">
@@ -79,52 +84,7 @@ const RecentActivity: React.FC<welcomeProps> = ({ activityData, language }) => {
             ))}
           </div>
         </div>
-
-        <div className=" lg:w-[500px]  w-full">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-5 bg-gray-100 p-5 lg:mt-0 md:mt-5 mt-5">
-            {activityFilterData?.slice(1, 5).map((data) => (
-              <div
-                key={data._id}
-                className="flex items-center gap-5 flex-col md:flex-row bg-white  lg:h-[100px] p-3 rounded shadow-md transition-transform duration-500 transform hover:scale-105"
-              >
-                {data.bng_Images?.slice(0, 1).map((img) => (
-                  <Image
-                    key={img}
-                    src={img}
-                    alt="news"
-                    className="w-full h-auto  md:w-20  object-cover rounded transition-opacity duration-500"
-                    width={0}
-                    height={0}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  />
-                ))}
-
-                <div>
-                  <h3 className="text-sm font-bold">
-                    {language === "ENG"
-                      ? truncateText(data.english_title, 60)
-                      : truncateText(data.bangla_title, 60)}
-                  </h3>
-
-                  <div className="flex justify-end">
-                    <Link href={`/recent-activities-of-zrf//${data._id}`}>
-                      <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-2 text-white rounded-full uppercase text-xs">
-                        <EastIcon />
-                      </button>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="mt-7 flex justify-end">
-            <Link href="/recent-activities-of-zrf">
-              <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-2 text-white rounded-full uppercase text-sm">
-                {language === "ENG" ? " See All" : "সব দেখুন"} <EastIcon />
-              </button>
-            </Link>
-          </div>
-        </div>
+        <RecentActivityRightSide activityFilterData={activityFilterData} language={language} />
       </div>
     </Container>
   );

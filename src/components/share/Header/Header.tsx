@@ -146,7 +146,7 @@ const Header = () => {
                   <ul className={`w-[240px] submenu  ${dropdown}`}>
                     <li className="lg:border-none border-b lg:py-0 py-2">
                       <Link href="/our-projects" onClick={closeMobileMenu}>  
-                        {language === 'ENG' ? 'Our Project' : 'আমাদের প্রকল্প'} 
+                        {language === 'ENG' ? 'Our Projects' : 'আমাদের প্রকল্প'} 
                       </Link>
                     </li>
                     <li className="lg:border-none border-b lg:py-0 py-2">

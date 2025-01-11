@@ -82,7 +82,7 @@ const renderContent = (content: string) => {
 const SingleCovid = ({ whatWedoData, language }: SingleWhatWeDoProps) => {
 
 
-    const title = language === 'ENG' ? 'Covid Program' : 'কোভিড কার্যক্রম'
+    const title = language === 'ENG' ? 'Covid Programs' : 'কোভিড কার্যক্রম'
     return (
         <>
             <CommonBanner title={title} />

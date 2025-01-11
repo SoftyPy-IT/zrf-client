@@ -15,7 +15,7 @@ interface projectProps {
 
 
 const ProjectData: React.FC<projectProps> = ({ projectData, language }) => {
-  const title = language === 'ENG' ? 'Our Project' : 'আমাদের প্রকল্প'
+  const title = language === 'ENG' ? 'Our Projects' : 'আমাদের প্রকল্প'
 
   const sortedProjectData = projectData?.sort((a: TProject, b: TProject) => {
     const dateA = new Date(a.date).getTime();

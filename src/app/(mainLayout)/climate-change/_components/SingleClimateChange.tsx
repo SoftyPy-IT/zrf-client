@@ -156,7 +156,7 @@ const renderContent = (content: string) => {
 
 const SingleClimateChange = ({ whatWedoData, language }: SingleWhatWeDoProps) => {
 
-    const title = language === 'ENG' ? 'Climate Change' : 'জলবায়ু পরিবর্তন'
+    const title = language === 'ENG' ? 'Climate Change Programs' : 'জলবায়ু পরিবর্তন কার্যক্রম'
 
     return (
         <>

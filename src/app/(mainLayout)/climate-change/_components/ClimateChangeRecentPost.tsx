@@ -21,7 +21,7 @@ const formatDate = (dateString: string | number | Date) => {
 }
 
 const ClimateChangeRecentPost: React.FC<EducationProps> = ({ whatWedoData, language }) => {
-    const RehabilitatinFilterData = whatWedoData.filter((edu) => edu.category === 'Covid')
+    const RehabilitatinFilterData = whatWedoData.filter((edu) => edu.category === 'Climate Change')
 
     return (
         <div>

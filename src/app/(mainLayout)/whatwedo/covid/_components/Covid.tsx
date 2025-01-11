@@ -18,7 +18,7 @@ interface CovidProps {
 
 const Covid: React.FC<CovidProps> = ({ covidData, language }) => {
 
-  const title = language === 'ENG' ? 'Covid Program' : 'কোভিড কার্যক্রম'
+  const title = language === 'ENG' ? 'Covid Programs' : 'কোভিড কার্যক্রম'
 
   const [visibleCount, setVisibleCount] = useState(6);
   const loadMore = () => {
