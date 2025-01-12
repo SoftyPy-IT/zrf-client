@@ -32,7 +32,7 @@ const ZRFInput = ({
   placeholder,
   required,
   variant = "outlined",
-  margin = "normal",
+  margin = "none",
   multiline = false,
   rows = 4,
   onChange,

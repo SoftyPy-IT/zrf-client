@@ -30,7 +30,7 @@ const MembershipForm = ({ onClose }: { onClose: () => void }) => {
     return (
         <ZRFForm onSubmit={handleSubmit}>
 
-            <Grid container spacing={2}>
+            <Grid container spacing={1}>
                 <Grid item xs={12} sm={12} md={12}>
                     <ZRFInput name="name" label={language === 'ENG' ? 'Name' : 'নাম'} size="medium" fullWidth />
                 </Grid>

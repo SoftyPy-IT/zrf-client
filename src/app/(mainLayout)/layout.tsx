@@ -3,6 +3,7 @@ import Header from "@/components/share/Header/Header";
 import { LanguageProvider } from "@/provider/LanguageProvider";
 import { ReactNode, Suspense } from "react";
 import dynamic from "next/dynamic";
+import Loader from "../loading";
 
 const CursorCustomize = dynamic(
   () => import("@/components/CursorCustomize/CursorCustomize"),
@@ -22,7 +23,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <LanguageProvider>
       <LandingPageProvider>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div><Loader /></div>}>
           <Header />
           {children}
           <CursorCustomize />

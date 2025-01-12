@@ -4,7 +4,7 @@ import "./globals.css";
 import Providers from "@/lib/Providers";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { Toaster } from "sonner";
-import { Noto_Sans_Bengali } from "next/font/google";
+import { Noto_Sans_Bengali, Baloo_Da_2 } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
@@ -16,6 +16,12 @@ export const metadata: Metadata = {
 const notoSansBengali = Noto_Sans_Bengali({
   subsets: ["bengali"],
   weight: ["400", "700"],
+  display: "swap",
+});
+
+const balooDa2 = Baloo_Da_2({
+  subsets: ["latin", "bengali"],
+  weight: ["400", "500", "700"],
   display: "swap",
 });
 
@@ -92,7 +98,7 @@ export default function RootLayout({
         />
       </head>
       <Providers>
-        <body className={`${inter.className} ${notoSansBengali.className}`}>
+        <body className={balooDa2.className}>
           <Toaster position="bottom-right" richColors />
           <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
         </body>

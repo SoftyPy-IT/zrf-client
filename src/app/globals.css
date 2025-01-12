@@ -1,5 +1,5 @@
 @import "~font-awesome/css/font-awesome.min.css";
-
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@400..800&family=Noto+Sans+Bengali:wght@100..900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,6 +10,12 @@
   box-sizing: border-box;
 }
 
+body {
+  overflow-x: hidden;
+  font-size: 16px;
+  font-family: "Baloo Da 2", serif;
+  font-optical-sizing: auto;
+}
 .sectionMargin {
   margin-top: 80px;
 }
@@ -128,15 +134,6 @@ Slider.css .slider-container {
   z-index: 10;
 }
 
-/* .sliderWrap:after {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  z-index: 99999;
-  background: #216740;
-  content: "";
-  opacity: 0.3;
-} */
 
 .overlay {
   opacity: 0;
