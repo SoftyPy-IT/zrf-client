@@ -134,16 +134,32 @@ const NewsData: React.FC<activityProps> = ({ activityData, language }) => {
             <div key={index}>
               <div className="shadow-lg  bg-gray-100  lg:h-[500px] md:h-[450px] relative">
                 <div className="relative h-[250px]">
-                  {data.bng_Images?.slice(0, 1).map((img) => (
-                    <Image
-                      width={500}
-                      height={500}
-                      key={img}
-                      src={img}
-                      alt=""
-                      className="h-[250px] object-cover"
-                    />
-                  ))}
+                  {
+                    language === 'ENG' ? (
+                      data.eng_images?.slice(0, 1).map((img) => (
+                        <Image
+                          width={500}
+                          height={500}
+                          key={img}
+                          src={img}
+                          alt=""
+                          className="h-[250px] object-cover"
+                        />
+                      ))
+                    ) : (
+                      data.bng_Images?.slice(0, 1).map((img) => (
+                        <Image
+                          width={500}
+                          height={500}
+                          key={img}
+                          src={img}
+                          alt=""
+                          className="h-[250px] object-cover"
+                        />
+                      ))
+                    )
+                  }
+
                 </div>
                 <div className="p-3  flex flex-col justify-between  ">
                   <div>
