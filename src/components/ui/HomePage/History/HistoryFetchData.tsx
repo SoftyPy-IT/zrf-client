@@ -146,7 +146,7 @@ const HistoryFetchData: React.FC<AboutProps> = ({ aboutData, language }) => {
                 ) : (
                   <>
                     <div className="content-right-container">
-                      <div className="content-right">
+                      <div className="content-left">
                         <div className="contentRightImgWrap">
                           {data.images?.slice(0, 1).map((img, idx) => (
                             <Image
@@ -161,7 +161,7 @@ const HistoryFetchData: React.FC<AboutProps> = ({ aboutData, language }) => {
                       </div>
                     </div>
                     <div className="content-left-container">
-                      <div className="content-left">
+                      <div className="content-right">
                         <h3 className="text-xl font-bold">
                           {language === "ENG"
                             ? data.title_english
