@@ -38,8 +38,8 @@ const Education: React.FC<EducationProps> = ({ whatWedoData, language }) => {
               }
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-green-600 via-yellow-600 to-transparent transition-transform transform translate-y-full group-hover:translate-y-0 duration-1000 ease-in-out h-[340px] md:h-[300px] lg:h-[300px]">
                 <div className="absolute inset-0 mt-20 flex flex-col justify-center items-center transition-opacity duration-300 group-hover:opacity-100 text-white p-4">
-                  <h2 className="text-xl font-bold mb-2">{data.english_title}</h2>
-                  <p className="text-sm mb-4 text-center">{data.bangla_short_description}</p>
+                  <h2 className="text-xl font-bold mb-2">{language == 'ENG' ? data.english_title: data.bangla_title}</h2>
+                  <p className="text-sm mb-4 text-center">{language === 'ENG' ? data.english_short_description: data.bangla_short_description}</p>
                   <Button
                     href={`/education/${data._id}`}
                     className=" hover:bg-blue-700 text-white py-2 px-4 rounded"

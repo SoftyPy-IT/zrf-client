@@ -158,7 +158,7 @@ const RecentEducation: React.FC<EducationProps> = ({ whatWedoData, language }) =
                                     }
                                     <div>
                                         <p className="text-xs">{formatDate(data.date)}</p>
-                                        <p className="text-sm">{data?.bangla_short_description}</p>
+                                        <p className="text-sm">{language === 'ENG' ? data?.english_short_description : data?.bangla_short_description}</p>
                                     </div>
                                 </div>
                             </Link>
