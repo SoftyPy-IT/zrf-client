@@ -77,7 +77,7 @@ const FeatureSlider: React.FC<projectProps> = ({ projectData, language }) => {
                       </button>
                     </Link>
                   </div>
-                  <div className="flex-none order-1 md:order-2 md:w-32 md:h-28 overflow-hidden">
+                  <div className="flex-none order-1 md:order-2 md:w-32  md:h-28 overflow-hidden">
                     {program.bng_Images?.slice(0, 1).map((img) => (
                       <Image
                         key={img}

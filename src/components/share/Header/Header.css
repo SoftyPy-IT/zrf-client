@@ -203,6 +203,7 @@
 }
 
 @media only screen and (max-width: 768px) {
+
   .activeBar,
   .bar1 {
     top: 36px;
@@ -222,6 +223,7 @@
 }
 
 @media only screen and (max-width: 500px) {
+
   .activeBar,
   .bar1 {
     top: 26px;
@@ -231,14 +233,18 @@
   .logo {
     width: 50px;
   }
-  .sliderContents {
 
-    left: 9px;
+  .sliderContents {
+    width: 100%;
+    left: 6px !important;
     padding: 0 7px;
+  }
 }
-}
+
+
 
 @media only screen and (max-width: 375px) {
+
   .activeBar,
   .bar1 {
     top: 29px;
@@ -276,13 +282,16 @@
 }
 
 @media only screen and (max-width: 320px) {
+
   .activeBar,
   .bar1 {
     top: 26px;
     right: -4px;
   }
-  .sliderContents {
-    left: 9px !important;
 
+
+  .sliderContents {
+    left: 10px;
+    padding: 5px !important;
 }
 }

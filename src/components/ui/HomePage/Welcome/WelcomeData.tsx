@@ -22,7 +22,7 @@ const WelcomeData: React.FC<welcomeProps> = ({ welcomeData, language }) => {
             <div className=" py-10 lg:pb-28 grid xl:grid-cols-2 2xl:grid-cols-2 mt-5 md:mt-14 lg:mt-0 mb-5 md:mb-8 lg:mb-0 text-center md:text-left xl:text-left lg:place-items-center">
                 {
                     welcomeFilterData?.map((data: TBanner) => (
-                        <div key={data._id}>
+                        <div key={data._id} className='order-2 md:order-1'>
                             <div className="h-full xl:w-[500px] mx-0 md:mx-5 lg:mx-0 mb-4 md:mb-0 lg:mb-0 space-y-3">
                                 <h4 className="text-2xl md:text-3xl lg:text-3xl font-bold">
 
@@ -60,7 +60,7 @@ const WelcomeData: React.FC<welcomeProps> = ({ welcomeData, language }) => {
                     ))
                 }
 
-                <div className="xl:-mt-0 hidden md:block ">
+                <div className="xl:-mt-0  md:block welcomGalleryWrap  order-1  md:order-2">
                     {/* -------------Main Images----------------- */}
                     <div className="mt-[60px] md:mt-[0px] lg:mt-[0px] xl:mt-[180px] 2xl:mt-[180px] ml-[15px] md:-ml-[5px] lg:ml-[450px] xl:ml-[290px] 2xl:ml-[300px] flex flex-col gap-10">
                         <div className="mt-[0px] md:mt-[40px] lg:mt-[100px] xl:-mt-[150px] 2xl:-mt-[180px] xl:-ml-[0px] ">
