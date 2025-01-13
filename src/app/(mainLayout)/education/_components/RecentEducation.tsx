@@ -24,6 +24,7 @@ const RecentPostFetchData: React.FC<educatoinProps> = ({ educationData, language
             return dateB - dateA;
         },
     );
+    
     return (
         <div className=" p-5 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
             <h3 className="text-xl font-semibold">{language === 'ENG' ? 'Popular Post' : 'জনপ্রিয় পোস্ট'}</h3>
