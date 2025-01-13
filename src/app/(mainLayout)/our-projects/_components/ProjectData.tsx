@@ -6,6 +6,7 @@ import EastIcon from "@mui/icons-material/East";
 import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 import { TProject } from "@/types/type";
 import { Button } from "@mui/material";
+import truncateText from "@/utils/truncate";
 
 
 interface projectProps {
@@ -37,16 +38,28 @@ const ProjectData: React.FC<projectProps> = ({ projectData, language }) => {
             <div key={index} className="w-full  px-4 mb-6">
               <div className="shadow-lg relative rounded-lg overflow-hidden lg:h-[500px] md:h-[450px] h-auto">
                 <div className="relative h-[200px] md:h-[250px]">
-                  {data.bng_Images?.slice(0, 1).map((img) => (
-                    <Image
-                      key={img}
-                      src={img}
-                      alt=""
-                      className="w-full h-full object-cover"
-                      width={500}
-                      height={500}
-                    />
-                  ))}
+
+                  {
+                    language === 'ENG' ? data.bng_Images?.slice(0, 1).map((img) => (
+                      <Image
+                        key={img}
+                        src={img}
+                        alt=""
+                        className="w-full h-full object-cover"
+                        width={500}
+                        height={500}
+                      />
+                    )) : data.eng_images?.slice(0, 1).map((img) => (
+                      <Image
+                        key={img}
+                        src={img}
+                        alt=""
+                        className="w-full h-full object-cover"
+                        width={500}
+                        height={500}
+                      />
+                    ))
+                  }
                 </div>
                 <div className="p-5 flex flex-col h-[calc(100%-250px)]">
                   <h3 className="text-lg md:text-xl font-semibold mb-3">
@@ -54,9 +67,9 @@ const ProjectData: React.FC<projectProps> = ({ projectData, language }) => {
                   </h3>
                   <p className="text-sm md:text-base text-justify flex-grow">
                     {language === "ENG"
-                      ? data.english_short_description?.slice(0, 150)
-                      : data.bangla_short_description?.slice(0, 150)}
-                    ...
+                      ? truncateText(data.english_short_description, 150)
+                      : truncateText(data.bangla_short_description, 150)}
+
                   </p>
                   <div className="flex justify-between mt-3 ">
                     <b>

@@ -1,14 +1,13 @@
 import React from "react";
 import Image from "next/image";
-import { TextField } from "@mui/material";
-import { TWhatWeDo } from "@/types/type";
+import { TActivity, TWhatWeDo } from "@/types/type";
 import Link from "next/link";
+import truncateText from "@/utils/truncate";
 
-interface EducationProps {
-    whatWedoData: TWhatWeDo[];
+interface healthServicesProps {
+    healthServicesData: TWhatWeDo[];
     language: string,
 }
-
 
 
 
@@ -20,47 +19,65 @@ const formatDate = (dateString: string | number | Date) => {
     return `${day}-${month}-${year}`;
 }
 
-const HealthServiceRecentpost: React.FC<EducationProps> = ({ whatWedoData, language }) => {
-    const RehabilitatinFilterData = whatWedoData.filter((edu) => edu.category === 'Health Services')
+const HealthServiceRecentpost: React.FC<healthServicesProps> = ({ healthServicesData, language }) => {
 
+    const sortedNewsData = healthServicesData?.sort(
+        (a: TActivity, b: TActivity) => {
+            const dateA = new Date(a.date).getTime();
+            const dateB = new Date(b.date).getTime();
+            return dateB - dateA;
+        },
+    );
     return (
-        <div>
+        <div className=" p-5 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
+            <h3 className="text-xl font-semibold">{language === 'ENG' ? 'Popular Post' : 'জনপ্রিয় পোস্ট'}</h3>
+            <hr className="w-16 h-1 bg-gradient-to-r from-yellow-600 to-green-600 border-0 rounded-full mb-5" />
+            <div className="flex flex-col  gap-y-3 gap-x-3 mt-5">
+                {sortedNewsData?.slice(1, 5).map((data) => (
+                    <div key={data._id}>
+                        <Link href={`/health-services/${data._id}`}>
+                            <div className="flex flex-col md:flex-row border rounded-md p-3  gap-2 ">
 
-           
 
-            <div className="bg-gray-100 p-5 rounded">
-                <h3>{language === 'ENG' ? 'Recent Post' : 'সাম্প্রতিক পোস্ট'}</h3>
-                <hr className="w-16 h-1 bg-gradient-to-r from-yellow-600 to-green-600 border-0 rounded-full mb-5" />
-                <div className="flex flex-col gap-3 mt-5">
-                    {RehabilitatinFilterData?.slice(1, 5).map((data) => (
-                        <div key={data._id}>
-                            <Link href={`/health-services/${data._id}`}>
-                                <div className="flex gap-5 ">
-                                    {
-                                        data.bng_Images?.slice(0, 1).map((img) => (
-                                            <div className="w-56 h-16" key={img}>
-                                                <Image
+                                {
+                                    data.bng_Images?.slice(0, 1).map((img) => (
+                                        <div className="relative w-full max-w-[14rem] aspect-[56/16] rounded-sm " key={img}>
+                                            {
+                                                language === 'ENG' ? (
+                                                    data.eng_images?.slice(0, 1).map((img) => (
+                                                        <Image
+                                                            key={img}
+                                                            src={img}
+                                                            alt=""
+                                                            fill
+                                                            className="object-cover"
+                                                        />
+                                                    ))
+                                                ) : (
+                                                    data.bng_Images?.slice(0, 1).map((img) => (
+                                                        <Image
+                                                            key={img}
+                                                            src={img}
+                                                            alt=""
+                                                            fill
+                                                            className="object-cover"
+                                                        />
+                                                    ))
+                                                )
+                                            }
+                                        </div>
+                                    ))
+                                }
 
-                                                    src={img}
-                                                    width={50}
-                                                    height={30}
-                                                    alt=""
-                                                    className="w-full h-full  object-contain"
-                                                />
-                                            </div>
-                                        ))
-                                    }
-                                    <div>
-                                        <p className="text-xs">{formatDate(data.date)}</p>
-                                        <p className="text-sm">{language === 'ENG' ? data.english_short_description?.slice(0, 100) : data.bangla_short_description?.slice(0, 100)}</p>
-                                    </div>
+                                <div>
+                                    <b className="text-xs">{formatDate(data.date)}</b>
+                                    <p className="text-sm">{language === 'ENG' ? truncateText(data.english_short_description, 80) : truncateText(data.bangla_short_description, 100)}</p>
                                 </div>
-                            </Link>
-                        </div>
-                    ))}
-                </div>
+                            </div>
+                        </Link>
+                    </div>
+                ))}
             </div>
-
         </div>
 
     );

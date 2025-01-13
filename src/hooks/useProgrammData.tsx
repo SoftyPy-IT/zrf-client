@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from "react";
-import { TEbook, TProgramm } from "@/types/type";
+import { TProgramm } from "@/types/type";
+import { activityFields } from "@/fields";
 
 export const useProgrammData = () => {
     const [programmData, setProgrammData] = useState<TProgramm[]>([]);
@@ -10,7 +11,7 @@ export const useProgrammData = () => {
     useEffect(() => {
         const fetchProgrammData = async () => {
             try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/programm?limit=1000`, {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/programm?limit=900000&fields=${activityFields}`, {
                     cache: "no-store",
                 });
                 const data = await response.json();

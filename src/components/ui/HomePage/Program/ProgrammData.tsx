@@ -7,7 +7,6 @@ import Image from "next/image";
 import "./Programm.css";
 import { TProgramm } from "@/types/type";
 import logo from '../../../../../src/assets/images/logo/16 by 16.svg'
-import { useState } from "react";
 import truncateText from "@/utils/truncate";
 interface programmProps {
     programmData: TProgramm[];
@@ -25,10 +24,6 @@ const ProgrammData: React.FC<programmProps> = ({ programmData, language }) => {
         },
     );
 
-    const [visibleCount, setVisibleCount] = useState(8);
-    const loadMore = () => {
-        setVisibleCount((prevCount) => prevCount + 8);
-    };
     return (
 
         <div className="my-20">

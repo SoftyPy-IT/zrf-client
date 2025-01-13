@@ -1,28 +1,55 @@
 "use client";
 import { useLanguage } from "@/provider/LanguageProvider";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AboutTopSectionData from "./AboutTopSectionData";
-import { useAboutData } from "@/hooks/useAboutData";
 import dynamic from "next/dynamic";
+import { TAbout } from "@/types/type";
+import axios from "axios";
 const Loader = dynamic(() => import("@/components/Loading/Loading"), {
   ssr: false,
 });
 
 const AboutTopSection = () => {
-  const { aboutData, loading, error } = useAboutData();
   const { language } = useLanguage();
+  const [aboutData, setAboutData] = useState<TAbout[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const categories = `About, Mission, Vision, Slogan`;
 
-  if (loading) {
+  useEffect(() => {
+    const fetchCovidData = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/about?category=${categories}`
+        );
+        setAboutData(res.data?.data?.abouts || []);
+      } catch (err) {
+        console.error("Error fetching climate change data:", err);
+        setError("Failed to load climate change data. Please try again later.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCovidData();
+  }, [categories]);
+
+  if (isLoading) {
     return <Loader />;
   }
+
   if (error) {
-    return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
+    return <h2>Oops! data not found.</h2>
   }
+
   return (
     <>
       <AboutTopSectionData language={language} aboutData={aboutData} />
     </>
   );
 };
+
 
 export default AboutTopSection;

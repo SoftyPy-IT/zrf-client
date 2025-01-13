@@ -22,8 +22,27 @@ function PublicationSlider() {
   const [activeIndex, setActiveIndex] = useState(0);
   const swiperRef = useRef<SwiperClass | null>(null);
   const { language } = useLanguage();
-  const { ebookData, loading, error } = useEbookData();
+  // const { ebookData, loading, error } = useEbookData();
+  const [ebookData, setEbookData] = useState<TEbook[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  useEffect(() => {
+    const fetchEbookData = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/ebook?limit=99999999&fields=images`, {
+          cache: "no-store",
+        });
+        const data = await response.json();
+        setEbookData(data.data?.ebooks || []);
+      } catch (err) {
+        setError("Failed to fetch eBook data!");
+      } finally {
+        setLoading(false);
+      }
+    };
 
+    fetchEbookData();
+  }, []);
   const updateIndex = useCallback(() => {
     if (swiperRef.current) {
       setActiveIndex(swiperRef.current.realIndex);
@@ -48,7 +67,6 @@ function PublicationSlider() {
   if (error) {
     return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
   }
-
   return (
     <div>
       <div>

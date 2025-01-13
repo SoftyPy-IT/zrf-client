@@ -23,13 +23,14 @@ const formatDate = (dateString: string | number | Date) => {
 const RecentActivityPost: React.FC<EducationProps> = ({ activityData, language }) => {
     const ActivityFilterData = activityData.filter((activity) => activity.category === 'Activity')
 
+
     return (
         <>
 
 
             <Paper className='p-3 ' >
 
-               
+
 
                 <div className=" p-5 rounded ">
                     <h3>{language === 'ENG' ? ' Recent Popular Activity' : 'সাম্প্রতিক জনপ্রিয় কার্যক্রম'} </h3>

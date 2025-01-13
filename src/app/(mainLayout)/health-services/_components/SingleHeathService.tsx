@@ -92,10 +92,8 @@ const SingleHeathService = ({ whatWedoData, language }: SingleWhatWeDoProps) => 
             <Container>
                 <div className="h-auto lg:flex gap-5">
                     <div className="w-full mt-2 lg:mt-0 lg:p-6">
-                 
+
                         <div className="relative w-full h-[200px] md:h-[400px] lg:h-[400px] mb-6">
-
-
                             {
                                 language === 'BNG' ? whatWedoData.bng_Images?.slice(0, 1).map((img) => (
                                     <Image

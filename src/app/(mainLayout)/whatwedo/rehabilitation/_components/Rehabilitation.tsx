@@ -14,7 +14,6 @@ interface EducationProps {
 
 
 const Rehabilitation: React.FC<EducationProps> = ({ whatWedoData, language }) => {
-  const educationFilterData = whatWedoData.filter((edu) => edu.category === 'ZRF Rehabilitation Team')
 
 
 
@@ -23,7 +22,7 @@ const Rehabilitation: React.FC<EducationProps> = ({ whatWedoData, language }) =>
     setVisibleCount((prevCount) => prevCount + 6);
   };
 
-  const sortedRehabilitationData = educationFilterData?.sort((a: TWhatWeDo, b: TWhatWeDo) => {
+  const sortedRehabilitationData = whatWedoData?.sort((a: TWhatWeDo, b: TWhatWeDo) => {
     const dateA = new Date(a.date).getTime();
     const dateB = new Date(b.date).getTime();
     return dateB - dateA;
@@ -35,7 +34,7 @@ const Rehabilitation: React.FC<EducationProps> = ({ whatWedoData, language }) =>
 
       <Container className="my-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
-          {educationFilterData?.slice(0, visibleCount).map((data, index: number) => (
+          {sortedRehabilitationData?.slice(0, visibleCount).map((data, index: number) => (
             <div
               key={index}
               className="relative group w-auto md:h-[450px] bg-white overflow-hidden transition-transform transform hover:scale-105 border"

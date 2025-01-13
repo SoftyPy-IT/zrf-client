@@ -153,7 +153,7 @@ const SingleRehabilitation = ({
 }: SingleProjectProps) => {
   return (
     <>
-      <CommonBanner title={language === "ENG" ? "News" : "খবর"} />
+      <CommonBanner title={language === "ENG" ? "Upcoming Programs" : "আসন্ন প্রোগ্রাম"} />
       <Container>
         <div className="h-auto lg:flex gap-5">
           <div className="w-full mt-2 lg:mt-0 lg:p-6">

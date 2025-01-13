@@ -10,33 +10,27 @@ interface CommitteProps {
 }
 
 const CommitteeFetchData: React.FC<CommitteProps> = ({ committeeData, language }) => {
-    const filterCommitteeData = committeeData.filter((volunteer) => volunteer.category === "Committee");
+    const sortedCommitteeData = committeeData
+        .sort((a, b) => {
+            const dateA = new Date(a.createdAt).getTime();
+            const dateB = new Date(b.createdAt).getTime();
+            return dateB - dateA;
+        })
+        .sort((a, b) => {
+            const committeeA = a.committee.toLowerCase();
+            const committeeB = b.committee.toLowerCase();
 
-    const sortedCommitteeData = filterCommitteeData.sort((a, b) => {
-        const dateA = new Date(a.createdAt).getTime();
-        const dateB = new Date(b.createdAt).getTime();
-        
-        return dateB - dateA; 
-    }).sort((a, b) => {
-        const committeeA = a.committee.toLowerCase();
-        const committeeB = b.committee.toLowerCase();
-    
-        if (committeeA === "board of directors") return -1;
-        if (committeeB === "board of directors") return 1;
-    
-        if (committeeA < committeeB) return -1;
-        if (committeeA > committeeB) return 1;
-    
-        if (committeeA === "") return -1;
-        if (committeeB === "") return 1;
-    
-        // Sort remaining committees alphabetically
-        if (committeeA < committeeB) return -1;
-        if (committeeA > committeeB) return 1;
-    
-        return 0;
-    });
-    
+            if (committeeA === "board of directors") return -1;
+            if (committeeB === "board of directors") return 1;
+
+            if (committeeA < committeeB) return -1;
+            if (committeeA > committeeB) return 1;
+
+            if (committeeA === "") return -1;
+            if (committeeB === "") return 1;
+
+            return 0;
+        });
 
     const committees = sortedCommitteeData.reduce((acc, profile) => {
         const committeeName = profile.committee;
@@ -75,6 +69,15 @@ const CommitteeFetchData: React.FC<CommitteProps> = ({ committeeData, language }
         );
     };
 
+    const getCommitteeName = (committeeName: string) => {
+        if (committeeName === "Board of Directors") {
+            return language === "ENG" ? "Board of Directors" : "পরিচালনা পর্ষদ";
+        } else if (committeeName === "Advisory Council") {
+            return language === "ENG" ? "Advisory Council" : "পরামর্শক পরিষদ";
+        }
+        return committeeName;
+    };
+
     return (
         <div>
             <CommitteeBanner language={language} />
@@ -83,16 +86,16 @@ const CommitteeFetchData: React.FC<CommitteProps> = ({ committeeData, language }
                     {Object.keys(committees).map((committeeName) => (
                         <div key={committeeName} className="mb-16">
                             <h2 className="text-3xl font-semibold text-center uppercase">
-                                {committeeName}
+                                {getCommitteeName(committeeName)}
                             </h2>
                             <div className="w-44 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-7 mx-auto"></div>
                             <div className="flex flex-wrap justify-center gap-10">
                                 {committees[committeeName].map((profile) => (
                                     <ProfileCard
                                         key={profile._id}
-                                        name={language === 'ENG' ? profile.english_name : profile.bangla_name}
+                                        name={language === "ENG" ? profile.english_name : profile.bangla_name}
                                         imageSrc={profile.images[0]}
-                                        designation={language === 'ENG' ? profile.designation_english : profile.designation_bangla}
+                                        designation={language === "ENG" ? profile.designation_english : profile.designation_bangla}
                                     />
                                 ))}
                             </div>

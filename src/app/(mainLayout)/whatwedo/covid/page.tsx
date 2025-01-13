@@ -3,22 +3,21 @@ import React, { useEffect, useState } from 'react';
 import Covid from './_components/Covid';
 import { useLanguage } from '@/provider/LanguageProvider';
 import axios from 'axios';
+import { whatwedoFields } from '@/fields';
 
 const Page = () => {
     const { language } = useLanguage();
-
     const [covidData, setCovidData] = useState(null);
-
     useEffect(() => {
         const fetchCovidData = async () => {
             try {
                 const res = await axios.get(
-                    `${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo?category=Covid`
+                    `${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo?category=Covid&fields=${whatwedoFields}`
                 );
                 setCovidData(res.data?.data?.
                     whatwedoes
                 );
-                console.log('Covid data:', res.data);
+
             } catch (err) {
                 console.log('Error fetching Covid data:', err);
             }
@@ -26,6 +25,8 @@ const Page = () => {
 
         fetchCovidData();
     }, []);
+
+
 
     return (
         <div>

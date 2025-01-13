@@ -33,7 +33,7 @@ const renderContent = (content: string) => {
                     {element.props.children}
                 </h2>
             );
-        }else if (element.type === "h4") {
+        } else if (element.type === "h4") {
             return (
                 <h2 key={index} className=" font-bold mb-2">
                     {element.props.children}
@@ -52,14 +52,14 @@ const renderContent = (content: string) => {
                 </b>
 
             );
-        }else if (element.type === "b") {
+        } else if (element.type === "b") {
             return (
                 <small key={index} className="text-sm">
                     {element.props.children}
                 </small>
 
             );
-        }else if (element.type === "b") {
+        } else if (element.type === "b") {
             return (
                 <span key={index} className="inline-block">
                     {element.props.children}
@@ -156,7 +156,7 @@ const renderContent = (content: string) => {
 const SingleWhatwedo = ({ whatWedoData, language }: SingleWhatWeDoProps) => {
 
 
-    const title = language === 'ENG' ? whatWedoData.english_title : whatWedoData.bangla_title 
+    const title = language === 'ENG' ? 'ZRF Education Programs' : 'জেডআরএফ শিক্ষা কার্যক্রম'
     return (
         <>
             <CommonBanner title={title} />
@@ -166,17 +166,31 @@ const SingleWhatwedo = ({ whatWedoData, language }: SingleWhatWeDoProps) => {
                     <div className="w-full mt-2 lg:mt-0 lg:p-6">
                         {/* Top Image */}
                         <div className="relative w-full   mb-6">
-                            {
-                                whatWedoData.bng_Images?.slice(0, 1).map((img) => (
-                                    <Image
-                                        width={500}
-                                        height={500}
-                                        key={img}
-                                        src={img}
-                                        alt="Top Image"
 
-                                        className="rounded-lg w-full h-full object-cover"
-                                    />
+                            {
+                                whatWedoData.bng_Images?.slice(0, 1).map(() => (
+                                    language === "ENG"
+                                        ? whatWedoData.eng_images?.slice(0, 1).map((img) => (
+                                            <Image
+                                                width={500}
+
+                                                height={500}
+                                                key={img}
+                                                src={img}
+                                                alt="Top Image"
+                                                className="rounded-lg w-full h-full object-cover"
+                                            />
+                                        ))
+                                        : whatWedoData.bng_Images?.slice(0, 1).map((img) => (
+                                            <Image
+                                                width={500}
+                                                height={500}
+                                                key={img}
+                                                src={img}
+                                                alt="education"
+                                                className="rounded-lg w-full h-full object-cover"
+                                            />
+                                        ))
                                 ))
                             }
                         </div>

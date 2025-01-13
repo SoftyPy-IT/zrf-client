@@ -1,8 +1,6 @@
 "use client";
 
 import React from "react";
-
-import { TProject } from "@/types/type";
 import { useLanguage } from "@/provider/LanguageProvider";
 import ProjectsFetchData from "./ProjectsFetchData";
 import { useProjectdata } from "@/hooks/useProjectdata";
@@ -14,7 +12,6 @@ const Loader = dynamic(() => import("@/components/Loading/Loading"), {
 const OurProjects = () => {
   const { language } = useLanguage();
   const { projectData, loading, error } = useProjectdata();
-
   if (loading) {
     return <Loader />;
   }
@@ -28,5 +25,4 @@ const OurProjects = () => {
     </>
   );
 };
-
 export default OurProjects;

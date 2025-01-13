@@ -1,114 +1,13 @@
 import React from "react";
 import Image from "next/image";
-import { TextField } from "@mui/material";
-import ReactHtmlParser from "react-html-parser";
-import { TWhatWeDo } from "@/types/type";
+import { TActivity, TProject, TWhatWeDo, } from "@/types/type";
 import Link from "next/link";
+import truncateText from "@/utils/truncate";
 
-interface EducationProps {
-    whatWedoData: TWhatWeDo[];
+interface educatoinProps {
+    educationData: TWhatWeDo[];
     language: string,
 }
-
-const renderContent = (content: string) => {
-    const parsedContent = ReactHtmlParser(content);
-
-    return parsedContent.map((element, index) => {
-        if (element.type === "h1") {
-            return (
-                <h1 key={index} className="text-2xl font-bold mb-2">
-                    {element.props.children}
-                </h1>
-            );
-        } else if (element.type === "h2") {
-            return (
-                <h2 key={index} className="text-xl font-bold mb-2">
-                    {element.props.children}
-                </h2>
-            );
-        } else if (element.type === "h3") {
-            return (
-                <h3 key={index} className="text-lg font-bold mb-2">
-                    {element.props.children}
-                </h3>
-            );
-        } else if (element.type === "img") {
-            return (
-                <div key={index} className="w-[700px] h-[400px]">
-                    <Image
-
-                        src={element.props.src}
-                        alt="this is image"
-                        className="mb-2"
-                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                    />
-                </div>
-            );
-        }
-        else if (element.type === "p") {
-            return (
-                <p key={index} className="mb-2">
-                    {element.props.children}
-                </p>
-            );
-        } else if (element.type === "video") {
-            return (
-                <video
-                    key={index}
-                    className="w-full h-auto mb-4"
-                    controls
-                    src={element.props.src}
-                >
-                    Your browser does not support the video tag.
-                </video>
-            );
-        } else if (element.type === "iframe") {
-            return (
-                <iframe
-                    key={index}
-                    className="w-full h-[500px] mb-4"
-                    src={element.props.src}
-                    title={`iframe-${index}`}
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                ></iframe>
-            );
-        } else if (
-            element.type === "div" &&
-            element.props.className === "ql-align-center"
-        ) {
-            return (
-                <div key={index} className="text-center mb-2">
-                    {element.props.children}
-                </div>
-            );
-        } else if (
-            element.type === "div" &&
-            element.props.className === "ql-align-right"
-        ) {
-            return (
-                <div key={index} className="text-right mb-2">
-                    {element.props.children}
-                </div>
-            );
-        } else if (
-            element.type === "div" &&
-            element.props.className === "ql-align-left"
-        ) {
-            return (
-                <div key={index} className="text-left mb-2">
-                    {element.props.children}
-                </div>
-            );
-        } else {
-            return null;
-        }
-    });
-};
-
-
-
 const formatDate = (dateString: string | number | Date) => {
     const date = new Date(dateString);
     const day = date.getDate().toString().padStart(2, "0");
@@ -117,59 +16,66 @@ const formatDate = (dateString: string | number | Date) => {
     return `${day}-${month}-${year}`;
 }
 
-const RecentEducation: React.FC<EducationProps> = ({ whatWedoData, language }) => {
-    const educationFilterData = whatWedoData.filter((edu) => edu.category === 'ZRF Education Programm')
-
+const RecentPostFetchData: React.FC<educatoinProps> = ({ educationData, language }) => {
+    const sortedNewsData = educationData?.sort(
+        (a: TWhatWeDo, b: TWhatWeDo) => {
+            const dateA = new Date(a.date).getTime();
+            const dateB = new Date(b.date).getTime();
+            return dateB - dateA;
+        },
+    );
     return (
-        <div>
+        <div className=" p-5 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
+            <h3 className="text-xl font-semibold">{language === 'ENG' ? 'Popular Post' : 'জনপ্রিয় পোস্ট'}</h3>
+            <hr className="w-16 h-1 bg-gradient-to-r from-yellow-600 to-green-600 border-0 rounded-full mb-5" />
+            <div className="flex flex-col  gap-y-3 gap-x-3 mt-5">
+                {sortedNewsData?.slice(1, 5).map((data) => (
+                    <div key={data._id}>
+                        <Link href={`/education/${data._id}`}>
+                            <div className="flex flex-col md:flex-row border rounded-md p-3  gap-2 ">
 
-            <div className="bg-gray-100 p-5 rounded mb-5">
-                <TextField
-                    id="outlined-basic"
-                    label="Search Here"
-                    variant="outlined"
-                    fullWidth
-                    size="small"
-                    className="bg-white"
-                />
-            </div>
+                                {
+                                    data.bng_Images?.slice(0, 1).map((img) => (
+                                        <div className="relative w-full max-w-[14rem] aspect-[56/16] rounded-sm " key={img}>
+                                            {
+                                                language === 'ENG' ? (
+                                                    data.eng_images?.slice(0, 1).map((img) => (
+                                                        <Image
+                                                            key={img}
+                                                            src={img}
+                                                            alt=""
+                                                            fill
+                                                            className="object-cover"
+                                                        />
+                                                    ))
+                                                ) : (
+                                                    data.bng_Images?.slice(0, 1).map((img) => (
+                                                        <Image
+                                                            key={img}
+                                                            src={img}
+                                                            alt=""
+                                                            fill
+                                                            className="object-cover"
+                                                        />
+                                                    ))
+                                                )
+                                            }
+                                        </div>
+                                    ))
+                                }
 
-            <div className="bg-gray-100 p-5 rounded mt-10">
-                <h3>{language === 'ENG' ? 'Popular Post' : 'জনপ্রিয় পোস্ট'}</h3>
-                <hr className="w-16 h-1 bg-gradient-to-r from-yellow-600 to-green-600 border-0 rounded-full mb-5" />
-                <div className="flex flex-col gap-3 mt-5">
-                    {educationFilterData?.slice(0, 5).map((data) => (
-                        <div key={data._id}>
-                            <Link href={`/education/${data._id}`}>
-                                <div className="flex">
-                                    {
-                                        data.bng_Images?.slice(0, 1).map((img) => (
-                                            <div className="w-56 h-16" key={img}>
-                                                <Image
-
-                                                    src={img}
-                                                    width={50}
-                                                    height={30}
-                                                    alt=""
-                                                    className="w-full h-full  object-contain"
-                                                />
-                                            </div>
-                                        ))
-                                    }
-                                    <div>
-                                        <p className="text-xs">{formatDate(data.date)}</p>
-                                        <p className="text-sm">{language === 'ENG' ? data?.english_short_description : data?.bangla_short_description}</p>
-                                    </div>
+                                <div>
+                                    <b className="text-xs">{formatDate(data.date)}</b>
+                                    <p className="text-sm">{language === 'ENG' ? truncateText(data.english_short_description, 80) : truncateText(data.bangla_short_description, 100)}</p>
                                 </div>
-                            </Link>
-                        </div>
-                    ))}
-                </div>
+                            </div>
+                        </Link>
+                    </div>
+                ))}
             </div>
-
         </div>
 
     );
 };
 
-export default RecentEducation;
+export default RecentPostFetchData;

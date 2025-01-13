@@ -1,15 +1,13 @@
-/* eslint-disable @next/next/no-img-element */
-import { TProject } from '@/types/type';
-import { Paper, TextField } from '@mui/material';
-import Image from 'next/image';
-import Link from 'next/link';
-import React from 'react';
-import ReactHtmlParser from "react-html-parser";
+import React from "react";
+import Image from "next/image";
+import { TActivity, TProject, } from "@/types/type";
+import Link from "next/link";
+import truncateText from "@/utils/truncate";
 
-
-
-
-
+interface projectProps {
+    projectData: TProject[];
+    language: string,
+}
 const formatDate = (dateString: string | number | Date) => {
     const date = new Date(dateString);
     const day = date.getDate().toString().padStart(2, "0");
@@ -18,56 +16,65 @@ const formatDate = (dateString: string | number | Date) => {
     return `${day}-${month}-${year}`;
 }
 
-interface welcomeProps {
-    projectData: TProject[];
-    language: string,
-}
-const RecentPostFetchData: React.FC<welcomeProps> = ({ projectData, language }) => {
-
+const RecentPostFetchData: React.FC<projectProps> = ({ projectData, language }) => {
+    const sortedNewsData = projectData?.sort(
+        (a: TProject, b: TProject) => {
+            const dateA = new Date(a.date).getTime();
+            const dateB = new Date(b.date).getTime();
+            return dateB - dateA;
+        },
+    );
     return (
-        <div>
+        <div className=" p-5 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
+            <h3 className="text-xl font-semibold">{language === 'ENG' ? 'Popular Post' : 'জনপ্রিয় পোস্ট'}</h3>
+            <hr className="w-16 h-1 bg-gradient-to-r from-yellow-600 to-green-600 border-0 rounded-full mb-5" />
+            <div className="flex flex-col  gap-y-3 gap-x-3 mt-5">
+                {sortedNewsData?.slice(1, 5).map((data) => (
+                    <div key={data._id}>
+                        <Link href={`/our-projects/${data._id}`}>
+                            <div className="flex flex-col md:flex-row border rounded-md p-3  gap-2 ">
 
-
-            <div className='w-full lg:w-[450px]'>
-
-                <Paper className='p-3 '>
-
-                    <div className=" rounded ">
-                        <h3>{language === 'ENG' ? 'Recent Projects' : 'সাম্প্রতিক প্রকল্প'}</h3>
-                        <hr className="w-16 h-1 bg-gradient-to-r from-yellow-600 to-green-600 border-0 rounded-full mb-5" />
-                        <div className="flex flex-col gap-3 mt-5">
-                            {projectData?.slice(1, 5).map((data) => (
-                                <div key={data._id} className="bg-white p-3 rounded-lg  hover:shadow-xl transition-shadow duration-300">
-                                    <Link href={`/our-projects/${data._id}`}>
-                                        <div className="flex gap-5">
+                                {
+                                    data.bng_Images?.slice(0, 1).map((img) => (
+                                        <div className="relative w-full max-w-[14rem] aspect-[56/16] rounded-sm " key={img}>
                                             {
-                                                data.bng_Images?.slice(0, 1).map((img) => (
-                                                    <div className='w-56 h-16' key={img}>
+                                                language === 'ENG' ? (
+                                                    data.eng_images?.slice(0, 1).map((img) => (
                                                         <Image
+                                                            key={img}
                                                             src={img}
-                                                            width={50}
-                                                            height={30}
                                                             alt=""
-                                                            className="w-full h-full object-contain rounded-lg"
+                                                            fill
+                                                            className="object-cover"
                                                         />
-                                                    </div>
-                                                ))
+                                                    ))
+                                                ) : (
+                                                    data.bng_Images?.slice(0, 1).map((img) => (
+                                                        <Image
+                                                            key={img}
+                                                            src={img}
+                                                            alt=""
+                                                            fill
+                                                            className="object-cover"
+                                                        />
+                                                    ))
+                                                )
                                             }
-                                            <div>
-                                                <p className="text-xs text-gray-500">{formatDate(data.date)}</p>
-                                                <p className="text-sm font-medium text-gray-700">{language === 'ENG' ? data.english_short_description?.slice(0, 100) : data.bangla_short_description?.slice(0, 100)}</p>
-                                            </div>
                                         </div>
-                                    </Link>
+                                    ))
+                                }
+
+                                <div>
+                                    <b className="text-xs">{formatDate(data.date)}</b>
+                                    <p className="text-sm">{language === 'ENG' ? truncateText(data.english_short_description, 80) : truncateText(data.bangla_short_description, 100)}</p>
                                 </div>
-                            ))}
-                        </div>
-
+                            </div>
+                        </Link>
                     </div>
-
-                </Paper>
+                ))}
             </div>
         </div>
+
     );
 };
 

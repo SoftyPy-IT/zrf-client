@@ -26,7 +26,6 @@ const RecentActivityRightSide = ({ activityFilterData, language }: welcomeProps)
     const displayedData = isLargeScreen
         ? activityFilterData?.slice(1, 5)
         : activityFilterData?.slice(1, 3);
-
     return (
         <div className="lg:w-[500px] w-full">
             <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-1 gap-5 bg-gray-100 md:p-5 p-3 lg:mt-0 md:mt-5 mt-5">

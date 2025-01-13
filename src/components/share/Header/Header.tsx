@@ -96,13 +96,13 @@ const Header = () => {
                   }`}
               >
                 <li className="lg:border-none border-b lg:py-0 py-1">
-                  <Link href="/" onClick={closeMobileMenu}> 
+                  <Link href="/" onClick={closeMobileMenu}>
                     {language === 'ENG' ? 'Home' : 'প্রচ্ছদ'}
                   </Link>
                 </li>
                 <li className="dropdownMenuWrap relative">
                   <Link href="#">
-                    {language === 'ENG' ? 'Who We Are' : 'আমাদের সম্পর্কে'}   
+                    {language === 'ENG' ? 'Who We Are' : 'আমাদের সম্পর্কে'}
                     <KeyboardArrowDownIcon />
                   </Link>
                   <ul className={`w-[290px] h-[160px]  ${dropdown}`}>
@@ -123,7 +123,7 @@ const Header = () => {
                     </li>
                     <li>
                       <Link href="/committee" onClick={closeMobileMenu}>
-                        {language === 'ENG' ? 'Committee' : 'কমিটি'} 
+                        {language === 'ENG' ? 'Committee' : 'কমিটি'}
                       </Link>
                     </li>
                     <li>
@@ -133,24 +133,24 @@ const Header = () => {
                     </li>
                     <li>
                       <Link href="/volunteer" onClick={closeMobileMenu}>
-                        {language === 'ENG' ? 'Our Volunteers' : 'আমাদের স্বেচ্ছাসেবক'}  
+                        {language === 'ENG' ? 'Our Volunteers' : 'আমাদের স্বেচ্ছাসেবক'}
                       </Link>
                     </li>
                   </ul>
                 </li>
                 <li className="dropdownMenuWrap relative">
                   <Link href="#" >
-                    {language === 'ENG' ? 'What We Do' : 'আমাদের কার্যক্রম'}  
+                    {language === 'ENG' ? 'What We Do' : 'আমাদের কার্যক্রম'}
                     <KeyboardArrowDownIcon />
                   </Link>
                   <ul className={`w-[240px] submenu  ${dropdown}`}>
                     <li className="lg:border-none border-b lg:py-0 py-2">
-                      <Link href="/our-projects" onClick={closeMobileMenu}>  
-                        {language === 'ENG' ? 'Our Projects' : 'আমাদের প্রকল্প'} 
+                      <Link href="/our-projects" onClick={closeMobileMenu}>
+                        {language === 'ENG' ? 'Our Projects' : 'আমাদের প্রকল্প'}
                       </Link>
                     </li>
                     <li className="lg:border-none border-b lg:py-0 py-2">
-                      <Link href="/education" onClick={closeMobileMenu}>  
+                      <Link href="/education" onClick={closeMobileMenu}>
                         {language === 'ENG' ? 'ZRF Education Programs' : 'জেডআরএফ শিক্ষা কার্যক্রম'}
                       </Link>
                     </li>
@@ -160,13 +160,13 @@ const Header = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link href="/whatwedo/covid" onClick={closeMobileMenu}> 
-                        {language === 'ENG' ? 'Covid Programs ' : 'কোভিড কার্যক্রম'} 
+                      <Link href="/whatwedo/covid" onClick={closeMobileMenu}>
+                        {language === 'ENG' ? 'Covid Programs ' : 'কোভিড কার্যক্রম'}
                       </Link>
                     </li>
                     <li className="lg:border-none border-b lg:py-0 py-2">
                       <Link href="/climate-change" onClick={closeMobileMenu}>
-                        {language === 'ENG' ? 'Climate Change Programs ' : 'জলবায়ু পরিবর্তন কার্যক্রম'} 
+                        {language === 'ENG' ? 'Climate Change Programs ' : 'জলবায়ু পরিবর্তন কার্যক্রম'}
                       </Link>
                     </li>
                     <li className="lg:border-none border-b lg:py-0 py-2">
@@ -182,7 +182,7 @@ const Header = () => {
                     </li>
                     <li>
                       <Link href="/program" onClick={closeMobileMenu}>
-                        {language === 'ENG' ? 'Our Programs' : 'আমাদের কর্মসূচি'} 
+                        {language === 'ENG' ? 'Our Programs' : 'আমাদের কর্মসূচি'}
                       </Link>
                     </li>
                   </ul>
@@ -194,13 +194,13 @@ const Header = () => {
                 </li>
 
                 <li className="lg:border-none border-b lg:py-0 py-2">
-                  <Link href="/ebooks" onClick={closeMobileMenu}> 
-                    {language === 'ENG' ? 'E-Books' : 'ই-বুক'} 
+                  <Link href="/ebooks" onClick={closeMobileMenu}>
+                    {language === 'ENG' ? 'E-Books' : 'ই-বুক'}
                   </Link>
                 </li>
                 <li className="lg:border-none border-b lg:py-0 py-2">
-                  <Link href="/news" onClick={closeMobileMenu}> 
-                    {language === 'ENG' ? 'News' : 'খবর'}
+                  <Link href="/news" onClick={closeMobileMenu}>
+                    {language === 'ENG' ? 'Upcoming Programs' : 'আসন্ন প্রোগ্রাম'}
                   </Link>
                 </li>
               </ul>

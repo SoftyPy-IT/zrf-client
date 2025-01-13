@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from "react";
 import Container from "@/components/share/Container";
 import Image from "next/image";
@@ -7,14 +8,15 @@ import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 import { TActivity } from "@/types/type";
 import { formatDate } from "@/utils/formateDate";
 import { Button } from "@mui/material";
+import truncateText from "@/utils/truncate";
+import Loader from "@/app/loading";
+import { useLanguage } from "@/provider/LanguageProvider";
 
-interface EducationProps {
-    activityData: TActivity[];
-    language: string,
-}
+import { useActivityData } from "@/hooks/useActivityData";
 
-
-const ActivityFetchData: React.FC<EducationProps> = ({ activityData, language }) => {
+const ActivityFetchData = () => {
+    const { activityData, loading, error } = useActivityData()
+    const { language } = useLanguage();
     const activityFilterData = activityData.filter((activity) => activity.category === 'Activity')
     const [visibleCount, setVisibleCount] = useState(6);
     const loadMore = () => {
@@ -25,6 +27,12 @@ const ActivityFetchData: React.FC<EducationProps> = ({ activityData, language })
         const dateB = new Date(b.date).getTime();
         return dateB - dateA;
     });
+    if (loading) {
+        return <Loader />;
+    }
+    if (error) {
+        return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
+    }
 
 
     return (
@@ -36,7 +44,16 @@ const ActivityFetchData: React.FC<EducationProps> = ({ activityData, language })
                         <div key={data._id} className="shadow-xl bg-white overflow-hidden">
                             <div className="relative">
                                 {
-                                    data.bng_Images?.slice(0, 1).map((img) => (
+                                    language === 'ENG' ? data.bng_Images?.slice(0, 1).map((img) => (
+                                        <Image
+                                            width={500}
+                                            height={500}
+                                            key={img}
+                                            src={img}
+                                            alt={data.english_title}
+                                            className="h-[250px] w-full object-cover transition-transform duration-500 transform hover:scale-105"
+                                        />
+                                    )) : data.eng_images?.slice(0, 1).map((img) => (
                                         <Image
                                             width={500}
                                             height={500}
@@ -49,7 +66,7 @@ const ActivityFetchData: React.FC<EducationProps> = ({ activityData, language })
                                 }
                             </div>
                             <div className="p-5 space-y-5">
-                                <h3 className="text-xl font-bold">{language == 'ENG' ? data.english_title.slice(0, 60) : data.bangla_title?.slice(0, 60)}</h3>
+                                <h3 className="text-xl font-bold">{language == 'ENG' ? truncateText(data.english_title, 60) : truncateText(data.bangla_title, 60)}</h3>
                                 <p className="text-justify">
                                     {language == 'ENG' ? data.english_short_description?.slice(0, 150) : data.bangla_short_description?.slice(0, 150)}...
                                 </p>

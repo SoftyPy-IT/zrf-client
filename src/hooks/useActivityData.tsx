@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from "react";
-import { TAbout, TActivity,  } from "@/types/type";
+import { TActivity, } from "@/types/type";
+import { activityFields } from "@/fields";
 
 export const useActivityData = () => {
     const [activityData, setActivityData] = useState<TActivity[]>([]);
@@ -10,7 +11,7 @@ export const useActivityData = () => {
     useEffect(() => {
         const fetchActivityData = async () => {
             try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/activity?limit=1000`, {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/activity?limit=99999999&fields=${activityFields}`, {
                     cache: "no-store",
                 });
                 const data = await response.json();
@@ -25,5 +26,5 @@ export const useActivityData = () => {
         fetchActivityData();
     }, []);
 
-    return {  activityData, loading, error };
+    return { activityData, loading, error };
 };

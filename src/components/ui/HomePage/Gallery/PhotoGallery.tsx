@@ -14,6 +14,7 @@ const Loader = dynamic(() => import("@/components/Loading/Loading"), {
   ssr: false,
 });
 
+
 const PhotoGallery = () => {
   const [galleryData, setGalleryData] = React.useState<TImgGallery[]>([]);
   const [loading, setLoading] = React.useState(true);
@@ -70,21 +71,21 @@ const PhotoGallery = () => {
         >
           {galleryData.map((gallery, index) => (
             <SwiperSlide key={gallery._id || index}>
-              <div className="relative w-full h-64 md:h-80 bg-gray-200 overflow-hidden">
-                {gallery.thumnailImages?.slice(0, 1).map((img, idx) => {
-                  return (
-                    <Image
-                      key={idx}
-                      src={img}
-                      alt="gallery"
-                      width={500}
-                      height={500}
-                      className="w-full h-full object-cover"
-                      layout="responsive"
-                    />
-                  );
-                })}
+              <div className="relative w-full h-64 md:h-[400px] bg-gray-200 overflow-hidden rounded-lg aspect-w-16 aspect-h-9 ">
+                {/* <div className="aspect-w-16 aspect-h-9"> */}
+                {gallery.thumnailImages?.slice(0, 1).map((img, idx) => (
+                  <Image
+                    key={idx}
+                    src={img}
+                    alt="gallery"
+                    width={500}
+                    height={500}
+                    className="w-full h-full object-cover rounded-md "
+                    sizes="(max-width: 768px) 100vw, 50vw "
+                  />
+                ))}
               </div>
+
             </SwiperSlide>
           ))}
         </Swiper>

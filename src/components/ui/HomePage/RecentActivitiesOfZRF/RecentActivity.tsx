@@ -7,13 +7,16 @@ import { TActivity } from "@/types/type";
 import truncateText from "@/utils/truncate";
 import { formatDate } from "@/utils/formateDate";
 import RecentActivityRightSide from "./RecentActivityRightSide";
+// const Loader = dynamic(() => import("@/components/Loading/Loading"), {
+//   ssr: false,
+// });
 
-interface welcomeProps {
+interface ActivityProps {
   activityData: TActivity[];
   language: string;
 }
 
-const RecentActivity: React.FC<welcomeProps> = ({ activityData, language }) => {
+const RecentActivity: React.FC<ActivityProps> = ({ activityData, language }) => {
   const activityFilterData = activityData?.filter(
     (welcome: any) => welcome.category === "Activity",
   );
@@ -26,7 +29,6 @@ const RecentActivity: React.FC<welcomeProps> = ({ activityData, language }) => {
 
 
 
-  
   return (
     <Container className="my-20">
       <h1 className="lg:text-3xl text-2xl font-bold uppercase">
@@ -44,17 +46,27 @@ const RecentActivity: React.FC<welcomeProps> = ({ activityData, language }) => {
                 className="relative shadow-xl bg-white overflow-hidden group hover:text-white"
               >
                 <div className="relative">
-                  {data.bng_Images?.slice(0, 1).map((img) => (
-                    <>
+                  {
+                    language === 'ENG' ? data.bng_Images?.slice(0, 1).map((img) => (
                       <Image
+                        key={img}
                         width={500}
                         height={500}
                         src={img}
                         alt="activity"
                         className="h-[250px] w-full object-cover transition-transform duration-500 transform group-hover:scale-105"
                       />
-                    </>
-                  ))}
+                    )) : data.eng_images?.slice(0, 1).map((img) => (
+                      <Image
+                        key={img}
+                        width={500}
+                        height={500}
+                        src={img}
+                        alt="activity"
+                        className="h-[250px] w-full object-cover transition-transform duration-500 transform group-hover:scale-105"
+                      />
+                    ))
+                  }
                 </div>
 
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-green-600 via-yellow-600 to-transparent transition-transform transform translate-y-full group-hover:translate-y-0 duration-1000 ease-in-out h-[340px] md:h-[300px] lg:h-[500px]"></div>
@@ -84,7 +96,7 @@ const RecentActivity: React.FC<welcomeProps> = ({ activityData, language }) => {
             ))}
           </div>
         </div>
-        <RecentActivityRightSide activityFilterData={activityFilterData} language={language} />
+        <RecentActivityRightSide activityFilterData={sortedActivityData} language={language} />
       </div>
     </Container>
   );

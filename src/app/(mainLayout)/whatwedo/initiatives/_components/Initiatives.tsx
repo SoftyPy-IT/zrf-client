@@ -11,18 +11,17 @@ import Link from "next/link";
 import EastIcon from "@mui/icons-material/East";
 
 interface CovidProps {
-    whatWedoData: TWhatWeDo[];
+    initiativeData: TWhatWeDo[];
     language: string,
 }
 
-const Initiatives: React.FC<CovidProps> = ({ whatWedoData, language }) => {
-    const initiativeFilterData = whatWedoData.filter((edu) => edu.category === 'Initiatives')
+const Initiatives: React.FC<CovidProps> = ({ initiativeData, language }) => {
     const [visibleCount, setVisibleCount] = useState(6);
     const loadMore = () => {
         setVisibleCount((prevCount) => prevCount + 6);
     };
 
-    const sortedInitiativeData = initiativeFilterData?.sort((a: TWhatWeDo, b: TWhatWeDo) => {
+    const sortedInitiativeData = initiativeData?.sort((a: TWhatWeDo, b: TWhatWeDo) => {
         const dateA = new Date(a.date).getTime();
         const dateB = new Date(b.date).getTime();
         return dateB - dateA;
@@ -66,7 +65,7 @@ const Initiatives: React.FC<CovidProps> = ({ whatWedoData, language }) => {
                                         </div>
                                         <p className="text-justify  text-sm "> {language == 'ENG' ? data.english_short_description?.slice(0, 200) : data.bangla_short_description?.slice(0, 200)}... </p>
 
-                                        
+
                                         <div className="flex justify-between mt-3 w-full items-center ">
                                             <b>
                                                 {formatDate(data.date)}

@@ -26,5 +26,4 @@ const Publication = () => {
     </Container>
   );
 };
-
 export default Publication;

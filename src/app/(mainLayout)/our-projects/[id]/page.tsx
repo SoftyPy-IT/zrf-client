@@ -19,13 +19,13 @@ const Project = ({ params }: PressId) => {
   const { id } = params;
 
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true); // Start loading
-      setError(null); // Reset error state
+      setLoading(true); 
+      setError(null);
       try {
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_BASE_API_URL}/project/${id}`,
@@ -39,7 +39,7 @@ const Project = ({ params }: PressId) => {
       } catch (error) {
         setError("An error occurred while fetching data.");
       } finally {
-        setLoading(false); // End loading
+        setLoading(false); 
       }
     };
 

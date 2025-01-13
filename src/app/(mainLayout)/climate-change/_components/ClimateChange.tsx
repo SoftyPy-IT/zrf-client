@@ -11,13 +11,10 @@ import Link from "next/link";
 import EastIcon from "@mui/icons-material/East";
 
 interface CovidProps {
-    whatWedoData: TWhatWeDo[];
+    climateChangeData: TWhatWeDo[] | null;
     language: string,
 }
-
-
-const ClimateChange: React.FC<CovidProps> = ({ whatWedoData, language }) => {
-    const climateFilterData = whatWedoData.filter((edu) => edu.category === 'Climate Change')
+const ClimateChange: React.FC<CovidProps> = ({ climateChangeData, language }) => {
 
     const title = language === 'ENG' ? 'Climate Change Programs' : 'জলবায়ু পরিবর্তন কার্যক্রম'
 
@@ -26,7 +23,7 @@ const ClimateChange: React.FC<CovidProps> = ({ whatWedoData, language }) => {
         setVisibleCount((prevCount) => prevCount + 6);
     };
 
-    const sortedClimateChangeData = climateFilterData?.sort((a: TWhatWeDo, b: TWhatWeDo) => {
+    const sortedClimateChangeData = climateChangeData?.sort((a: TWhatWeDo, b: TWhatWeDo) => {
         const dateA = new Date(a.date).getTime();
         const dateB = new Date(b.date).getTime();
         return dateB - dateA;
@@ -104,11 +101,17 @@ const ClimateChange: React.FC<CovidProps> = ({ whatWedoData, language }) => {
                     ))}
                 </div>
 
-                {visibleCount < sortedClimateChangeData?.length && (<div className="flex items-center justify-center mt-5 ">
-                    <Button onClick={loadMore} className="bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white">
-                        {language === "ENG" ? "Load More" : "আরো লোড"}
-                    </Button>
-                </div>)}
+                {visibleCount < (sortedClimateChangeData?.length || 0) && (
+                    <div className="flex items-center justify-center mt-5 ">
+                        <Button
+                            onClick={loadMore}
+                            className="bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white"
+                        >
+                            {language === "ENG" ? "Load More" : "আরো লোড"}
+                        </Button>
+                    </div>
+                )}
+
             </Container>
         </>
     );

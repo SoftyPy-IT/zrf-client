@@ -12,22 +12,19 @@ import { buttonStyle } from "@/utils/btnStyle";
 import truncateText from "@/utils/truncate";
 
 interface CovidProps {
-    whatWedoData: TWhatWeDo[];
+    healthServicesData: TWhatWeDo[];
     language: string,
 }
 
 
 
-const HealthServices: React.FC<CovidProps> = ({ whatWedoData, language }) => {
-    const healthServiceFilterData = whatWedoData.filter((edu) => edu.category === 'Health Services')
-
-
+const HealthServices: React.FC<CovidProps> = ({ healthServicesData, language }) => {
     const [visibleCount, setVisibleCount] = useState(6);
     const loadMore = () => {
         setVisibleCount((prevCount) => prevCount + 6);
     };
 
-    const sortedHealtherviceData = healthServiceFilterData?.sort((a: TWhatWeDo, b: TWhatWeDo) => {
+    const sortedHealtherviceData = healthServicesData?.sort((a: TWhatWeDo, b: TWhatWeDo) => {
         const dateA = new Date(a.date).getTime();
         const dateB = new Date(b.date).getTime();
         return dateB - dateA;
@@ -42,18 +39,30 @@ const HealthServices: React.FC<CovidProps> = ({ whatWedoData, language }) => {
                             className="relative shadow-md overflow-hidden group border"
                             key={index}
                         >
-
                             {
-                                data.bng_Images?.slice(0, 1).map((img) => (
-                                    <Image
-                                        width={500}
-                                        height={500}
-                                        key={img}
-                                        src={img}
-                                        alt='education'
-                                        className="w-full h-[300px] lg:h-[400px] object-cover"
-                                    />
-                                ))
+                                language === 'ENG' ? (
+                                    data.eng_images?.slice(0, 1).map((img) => (
+                                        <Image
+                                            width={500}
+                                            height={500}
+                                            key={img}
+                                            src={img}
+                                            alt='education'
+                                            className="w-full h-[300px] lg:h-[400px] object-cover"
+                                        />
+                                    ))
+                                ) : (
+                                    data.bng_Images?.slice(0, 1).map((img) => (
+                                        <Image
+                                            width={500}
+                                            height={500}
+                                            key={img}
+                                            src={img}
+                                            alt='education'
+                                            className="w-full h-[300px] lg:h-[400px] object-cover"
+                                        />
+                                    ))
+                                )
                             }
 
                             <div className="absolute bottom-0 left-0 right-0 p-2 md:p-4 lg:p-4 bg-blue-950 border-t border-gray-300 md:rounded-t-3xl h-[150px] md:h-[200px] lg:h-[200px] mt-28 md:mt-0 lg:mt-0">

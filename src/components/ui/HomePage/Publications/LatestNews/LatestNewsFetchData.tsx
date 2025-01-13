@@ -26,11 +26,11 @@ const LatestNewsFetchData: React.FC<newsProps> = ({ newsData, language }) => {
       if (window.innerWidth >= 1024) {
         setItemsToShow(3);
       } else {
-        setItemsToShow(2); 
+        setItemsToShow(2);
       }
     };
 
-    handleResize(); 
+    handleResize();
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);
@@ -68,13 +68,28 @@ const LatestNewsFetchData: React.FC<newsProps> = ({ newsData, language }) => {
           >
             {/* Image Section */}
             <div className="lg:w-1/3 w-full h-[150px] lg:h-[130px] overflow-hidden rounded">
-              <Image
-                className="w-full h-full object-cover"
-                alt={data.english_title || "E-Book"}
-                src={data.bng_Images[0] || ""}
-                width={300}
-                height={400}
-              />
+
+              {
+                language === 'ENG' ? data.bng_Images?.slice(0, 1).map((img) => (
+                  <Image
+                    key={img}
+                    className="w-full h-full object-cover"
+                    alt={data.english_title || "E-Book"}
+                    src={data.bng_Images[0] || ""}
+                    width={300}
+                    height={400}
+                  />
+                )) : data.eng_images?.slice(0, 1).map((img) => (
+                  <Image
+                    key={img}
+                    className="w-full h-full object-cover"
+                    alt={data.english_title || "E-Book"}
+                    src={data.bng_Images[0] || ""}
+                    width={300}
+                    height={400}
+                  />
+                ))
+              }
             </div>
 
             {/* Text Section */}

@@ -105,15 +105,13 @@ const renderContent = (content: string) => {
   });
 };
 interface activityProps {
-  activityData: TActivity[];
+  newsData: TActivity[];
   language: string;
 }
 
-const NewsData: React.FC<activityProps> = ({ activityData, language }) => {
-  const filterNewsData = activityData.filter(
-    (news) => news.category === "News",
-  );
-  const sortedNewsData = filterNewsData?.sort(
+const NewsData: React.FC<activityProps> = ({ newsData, language }) => {
+
+  const sortedNewsData = newsData?.sort(
     (a: TActivity, b: TActivity) => {
       const dateA = new Date(a.date).getTime();
       const dateB = new Date(b.date).getTime();
@@ -125,6 +123,7 @@ const NewsData: React.FC<activityProps> = ({ activityData, language }) => {
     setVisibleCount((prevCount) => prevCount + 6);
   };
 
+
   return (
     <div>
       <CommonBanner title={language === "ENG" ? "News" : "খবর"} />
@@ -132,7 +131,7 @@ const NewsData: React.FC<activityProps> = ({ activityData, language }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-16">
           {sortedNewsData?.slice(0, visibleCount).map((data, index: number) => (
             <div key={index}>
-              <div className="shadow-lg  bg-gray-100  lg:h-[500px] md:h-[450px] relative">
+              <div className="shadow-lg flex flex-col justify-between bg-gray-100  lg:h-[480px] md:h-[400px] relative">
                 <div className="relative h-[250px]">
                   {
                     language === 'ENG' ? (
@@ -143,7 +142,7 @@ const NewsData: React.FC<activityProps> = ({ activityData, language }) => {
                           key={img}
                           src={img}
                           alt=""
-                          className="h-[250px] object-cover"
+                          className="h-[240px] object-cover"
                         />
                       ))
                     ) : (
@@ -154,7 +153,7 @@ const NewsData: React.FC<activityProps> = ({ activityData, language }) => {
                           key={img}
                           src={img}
                           alt=""
-                          className="h-[250px] object-cover"
+                          className="h-[240px] object-cover"
                         />
                       ))
                     )
@@ -178,7 +177,7 @@ const NewsData: React.FC<activityProps> = ({ activityData, language }) => {
                         )}
                     </p>
                   </div>
-                  <div className="flex justify-between mt-3 ">
+                  <div className="flex justify-between  ">
                     <b>
                       {data.date}
                     </b>

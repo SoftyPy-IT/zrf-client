@@ -22,5 +22,4 @@ const GallerySection = () => {
     </Container>
   );
 };
-
 export default GallerySection;
