@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { TActivity, TProject, } from "@/types/type";
+import {  TProject, } from "@/types/type";
 import Link from "next/link";
 import truncateText from "@/utils/truncate";
 

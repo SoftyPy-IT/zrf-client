@@ -7,6 +7,25 @@ import Image from "next/image";
 import "./Programm.css";
 import { TProgramm } from "@/types/type";
 import logo from '../../../../../src/assets/images/logo/16 by 16.svg'
+
+import helth from '../../../../../src/assets/icon/herlth.png';
+import education from '../../../../../src/assets/icon/teaching.png';
+import democration from '../../../../../src/assets/icon/democracy.png';
+import forest from '../../../../../src/assets/icon/forest.png';
+import scholarship from '../../../../../src/assets/icon/scholarship.png';
+import team from '../../../../../src/assets/icon/team.png';
+import volunteer from '../../../../../src/assets/icon/volunteering.png';
+import water from '../../../../../src/assets/icon/water.png';
+import water2 from '../../../../../src/assets/icon/water (2).png';
+import vegetable from '../../../../../src/assets/icon/vegetables.png';
+import surgery from '../../../../../src/assets/icon/surgery.png';
+import publicLibrary from '../../../../../src/assets/icon/publicLibrary.png';
+import asthma from '../../../../../src/assets/icon/asthma.png';
+import democracy from '../../../../../src/assets/icon/democracy.png';
+import conservation from '../../../../../src/assets/icon/conservation.png';
+import trun from '../../../../../src/assets/icon/conservation.png';
+import seed from '../../../../../src/assets/icon/seed.png';
+import medical from '../../../../../src/assets/icon/medical.png';
 import truncateText from "@/utils/truncate";
 interface programmProps {
     programmData: TProgramm[];
@@ -23,6 +42,54 @@ const ProgrammData: React.FC<programmProps> = ({ programmData, language }) => {
             return dateA - dateB;
         },
     );
+
+    const getIcon = (index: number) => {
+        switch (index) {
+            case 1:
+                return helth;
+            case 2:
+                return conservation;
+            case 3:
+                return volunteer;
+            case 4:
+                return education;
+            case 5:
+                return forest;
+            case 6:
+                return medical;
+            case 7:
+                return vegetable;
+            case 8:
+                return publicLibrary;
+            case 9:
+                return democracy;
+            case 10:
+                return scholarship;
+            case 11:
+                return publicLibrary;
+            case 12:
+                return seed;
+            case 13:
+                return forest;
+            case 14:
+                return surgery;
+            case 15:
+                return asthma;
+            case 12:
+                return seed;
+            case 13:
+                return forest;
+            case 14:
+                return trun;
+            case 15:
+                return forest;
+            case 16:
+                return forest;
+            default:
+                return helth;
+        }
+    };
+
 
     return (
 
@@ -42,7 +109,6 @@ const ProgrammData: React.FC<programmProps> = ({ programmData, language }) => {
                                 alt="programm"
                             />
                         </div>
-
                     </div>
                     <div>
                         <h2 className="text-3xl font-bold uppercase "> {language === 'ENG' ? 'Our Programs ' : 'আমাদের প্রোগ্রাম'}</h2>
@@ -56,10 +122,16 @@ const ProgrammData: React.FC<programmProps> = ({ programmData, language }) => {
                                 >
                                     <div className="mb-4">
                                         <div className="w-12 h-12  md:h-20 md:w-20  rounded-full p-2 flex items-center justify-center shadow-lg transform transition-transform duration-300 hover:scale-110">
-                                            <Image
+                                            {/* <Image
                                                 className="w-auto h-auto max-w-full max-h-full object-contain"
                                                 src={logo}
                                                 alt="logo"
+                                            /> */}
+
+                                            <Image
+                                                className="w-auto h-auto max-w-full max-h-full object-contain"
+                                                src={getIcon(index + 1)}
+                                                alt={`icon-${index + 1}`}
                                             />
                                         </div>
                                     </div>

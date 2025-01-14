@@ -2,30 +2,39 @@
 import React, { useEffect, useState } from 'react';
 import Covid from './_components/Covid';
 import { useLanguage } from '@/provider/LanguageProvider';
-import axios from 'axios';
 import { whatwedoFields } from '@/fields';
-
+import Loader from '@/app/loading';
+import { TWhatWeDo } from '@/types/type';
 const Page = () => {
-    const { language } = useLanguage();
-    const [covidData, setCovidData] = useState(null);
+    const { language } = useLanguage()
+    const title = language === 'ENG' ? ' ZRF Rehabilitation Programs' : 'জেডআরএফ পুনর্বাসন কার্যক্রম'
+    const [covidData, setCovidData] = useState<TWhatWeDo[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     useEffect(() => {
-        const fetchCovidData = async () => {
+        const fetchWhatwedoData = async () => {
             try {
-                const res = await axios.get(
-                    `${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo?category=Covid&fields=${whatwedoFields}`
-                );
-                setCovidData(res.data?.data?.
-                    whatwedoes
-                );
-
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo?category=Covid&fields=${whatwedoFields}`, {
+                    cache: "no-store",
+                });
+                const data = await response.json();
+                setCovidData(data.data?.whatwedoes || []);
             } catch (err) {
-                console.log('Error fetching Covid data:', err);
+                setError("Failed to fetch whatwedo data!");
+            } finally {
+                setLoading(false);
             }
         };
 
-        fetchCovidData();
+        fetchWhatwedoData();
     }, []);
 
+    if (loading) {
+        return <Loader />
+    }
+    if (error) {
+        return <p>Oops covid data not found!</p>
+    }
 
 
     return (
