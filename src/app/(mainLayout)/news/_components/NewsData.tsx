@@ -126,7 +126,7 @@ const NewsData: React.FC<activityProps> = ({ newsData, language }) => {
 
   return (
     <div>
-      <CommonBanner title={language === "ENG" ? "News" : "খবর"} />
+      <CommonBanner title={language === "ENG" ? "Upcoming News" : "আসন্ন প্রোগ্রাম"} />
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-16">
           {sortedNewsData?.slice(0, visibleCount).map((data, index: number) => (

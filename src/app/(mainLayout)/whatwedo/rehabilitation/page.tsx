@@ -1,49 +1,94 @@
-'use client'
+import React from 'react';
+import RehabilitationHomePage from './_components/RehabilitationHomePage';
+import Head from 'next/head';
 
-import React, { useEffect, useState } from 'react';
-import { useLanguage } from '@/provider/LanguageProvider';
-import { useWhatwedoData } from '@/hooks/useWhatwedoData';
-import Rehabilitation from './_components/Rehabilitation';
-import CommonBanner from '@/components/share/CommonBanner/CommonBanner';
-import { TWhatWeDo } from '@/types/type';
-import { whatwedoFields } from '@/fields';
-import Loader from '@/app/loading';
-
-const EducationPage = () => {
-    const { language } = useLanguage()
-    const title = language === 'ENG' ? ' ZRF Rehabilitation Programs' : 'জেডআরএফ পুনর্বাসন কার্যক্রম'
-    const [whatWedoData, setWhatWedoData] = useState<TWhatWeDo[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-    useEffect(() => {
-        const fetchWhatwedoData = async () => {
-            try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo?limit=1000&fields=${whatwedoFields}&category=ZRF Rehabilitation Team`, {
-                    cache: "no-store",
-                });
-                const data = await response.json();
-                setWhatWedoData(data.data?.whatwedoes || []);
-            } catch (err) {
-                setError("Failed to fetch whatwedo data!");
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchWhatwedoData();
-    }, []);
-
-    if (loading) {
-        return <Loader />
-    }
-    if (error) {
-        return <p>Oops data not found!</p>
-    }
+const page = () => {
     return (
         <div>
-            <CommonBanner title={title} />
-            <Rehabilitation whatWedoData={whatWedoData} language={language} />
+            <Head>
+                {/* Essential Meta Tags */}
+                <title>Rehabilitation Programs - Ziaur Rahman Foundation | Restoring Lives</title>
+                <meta
+                    name="description"
+                    content="Discover Ziaur Rahman Foundation's rehabilitation programs designed to restore lives and support recovery through innovative and compassionate initiatives."
+                />
+                <meta
+                    name="keywords"
+                    content="rehabilitation programs, recovery initiatives, Ziaur Rahman Foundation, community support, mental health recovery, disaster rehabilitation, social empowerment"
+                />
+                <meta name="author" content="Ziaur Rahman Foundation" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <meta name="robots" content="index, follow" />
+
+                {/* Open Graph / Facebook */}
+                <meta
+                    property="og:title"
+                    content="Rehabilitation Programs - Ziaur Rahman Foundation | Restoring Lives"
+                />
+                <meta
+                    property="og:description"
+                    content="Join the Ziaur Rahman Foundation in its mission to rehabilitate and empower communities affected by disasters, mental health challenges, and social crises."
+                />
+                <meta property="og:image" content="/images/og-rehabilitation.jpg" />
+                <meta property="og:url" content="https://www.zrf.org/rehabilitation" />
+                <meta property="og:type" content="website" />
+
+                {/* Twitter */}
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta
+                    name="twitter:title"
+                    content="Rehabilitation Programs - Ziaur Rahman Foundation | Restoring Lives"
+                />
+                <meta
+                    name="twitter:description"
+                    content="Explore our comprehensive rehabilitation programs designed to restore dignity and support communities in need."
+                />
+                <meta name="twitter:image" content="/images/twitter-rehabilitation.jpg" />
+
+                {/* Canonical URL */}
+                <link rel="canonical" href="https://www.zrf.org/rehabilitation" />
+
+                {/* Favicon */}
+                <link rel="icon" href="/favicon.ico" />
+
+                {/* Structured Data (JSON-LD for Rehabilitation Programs) */}
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify({
+                            "@context": "https://schema.org",
+                            "@type": "NonProfitOrganization",
+                            "name": "Ziaur Rahman Foundation",
+                            "url": "https://www.zrf.org/rehabilitation",
+                            "logo": "https://www.zrf.org/images/logo.png",
+                            "description":
+                                "Ziaur Rahman Foundation provides comprehensive rehabilitation programs to restore dignity and empower communities affected by challenges like disasters and mental health issues.",
+                            "address": {
+                                "@type": "PostalAddress",
+                                "streetAddress": "123 Hope Street",
+                                "addressLocality": "City Name",
+                                "addressRegion": "Region Name",
+                                "postalCode": "12345",
+                                "addressCountry": "Country",
+                            },
+                            "contactPoint": {
+                                "@type": "ContactPoint",
+                                "telephone": "+123-456-7890",
+                                "contactType": "Customer Support",
+                            },
+                            "sameAs": [
+                                "https://facebook.com/zrf",
+                                "https://twitter.com/zrf",
+                                "https://instagram.com/zrf",
+                            ],
+                        }),
+                    }}
+                />
+            </Head>
+
+            <RehabilitationHomePage />
         </div>
     );
 };
-export default EducationPage;
+
+export default page;

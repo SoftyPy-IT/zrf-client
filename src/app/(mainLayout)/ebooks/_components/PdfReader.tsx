@@ -19,6 +19,7 @@ import {
   Close,
   ZoomOut
 } from '@mui/icons-material'
+import Loader from '@/app/loading'
 
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
   color: '#000',
@@ -217,51 +218,58 @@ const PdfFlipBook: React.FC<PdfFlipBookProps> = ({ pdfUrl, onClose }) => {
           transformOrigin: 'center center',
         }}
       >
-        {pages.length > 0 && dimensions.width > 0 && (
-          <BookWrapper elevation={0}>
-            <HTMLFlipBook
-              width={dimensions.width}
-              height={dimensions.height}
-              size="stretch"
-              minWidth={dimensions.width * 0.6}
-              maxWidth={dimensions.width * 1.4}
-              minHeight={dimensions.height * 0.6}
-              maxHeight={dimensions.height * 1.4}
-              drawShadow={true}
-              flippingTime={800}
-              className="book-render"
-              showCover={true}
-              mobileScrollSupport={true}
-              onFlip={(e) => setCurrentPage(e.data + 1)}
-              maxShadowOpacity={0.2}
-              showPageCorners={true}
-              usePortrait={false}
-              startPage={0}
-              style={{}}
-              startZIndex={1} 
-              autoSize={true} 
-              clickEventForward={true} 
-              useMouseEvents={true}
-              swipeDistance={50} 
-              disableFlipByClick={false} 
-            >
-              {pages.map((pageSrc, index) => (
-                <div key={index} className="page">
-                  <img
-                    src={pageSrc}
-                    alt={`Page ${index + 1}`}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'contain',
-                      padding: '2px',
-                    }}
-                  />
-                </div>
-              ))}
-            </HTMLFlipBook>
-          </BookWrapper>
-        )}
+        {
+          loading ? (
+            <Loader />
+          ) : (
+            pages.length > 0 && dimensions.width > 0 && (
+              <BookWrapper elevation={0}>
+                <HTMLFlipBook
+                  width={dimensions.width}
+                  height={dimensions.height}
+                  size="stretch"
+                  minWidth={dimensions.width * 0.6}
+                  maxWidth={dimensions.width * 1.4}
+                  minHeight={dimensions.height * 0.6}
+                  maxHeight={dimensions.height * 1.4}
+                  drawShadow={true}
+                  flippingTime={800}
+                  className="book-render"
+                  showCover={true}
+                  mobileScrollSupport={true}
+                  onFlip={(e) => setCurrentPage(e.data + 1)}
+                  maxShadowOpacity={0.2}
+                  showPageCorners={true}
+                  usePortrait={false}
+                  startPage={0}
+                  style={{}}
+                  startZIndex={1}
+                  autoSize={true}
+                  clickEventForward={true}
+                  useMouseEvents={true}
+                  swipeDistance={50}
+                  disableFlipByClick={false}
+                >
+                  {pages.map((pageSrc, index) => (
+                    <div key={index} className="page">
+                      <img
+                        src={pageSrc}
+                        alt={`Page ${index + 1}`}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'contain',
+                          padding: '2px',
+                        }}
+                      />
+                    </div>
+                  ))}
+                </HTMLFlipBook>
+              </BookWrapper>
+            )
+          )
+        }
+
       </Box>
     </Box>
   )

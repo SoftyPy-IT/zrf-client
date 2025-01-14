@@ -1,51 +1,94 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import Covid from './_components/Covid';
-import { useLanguage } from '@/provider/LanguageProvider';
-import { whatwedoFields } from '@/fields';
-import Loader from '@/app/loading';
-import { TWhatWeDo } from '@/types/type';
-const Page = () => {
-    const { language } = useLanguage()
-    const title = language === 'ENG' ? ' ZRF Rehabilitation Programs' : 'জেডআরএফ পুনর্বাসন কার্যক্রম'
-    const [covidData, setCovidData] = useState<TWhatWeDo[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-    useEffect(() => {
-        const fetchWhatwedoData = async () => {
-            try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo?category=Covid&fields=${whatwedoFields}`, {
-                    cache: "no-store",
-                });
-                const data = await response.json();
-                setCovidData(data.data?.whatwedoes || []);
-            } catch (err) {
-                setError("Failed to fetch whatwedo data!");
-            } finally {
-                setLoading(false);
-            }
-        };
+import React from 'react';
+import CovidHomePage from './_components/CovidHomePage';
+import Head from 'next/head';
 
-        fetchWhatwedoData();
-    }, []);
-
-    if (loading) {
-        return <Loader />
-    }
-    if (error) {
-        return <p>Oops covid data not found!</p>
-    }
-
-
+const Covid = () => {
     return (
         <div>
-            {covidData ? (
-                <Covid covidData={covidData} language={language} />
-            ) : (
-                <p>Loading Covid data...</p>
-            )}
+            <Head>
+                {/* Essential Meta Tags */}
+                <title>COVID-19 Relief & Support - Ziaur Rahman Foundation</title>
+                <meta
+                    name="description"
+                    content="Ziaur Rahman Foundation provides COVID-19 relief support, including medical assistance, education, and community outreach programs to those affected."
+                />
+                <meta
+                    name="keywords"
+                    content="COVID-19 relief, COVID-19 support, community outreach, Ziaur Rahman Foundation, medical assistance, education programs, disaster relief"
+                />
+                <meta name="author" content="Ziaur Rahman Foundation" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <meta name="robots" content="index, follow" />
+
+                {/* Open Graph / Facebook */}
+                <meta
+                    property="og:title"
+                    content="COVID-19 Relief & Support - Ziaur Rahman Foundation"
+                />
+                <meta
+                    property="og:description"
+                    content="Join Ziaur Rahman Foundation's COVID-19 relief efforts to provide medical care, education, and support to communities in need."
+                />
+                <meta property="og:image" content="/images/og-covid.jpg" />
+                <meta property="og:url" content="https://www.zrf.org/covid" />
+                <meta property="og:type" content="website" />
+
+                {/* Twitter */}
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta
+                    name="twitter:title"
+                    content="COVID-19 Relief & Support - Ziaur Rahman Foundation"
+                />
+                <meta
+                    name="twitter:description"
+                    content="Join Ziaur Rahman Foundation's COVID-19 relief efforts to support vulnerable communities with medical care, educational resources, and essential services."
+                />
+                <meta name="twitter:image" content="/images/twitter-covid.jpg" />
+
+                {/* Canonical URL */}
+                <link rel="canonical" href="https://www.zrf.org/covid" />
+
+                {/* Favicon */}
+                <link rel="icon" href="/favicon.ico" />
+
+                {/* Structured Data (JSON-LD for COVID Relief) */}
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify({
+                            "@context": "https://schema.org",
+                            "@type": "NonProfitOrganization",
+                            "name": "Ziaur Rahman Foundation",
+                            "url": "https://www.zrf.org/covid",
+                            "logo": "https://www.zrf.org/images/logo.png",
+                            "description":
+                                "Ziaur Rahman Foundation works on providing COVID-19 relief, including medical assistance, education programs, and community outreach.",
+                            "address": {
+                                "@type": "PostalAddress",
+                                "streetAddress": "123 Hope Street",
+                                "addressLocality": "City Name",
+                                "addressRegion": "Region Name",
+                                "postalCode": "12345",
+                                "addressCountry": "Country",
+                            },
+                            "contactPoint": {
+                                "@type": "ContactPoint",
+                                "telephone": "+123-456-7890",
+                                "contactType": "Customer Support",
+                            },
+                            "sameAs": [
+                                "https://facebook.com/zrf",
+                                "https://twitter.com/zrf",
+                                "https://instagram.com/zrf",
+                            ],
+                        }),
+                    }}
+                />
+            </Head>
+
+            <CovidHomePage />
         </div>
     );
 };
 
-export default Page;
+export default Covid;

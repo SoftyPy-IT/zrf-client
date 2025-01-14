@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unescaped-entities */
+
 import React from "react";
 import Head from "next/head";
 import News from "./_components/News";
@@ -17,7 +19,9 @@ const NewsPage = () => {
         />
         <meta name="author" content="Ziaur Rahman Foundation" />
         <meta name="robots" content="index, follow" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+        {/* Open Graph / Facebook Meta Tags */}
         <meta
           property="og:title"
           content="Latest News | Stay Informed with Updates"
@@ -33,11 +37,22 @@ const NewsPage = () => {
         />
         <meta property="og:type" content="website" />
 
+        {/* Twitter Meta Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Latest News | Stay Informed with Updates" />
+        <meta
+          name="twitter:description"
+          content="Explore the latest updates, news, and announcements. Stay informed about recent happenings."
+        />
+        <meta name="twitter:image" content="/news-twitter-image.png" />
+
+        {/* Canonical URL */}
         <link
           rel="canonical"
           href="https://www.ziaurrahmanfoundation.com/news"
         />
 
+        {/* JSON-LD Structured Data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -65,6 +80,19 @@ const NewsPage = () => {
                   },
                 ],
               },
+              author: {
+                "@type": "Organization",
+                name: "Ziaur Rahman Foundation",
+              },
+              publisher: {
+                "@type": "Organization",
+                name: "Ziaur Rahman Foundation",
+                logo: {
+                  "@type": "ImageObject",
+                  url: "/logo.png",
+                },
+              },
+              image: "/news-og-image.png",
             }),
           }}
         />

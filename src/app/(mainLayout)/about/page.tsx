@@ -16,22 +16,21 @@ const AboutUs = () => {
         <title>About Us | Ziaur Rahman Foundation</title>
         <meta
           name="description"
-          content="Learn about the Ziaur Rahman Foundation, our history, and our remarkable programs that empower communities through social services and humanitarian work."
+          content="Discover the mission, vision, and achievements of Ziaur Rahman Foundation. Learn how our impactful programs empower communities worldwide through education, healthcare, and social services."
         />
         <meta
           name="keywords"
-          content="Ziaur Rahman Foundation, about us, non-profit, charity, humanitarian work"
+          content="Ziaur Rahman Foundation, about us, non-profit organization, charity, community development, education, healthcare, humanitarian services"
         />
         <meta name="author" content="Ziaur Rahman Foundation" />
         <meta name="robots" content="index, follow" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <meta
-          property="og:title"
-          content="About Us | Ziaur Rahman Foundation"
-        />
+        {/* Open Graph / Facebook Meta Tags */}
+        <meta property="og:title" content="About Us | Ziaur Rahman Foundation" />
         <meta
           property="og:description"
-          content="Discover the mission, vision, and programs of the Ziaur Rahman Foundation, dedicated to empowering communities through social services."
+          content="Discover the mission, vision, and achievements of Ziaur Rahman Foundation. Learn how our impactful programs empower communities worldwide through education, healthcare, and social services."
         />
         <meta property="og:image" content="/about-us-og-image.png" />
         <meta
@@ -40,21 +39,22 @@ const AboutUs = () => {
         />
         <meta property="og:type" content="website" />
 
+        {/* Twitter Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta
-          name="twitter:title"
-          content="About Us | Ziaur Rahman Foundation"
-        />
+        <meta name="twitter:title" content="About Us | Ziaur Rahman Foundation" />
         <meta
           name="twitter:description"
-          content="Learn about the Ziaur Rahman Foundation, our history, and our remarkable programs that empower communities through social services and humanitarian work."
+          content="Discover the mission, vision, and achievements of Ziaur Rahman Foundation. Learn how our impactful programs empower communities worldwide through education, healthcare, and social services."
         />
         <meta name="twitter:image" content="/about-us-twitter-image.png" />
+
+        {/* Canonical URL */}
         <link
           rel="canonical"
           href="https://www.ziaurrahmanfoundation.com/about-us"
         />
 
+        {/* JSON-LD Structured Data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -63,8 +63,12 @@ const AboutUs = () => {
               "@type": "WebPage",
               name: "About Us",
               description:
-                "Learn about the Ziaur Rahman Foundation, our history, and our remarkable programs that empower communities through social services and humanitarian work.",
+                "Discover the mission, vision, and achievements of Ziaur Rahman Foundation. Learn how our impactful programs empower communities worldwide through education, healthcare, and social services.",
               url: "https://www.ziaurrahmanfoundation.com/about-us",
+              mainEntityOfPage: {
+                "@type": "WebPage",
+                "@id": "https://www.ziaurrahmanfoundation.com/about-us",
+              },
               breadcrumb: {
                 "@type": "BreadcrumbList",
                 itemListElement: [
@@ -82,6 +86,19 @@ const AboutUs = () => {
                   },
                 ],
               },
+              author: {
+                "@type": "Organization",
+                name: "Ziaur Rahman Foundation",
+              },
+              publisher: {
+                "@type": "Organization",
+                name: "Ziaur Rahman Foundation",
+                logo: {
+                  "@type": "ImageObject",
+                  url: "/logo.png",
+                },
+              },
+              image: "/about-us-og-image.png",
             }),
           }}
         />
@@ -96,4 +113,5 @@ const AboutUs = () => {
     </div>
   );
 };
+
 export default AboutUs;
