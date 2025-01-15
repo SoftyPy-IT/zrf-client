@@ -27,7 +27,7 @@ const RecentPostFetchData: React.FC<educatoinProps> = ({ educationData, language
     
     return (
         <div className=" p-5 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
-            <h3 className="text-xl font-semibold">{language === 'ENG' ? 'Popular Post' : 'জনপ্রিয় পোস্ট'}</h3>
+            <h3 className="text-xl font-semibold">{language === 'ENG' ? 'Recent Post' : 'সাম্প্রতিক পোস্ট'}</h3>
             <hr className="w-16 h-1 bg-gradient-to-r from-yellow-600 to-green-600 border-0 rounded-full mb-5" />
             <div className="flex flex-col  gap-y-3 gap-x-3 mt-5">
                 {sortedNewsData?.slice(1, 5).map((data) => (

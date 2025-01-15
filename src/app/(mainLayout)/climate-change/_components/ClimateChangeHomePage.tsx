@@ -35,6 +35,7 @@ const ClimateChangeHomePage = () => {
         setIsLoading(false); 
       }
     };
+    
 
     fetchCovidData();
   }, [category]);
