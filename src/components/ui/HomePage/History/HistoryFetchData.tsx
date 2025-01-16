@@ -96,7 +96,7 @@ const HistoryFetchData: React.FC<AboutProps> = ({ aboutData, language }) => {
             type="number"
             value={startYear}
             onChange={(e) => setStartYear(e.target.value)}
-            placeholder="Start Year"
+            placeholder={language === 'ENG' ? 'Start Year' : 'শুরুর বছর'}
             min="1900"
             max="2099"
             step="1"
@@ -106,7 +106,7 @@ const HistoryFetchData: React.FC<AboutProps> = ({ aboutData, language }) => {
             type="number"
             value={endYear}
             onChange={(e) => setEndYear(e.target.value)}
-            placeholder="End Year"
+            placeholder={language === 'ENG' ? 'End Year' : 'শেষ বছর'}
             min="1900"
             max="2099"
             step="1"
