@@ -116,10 +116,10 @@ const ProgrammSection = () => {
               className="bg-white p-5 rounded shadow-lg flex flex-col items-center transform transition-transform duration-300 hover:scale-105"
             >
               <div className="mb-4">
-                <div className="w-16 h-16  md:h-20 md:w-20  rounded-full p-2 flex items-center justify-center shadow-lg transform transition-transform duration-300 hover:scale-110">
+                <div className="w-12 h-12  md:h-[68px] md:w-[68px]  rounded-full p-2 flex items-center justify-center shadow-lg transform transition-transform duration-300 hover:scale-110">
                   <Image
                     className="w-auto h-auto max-w-full max-h-full object-contain"
-                    src={getIcon(index + 1)} 
+                    src={getIcon(index + 1)}
                     alt={`icon-${index + 1}`}
                   />
                 </div>
@@ -132,19 +132,26 @@ const ProgrammSection = () => {
             </div>
           ))}
         </div>
-        <div className="flex items-center justify-center mt-8 ">
-          {patname === '/about' ? (
-            <Link href='/program'>
-              <Button className="bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white">
-                {language === "ENG" ? "See More" : "আরো দেখুন"}
+
+
+        {visibleCount < sortedProgrammData?.length && (<div className="flex items-center justify-center">
+          <div className="flex items-center justify-center mt-8 ">
+            {patname === '/about' ? (
+              <Link href='/program'>
+                <Button className="bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white">
+                  {language === "ENG" ? "See More" : "আরো দেখুন"}
+                </Button>
+              </Link>
+            ) : (
+              <Button onClick={loadMore} className="bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white">
+                {language === "ENG" ? "Load More" : "আরো লোড"}
               </Button>
-            </Link>
-          ) : (
-            <Button onClick={loadMore} className="bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white">
-              {language === "ENG" ? "Load More" : "আরো লোড"}
-            </Button>
-          )}
-        </div>
+            )}
+          </div>
+        </div>)}
+
+
+
       </Container>
     </div>
   );
