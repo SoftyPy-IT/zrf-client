@@ -87,7 +87,7 @@ export type TImgGallery = {
   _id: string;
   title_of_bangla: string;
   title_of_english: string;
-  slug: string;
+  date: string;
   thumnailImages: string[];
 };
 export type TMessage = {

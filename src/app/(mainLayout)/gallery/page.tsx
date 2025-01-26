@@ -5,18 +5,19 @@ import "react-image-lightbox/style.css";
 import Image from "next/image";
 import { useLanguage } from "@/provider/LanguageProvider";
 import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
-import { TImgGallery } from "@/types/type";
 import Container from "@/components/share/Container";
 import CloseIcon from "@mui/icons-material/Close";
+import { sortByDate } from "@/utils/sort";
+import { TImgGallery } from "@/types/type";
 
 const CustomCloseButton = ({ onClose }: { onClose: () => void }) => (
   <button
     type="button"
-    className="closeIcon absolute top-[0%]  right-[50%] z-[10000] p-2 bg-red-600 rounded-full text-white hover:bg-red-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+    className="closeIcon absolute top-[0%] right-[50%] z-[10000] p-2 bg-red-600 rounded-full text-white hover:bg-red-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
     onClick={onClose}
     aria-label="Close lightbox"
   >
-    <CloseIcon style={{ fontSize: '24px' }} />
+    <CloseIcon style={{ fontSize: "24px" }} />
   </button>
 );
 
@@ -33,7 +34,7 @@ const Page = () => {
       try {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_BASE_API_URL}/image-gallery?limit=10000`,
-          { cache: "no-store" },
+          { cache: "no-store" }
         );
         const data = await response.json();
         setGalleryData(data.data?.galleries || []);
@@ -67,6 +68,7 @@ const Page = () => {
   }, [galleryData]);
 
   const title = language === "ENG" ? "Image Gallery" : "ফটো গ্যালারি";
+  const sortedGalleryData = sortByDate(galleryData, "date");
 
   return (
     <>
@@ -74,19 +76,19 @@ const Page = () => {
       <div className="App my-10">
         <Container>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-            {galleryData?.map((data, index) => (
+            {sortedGalleryData?.map((data, index) => (
               <div
                 key={data._id}
                 className="cursor-pointer"
                 onClick={() => openLightbox(index)}
               >
-                {data.thumnailImages.length > 0 && (
+                {data.thumnailImages?.[0] && (
                   <Image
                     className="w-full h-[300px] object-cover transition-transform duration-300 transform group-hover:scale-110"
                     src={data.thumnailImages[0]}
                     alt={data.title_of_english}
                     width={500}
-                    height={500}
+                    height={300}
                   />
                 )}
               </div>
@@ -95,24 +97,30 @@ const Page = () => {
         </Container>
       </div>
 
-      {isOpen && galleryData[currentIndex]?.thumnailImages?.length > 0 && (
-        <div className="relative">
-          <CustomCloseButton onClose={closeLightbox} />
-          <Lightbox
-            mainSrc={galleryData[currentIndex].thumnailImages[0]}
-            nextSrc={galleryData[(currentIndex + 1) % galleryData.length]?.thumnailImages[0]}
-            prevSrc={galleryData[(currentIndex + galleryData.length - 1) % galleryData.length]?.thumnailImages[0]}
-            onCloseRequest={closeLightbox}
-            onMovePrevRequest={prevImage}
-            onMoveNextRequest={nextImage}
-            enableZoom={false}
-
-          />
-        </div>
+      {isOpen && sortedGalleryData[currentIndex]?.thumnailImages?.[0] && (
+        <Lightbox
+          mainSrc={sortedGalleryData[currentIndex].thumnailImages[0]}
+          nextSrc={
+            sortedGalleryData[(currentIndex + 1) % sortedGalleryData.length]
+              ?.thumnailImages[0]
+          }
+          prevSrc={
+            sortedGalleryData[
+              (currentIndex + sortedGalleryData.length - 1) %
+              sortedGalleryData.length
+            ]?.thumnailImages[0]
+          }
+          onCloseRequest={closeLightbox}
+          onMovePrevRequest={prevImage}
+          onMoveNextRequest={nextImage}
+          enableZoom={false}
+          toolbarButtons={[
+            <CustomCloseButton onClose={closeLightbox} key="custom-close" />,
+          ]}
+        />
       )}
     </>
   );
 };
 
 export default Page;
-

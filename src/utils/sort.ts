@@ -9,7 +9,7 @@ export const sortByDate = <T>(data: T[], dateKey: keyof T): T[] => {
     return data.sort((a, b) => {
       const dateA = new Date(a[dateKey] as string).getTime();
       const dateB = new Date(b[dateKey] as string).getTime();
-      return dateA - dateB;
+      return dateB- dateA;
     });
   };
   
