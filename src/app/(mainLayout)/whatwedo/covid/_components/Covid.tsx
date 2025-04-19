@@ -12,13 +12,11 @@ import { buttonStyle } from "@/utils/btnStyle";
 
 interface CovidProps {
   covidData: TWhatWeDo[];
-  language: string,
+  language: string;
 }
 
-
 const Covid: React.FC<CovidProps> = ({ covidData, language }) => {
-
-  const title = language === 'ENG' ? 'Covid Programs' : 'কোভিড কার্যক্রম'
+  const title = language === "ENG" ? "Covid Programs" : "কোভিড কার্যক্রম";
 
   const [visibleCount, setVisibleCount] = useState(6);
   const loadMore = () => {
@@ -41,22 +39,24 @@ const Covid: React.FC<CovidProps> = ({ covidData, language }) => {
               className="relative shadow-md overflow-hidden group border"
               key={index}
             >
-              {
-                data.bng_Images.slice(0, 1).map((img) => (
-                  <Image
-                    width={500}
-                    height={500}
-                    key={img}
-                    src={img}
-                    alt='education'
-                    className="w-full h-[300px] lg:h-[400px] object-cover"
-                  />
-                ))
-              }
+              {data.bng_Images.slice(0, 1).map((img) => (
+                <Image
+                  width={500}
+                  height={500}
+                  key={img}
+                  src={img}
+                  alt="education"
+                  className="w-full h-[300px] lg:h-[400px] object-cover"
+                />
+              ))}
               <div className="absolute bottom-0 left-0 right-0 p-2 md:p-4 lg:p-4 bg-blue-950 border-t border-gray-300 rounded-t-3xl h-[150px] md:h-[200px] lg:h-[200px] mt-28 md:mt-0 lg:mt-0">
-                <h2 className="text-xl text-white">{language == 'ENG' ? data.english_title : data.bangla_title}</h2>
+                <h2 className="text-xl text-white">
+                  {language == "ENG" ? data.english_title : data.bangla_title}
+                </h2>
                 <p className="mt-2 text-white">
-                  {language == 'ENG' ? truncateText(data.english_short_description, 180) : truncateText(data.bangla_short_description, 180)}
+                  {language == "ENG"
+                    ? truncateText(data.english_short_description, 180)
+                    : truncateText(data.bangla_short_description, 180)}
                 </p>
               </div>
               {/* Hover content */}
@@ -64,19 +64,28 @@ const Covid: React.FC<CovidProps> = ({ covidData, language }) => {
                 <div className="w-full p-2 md:p-4 lg:p-6 lg:h-full">
                   <div className="space-y-3">
                     <div className="flex items-center gap-3">
-                      <h2 className="text-xl ">{language == 'ENG' ? data.english_title : data.bangla_title}</h2>
+                      <h2 className="text-xl ">
+                        {language == "ENG"
+                          ? data.english_title
+                          : data.bangla_title}
+                      </h2>
                     </div>
-                    <p className="text-justify"> {language == 'ENG' ? data.english_short_description.slice(0, 200) : data.bangla_short_description.slice(0, 200)}... </p>
-
+                    <p className="text-justify">
+                      {" "}
+                      {language == "ENG"
+                        ? data.english_short_description.slice(0, 200)
+                        : data.bangla_short_description.slice(0, 200)}
+                      ...{" "}
+                    </p>
 
                     <div className="flex justify-between mt-3 w-full items-center ">
-                      <b>
-                        {formatDate(data.date)}
-                      </b>
+                      <b>{formatDate(data.date)}</b>
                       <Link href={`/whatwedo/covid/${data._id}`}>
                         <Button sx={buttonStyle}>
                           {language === "ENG" ? "Read More" : "আরও পড়ুন"}{" "}
-                          <EastIcon sx={{ fontSize: { md: '20px', xs: '20px' } }} />
+                          <EastIcon
+                            sx={{ fontSize: { md: "20px", xs: "20px" } }}
+                          />
                         </Button>
                       </Link>
                     </div>
@@ -87,11 +96,16 @@ const Covid: React.FC<CovidProps> = ({ covidData, language }) => {
           ))}
         </div>
 
-        {visibleCount < sortedCovidData?.length && (<div className="flex items-center justify-center mt-5 ">
-          <Button onClick={loadMore} className="bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white">
-            {language === "ENG" ? "Load More" : "আরো লোড"}
-          </Button>
-        </div>)}
+        {visibleCount < sortedCovidData?.length && (
+          <div className="flex items-center justify-center mt-5 ">
+            <Button
+              onClick={loadMore}
+              className="bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white"
+            >
+              {language === "ENG" ? "Load More" : "আরো লোড"}
+            </Button>
+          </div>
+        )}
       </Container>
     </>
   );

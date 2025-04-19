@@ -11,7 +11,6 @@ const Loader = dynamic(() => import("@/components/Loading/Loading"), {
   ssr: false,
 });
 
-
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 import "./Gallery.css";
 const VideoGallery = () => {
@@ -27,7 +26,7 @@ const VideoGallery = () => {
           `${process.env.NEXT_PUBLIC_BASE_API_URL}/videos?limit=1`,
           {
             cache: "no-store",
-          },
+          }
         );
         const data = await response.json();
         setVideos(data.data?.videos || []);
@@ -50,17 +49,16 @@ const VideoGallery = () => {
 
   return (
     <>
-
       <div>
         <h2 className="lg:text-3xl text-2xl font-bold uppercase">
           {language === "ENG" ? "Video Gallery " : "ভিডিও গ্যালারি"}
         </h2>
         <div className="w-28 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-5"></div>
 
-        <div className="grid grid-cols-1 gap-y-5  gap-5  ">
+        <div className="grid grid-cols-1 gap-y-5 gap-5">
           {videos.length > 0 ? (
             videos.slice(0, 1).map((video: TVideo) => (
-              <div key={video._id} className="videoCard">
+              <div key={video._id} className="videoCard border">
                 <div className="videoWraper">
                   <ReactPlayer
                     url={video.video_url}

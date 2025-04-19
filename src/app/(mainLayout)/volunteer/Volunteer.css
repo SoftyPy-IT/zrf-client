@@ -17,6 +17,6 @@
 @media only screen and (max-width: 1024px) {
   .volunteerImg {
     width: 100%;
-    height: auto;
+    height: 300px;
   }
 }

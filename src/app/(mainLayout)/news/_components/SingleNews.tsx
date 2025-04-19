@@ -153,44 +153,45 @@ const SingleRehabilitation = ({
 }: SingleProjectProps) => {
   return (
     <>
-      <CommonBanner title={language === "ENG" ? "Upcoming Programs" : "আসন্ন প্রোগ্রাম"} />
+      <CommonBanner
+        title={language === "ENG" ? "Upcoming Programs" : "আসন্ন প্রোগ্রাম"}
+      />
       <Container>
-        <div className="h-auto lg:flex gap-5">
-          <div className="w-full mt-2 lg:mt-0 lg:p-6">
-            <h1 className="text-3xl font-bold mb-4">
+        <div className="grid md:grid-cols-12 gap-7 my-10">
+          <div className="md:col-span-7 lg:col-span-8">
+            <div className="relative w-full h-[200px] md:h-[400px] mb-6">
+              {language === "BNG"
+                ? singleNewsData.bng_Images
+                    ?.slice(0, 1)
+                    .map((img) => (
+                      <Image
+                        width={500}
+                        height={500}
+                        key={img}
+                        src={img}
+                        alt="Top Image"
+                        className="rounded-md w-full h-full"
+                      />
+                    ))
+                : singleNewsData.eng_images
+                    ?.slice(0, 1)
+                    .map((img) => (
+                      <Image
+                        width={500}
+                        height={500}
+                        key={img}
+                        src={img}
+                        alt="Top Image"
+                        className="rounded-md w-full h-full"
+                      />
+                    ))}
+            </div>
+
+            <h1 className="text-2xl font-bold mb-5">
               {language === "ENG"
                 ? singleNewsData.english_title
                 : singleNewsData.bangla_title}
             </h1>
-
-            <div className="relative w-full h-[200px] md:h-[400px] mb-6">
-
-
-              {
-                language === 'BNG' ? singleNewsData.bng_Images?.slice(0, 1).map((img) => (
-                  <Image
-                    width={500}
-                    height={500}
-                    key={img}
-                    src={img}
-                    alt="Top Image"
-
-                    className="rounded-lg w-full h-full object-cover"
-                  />
-                )) : singleNewsData.eng_images?.slice(0, 1).map((img) => (
-                  <Image
-                    width={500}
-                    height={500}
-                    key={img}
-                    src={img}
-                    alt="Top Image"
-
-                    className="rounded-lg w-full h-full object-cover"
-                  />
-                ))
-              }
-
-            </div>
 
             <p className="text-lg text-gray-800 text-justify">
               {language === "ENG"
@@ -219,8 +220,8 @@ const SingleRehabilitation = ({
             </div>
           </div>
 
-          <div className="w-full lg:w-[600px] lg:mt-6 md:mt-0 mt-5">
-            <div className="sticky top-28">
+          <div className="md:col-span-5 lg:col-span-4">
+            <div className="sticky top-24">
               <RecentNewsSidebar />
             </div>
           </div>

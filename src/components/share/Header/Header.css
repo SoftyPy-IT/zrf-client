@@ -1,7 +1,9 @@
-.navItems li {
-  padding: 18px;
-  position: relative;
-  transition: all 0.5s cubic-bezier(0.4, 0.43, 0.54, 0.54);
+@media screen and (min-width: 1024px) {
+  .navItems li {
+    padding: 18px;
+    position: relative;
+    transition: all 0.5s cubic-bezier(0.4, 0.43, 0.54, 0.54);
+  }
 }
 
 .navItems li::after {
@@ -129,7 +131,7 @@
     position: absolute;
     left: -400px;
     display: block;
-    width: 220px;
+    width: 300px;
     top: 0px;
     height: 100vh;
     padding: 20px;
@@ -138,18 +140,14 @@
   }
 
   .navItems li {
-    padding-bottom: 16px;
-    border-bottom: none;
+    padding-bottom: 18px;
+    color: #fff;
   }
 
   .activeMenu {
     left: 0px;
     transition: all 0.5s cubic-bezier(0.43, 0.38, 0.68, 0.63);
     z-index: 999;
-  }
-
-  .navItems li {
-    color: #fff;
   }
 
   .activeBar,
@@ -203,7 +201,6 @@
 }
 
 @media only screen and (max-width: 768px) {
-
   .activeBar,
   .bar1 {
     top: 36px;
@@ -218,12 +215,11 @@
   }
 
   .navItems {
-    width: 241px;
+    width: 300px;
   }
 }
 
 @media only screen and (max-width: 500px) {
-
   .activeBar,
   .bar1 {
     top: 26px;
@@ -241,10 +237,7 @@
   }
 }
 
-
-
 @media only screen and (max-width: 375px) {
-
   .activeBar,
   .bar1 {
     top: 29px;
@@ -255,7 +248,7 @@
   .submenu3 {
     top: 24px;
     left: 0px;
-    width: 240px;
+    width: 300px;
   }
 
   .navItems li {
@@ -269,7 +262,6 @@
   }
 }
 
-
 .murterDropDown:hover .submenu3 {
   transform: scaleY(1);
   opacity: 1;
@@ -282,16 +274,14 @@
 }
 
 @media only screen and (max-width: 320px) {
-
   .activeBar,
   .bar1 {
     top: 26px;
     right: -4px;
   }
 
-
   .sliderContents {
     left: 10px;
     padding: 5px !important;
-}
+  }
 }

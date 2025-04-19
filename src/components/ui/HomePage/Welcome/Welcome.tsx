@@ -22,7 +22,7 @@ const Welcome = () => {
           `${process.env.NEXT_PUBLIC_BASE_API_URL}/banner?limit=1000`,
           {
             cache: "no-store",
-          },
+          }
         );
         const data = await response.json();
         setWelcomeData(data.data?.banners || []);

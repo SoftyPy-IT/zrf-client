@@ -68,7 +68,7 @@ const AboutTopSectionData: React.FC<AboutProps> = ({ aboutData, language }) => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row bg-white p-10 mt-20 border">
+    <div className="flex flex-col lg:flex-row bg-white md:p-10 p-5 mt-20 rounded-md">
       <div className="lg:w-1/2 mb-8 lg:mb-0 flex justify-center">
         <Image
           height={500}

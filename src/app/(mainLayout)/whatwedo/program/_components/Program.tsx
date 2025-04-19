@@ -65,7 +65,9 @@ const Program = () => {
                     <div className="flex items-center gap-3">
                       <h2 className="text-xl ">{card.title?.slice(0, 100)}</h2>
                     </div>
-                    <p className="text-justify">{card.content?.slice(0, 200)}</p>
+                    <p className="text-justify">
+                      {card.content?.slice(0, 200)}
+                    </p>
                     <Button href={`/whatwedo/program/${card.id}`}>
                       Read More
                     </Button>

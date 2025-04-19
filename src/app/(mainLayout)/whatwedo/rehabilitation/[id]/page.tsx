@@ -1,8 +1,8 @@
-'use client'
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import { useLanguage } from '@/provider/LanguageProvider';
-import SingleRehabilitation from '../_components/SingleRehabilitation';
+import React, { useEffect, useState } from "react";
+import { useLanguage } from "@/provider/LanguageProvider";
+import SingleRehabilitation from "../_components/SingleRehabilitation";
 interface paramsId {
   params: {
     id: string;
@@ -18,7 +18,9 @@ const Rehabilitation = ({ params }: paramsId) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo/${id}`);
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo/${id}`
+        );
         const result = await res.json();
         if (result?.data) {
           setData(result.data);
@@ -38,8 +40,11 @@ const Rehabilitation = ({ params }: paramsId) => {
   }
   return (
     <>
-      <>{data && <SingleRehabilitation language={language} whatWedoData={data} />}</>
-
+      <>
+        {data && (
+          <SingleRehabilitation language={language} whatWedoData={data} />
+        )}
+      </>
     </>
   );
 };
