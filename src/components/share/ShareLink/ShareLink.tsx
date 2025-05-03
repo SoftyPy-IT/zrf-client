@@ -1,65 +1,79 @@
-'use client'
+"use client";
 
-import { Share } from '@mui/icons-material';
-import Image from 'next/image';
-import { FacebookShareButton, TwitterShareButton, LinkedinShareButton } from 'react-share';
-import facebook from '../../assets/icon/facebook.png';
-import linkedIn from '../../assets/icon/linkedin.png';
-import instagram from '../../assets/icon/instagram.png';
-import { useState } from 'react';
-import ShareModal from './ShareModal';
-import FacebookIcon from "@mui/icons-material/Facebook";
-import XIcon from "@mui/icons-material/X";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import Link from 'next/link';
-
+import React, { useEffect, useState } from "react";
+import {
+  FaFacebookF,
+  FaFacebookMessenger,
+  FaTwitter,
+  FaWhatsapp,
+} from "react-icons/fa6";
+import { SlSocialLinkedin } from "react-icons/sl";
 
 const ShareLink = () => {
-    const [open, setOpen] = useState(false)
-    const handleOpen = () => setOpen(true)
-    const handleClose = () => setOpen(false)
+  const [currentUrl, setCurrentUrl] = useState("");
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setCurrentUrl(window.location.href);
+    }
+  }, []);
 
-    const urlToShare = "https://facebook.com";
-    const title = "Facebook!";
+  const facebookShare = `https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`;
+  const messengerShare = `fb-messenger://share?link=${currentUrl}`;
+  const twitterShare = `https://twitter.com/intent/tweet?url=${currentUrl}&text=Check this out!`;
+  const whatsappShare = `https://api.whatsapp.com/send?text=${currentUrl}`;
+  const linkedinShare = `https://www.linkedin.com/shareArticle?mini=true&url=${currentUrl}`;
 
-    return (
-        <>
-            <div className="socialMedia flex-col md:flex-row gap-5 lg:gap-0 flex ">
-                <div className="flex items-center space-x-3">
+  return (
+    <div className="flex items-center gap-2 mt-10 flex-wrap">
+      <h3 className="text-lg font-bold text-gray-600">Share Now:</h3>
 
+      <a
+        href={facebookShare}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="bg-[#1877F2] hover:bg-[#344e86] flex items-center justify-center h-6 lg:h-8 w-6 lg:w-8 rounded-full"
+      >
+        <FaFacebookF className="h-4 w-4 text-white" />
+      </a>
 
+      <a
+        href={messengerShare}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="bg-[#0084ff] hover:bg-[#0074e0] flex items-center justify-center h-6 lg:h-8 w-6 lg:w-8 rounded-full"
+      >
+        <FaFacebookMessenger className="h-4 w-4 text-white" />
+      </a>
 
-                    <div className="flex gap-5 p-5">
-                        <span onClick={handleOpen} className='cursor-pointer'><Share /> </span>
-                        <span>Share</span>
-                        <span className="cursor-pointer">
-                            <Link href='https://www.facebook.com/webnpfamily'>
-                                <FacebookIcon fontSize="small" />
-                            </Link>
-                        </span>
-                        <span className="cursor-pointer">
-                            <Link href='https://x.com/i/flow/login?redirect_after_login=%2Fwebnpfamily'>
-                                <XIcon fontSize="small" />
-                            </Link>
+      <a
+        href={whatsappShare}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="bg-[#25D366] hover:bg-[#21bd5a] flex items-center justify-center h-6 lg:h-8 w-6 lg:w-8 rounded-full"
+      >
+        <FaWhatsapp className="h-4 w-4 text-white" />
+      </a>
 
-                        </span>
-                        <span className="cursor-pointer">
-                            <InstagramIcon fontSize="small" />
-                        </span>
-                        <span className="cursor-pointer">
-                            <LinkedInIcon fontSize="small" />
-                        </span>
-                    </div>
-                </div>
-            </div>
+      <a
+        href={twitterShare}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="bg-black hover:bg-gray-800 flex items-center justify-center h-6 lg:h-8 w-6 lg:w-8 rounded-full"
+      >
+        <FaTwitter className="h-4 w-4 text-white" />
+      </a>
 
-            {
-                open && <ShareModal close={handleClose} />
-            }
-        </>
-    );
+      <a
+        href={linkedinShare}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="bg-[#0077b5] hover:bg-[#006399] flex items-center justify-center h-6 lg:h-8 w-6 lg:w-8 rounded-full"
+      >
+        <SlSocialLinkedin className="h-4 w-4 text-white" />
+      </a>
+    </div>
+  );
 };
 
 export default ShareLink;
