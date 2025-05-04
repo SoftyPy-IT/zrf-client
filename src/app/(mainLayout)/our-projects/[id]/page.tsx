@@ -34,12 +34,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!data) return {};
 
   return {
-    title: data.title || "Project Details",
-    description: data.description?.slice(0, 150) || "View project details",
+    title: data.english_title || "Project Details",
+    description:
+      data.english_description?.slice(0, 150) || "View project details",
     openGraph: {
-      title: data.title,
-      description: data.description?.slice(0, 150),
-      images: data.image ? [{ url: data.image }] : [],
+      title: data.english_title,
+      description: data.english_description?.slice(0, 150),
+      images: data.eng_images ? [{ url: data.eng_images }] : [],
     },
   };
 }
@@ -51,11 +52,9 @@ const ProjectPage = async ({ params }: Props) => {
     notFound();
   }
 
- 
-
   return (
     <div>
-      <SingleProjectData  singleProjectData={data} />
+      <SingleProjectData singleProjectData={data} />
     </div>
   );
 };
