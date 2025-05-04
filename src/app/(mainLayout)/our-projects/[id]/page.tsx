@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import SingleProjectData from "../_components/SingleProjectData";
-import { getLanguageFromCookie } from "@/utils/language";
 
 type Props = {
   params: {
@@ -14,7 +13,7 @@ async function getProjectData(id: string) {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API_URL}/project/${id}`,
       {
-        cache: "no-store", // or 'force-cache' depending on needs
+        cache: "no-store",
       }
     );
 
@@ -35,11 +34,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: data.english_title || "Project Details",
-    description:
-      data.english_description?.slice(0, 150) || "View project details",
     openGraph: {
       title: data.english_title,
-      description: data.english_description?.slice(0, 150),
       images: data.eng_images ? [{ url: data.eng_images }] : [],
     },
   };
