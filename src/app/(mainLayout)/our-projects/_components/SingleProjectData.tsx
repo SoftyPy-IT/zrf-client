@@ -206,7 +206,7 @@ const SingleProjectData = ({
           </div>
         </div>
 
-        <ShareLink />
+        <ShareLink id={singleProjectData._id} />
       </Container>
     </div>
   );
