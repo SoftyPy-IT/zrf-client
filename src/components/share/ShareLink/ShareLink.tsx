@@ -21,20 +21,16 @@ import {
   FaEnvelope,
 } from "react-icons/fa";
 
-type Props = {
-  id?: string;
-};
-
-const ShareLink = ({ id }: Props) => {
+const ShareLink = () => {
   const pathName = usePathname();
   const [fullUrl, setFullUrl] = useState("");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const origin = window.location.origin;
-      setFullUrl(`${origin}${pathName}/${id}`);
+      setFullUrl(`${origin}${pathName}`);
     }
-  }, [pathName, id]);
+  }, [pathName]);
 
   const buttonStyle =
     "flex items-center gap-2 px-4 py-2 rounded text-white hover:opacity-90 transition text-sm";
