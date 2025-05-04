@@ -8,10 +8,10 @@ import { TProject } from "@/types/type";
 import ReactHtmlParser from "react-html-parser";
 import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 import RecentProjectPost from "./RecentProjectPost";
+import { useLanguage } from "@/provider/LanguageProvider";
 
 type SingleProjectProps = {
   singleProjectData: TProject;
-  language: string;
 };
 
 const renderContent = (content: string) => {
@@ -145,10 +145,9 @@ const renderContent = (content: string) => {
   });
 };
 
-const SingleProjectData = ({
-  singleProjectData,
-  language,
-}: SingleProjectProps) => {
+const SingleProjectData = ({ singleProjectData }: SingleProjectProps) => {
+  const { language } = useLanguage();
+
   return (
     <div>
       <CommonBanner

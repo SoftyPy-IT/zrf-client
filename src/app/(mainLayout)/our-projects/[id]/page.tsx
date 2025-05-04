@@ -1,70 +1,63 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
-import { useLanguage } from "@/provider/LanguageProvider";
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
 import SingleProjectData from "../_components/SingleProjectData";
-import dynamic from "next/dynamic";
-const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-  ssr: false,
-});
+import { getLanguageFromCookie } from "@/utils/language";
 
-interface PressId {
+type Props = {
   params: {
     id: string;
   };
+};
+
+async function getProjectData(id: string) {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/project/${id}`,
+      {
+        cache: "no-store", // or 'force-cache' depending on needs
+      }
+    );
+
+    const result = await res.json();
+
+    if (result?.data) return result.data;
+    return null;
+  } catch (error) {
+    return null;
+  }
 }
 
-const Project = ({ params }: PressId) => {
-  const { language } = useLanguage();
-  const { id } = params;
+// Optional: Dynamic Metadata
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const data = await getProjectData(params.id);
 
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  if (!data) return {};
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true); 
-      setError(null);
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/project/${id}`,
-        );
-        const result = await res.json();
-        if (result?.data) {
-          setData(result.data);
-        } else {
-          setError("Project data not found");
-        }
-      } catch (error) {
-        setError("An error occurred while fetching data.");
-      } finally {
-        setLoading(false); 
-      }
-    };
+  return {
+    title: data.title || "Project Details",
+    description: data.description?.slice(0, 150) || "View project details",
+    openGraph: {
+      title: data.title,
+      description: data.description?.slice(0, 150),
+      images: data.image ? [{ url: data.image }] : [],
+    },
+  };
+}
 
-    fetchData();
-  }, [id]);
+const ProjectPage = async ({ params }: Props) => {
+  const data = await getProjectData(params.id);
 
-  if (loading) {
-    return <Loader />;
+  if (!data) {
+    notFound();
   }
 
-  if (error) {
-    return (
-      <div className="text-center text-red-600">
-        <h2>Ooops! Something Went Wrong!</h2>
-      </div>
-    );
-  }
+ 
 
   return (
     <div>
-      {data && (
-        <SingleProjectData language={language} singleProjectData={data} />
-      )}
+      <SingleProjectData  singleProjectData={data} />
     </div>
   );
 };
 
-export default Project;
+export default ProjectPage;
