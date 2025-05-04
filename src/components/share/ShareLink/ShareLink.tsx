@@ -22,7 +22,7 @@ import {
 } from "react-icons/fa";
 
 type Props = {
-  id: string;
+  id?: string;
 };
 
 const ShareLink = ({ id }: Props) => {
