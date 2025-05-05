@@ -9,10 +9,10 @@ import CovidSidebar from "./CovidSidebar";
 
 import ReactHtmlParser from "react-html-parser";
 import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
+import { useLanguage } from "@/provider/LanguageProvider";
 
 type SingleWhatWeDoProps = {
   whatWedoData: TWhatWeDo;
-  language: string;
 };
 
 const renderContent = (content: string) => {
@@ -76,11 +76,13 @@ const renderContent = (content: string) => {
   });
 };
 
-const SingleCovid = ({ whatWedoData, language }: SingleWhatWeDoProps) => {
-  const title = language === "ENG" ? "Covid Programs" : "কোভিড কার্যক্রম";
+const SingleCovid = ({ whatWedoData }: SingleWhatWeDoProps) => {
+  const { language } = useLanguage();
   return (
     <>
-      <CommonBanner title={title} />
+      <CommonBanner
+        title={language === "ENG" ? "Covid Programs" : "কোভিড কার্যক্রম"}
+      />
       <Container>
         <div className="grid md:grid-cols-12 gap-7 my-10">
           <div className="md:col-span-8 lg:col-span-8">
@@ -127,11 +129,6 @@ const SingleCovid = ({ whatWedoData, language }: SingleWhatWeDoProps) => {
 
             <hr className="my-6" />
             <div className=" md:flex lg:flex justify-between items-center mb-8 space-y-3">
-              <div className="flex items-center gap-2">
-                <BookmarkIcon className="text-gray-600 cursor-pointer" />
-
-                <h4>{language === "ENG" ? "Social Work" : "সামাজিক কাজ"} </h4>
-              </div>
               <div className="flex items-center gap-4">
                 <ShareLink />
               </div>
