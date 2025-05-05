@@ -1,49 +1,58 @@
-'use client'
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import SingleWhatwedo from "../_components/SingleWhatwedo";
 
-import React, { useEffect, useState } from 'react';
-import { useLanguage } from '@/provider/LanguageProvider';
-import SingleWhatwedo from '../_components/SingleWhatwedo';
-
-
-interface paramsId {
+type Props = {
   params: {
     id: string;
   };
-}
-const Whatwedo = ({ params }: paramsId) => {
-  const { language } = useLanguage();
-  const { id } = params;
+};
 
-  const [data, setData] = useState(null);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo/${id}`);
-        const result = await res.json();
-        if (result?.data) {
-          setData(result.data);
-        } else {
-          setError("Report data not found");
-        }
-      } catch (error) {
-        setError("An error occurred while fetching data.");
+async function getProjectData(id: string) {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo/${id}`,
+      {
+        cache: "no-store",
       }
-    };
+    );
 
-    fetchData();
-  }, [id]);
+    const result = await res.json();
 
-  if (error) {
-    return <div>{error}</div>;
+    if (result?.data) return result.data;
+    return null;
+  } catch (error) {
+    return null;
   }
-  return (
-    <>
-      <>{data && <SingleWhatwedo language={language} whatWedoData={data} />}</>
+}
 
-    </>
+// Optional: Dynamic Metadata
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const data = await getProjectData(params.id);
+
+  if (!data) return {};
+
+  return {
+    title: data.english_title || "Project Details",
+    openGraph: {
+      title: data.english_title,
+      images: data.eng_images ? [{ url: data.eng_images }] : [],
+    },
+  };
+}
+
+const ProjectPage = async ({ params }: Props) => {
+  const data = await getProjectData(params.id);
+
+  if (!data) {
+    notFound();
+  }
+
+  return (
+    <div>
+      <SingleWhatwedo whatWedoData={data} />
+    </div>
   );
 };
 
-export default Whatwedo;
+export default ProjectPage;
