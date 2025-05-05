@@ -1,8 +1,6 @@
 "use client";
 import React from "react";
-
 import Container from "@/components/share/Container";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
 import ReactHtmlParser from "react-html-parser";
 import ShareLink from "@/components/share/ShareLink/ShareLink";
 import { TWhatWeDo } from "@/types/type";
@@ -10,10 +8,10 @@ import Image from "next/image";
 
 import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 import InitiativeSidebar from "./InitiativeSidebar";
+import { useLanguage } from "@/provider/LanguageProvider";
 
 type SingleWhatWeDoProps = {
   whatWedoData: TWhatWeDo;
-  language: string;
 };
 
 const renderContent = (content: string) => {
@@ -77,7 +75,8 @@ const renderContent = (content: string) => {
   });
 };
 
-const SingleInitiative = ({ whatWedoData, language }: SingleWhatWeDoProps) => {
+const SingleInitiative = ({ whatWedoData }: SingleWhatWeDoProps) => {
+  const { language } = useLanguage();
   return (
     <>
       <CommonBanner
@@ -127,11 +126,6 @@ const SingleInitiative = ({ whatWedoData, language }: SingleWhatWeDoProps) => {
 
             <hr className="my-6" />
             <div className=" md:flex lg:flex justify-between items-center mb-8 space-y-3">
-              <div className="flex items-center gap-2">
-                <BookmarkIcon className="text-gray-600 cursor-pointer" />
-
-                <h4>{language === "ENG" ? "Social Work" : "সামাজিক কাজ"} </h4>
-              </div>
               <div className="flex items-center gap-4">
                 <ShareLink />
               </div>

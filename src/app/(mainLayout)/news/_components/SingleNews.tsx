@@ -10,10 +10,10 @@ import { TActivity } from "@/types/type";
 import Image from "next/image";
 import RecentNewsSidebar from "./RecentNewsSidebar";
 import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
+import { useLanguage } from "@/provider/LanguageProvider";
 
 type SingleProjectProps = {
   singleNewsData: TActivity;
-  language: string;
 };
 
 const renderContent = (content: string) => {
@@ -147,10 +147,8 @@ const renderContent = (content: string) => {
   });
 };
 
-const SingleRehabilitation = ({
-  singleNewsData,
-  language,
-}: SingleProjectProps) => {
+const SingleRehabilitation = ({ singleNewsData }: SingleProjectProps) => {
+  const { language } = useLanguage();
   return (
     <>
       <CommonBanner
@@ -201,11 +199,6 @@ const SingleRehabilitation = ({
 
             <hr className="my-6" />
             <div className=" md:flex lg:flex justify-between items-center mb-8 space-y-3">
-              <div className="flex items-center gap-2">
-                <BookmarkIcon className="text-gray-600 cursor-pointer" />
-
-                <h4>{language === "ENG" ? "Social Work" : "সামাজিক কাজ"} </h4>
-              </div>
               <div className="flex items-center gap-4">
                 <ShareLink />
               </div>
