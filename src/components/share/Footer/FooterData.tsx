@@ -58,14 +58,22 @@ const FooterData = ({ language }: FooterProps) => {
           <div className="container mx-auto">
             <div className="flex flex-col md:flex-row justify-between items-start mt-8">
               <div className="w-full md:w-1/4 mb-8 md:mb-0">
-                <Link href='/'> <div className="space-y-3 flex flex-col items-center">
-                  <Image src={logo} alt="Seville Logo" width={90} height={90} />
-                  <h3 className="font-bold text-lg text-center">
-                    {language === "ENG"
-                      ? "Ziaur Rahman Foundation"
-                      : "জিয়াউর রহমান ফাউন্ডেশন"}
-                  </h3>
-                </div></Link>
+                <Link href="/">
+                  {" "}
+                  <div className="space-y-3 flex flex-col items-center">
+                    <Image
+                      src={logo}
+                      alt="Seville Logo"
+                      width={90}
+                      height={90}
+                    />
+                    <h3 className="font-bold text-lg text-center">
+                      {language === "ENG"
+                        ? "Ziaur Rahman Foundation"
+                        : "জিয়াউর রহমান ফাউন্ডেশন"}
+                    </h3>
+                  </div>
+                </Link>
               </div>
 
               <div className="w-full md:w-1/4 mb-8 md:mb-0 text-center">

@@ -10,42 +10,47 @@ import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 const Contact = () => {
-  const { language } = useLanguage()
+  const { language } = useLanguage();
 
   return (
     <>
       <div>
-        <CommonBanner title={language == 'ENG' ? 'Contact Us' : 'আমাদের সাথে যোগাযোগ করুন'} />
+        <CommonBanner
+          title={language == "ENG" ? "Contact Us" : "আমাদের সাথে যোগাযোগ করুন"}
+        />
         <Container>
           <div className="container mx-auto lg:px-4 my-20 lg:flex gap-10">
             <div className="lg:w-1/2 mb-12">
               <div className="bg-green-600 p-5">
                 <h2 className="text-2xl font-bold mb-4 text-white font-serif">
-
-                  {language == 'ENG' ? 'Contact Information' : 'যোগাযোগের তথ্য'}
+                  {language == "ENG" ? "Contact Information" : "যোগাযোগের তথ্য"}
                 </h2>
                 <div className="text-white">
                   <div className="mb-4">
                     <h3 className="text-xl font-semibold">
                       <LocationOnIcon sx={{ marginRight: "5px" }} />
-                      {language == 'ENG' ? 'Location' : 'অবস্থান'}
+                      {language == "ENG" ? "Location" : "অবস্থান"}
                     </h3>
                     <p className="text-white">
-
-                      {language == 'ENG' ? ' House#4, Road#7, Niketon Gate #2, Gulshan-1, Dhaka-1212, Bangladesh.' : 'বাড়ি#৪, রোড#৭, নিকেতন গেট#২, গুলশান-১, ঢাকা-১২১২, বাংলাদেশ।'}
+                      {language == "ENG"
+                        ? " House#2, Road#23/A, Gulshan-1, Near Gulshan 1 Post Office, Dhaka-1212, Bangladesh."
+                        : "বাড়ি #২, রোড #২৩/এ, গুলশান-১, গুলশান ১ পোস্ট অফিস, ঢাকা-১২১২, বাংলাদেশ।"}
                     </p>
                   </div>
                   <div className="mb-4">
                     <h3 className="text-xl font-semibold">
                       <CallOutlinedIcon sx={{ marginRight: "5px" }} />
-                      {language == 'ENG' ? 'Location' : 'আমাদের কল করুন'}
+                      {language == "ENG" ? "Location" : "আমাদের কল করুন"}
                     </h3>
-                    <p className="text-white">  {language == 'ENG' ? '01819213236' : '01819213236'} </p>
+                    <p className="text-white">
+                      {" "}
+                      {language == "ENG" ? "01819213236" : "01819213236"}{" "}
+                    </p>
                   </div>
                   <div className="mb-4">
                     <h3 className="text-xl font-semibold">
                       <EmailOutlinedIcon sx={{ marginRight: "5px" }} />
-                      {language == 'ENG' ? ' Email Us' : 'আমাদের ইমেল করুন'}
+                      {language == "ENG" ? " Email Us" : "আমাদের ইমেল করুন"}
                     </h3>
                     <p className="text-white">donaroncolog@gmail.com</p>
                   </div>
@@ -56,7 +61,7 @@ const Contact = () => {
             <div>
               <div className=" bg-white shadow-md p-5 border">
                 <h2 className="text-2xl font-serif font-bold mb-4">
-                  {language == 'ENG' ? 'Contact Us!' : ' যোগাযোগ করুন!'}
+                  {language == "ENG" ? "Contact Us!" : " যোগাযোগ করুন!"}
                 </h2>
                 {/* <p className="text-gray-700 mb-6">
                   {language == 'ENG' ? ' Contact us to get, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ainim veniam.' : 'পেতে আমাদের সাথে যোগাযোগ করুন, কনসেক্টেটুর adipisising elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ইউটেনিম অ্যানিম ভেনিয়াম।'}
