@@ -76,8 +76,8 @@ const FooterData = ({ language }: FooterProps) => {
                 <p>
                   {" "}
                   {language === "ENG"
-                    ? "House#4, Road#7, Niketon Gate #2, Gulshan-1, Dhaka-1212, Bangladesh."
-                    : "বাড়ি#৪, রোড#৭, নিকেতন গেট#২, গুলশান-১, ঢাকা-১২১২, বাংলাদেশ।"}{" "}
+                    ? "House#2, Road#23/A, Gulshan-1, Near Gulshan 1 Post Office, Dhaka-1212, Bangladesh."
+                    : "বাড়ি #২, রোড #২৩/এ, গুলশান-১, গুলশান ১ পোস্ট অফিস, ঢাকা-১২১২, বাংলাদেশ।"}{" "}
                 </p>
               </div>
               <div className="w-full md:w-1/4 mb-8 md:mb-0 text-center">
