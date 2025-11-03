@@ -36,7 +36,7 @@ const RecentActivityPost: React.FC<educatoinProps> = ({ activityData, language }
 
                                 {
                                     data.bng_Images?.slice(0, 1).map((img) => (
-                                        <div className="relative w-full max-w-[14rem] aspect-[56/16] rounded-sm " key={img}>
+                                        <div className="relative w-full aspect-[56/16] rounded-sm h-[120px] md:h-auto " key={img}>
                                             {
                                                 language === 'ENG' ? (
                                                     data.eng_images?.slice(0, 1).map((img) => (
