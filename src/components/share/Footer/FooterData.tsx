@@ -41,7 +41,7 @@ const FooterData = ({ language }: FooterProps) => {
           <div className="relative md:gap-0 gap-y-3 flex flex-col md:flex-row justify-between items-center py-8 z-10">
             <p className="text-xl  lg:text-3xl text-white font-sans uppercase">
               {language === "ENG"
-                ? " Join Our Newsletter"
+                ? " Join Our Newsletter"  
                 : "আমাদের নিউজলেটার যোগদান"}
             </p>
             <Subscribe />
