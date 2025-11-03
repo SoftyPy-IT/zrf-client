@@ -61,7 +61,7 @@ const Header = () => {
 
           <div>
             <ul
-              className={`lg:w-full xl:w-full lg:py-2 flex justify-center items-center navItems ${
+              className={`lg:w-full xl:w-full px-3 lg:py-2 flex justify-center items-center navItems ${
                 open ? "" : "activeMenu z-50"
               }`}
             >
@@ -70,12 +70,12 @@ const Header = () => {
                   {language === "ENG" ? "Home" : "প্রচ্ছদ"}
                 </Link>
               </li>
-              <li className="dropdownMenuWrap relative">
+              <li className="dropdownMenuWrap relative ">
                 <Link href="#">
                   {language === "ENG" ? "Who We Are" : "আমাদের সম্পর্কে"}
                   <KeyboardArrowDownIcon />
                 </Link>
-                <ul className={`w-[290px] h-[160px]  ${dropdown}`}>
+                <ul className={`w-[290px] h-[200px]  ${dropdown}`}>
                   <li>
                     <Link
                       href="/message-of-president"
