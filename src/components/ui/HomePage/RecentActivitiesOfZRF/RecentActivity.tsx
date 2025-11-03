@@ -48,7 +48,7 @@ const RecentActivity: React.FC<ActivityProps> = ({
                 key={data._id}
                 className="relative shadow-xl bg-white overflow-hidden group hover:text-white"
               >
-                <div className="relative lg:h-[250px]">
+                <div className="relative ">
                   {language === "ENG"
                     ? data.bng_Images
                         ?.slice(0, 1)
