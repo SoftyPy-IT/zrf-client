@@ -9,137 +9,7 @@ import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 import ActivitySidebar from "./ActivitySidebar";
 import ReactHtmlParser from "react-html-parser";
 import { useLanguage } from "@/provider/LanguageProvider";
-
-const renderContent = (content: string) => {
-  const parsedContent = ReactHtmlParser(content);
-
-  return parsedContent.map((element: any, index: number) => {
-    const { type, props } = element;
-
-    switch (type) {
-      case "h1":
-        return (
-          <h1 key={index} className="text-2xl font-bold mb-2">
-            {props.children}
-          </h1>
-        );
-      case "h2":
-        return (
-          <h2 key={index} className="text-xl font-bold mb-2">
-            {props.children}
-          </h2>
-        );
-      case "h3":
-        return (
-          <h3 key={index} className="text-lg font-bold mb-2">
-            {props.children}
-          </h3>
-        );
-      case "h4":
-        return (
-          <h4 key={index} className="font-bold mb-2">
-            {props.children}
-          </h4>
-        );
-      case "b":
-        return (
-          <b key={index} className="font-bold">
-            {props.children}
-          </b>
-        );
-      case "p":
-        return (
-          <p key={index} className="mb-3 leading-relaxed">
-            {props.children}
-          </p>
-        );
-      case "img":
-        return (
-          <div key={index} className="my-4 w-full flex justify-center">
-            <img
-              src={props.src}
-              alt={props.alt || "content image"}
-              className="max-w-full rounded-lg object-cover"
-            />
-          </div>
-        );
-      case "ul":
-        return (
-          <ul key={index} className="list-disc list-inside mb-3">
-            {props.children}
-          </ul>
-        );
-      case "ol":
-        return (
-          <ol key={index} className="list-decimal list-inside mb-3">
-            {props.children}
-          </ol>
-        );
-      case "video":
-        return (
-          <video key={index} controls className="w-full h-auto my-4">
-            <source src={props.src} />
-            Your browser does not support the video tag.
-          </video>
-        );
-      case "iframe":
-        return (
-          <iframe
-            key={index}
-            src={props.src}
-            className="w-full h-[400px] my-4 rounded"
-            title={`iframe-${index}`}
-            frameBorder="0"
-            allowFullScreen
-          />
-        );
-      case "div":
-        if (props.className === "ql-align-center")
-          return (
-            <div key={index} className="text-center mb-2">
-              {props.children}
-            </div>
-          );
-        if (props.className === "ql-align-right")
-          return (
-            <div key={index} className="text-right mb-2">
-              {props.children}
-            </div>
-          );
-        if (props.className === "ql-align-left")
-          return (
-            <div key={index} className="text-left mb-2">
-              {props.children}
-            </div>
-          );
-        // ✅ fallback for all other divs
-        return (
-          <div key={index} className="mb-2">
-            {props.children}
-          </div>
-        );
-
-      case "span":
-        // ✅ fallback for spans with inline styles (retain their text)
-        return (
-          <span key={index} style={props.style}>
-            {props.children}
-          </span>
-        );
-
-      case "br":
-        return <br key={index} />;
-
-      default:
-        // ✅ fallback for any unknown tag
-        return (
-          <React.Fragment key={index}>
-            {props?.children || element}
-          </React.Fragment>
-        );
-    }
-  });
-};
+import RenderContent from "@/components/Common/RenderContent";
 
 type SingleActivityProps = {
   singleActivityData: TActivity;
@@ -195,10 +65,13 @@ const SingleActivity = ({ singleActivityData }: SingleActivityProps) => {
                     : singleActivityData.bangla_title}
                 </h3>
                 <p className="text-justify mt-5">
-                  {" "}
-                  {language === "ENG"
-                    ? renderContent(singleActivityData.english_description)
-                    : renderContent(singleActivityData.bangla_description)}
+                  <RenderContent
+                    content={
+                      language === "ENG"
+                        ? singleActivityData.english_description
+                        : singleActivityData.bangla_description
+                    }
+                  />
                 </p>
               </div>
             </div>

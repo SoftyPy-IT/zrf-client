@@ -26,7 +26,6 @@ async function getProjectData(id: string) {
   }
 }
 
-// Optional: Dynamic Metadata
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const data = await getProjectData(params.id);
 

@@ -1,28 +1,19 @@
-import React from "react";
-import Banner from "../_components/Banner";
 import Container from "@/components/share/Container";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import { TextField } from "@mui/material";
 import Image from "next/image";
-import titleImage from "../../../../../assets/images/program/1.jpg";
-import img1 from "../../../../../assets/images/program/1.1.jpg";
-import img2 from "../../../../../assets/images/program/1.2.jpg";
-import img3 from "../../../../../assets/images/program/1.3.jpg";
-import profile from "../../../../../assets/images/profile.jpg";
 import media2 from "../../../../../assets/images/news/news (2).jpg";
 import media3 from "../../../../../assets/images/news/news (3).jpg";
 import media4 from "../../../../../assets/images/news/news (4).jpg";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import XIcon from "@mui/icons-material/X";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import { Button } from "@mui/material";
-import { TextField } from "@mui/material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import img1 from "../../../../../assets/images/program/1.1.jpg";
+import img2 from "../../../../../assets/images/program/1.2.jpg";
+import img3 from "../../../../../assets/images/program/1.3.jpg";
+import titleImage from "../../../../../assets/images/program/1.jpg";
+import Banner from "../_components/Banner";
 
-import StopIcon from "@mui/icons-material/Stop";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import ShareIcon from '@mui/icons-material/Share';
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+
 import ShareLink from "@/components/share/ShareLink/ShareLink";
 
 const newsData = [
@@ -155,12 +146,12 @@ const DescriptionPage = () => {
             <div className=" md:flex lg:flex justify-between items-center mb-8 space-y-3">
               <div className="flex items-center gap-2">
                 <BookmarkIcon className="text-gray-600 cursor-pointer" />
-          
+
                 <h4>Social Work</h4>
               </div>
               <div className="flex items-center">
-                <h1>Share:</h1>                
-                <ShareLink/>                
+                <h1>Share:</h1>
+                <ShareLink />
               </div>
             </div>
             <div className="flex justify-between items-center mt-5">
@@ -243,113 +234,6 @@ const DescriptionPage = () => {
                 ))}
               </div>
             </div>
-
-            {/* achieves */}
-            {/* <div className="bg-gray-100 p-5 rounded mt-10">
-              <h3>Achieves</h3>
-              <hr className="w-16 h-1 bg-gradient-to-r from-yellow-600 to-green-600 border-0 rounded-full mb-5" />
-              <div>
-                <div className="my-3">
-                  <button className="font-medium text-sm">
-                    <StopIcon fontSize="small" /> May 2024
-                  </button>
-                </div>
-
-                <hr />
-                <div className="my-3">
-                  <button className="font-medium text-sm">
-                    <StopIcon fontSize="small" /> April 2024
-                  </button>
-                </div>
-                <hr />
-                <div className="my-3">
-                  <button className="font-medium text-sm">
-                    <StopIcon fontSize="small" /> June 2024
-                  </button>
-                </div>
-                <hr />
-                <div className="my-3">
-                  <button className="font-medium text-sm">
-                    <StopIcon fontSize="small" /> July 2024
-                  </button>
-                </div>
-              </div>
-            </div> */}
-
-            {/* category */}
-            {/* <div className="bg-gray-100 p-5 rounded mt-10">
-              <h3>Category</h3>
-              <hr className="w-16 h-1 bg-gradient-to-r from-yellow-600 to-green-600 border-0 rounded-full mb-5" />
-              <div>
-                <div className="flex gap-2 my-3">
-                  <button className="font-medium text-sm">
-                    <StopIcon fontSize="small" /> Education
-                  </button>
-                  <span className="block font-medium text-sm">(10)</span>
-                </div>
-
-                <hr />
-                <div className="flex gap-2 my-3">
-                  <button className="font-medium text-sm">
-                    <StopIcon fontSize="small" /> National
-                  </button>
-                  <span className="block font-medium text-sm">(20)</span>
-                </div>
-                <hr />
-                <div className="flex gap-2 my-3">
-                  <button className="font-medium text-sm">
-                    <StopIcon fontSize="small" /> Health
-                  </button>
-                  <span className="block font-medium text-sm">(17)</span>
-                </div>
-                <hr />
-                <div className="flex gap-2 my-3">
-                  <button className="font-medium text-sm">
-                    <StopIcon fontSize="small" /> Sports
-                  </button>
-                  <span className="block font-medium text-sm">(12)</span>
-                </div>
-                <hr />
-                <div className="flex gap-2 my-3">
-                  <button className="font-medium text-sm">
-                    <StopIcon fontSize="small" /> Magazine
-                  </button>
-                  <span className="block font-medium text-sm">(16)</span>
-                </div>
-              </div>
-            </div> */}
-
-            {/* tags */}
-            {/* <div className="bg-gray-100 p-5 rounded mt-10">
-              <h3>Tags</h3>
-              <hr className="w-16 h-1 bg-gradient-to-r from-yellow-600 to-green-600 border-0 rounded-full mb-5" />
-              <div className="flex flex-wrap gap-3">
-                <button className="border hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-2 rounded hover:text-white text-sm">
-                  Fashion
-                </button>
-                <button className="border hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-2 rounded hover:text-white text-sm">
-                  Education
-                </button>
-                <button className="border hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-2 rounded hover:text-white text-sm">
-                  Nation
-                </button>
-                <button className="border hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-2 rounded hover:text-white text-sm">
-                  Study
-                </button>
-                <button className="border hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-2 rounded hover:text-white text-sm">
-                  Health
-                </button>
-                <button className="border hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-2 rounded hover:text-white text-sm">
-                  Food
-                </button>
-                <button className="border hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-2 rounded hover:text-white text-sm">
-                  Travel
-                </button>
-                <button className="border hover:bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-2 rounded hover:text-white text-sm">
-                  Science
-                </button>
-              </div>
-            </div> */}
           </div>
         </div>
       </Container>
