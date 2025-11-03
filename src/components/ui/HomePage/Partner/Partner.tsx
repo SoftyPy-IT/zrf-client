@@ -1,12 +1,12 @@
-import Partners from '@/app/(mainLayout)/partner/_components/Partner';
-import React from 'react';
+// import Partners from '@/app/(mainLayout)/partner/_components/Partner';
+// import React from 'react';
 
-const Partner = () => {
-    return (
-        <div>
-            <Partners/>
-        </div>
-    );
-};
+// const Partner = () => {
+//     return (
+//         <div>
+//             <Partners/>
+//         </div>
+//     );
+// };
 
-export default Partner;
+// export default Partner;
