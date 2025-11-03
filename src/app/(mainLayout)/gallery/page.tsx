@@ -1,36 +1,22 @@
 "use client";
-import React, { useState, useCallback } from "react";
-import Lightbox from "react-image-lightbox";
-import "react-image-lightbox/style.css";
+import React, { useState } from "react";
 import Image from "next/image";
 import { useLanguage } from "@/provider/LanguageProvider";
 import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 import Container from "@/components/share/Container";
-import CloseIcon from "@mui/icons-material/Close";
 import { sortByDate } from "@/utils/sort";
 import { TImgGallery } from "@/types/type";
 
-const CustomCloseButton = ({ onClose }: { onClose: () => void }) => (
-  <button
-    type="button"
-    className="closeIcon absolute top-[0%] right-[50%] z-[10000] p-2 bg-red-600 rounded-full text-white hover:bg-red-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-    onClick={onClose}
-    aria-label="Close lightbox"
-  >
-    <CloseIcon style={{ fontSize: "24px" }} />
-  </button>
-);
-
 const Page = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
   const { language } = useLanguage();
   const [galleryData, setGalleryData] = React.useState<TImgGallery[]>([]);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   React.useEffect(() => {
-    const fetchAffiliationData = async () => {
+    const fetchGalleryData = async () => {
       try {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_BASE_API_URL}/image-gallery?limit=10000`,
@@ -38,34 +24,26 @@ const Page = () => {
         );
         const data = await response.json();
         setGalleryData(data.data?.galleries || []);
-      } catch (err) {
+      } catch {
         setError("Failed to fetch gallery data.");
       } finally {
         setLoading(false);
       }
     };
-
-    fetchAffiliationData();
+    fetchGalleryData();
   }, []);
 
-  const openLightbox = useCallback((index: number) => {
+  const openViewer = (index: number) => {
     setCurrentIndex(index);
     setIsOpen(true);
-  }, []);
+  };
 
-  const closeLightbox = useCallback(() => {
-    setIsOpen(false);
-  }, []);
+  const closeViewer = () => setIsOpen(false);
 
-  const nextImage = useCallback(() => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % galleryData.length);
-  }, [galleryData]);
-
-  const prevImage = useCallback(() => {
-    setCurrentIndex((prevIndex) =>
-      (prevIndex + galleryData.length - 1) % galleryData.length
-    );
-  }, [galleryData]);
+  const nextImage = () =>
+    setCurrentIndex((prev) => (prev + 1) % galleryData.length);
+  const prevImage = () =>
+    setCurrentIndex((prev) => (prev - 1 + galleryData.length) % galleryData.length);
 
   const title = language === "ENG" ? "Image Gallery" : "ফটো গ্যালারি";
   const sortedGalleryData = sortByDate(galleryData, "date");
@@ -75,49 +53,68 @@ const Page = () => {
       <CommonBanner title={title} />
       <div className="App my-10">
         <Container>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-            {sortedGalleryData?.map((data, index) => (
-              <div
-                key={data._id}
-                className="cursor-pointer"
-                onClick={() => openLightbox(index)}
-              >
-                {data.thumnailImages?.[0] && (
-                  <Image
-                    className="w-full h-[300px] object-cover transition-transform duration-300 transform group-hover:scale-110"
-                    src={data.thumnailImages[0]}
-                    alt={data.title_of_english}
-                    width={500}
-                    height={300}
-                  />
-                )}
-              </div>
-            ))}
-          </div>
+          {loading ? (
+            <p>Loading...</p>
+          ) : error ? (
+            <p>{error}</p>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+              {sortedGalleryData.map((data, index) => (
+                <div
+                  key={data._id}
+                  className="cursor-pointer relative overflow-hidden rounded-lg group"
+                  onClick={() => openViewer(index)}
+                >
+                  {data.thumnailImages?.[0] && (
+                    <Image
+                      src={data.thumnailImages[0]}
+                      alt={data.title_of_english}
+                      width={500}
+                      height={300}
+                      className="w-full h-[300px] object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </Container>
       </div>
 
+      {/* Custom Lightbox */}
       {isOpen && sortedGalleryData[currentIndex]?.thumnailImages?.[0] && (
-        <Lightbox
-          mainSrc={sortedGalleryData[currentIndex].thumnailImages[0]}
-          nextSrc={
-            sortedGalleryData[(currentIndex + 1) % sortedGalleryData.length]
-              ?.thumnailImages[0]
-          }
-          prevSrc={
-            sortedGalleryData[
-              (currentIndex + sortedGalleryData.length - 1) %
-              sortedGalleryData.length
-            ]?.thumnailImages[0]
-          }
-          onCloseRequest={closeLightbox}
-          onMovePrevRequest={prevImage}
-          onMoveNextRequest={nextImage}
-          enableZoom={false}
-          toolbarButtons={[
-            <CustomCloseButton onClose={closeLightbox} key="custom-close" />,
-          ]}
-        />
+        <div className="fixed inset-0 z-[10000] bg-black bg-opacity-90 flex items-center justify-center p-4 md:p-10">
+          <button
+            className="absolute top-4 right-4 text-white bg-red-600 rounded-full w-10 h-10 flex items-center justify-center hover:bg-red-700 transition"
+            onClick={closeViewer}
+          >
+            ×
+          </button>
+
+          <button
+            className="absolute left-4 text-white text-3xl md:text-5xl font-bold"
+            onClick={prevImage}
+          >
+            ‹
+          </button>
+
+          <div className="max-w-full max-h-full flex items-center justify-center">
+            <Image
+              src={sortedGalleryData[currentIndex].thumnailImages[0]}
+              alt={sortedGalleryData[currentIndex].title_of_english}
+              width={1200}
+              height={800}
+              className="max-w-full max-h-[90vh] object-contain rounded-md"
+            />
+          </div>
+
+          <button
+            className="absolute right-4 text-white text-3xl md:text-5xl font-bold"
+            onClick={nextImage}
+          >
+            ›
+          </button>
+        </div>
       )}
     </>
   );
