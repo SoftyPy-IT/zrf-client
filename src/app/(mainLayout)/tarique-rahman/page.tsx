@@ -184,15 +184,18 @@ const BiographyPage = () => {
             </div>
           ))}
         </div>
+        
         {modalContent && (
           <Modal
             isOpen={isOpen}
             onClose={handleClose}
             title={modalContent.title}
+          
           >
             <p>{modalContent.content}</p>
           </Modal>
         )}
+      
       </div>
     </Container>
   );

@@ -17,7 +17,7 @@ const Modal: FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
   return (
     <Dialog open={isOpen} onClose={onClose} maxWidth="md" fullWidth>
       {title && <DialogTitle>{title}</DialogTitle>}
-      <DialogContent>{children}</DialogContent>
+      <DialogContent sx={{height:"450px"}} >{children}</DialogContent>
       <DialogActions>
       <button
           onClick={onClose}
