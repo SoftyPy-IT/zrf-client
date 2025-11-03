@@ -19,9 +19,7 @@ const SingleRehabilitation = ({ singleNewsData }: SingleProjectProps) => {
   const { language } = useLanguage();
   return (
     <>
-      <CommonBanner
-        title={language === "ENG" ? "Upcoming Programs" : "আসন্ন প্রোগ্রাম"}
-      />
+      <CommonBanner title={language === "ENG" ? "Message" : "বার্তা"} />
       <Container>
         <div className="grid md:grid-cols-12 gap-7 my-10">
           <div className="md:col-span-7 lg:col-span-8">
