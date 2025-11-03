@@ -1,21 +1,7 @@
-.lg-backdrop {
-  background-color: rgba(0, 0, 0, 0.95) !important;
+#custom-lg-close {
+  transition: background 0.3s;
 }
 
-.lg-toolbar {
-  background: rgba(0, 0, 0, 0.4) !important;
-}
-
-.lg-icon {
-  color: white !important;
-}
-
-.lg-sub-html {
-  color: #fff !important;
-  text-align: center;
-  padding-top: 10px;
-}
-
-.lg-thumb-outer {
-  background: rgba(0, 0, 0, 0.85) !important;
+#custom-lg-close:hover {
+  background: rgba(0, 0, 0, 0.8);
 }
