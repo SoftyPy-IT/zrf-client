@@ -265,3 +265,8 @@ Slider.css .slider-container {
     right: 12px;
 }
 }
+
+.latestAccordion{
+  height:80px !important;
+  width: 200px !important;
+}

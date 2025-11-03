@@ -22,25 +22,10 @@ const Header = () => {
     setOpen((open) => !open);
   };
 
-  // Close the mobile menu when clicking any menu item
   const closeMobileMenu = () => {
     setOpen(true);
   };
 
-  const btnStyle = {
-    color: "black",
-    background: "white",
-    padding: "0px",
-    boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
-    width: "40px",
-    minWidth: "56px",
-    height: "33px",
-    transition: "background 0.3s ease",
-    "&:hover": {
-      background: "linear-gradient(to right, #dc2626, #16a34a)",
-      color: "white",
-    },
-  };
   const dropdown =
     "dropdownMenu absolute flex flex-col justify-center mt-[20px] md:mt-[15px] lg:mt-[30px] xl:mt-[18px] rounded-md bg-white shadow-md border border-t-4 border-t-green-600 invisible opacity-0  origin-top z-50 text-black ";
 
@@ -215,10 +200,27 @@ const Header = () => {
                   {language === "ENG" ? "E-Books" : "ই-বুক"}
                 </Link>
               </li>
-              <li>
-                <Link href="/news" onClick={closeMobileMenu}>
-                  {language === "ENG" ? "Upcoming Programs" : "আসন্ন প্রোগ্রাম"}
+              <li className="dropdownMenuWrap relative">
+                <Link href="#">
+                  {language === "ENG" ? "Latest" : "সর্বশেষ"}
+                  <KeyboardArrowDownIcon />
                 </Link>
+                <ul
+                  className={`w-[200px] h-[80px] latestAccordion  ${dropdown}`}
+                >
+                  <li>
+                    <Link href="/upcoming-programs" onClick={closeMobileMenu}>
+                      {language === "ENG"
+                        ? "Upcoming Programs"
+                        : "আসন্ন প্রোগ্রাম"}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/message" onClick={closeMobileMenu}>
+                      {language === "ENG" ? "Message " : "বার্তা"}
+                    </Link>
+                  </li>
+                </ul>
               </li>
             </ul>
           </div>
