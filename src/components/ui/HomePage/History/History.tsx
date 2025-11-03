@@ -11,9 +11,9 @@ const Loader = dynamic(() => import("@/components/Loading/Loading"), {
 const History = () => {
   const { aboutData, loading, error } = useAboutData();
   const { language } = useLanguage();
-  if (loading) {
-    return <Loader />;
-  }
+  // if (loading) {
+  //   return <Loader />;
+  // }
   if (error) {
     return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
   }

@@ -12,103 +12,12 @@ import Head from "next/head";
 const AboutUs = () => {
   return (
     <div>
-      <Head>
-        <title>About Us | Ziaur Rahman Foundation</title>
-        <meta
-          name="description"
-          content="Discover the mission, vision, and achievements of Ziaur Rahman Foundation. Learn how our impactful programs empower communities worldwide through education, healthcare, and social services."
-        />
-        <meta
-          name="keywords"
-          content="Ziaur Rahman Foundation, about us, non-profit organization, charity, community development, education, healthcare, humanitarian services"
-        />
-        <meta name="author" content="Ziaur Rahman Foundation" />
-        <meta name="robots" content="index, follow" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-        {/* Open Graph / Facebook Meta Tags */}
-        <meta property="og:title" content="About Us | Ziaur Rahman Foundation" />
-        <meta
-          property="og:description"
-          content="Discover the mission, vision, and achievements of Ziaur Rahman Foundation. Learn how our impactful programs empower communities worldwide through education, healthcare, and social services."
-        />
-        <meta property="og:image" content="/about-us-og-image.png" />
-        <meta
-          property="og:url"
-          content="https://www.ziaurrahmanfoundation.com/about-us"
-        />
-        <meta property="og:type" content="website" />
-
-        {/* Twitter Meta Tags */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="About Us | Ziaur Rahman Foundation" />
-        <meta
-          name="twitter:description"
-          content="Discover the mission, vision, and achievements of Ziaur Rahman Foundation. Learn how our impactful programs empower communities worldwide through education, healthcare, and social services."
-        />
-        <meta name="twitter:image" content="/about-us-twitter-image.png" />
-
-        {/* Canonical URL */}
-        <link
-          rel="canonical"
-          href="https://www.ziaurrahmanfoundation.com/about-us"
-        />
-
-        {/* JSON-LD Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebPage",
-              name: "About Us",
-              description:
-                "Discover the mission, vision, and achievements of Ziaur Rahman Foundation. Learn how our impactful programs empower communities worldwide through education, healthcare, and social services.",
-              url: "https://www.ziaurrahmanfoundation.com/about-us",
-              mainEntityOfPage: {
-                "@type": "WebPage",
-                "@id": "https://www.ziaurrahmanfoundation.com/about-us",
-              },
-              breadcrumb: {
-                "@type": "BreadcrumbList",
-                itemListElement: [
-                  {
-                    "@type": "ListItem",
-                    position: 1,
-                    name: "Home",
-                    item: "https://www.ziaurrahmanfoundation.com",
-                  },
-                  {
-                    "@type": "ListItem",
-                    position: 2,
-                    name: "About Us",
-                    item: "https://www.ziaurrahmanfoundation.com/about-us",
-                  },
-                ],
-              },
-              author: {
-                "@type": "Organization",
-                name: "Ziaur Rahman Foundation",
-              },
-              publisher: {
-                "@type": "Organization",
-                name: "Ziaur Rahman Foundation",
-                logo: {
-                  "@type": "ImageObject",
-                  url: "/logo.png",
-                },
-              },
-              image: "/about-us-og-image.png",
-            }),
-          }}
-        />
-      </Head>
       <AboutBanner />
       <Container>
         <AboutTopSection />
         <ProgrammSection />
         <History />
-        <JoinUs />
+        {/* <JoinUs /> */}
       </Container>
     </div>
   );

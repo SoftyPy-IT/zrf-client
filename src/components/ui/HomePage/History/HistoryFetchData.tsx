@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "./History.css";
 import Image from "next/image";
 import type { TAbout } from "@/types/type";
@@ -52,16 +52,11 @@ const HistoryFetchData: React.FC<AboutProps> = ({ aboutData, language }) => {
 
   const category = `History`;
 
-  const fetchHistoryData = async () => {
+  const fetchHistoryData = useCallback(async () => {
     try {
       setLoading(true);
       const url = `${process.env.NEXT_PUBLIC_BASE_API_URL}/about?category=${category}`;
-
-      console.log("Fetching data from:", url);
-
-      const response = await fetch(url, {
-        cache: "no-store",
-      });
+      const response = await fetch(url, { cache: "no-store" });
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -76,7 +71,11 @@ const HistoryFetchData: React.FC<AboutProps> = ({ aboutData, language }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [category]);
+
+  useEffect(() => {
+    fetchHistoryData();
+  }, [fetchHistoryData]);
 
   useEffect(() => {
     fetchHistoryData();
