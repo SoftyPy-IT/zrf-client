@@ -48,7 +48,7 @@ const RecentActivity: React.FC<ActivityProps> = ({
                 key={data._id}
                 className="relative shadow-xl bg-white overflow-hidden group hover:text-white"
               >
-                <div className="relative">
+                <div className="relative lg:h-[250px]">
                   {language === "ENG"
                     ? data.bng_Images
                         ?.slice(0, 1)
@@ -59,7 +59,7 @@ const RecentActivity: React.FC<ActivityProps> = ({
                             height={500}
                             src={img}
                             alt="activity"
-                            className="h-[250px] w-full object-cover transition-transform duration-500 transform group-hover:scale-105"
+                            className=" h-full w-full object-cover transition-transform duration-500 transform group-hover:scale-105"
                           />
                         ))
                     : data.eng_images
@@ -71,7 +71,7 @@ const RecentActivity: React.FC<ActivityProps> = ({
                             height={500}
                             src={img}
                             alt="activity"
-                            className="h-[250px] w-full object-cover transition-transform duration-500 transform group-hover:scale-105"
+                            className="h-full w-full object-cover transition-transform duration-500 transform group-hover:scale-105"
                           />
                         ))}
                 </div>
