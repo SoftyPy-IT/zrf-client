@@ -1,58 +1,22 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { fetchWithSEO } from "@/utils/fetchWithSEO";
 import SingleInitiative from "../_components/SingleInitiative";
 
-type Props = {
-  params: {
-    id: string;
-  };
-};
+type Props = { params: { id: string } };
 
-async function getProjectData(id: string) {
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo/${id}`,
-      {
-        cache: "no-store",
-      }
-    );
-
-    const result = await res.json();
-
-    if (result?.data) return result.data;
-    return null;
-  } catch (error) {
-    return null;
-  }
-}
-
-// Optional: Dynamic Metadata
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const data = await getProjectData(params.id);
-
-  if (!data) return {};
-
-  return {
-    title: data.english_title || "Project Details",
-    openGraph: {
-      title: data.english_title,
-      images: data.eng_images ? [{ url: data.eng_images }] : [],
-    },
-  };
+  const { metadata } = await fetchWithSEO(
+    "whatwedo",
+    params.id,
+    "Project Details"
+  );
+  return metadata;
 }
 
-const Rehabilitation = async ({ params }: Props) => {
-  const data = await getProjectData(params.id);
+export default async function InitiativePage({ params }: Props) {
+  const { data } = await fetchWithSEO("whatwedo", params.id, "Project Details");
+  if (!data) notFound();
 
-  if (!data) {
-    notFound();
-  }
-
-  return (
-    <div>
-      <SingleInitiative whatWedoData={data} />
-    </div>
-  );
-};
-
-export default Rehabilitation;
+  return <SingleInitiative whatWedoData={data} />;
+}

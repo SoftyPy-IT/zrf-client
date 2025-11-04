@@ -1,16 +1,15 @@
 "use client";
 import React from "react";
 import Container from "@/components/share/Container";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
+
 import ShareLink from "@/components/share/ShareLink/ShareLink";
 import { TWhatWeDo } from "@/types/type";
 import Image from "next/image";
 import CovidSidebar from "./CovidSidebar";
-
-import ReactHtmlParser from "react-html-parser";
 import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 import { useLanguage } from "@/provider/LanguageProvider";
 import RenderContent from "@/components/Common/RenderContent";
+import { stripHtml } from "@/utils/stripHtml";
 
 type SingleWhatWeDoProps = {
   whatWedoData: TWhatWeDo;
@@ -18,6 +17,12 @@ type SingleWhatWeDoProps = {
 
 const SingleCovid = ({ whatWedoData }: SingleWhatWeDoProps) => {
   const { language } = useLanguage();
+  const shareUrl = typeof window !== "undefined" ? window.location.href : "";
+  const description =
+    language === "ENG"
+      ? stripHtml(whatWedoData?.english_description ?? "")
+      : stripHtml(whatWedoData?.bangla_description ?? "");
+
   return (
     <>
       <CommonBanner
@@ -74,7 +79,16 @@ const SingleCovid = ({ whatWedoData }: SingleWhatWeDoProps) => {
             <hr className="my-6" />
             <div className=" md:flex lg:flex justify-between items-center mb-8 space-y-3">
               <div className="flex items-center gap-4">
-                {/* <ShareLink /> */}
+                <ShareLink
+                  shareUrl={shareUrl}
+                  title={
+                    language === "ENG"
+                      ? whatWedoData?.english_title
+                      : whatWedoData?.bangla_title
+                  }
+                  hashtag={`#${whatWedoData?.bangla_title}`}
+                  description={description}
+                />
               </div>
             </div>
             <div className="flex justify-between items-center mt-5">

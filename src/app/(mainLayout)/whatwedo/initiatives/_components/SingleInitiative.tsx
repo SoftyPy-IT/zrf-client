@@ -1,8 +1,6 @@
 "use client";
 import React from "react";
 import Container from "@/components/share/Container";
-import ReactHtmlParser from "react-html-parser";
-import ShareLink from "@/components/share/ShareLink/ShareLink";
 import { TWhatWeDo } from "@/types/type";
 import Image from "next/image";
 
@@ -10,6 +8,8 @@ import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 import InitiativeSidebar from "./InitiativeSidebar";
 import { useLanguage } from "@/provider/LanguageProvider";
 import RenderContent from "@/components/Common/RenderContent";
+import ShareLink from "@/components/share/ShareLink/ShareLink";
+import { stripHtml } from "@/utils/stripHtml";
 
 type SingleWhatWeDoProps = {
   whatWedoData: TWhatWeDo;
@@ -17,6 +17,12 @@ type SingleWhatWeDoProps = {
 
 const SingleInitiative = ({ whatWedoData }: SingleWhatWeDoProps) => {
   const { language } = useLanguage();
+  const shareUrl = typeof window !== "undefined" ? window.location.href : "";
+  const description =
+    language === "ENG"
+      ? stripHtml(whatWedoData?.english_description ?? "")
+      : stripHtml(whatWedoData?.bangla_description ?? "");
+
   return (
     <>
       <CommonBanner
@@ -25,7 +31,6 @@ const SingleInitiative = ({ whatWedoData }: SingleWhatWeDoProps) => {
       <Container>
         <div className="grid md:grid-cols-12 gap-7 my-10">
           <div className="md:col-span-7 lg:col-span-8">
-            {/* Top Image */}
             <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden mb-6">
               {language === "BNG"
                 ? whatWedoData.bng_Images
@@ -68,10 +73,18 @@ const SingleInitiative = ({ whatWedoData }: SingleWhatWeDoProps) => {
               />
             </p>
 
-            <hr className="my-6" />
             <div className=" md:flex lg:flex justify-between items-center mb-8 space-y-3">
               <div className="flex items-center gap-4">
-                {/* <ShareLink /> */}
+                <ShareLink
+                  shareUrl={shareUrl}
+                  title={
+                    language === "ENG"
+                      ? whatWedoData?.english_title
+                      : whatWedoData?.bangla_title
+                  }
+                  hashtag={`#${whatWedoData?.bangla_title}`}
+                  description={description}
+                />
               </div>
             </div>
             <div className="flex justify-between items-center mt-5">
