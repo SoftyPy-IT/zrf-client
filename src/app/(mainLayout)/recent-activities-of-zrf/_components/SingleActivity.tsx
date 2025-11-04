@@ -89,7 +89,6 @@ const SingleActivity = ({ singleActivityData }: SingleActivityProps) => {
           </div>
         </div>
 
-        {/* <ShareLink /> */}
         <ShareLink
           shareUrl={shareUrl}
           title={

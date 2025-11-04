@@ -1,57 +1,18 @@
-import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
+import { fetchWithSEO } from "@/utils/fetchWithSEO";
 import SingleWhatwedo from "../_components/SingleWhatwedo";
 
-type Props = {
-  params: {
-    id: string;
-  };
-};
-
-async function getProjectData(id: string) {
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo/${id}`,
-      {
-        cache: "no-store",
-      }
-    );
-
-    const result = await res.json();
-
-    if (result?.data) return result.data;
-    return null;
-  } catch (error) {
-    return null;
-  }
-}
+type Props = { params: { id: string } };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const data = await getProjectData(params.id);
-
-  if (!data) return {};
-
-  return {
-    title: data.english_title || "Project Details",
-    openGraph: {
-      title: data.english_title,
-      images: data.eng_images ? [{ url: data.eng_images }] : [],
-    },
-  };
+  const { metadata } = await fetchWithSEO("whatwedo", params.id, "Project");
+  return metadata;
 }
 
-const ProjectPage = async ({ params }: Props) => {
-  const data = await getProjectData(params.id);
+export default async function ProjectPage({ params }: Props) {
+  const { data } = await fetchWithSEO("whatwedo", params.id, "Project");
+  if (!data) notFound();
 
-  if (!data) {
-    notFound();
-  }
-
-  return (
-    <div>
-      <SingleWhatwedo whatWedoData={data} />
-    </div>
-  );
-};
-
-export default ProjectPage;
+  return <SingleWhatwedo whatWedoData={data} />;
+}

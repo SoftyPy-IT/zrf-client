@@ -174,7 +174,7 @@ const NewsData: React.FC<activityProps> = ({ newsData, language }) => {
                   </div>
                   <div className="flex justify-between  ">
                     <b>{data.date}</b>
-                    <Link href={`/news/${data._id}`}>
+                    <Link href={`/message/${data._id}`}>
                       <button className=" text-white bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-1 hover:text-white rounded-full uppercase text-sm border">
                         {language === "ENG" ? "Read More" : "আরও পড়ুন"}{" "}
                         <EastIcon />

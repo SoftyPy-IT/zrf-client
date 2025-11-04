@@ -3,20 +3,27 @@
 import React from "react";
 
 import Container from "@/components/share/Container";
-import ShareLink from "@/components/share/ShareLink/ShareLink";
 import { TActivity } from "@/types/type";
 import Image from "next/image";
 import RecentNewsSidebar from "./RecentNewsSidebar";
 import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 import { useLanguage } from "@/provider/LanguageProvider";
 import RenderContent from "@/components/Common/RenderContent";
+import ShareLink from "@/components/share/ShareLink/ShareLink";
+import { stripHtml } from "@/utils/stripHtml";
 
 type SingleProjectProps = {
   singleNewsData: TActivity;
 };
 
-const SingleRehabilitation = ({ singleNewsData }: SingleProjectProps) => {
+const SingleMessage = ({ singleNewsData }: SingleProjectProps) => {
+  const shareUrl = typeof window !== "undefined" ? window.location.href : "";
   const { language } = useLanguage();
+  const description =
+    language === "ENG"
+      ? stripHtml(singleNewsData?.english_description ?? "")
+      : stripHtml(singleNewsData?.bangla_description ?? "");
+
   return (
     <>
       <CommonBanner title={language === "ENG" ? "Message" : "বার্তা"} />
@@ -67,10 +74,18 @@ const SingleRehabilitation = ({ singleNewsData }: SingleProjectProps) => {
               />
             </p>
 
-            <hr className="my-6" />
             <div className=" md:flex lg:flex justify-between items-center mb-8 space-y-3">
               <div className="flex items-center gap-4">
-                {/* <ShareLink /> */}
+                <ShareLink
+                  shareUrl={shareUrl}
+                  title={
+                    language === "ENG"
+                      ? singleNewsData?.english_title
+                      : singleNewsData?.bangla_title
+                  }
+                  hashtag={`#${singleNewsData?.bangla_title}`}
+                  description={description}
+                />
               </div>
             </div>
             <div className="flex justify-between items-center mt-5">
@@ -94,4 +109,4 @@ const SingleRehabilitation = ({ singleNewsData }: SingleProjectProps) => {
   );
 };
 
-export default SingleRehabilitation;
+export default SingleMessage;

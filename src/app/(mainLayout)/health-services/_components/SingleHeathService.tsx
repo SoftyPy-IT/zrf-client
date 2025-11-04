@@ -11,13 +11,20 @@ import HealthServiceSidebar from "./HealthServiceSidebar";
 import ReactHtmlParser from "react-html-parser";
 import { useLanguage } from "@/provider/LanguageProvider";
 import RenderContent from "@/components/Common/RenderContent";
+import { stripHtml } from "@/utils/stripHtml";
 
 type SingleWhatWeDoProps = {
   whatWedoData: TWhatWeDo;
 };
 
 const SingleHeathService = ({ whatWedoData }: SingleWhatWeDoProps) => {
+  const shareUrl = typeof window !== "undefined" ? window.location.href : "";
   const { language } = useLanguage();
+  const description =
+    language === "ENG"
+      ? stripHtml(whatWedoData?.english_description ?? "")
+      : stripHtml(whatWedoData?.bangla_description ?? "");
+
   return (
     <>
       <CommonBanner
@@ -74,10 +81,18 @@ const SingleHeathService = ({ whatWedoData }: SingleWhatWeDoProps) => {
               />
             </p>
 
-            <hr className="my-6" />
             <div className=" md:flex lg:flex justify-between items-center mb-8 space-y-3">
               <div className="flex items-center gap-4">
-                {/* <ShareLink /> */}
+                <ShareLink
+                  shareUrl={shareUrl}
+                  title={
+                    language === "ENG"
+                      ? whatWedoData?.english_title
+                      : whatWedoData?.bangla_title
+                  }
+                  hashtag={`#${whatWedoData?.bangla_title}`}
+                  description={description}
+                />
               </div>
             </div>
             <div className="flex justify-between items-center mt-5">

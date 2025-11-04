@@ -10,6 +10,7 @@ import RecentNewsSidebar from "./RecentNewsSidebar";
 import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 import { useLanguage } from "@/provider/LanguageProvider";
 import RenderContent from "@/components/Common/RenderContent";
+import { stripHtml } from "@/utils/stripHtml";
 
 type SingleProjectProps = {
   singleNewsData: TActivity;
@@ -17,6 +18,12 @@ type SingleProjectProps = {
 
 const SingleRehabilitation = ({ singleNewsData }: SingleProjectProps) => {
   const { language } = useLanguage();
+  const shareUrl = typeof window !== "undefined" ? window.location.href : "";
+  const description =
+    language === "ENG"
+      ? stripHtml(singleNewsData?.english_description ?? "")
+      : stripHtml(singleNewsData?.bangla_description ?? "");
+
   return (
     <>
       <CommonBanner
@@ -69,10 +76,18 @@ const SingleRehabilitation = ({ singleNewsData }: SingleProjectProps) => {
               />
             </p>
 
-            <hr className="my-6" />
             <div className=" md:flex lg:flex justify-between items-center mb-8 space-y-3">
               <div className="flex items-center gap-4">
-                {/* <ShareLink /> */}
+                <ShareLink
+                  shareUrl={shareUrl}
+                  title={
+                    language === "ENG"
+                      ? singleNewsData?.english_title
+                      : singleNewsData?.bangla_title
+                  }
+                  hashtag={`#${singleNewsData?.bangla_title}`}
+                  description={description}
+                />
               </div>
             </div>
             <div className="flex justify-between items-center mt-5">

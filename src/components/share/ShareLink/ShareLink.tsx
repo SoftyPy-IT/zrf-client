@@ -10,6 +10,7 @@ import {
 } from "react-share";
 import { Tooltip } from "@mui/material";
 import Image from "next/image";
+import { FaLink } from "react-icons/fa";
 
 import facebook from "../../../../src/assets/icon/facebook.png";
 import linkedIn from "../../../../src/assets/icon/linkedin.png";
@@ -19,23 +20,23 @@ import email from "../../../../src/assets/icon/email.png";
 
 type ShareProps = {
   shareUrl: string;
-  title: string | undefined;
+  title?: string;
   hashtag: string;
   description?: string;
 };
 
-const ShareLink = ({ shareUrl, title, hashtag, description }: ShareProps) => {
-  const [copySuccess, setCopySuccess] = useState("");
+const ShareLink = ({ shareUrl, title, hashtag }: ShareProps) => {
+  const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(shareUrl);
-    setCopySuccess("Copied!");
-    setTimeout(() => setCopySuccess(""), 2000);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <div className="w-full flex flex-col items-center md:flex-row md:items-center md:justify-between gap-4 py-4 border-t border-gray-200 mt-6">
-      {/* Left Title */}
+    <div className="w-full flex flex-col items-center md:flex-row md:items-center md:justify-between gap-4 py-6 border-t border-gray-200 mt-6">
+      {/* Left Section */}
       <h4 className="text-sm md:text-base font-semibold text-gray-700">
         Share this article:
       </h4>
@@ -44,57 +45,49 @@ const ShareLink = ({ shareUrl, title, hashtag, description }: ShareProps) => {
       <div className="flex flex-wrap justify-center gap-4">
         <Tooltip title="Share on WhatsApp" arrow>
           <WhatsappShareButton url={shareUrl} title={title}>
-            <div className="group transition-all duration-200 transform hover:scale-110">
-              <Image
-                src={whatsapp}
-                alt="WhatsApp"
-                width={40}
-                height={40}
-                className="rounded-full"
-              />
-            </div>
+            <Image
+              src={whatsapp}
+              alt="WhatsApp"
+              width={40}
+              height={40}
+              className="rounded-full transition-transform duration-200 hover:scale-110"
+            />
           </WhatsappShareButton>
         </Tooltip>
 
         <Tooltip title="Share on Facebook" arrow>
           <FacebookShareButton url={shareUrl} hashtag={hashtag}>
-            <div className="group transition-all duration-200 transform hover:scale-110">
-              <Image
-                src={facebook}
-                alt="Facebook"
-                width={40}
-                height={40}
-                className="rounded-full"
-              />
-            </div>
+            <Image
+              src={facebook}
+              alt="Facebook"
+              width={40}
+              height={40}
+              className="rounded-full transition-transform duration-200 hover:scale-110"
+            />
           </FacebookShareButton>
         </Tooltip>
 
         <Tooltip title="Share on LinkedIn" arrow>
           <LinkedinShareButton url={shareUrl} title={title}>
-            <div className="group transition-all duration-200 transform hover:scale-110">
-              <Image
-                src={linkedIn}
-                alt="LinkedIn"
-                width={40}
-                height={40}
-                className="rounded-full"
-              />
-            </div>
+            <Image
+              src={linkedIn}
+              alt="LinkedIn"
+              width={40}
+              height={40}
+              className="rounded-full transition-transform duration-200 hover:scale-110"
+            />
           </LinkedinShareButton>
         </Tooltip>
 
         <Tooltip title="Share on Twitter" arrow>
           <TwitterShareButton url={shareUrl} title={title} hashtags={[hashtag]}>
-            <div className="group transition-all duration-200 transform hover:scale-110">
-              <Image
-                src={twitter}
-                alt="Twitter"
-                width={40}
-                height={40}
-                className="rounded-full"
-              />
-            </div>
+            <Image
+              src={twitter}
+              alt="Twitter"
+              width={40}
+              height={40}
+              className="rounded-full transition-transform duration-200 hover:scale-110"
+            />
           </TwitterShareButton>
         </Tooltip>
 
@@ -104,33 +97,30 @@ const ShareLink = ({ shareUrl, title, hashtag, description }: ShareProps) => {
             subject={title}
             body={`Check this out: ${shareUrl}`}
           >
-            <div className="group transition-all duration-200 transform hover:scale-110">
-              <Image
-                src={email}
-                alt="Email"
-                width={40}
-                height={40}
-                className="rounded-full"
-              />
-            </div>
+            <Image
+              src={email}
+              alt="Email"
+              width={40}
+              height={40}
+              className="rounded-full transition-transform duration-200 hover:scale-110"
+            />
           </EmailShareButton>
         </Tooltip>
       </div>
 
       {/* Copy Link Section */}
-      <div className="flex items-center gap-2 border border-gray-300 rounded-full px-3 py-1">
-        <input
-          value={shareUrl}
-          type="text"
-          readOnly
-          className="w-[150px] md:w-[200px] text-xs md:text-sm bg-transparent outline-none"
-        />
-        <button
-          onClick={handleCopy}
-          className="text-xs md:text-sm text-blue-600 font-medium hover:text-blue-800 transition-all"
-        >
-          {copySuccess ? "Copied!" : "Copy"}
-        </button>
+      <div
+        onClick={handleCopy}
+        className={`flex items-center gap-2 px-4 py-2 rounded-full border cursor-pointer transition-all duration-300 ${
+          copied
+            ? "bg-green-100 border-green-400 text-green-700"
+            : "bg-gray-50 hover:bg-gray-100 border-gray-300 text-gray-700"
+        }`}
+      >
+        <FaLink className="text-gray-600" />
+        <span className="text-xs md:text-sm font-medium truncate max-w-[140px] md:max-w-[180px]">
+          {copied ? "Link copied!" : shareUrl}
+        </span>
       </div>
     </div>
   );
