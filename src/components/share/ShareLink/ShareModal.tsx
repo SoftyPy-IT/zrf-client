@@ -36,38 +36,25 @@ const ShareModal = ({ close, shareUrl, title, hashtag }: TProps) => {
   };
 
   return (
-    <div className="w-full md:w-[550px] h-[250px] md:h-[330px] bg-white fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-2xl text-black shadow-xl z-[9999] overflow-hidden shareModal">
-      <div>
-        <div className="flex items-center justify-between">
-          <span className="transition text-sm ease-in-out delay-75 cursor-pointer absolute left-4 top-4">
-            Share
-          </span>
-          <VscClose
-            className="transition text-sm ease-in-out delay-75 cursor-pointer absolute right-4 top-4"
-            onClick={close}
-            size={30}
-          />
+    <div className="w-[95%] md:w-[550px] h-auto bg-white fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-2xl text-black shadow-xl z-[9999] overflow-hidden shareModal">
+      <div className="relative">
+        <div className="flex items-center justify-between px-4 pt-4">
+          <span className="text-sm">Share</span>
+          <VscClose className="cursor-pointer" onClick={close} size={26} />
         </div>
       </div>
-      <div className="mt-16 md:mt-20 w-full md:w-[450px] mx-auto">
+
+      <div className="mt-10 md:mt-12 w-full px-4">
         <Swiper
           spaceBetween={0}
           slidesPerView={4}
           navigation={true}
           className="mySwiper"
           breakpoints={{
-            500: {
-              slidesPerView: 5,
-            },
-            640: {
-              slidesPerView: 4,
-            },
-            768: {
-              slidesPerView: 4,
-            },
-            1024: {
-              slidesPerView: 5,
-            },
+            480: { slidesPerView: 4 },
+            640: { slidesPerView: 5 },
+            768: { slidesPerView: 5 },
+            1024: { slidesPerView: 5 },
           }}
         >
           <SwiperSlide>
@@ -80,10 +67,11 @@ const ShareModal = ({ close, shareUrl, title, hashtag }: TProps) => {
                   width={56}
                   height={56}
                 />
-                <small className="text-sm text-[12px]">WhatsApp</small>
+                <small className="text-[12px]">WhatsApp</small>
               </WhatsappShareButton>
             </div>
           </SwiperSlide>
+
           <SwiperSlide>
             <div className="text-center">
               <FacebookShareButton
@@ -98,10 +86,11 @@ const ShareModal = ({ close, shareUrl, title, hashtag }: TProps) => {
                   width={56}
                   height={56}
                 />
-                <small className="text-sm text-[12px]">Facebook</small>
+                <small className="text-[12px]">Facebook</small>
               </FacebookShareButton>
             </div>
           </SwiperSlide>
+
           <SwiperSlide>
             <div className="text-center">
               <LinkedinShareButton url={shareUrl} title={title}>
@@ -112,10 +101,11 @@ const ShareModal = ({ close, shareUrl, title, hashtag }: TProps) => {
                   width={56}
                   height={56}
                 />
-                <small className="text-sm text-[12px]">LinkedIn</small>
+                <small className="text-[12px]">LinkedIn</small>
               </LinkedinShareButton>
             </div>
           </SwiperSlide>
+
           <SwiperSlide>
             <div className="text-center">
               <TwitterShareButton
@@ -130,10 +120,11 @@ const ShareModal = ({ close, shareUrl, title, hashtag }: TProps) => {
                   width={56}
                   height={56}
                 />
-                <small className="text-sm text-[12px]">Twitter</small>
+                <small className="text-[12px]">Twitter</small>
               </TwitterShareButton>
             </div>
           </SwiperSlide>
+
           <SwiperSlide>
             <div className="text-center">
               <EmailShareButton
@@ -148,18 +139,20 @@ const ShareModal = ({ close, shareUrl, title, hashtag }: TProps) => {
                   width={56}
                   height={56}
                 />
-                <small className="text-sm text-[12px]">Email</small>
+                <small className="text-[12px]">Email</small>
               </EmailShareButton>
             </div>
           </SwiperSlide>
         </Swiper>
       </div>
-      <div>
-        <div className="mt-5 border w-[300px] md:w-[500px] h-[50px] p-3 rounded-md mx-auto items-center justify-between flex">
+
+      {/* Copy Section */}
+      <div className="mt-6 px-4 pb-6">
+        <div className="flex items-center justify-between border rounded-md px-3 py-2 w-full">
           <input
             value={shareUrl}
             type="text"
-            className="w-[200px] md:w-full"
+            className="w-[75%] md:w-[80%] outline-none text-sm bg-transparent"
             readOnly
           />
           <Button
@@ -174,8 +167,11 @@ const ShareModal = ({ close, shareUrl, title, hashtag }: TProps) => {
             Copy
           </Button>
         </div>
+
         {copySuccess && (
-          <p className="text-center mt-2 text-green-500">{copySuccess}</p>
+          <p className="text-center mt-2 text-green-500 text-sm">
+            {copySuccess}
+          </p>
         )}
       </div>
     </div>

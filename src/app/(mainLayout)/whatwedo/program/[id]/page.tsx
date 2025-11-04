@@ -151,7 +151,7 @@ const DescriptionPage = () => {
               </div>
               <div className="flex items-center">
                 <h1>Share:</h1>
-                <ShareLink />
+                {/* <ShareLink /> */}
               </div>
             </div>
             <div className="flex justify-between items-center mt-5">

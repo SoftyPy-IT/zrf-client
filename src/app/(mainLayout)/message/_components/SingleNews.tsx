@@ -70,7 +70,7 @@ const SingleRehabilitation = ({ singleNewsData }: SingleProjectProps) => {
             <hr className="my-6" />
             <div className=" md:flex lg:flex justify-between items-center mb-8 space-y-3">
               <div className="flex items-center gap-4">
-                <ShareLink />
+                {/* <ShareLink /> */}
               </div>
             </div>
             <div className="flex justify-between items-center mt-5">
