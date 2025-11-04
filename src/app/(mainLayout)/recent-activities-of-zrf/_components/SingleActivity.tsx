@@ -7,17 +7,22 @@ import ShareLink from "@/components/share/ShareLink/ShareLink";
 import { TActivity } from "@/types/type";
 import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 import ActivitySidebar from "./ActivitySidebar";
-import ReactHtmlParser from "react-html-parser";
 import { useLanguage } from "@/provider/LanguageProvider";
 import RenderContent from "@/components/Common/RenderContent";
+import { stripHtml } from "@/utils/stripHtml";
 
 type SingleActivityProps = {
   singleActivityData: TActivity;
 };
 
 const SingleActivity = ({ singleActivityData }: SingleActivityProps) => {
-  console.log("data check ", singleActivityData);
+  const shareUrl = typeof window !== "undefined" ? window.location.href : "";
   const { language } = useLanguage();
+  const description =
+    language === "ENG"
+      ? stripHtml(singleActivityData?.english_description ?? "")
+      : stripHtml(singleActivityData?.bangla_description ?? "");
+
   return (
     <div>
       <CommonBanner
@@ -84,7 +89,17 @@ const SingleActivity = ({ singleActivityData }: SingleActivityProps) => {
           </div>
         </div>
 
-        <ShareLink />
+        {/* <ShareLink /> */}
+        <ShareLink
+          shareUrl={shareUrl}
+          title={
+            language === "ENG"
+              ? singleActivityData?.english_title
+              : singleActivityData?.bangla_title
+          }
+          hashtag={`#${singleActivityData?.bangla_title}`}
+          description={description}
+        />
       </Container>
     </div>
   );

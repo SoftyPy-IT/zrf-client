@@ -1,58 +1,63 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { stripHtml } from "@/utils/stripHtml";
 import SingleActivity from "../_components/SingleActivity";
 
 type Props = {
-  params: {
-    id: string;
-  };
+  params: { id: string };
 };
 
-async function getProjectData(id: string) {
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/activity/${id}`,
-      {
-        cache: "no-store",
-      }
-    );
+async function getActivity(id: string) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_API_URL}/activity/${id}`,
+    {
+      cache: "no-store",
+    }
+  );
 
-    const result = await res.json();
+  if (!res.ok) return null;
+  const data = await res.json();
 
-    if (result?.data) return result.data;
-    return null;
-  } catch (error) {
-    return null;
-  }
+  return data?.data || null;
 }
 
-// Optional: Dynamic Metadata
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const data = await getProjectData(params.id);
+  const activity = await getActivity(params.id);
+  console.log("get activity tes this ", activity);
+  if (!activity) {
+    return {
+      title: "Activity Not Found",
+      description: "The requested activity could not be loaded.",
+    };
+  }
 
-  if (!data) return {};
+  const title = activity.english_title || "Activity";
+  const description = stripHtml(activity.english_short_description || "");
+  const image = activity.eng_images?.[0] || "/default-image.jpg";
+  const url = `${process.env.NEXT_PUBLIC_SITE_URL}/activity/${params.id}`;
 
   return {
-    title: data.english_title || "Project Details",
+    title,
+    description,
     openGraph: {
-      title: data.english_title,
-      images: data.eng_images ? [{ url: data.eng_images }] : [],
+      title,
+      description,
+      type: "article",
+      url,
+      images: [{ url: image, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [image],
     },
   };
 }
 
-const Activity = async ({ params }: Props) => {
-  const data = await getProjectData(params.id);
+export default async function ActivityPage({ params }: Props) {
+  const data = await getActivity(params.id);
+  if (!data) notFound();
 
-  if (!data) {
-    notFound();
-  }
-
-  return (
-    <div>
-      <SingleActivity singleActivityData={data} />
-    </div>
-  );
-};
-
-export default Activity;
+  return <SingleActivity singleActivityData={data} />;
+}

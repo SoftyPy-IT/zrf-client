@@ -1,96 +1,41 @@
 "use client";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import {
-  FacebookShareButton,
-  TwitterShareButton,
-  LinkedinShareButton,
-  WhatsappShareButton,
-  TelegramShareButton,
-  RedditShareButton,
-  EmailShareButton,
-} from "react-share";
 
-import {
-  FaFacebookF,
-  FaTwitter,
-  FaLinkedinIn,
-  FaWhatsapp,
-  FaTelegramPlane,
-  FaRedditAlien,
-  FaEnvelope,
-} from "react-icons/fa";
+import { Share } from "@mui/icons-material";
+import { useState } from "react";
+import ShareModal from "./ShareModal";
 
-const ShareLink = () => {
-  const pathName = usePathname();
-  const [fullUrl, setFullUrl] = useState("");
+type ShareProps = {
+  shareUrl: string;
+  title: string | undefined;
+  hashtag: string;
+  description?: string; // ✅ added
+};
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const origin = window.location.origin;
-      setFullUrl(`${origin}${pathName}`);
-    }
-  }, [pathName]);
-
-  const buttonStyle =
-    "flex items-center gap-2 px-4 py-2 rounded text-white hover:opacity-90 transition text-sm";
+const ShareLink = ({ shareUrl, title, hashtag, description }: ShareProps) => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
-    <div className="mt-10">
-      <h3 className="text-lg font-bold text-gray-600 mb-4">Share Now:</h3>
-      {fullUrl && (
-        <div className="flex flex-wrap gap-3">
-          <FacebookShareButton url={fullUrl}>
-            <div className={`${buttonStyle} bg-blue-600`}>
-              <FaFacebookF />
-              Facebook
-            </div>
-          </FacebookShareButton>
-
-          <TwitterShareButton url={fullUrl}>
-            <div className={`${buttonStyle} bg-blue-400`}>
-              <FaTwitter />
-              Twitter
-            </div>
-          </TwitterShareButton>
-
-          <LinkedinShareButton url={fullUrl}>
-            <div className={`${buttonStyle} bg-blue-700`}>
-              <FaLinkedinIn />
-              LinkedIn
-            </div>
-          </LinkedinShareButton>
-
-          <WhatsappShareButton url={fullUrl}>
-            <div className={`${buttonStyle} bg-green-500`}>
-              <FaWhatsapp />
-              WhatsApp
-            </div>
-          </WhatsappShareButton>
-
-          <TelegramShareButton url={fullUrl}>
-            <div className={`${buttonStyle} bg-sky-500`}>
-              <FaTelegramPlane />
-              Telegram
-            </div>
-          </TelegramShareButton>
-
-          <RedditShareButton url={fullUrl}>
-            <div className={`${buttonStyle} bg-orange-500`}>
-              <FaRedditAlien />
-              Reddit
-            </div>
-          </RedditShareButton>
-
-          <EmailShareButton url={fullUrl}>
-            <div className={`${buttonStyle} bg-gray-600`}>
-              <FaEnvelope />
-              Email
-            </div>
-          </EmailShareButton>
+    <>
+      <div className="flex-col md:flex-row gap-5 lg:gap-0 flex">
+        <div className="flex items-center space-x-3">
+          <div className="flex gap-0 cursor-pointer" onClick={handleOpen}>
+            <Share />
+          </div>
         </div>
+      </div>
+
+      {open && (
+        <ShareModal
+          title={title || ""}
+          shareUrl={shareUrl}
+          hashtag={hashtag || ""}
+          description={description || ""}
+          close={handleClose}
+        />
       )}
-    </div>
+    </>
   );
 };
 
