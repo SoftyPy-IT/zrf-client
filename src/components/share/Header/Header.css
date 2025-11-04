@@ -139,6 +139,14 @@
     z-index: 999;
   }
 
+  .dropdownMenu li {
+    border-bottom: 1px solid #ddd !important;
+  }
+
+   .dropdownMenu li:last-child {
+    border-bottom: none !important;
+  }
+
   .navItems li {
     padding-bottom: 18px;
     color: #fff;
@@ -291,4 +299,6 @@
     left: 10px;
     padding: 5px !important;
   }
+
+  
 }

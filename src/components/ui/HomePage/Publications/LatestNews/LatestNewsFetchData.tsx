@@ -64,7 +64,7 @@ const LatestNewsFetchData: React.FC<newsProps> = ({ newsData, language }) => {
         {displayedData.map((data) => (
           <div
             key={data._id}
-            className="border h-[220px] md:h-auto rounded items-center p-2 lg:p-5 shadow-md flex flex-col lg:flex-row gap-2 md:gap-4"
+            className="border h-[220px] md:h-auto rounded items-center  shadow-md flex flex-col lg:flex-row gap-2 md:gap-4"
           >
             {/* Image Section */}
             <div className="lg:w-1/3 w-full h-[150px] lg:h-[130px] overflow-hidden rounded">
@@ -73,27 +73,27 @@ const LatestNewsFetchData: React.FC<newsProps> = ({ newsData, language }) => {
                 language === 'ENG' ? data.bng_Images?.slice(0, 1).map((img) => (
                   <Image
                     key={img}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full"
                     alt={data.english_title || "E-Book"}
                     src={data.bng_Images[0] || ""}
-                    width={300}
-                    height={400}
+                    width={400}
+                    height={500}
                   />
                 )) : data.eng_images?.slice(0, 1).map((img) => (
                   <Image
                     key={img}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full"
                     alt={data.english_title || "E-Book"}
                     src={data.bng_Images[0] || ""}
-                    width={300}
-                    height={400}
+                    width={400}
+                    height={500}
                   />
                 ))
               }
             </div>
 
             {/* Text Section */}
-            <div className="flex-1">
+            <div className="flex-1 p-2 lg:p-5">
               <h4 className="text-[10px] md:text-sm font-semibold uppercase">
                 {language === "ENG"
                   ? truncateText(data?.english_title, 50)
