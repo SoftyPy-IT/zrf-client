@@ -1,0 +1,7 @@
+export const stripHtml = (html: string) => {
+  if (!html) return "";
+  return html
+    .replace(/<[^>]+>/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+};

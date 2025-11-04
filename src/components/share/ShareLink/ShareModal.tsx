@@ -4,39 +4,39 @@ import { VscClose } from "react-icons/vsc";
 import "./Share.css";
 import {
   FacebookShareButton,
-  InstapaperShareButton,
   LinkedinShareButton,
   TwitterShareButton,
   WhatsappShareButton,
   EmailShareButton,
 } from "react-share";
 import Image from "next/image";
-import facebook from "../../../assets/icon/facebook.png";
-import linkedIn from "../../../assets/icon/linkedin.png";
-import instagram from "../../../assets/icon/instagram.png";
-import whatsapp from "../../../assets/icon/chat3.png";
-import twitter from "../../../assets/icon/twitter.png";
-import email from "../../../assets/icon/email.png";
+import facebook from "../../../../src/assets/icon/facebook.png";
+import linkedIn from "../../../../src/assets/icon/linkedin.png";
+import whatsapp from "../../../../src/assets/icon/chat3.png";
+import twitter from "../../../../src/assets/icon/twitter.png";
+import email from "../../../../src/assets/icon/email.png";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Button } from "@mui/material";
 
 type TProps = {
   close: () => void;
+  title: string;
+  shareUrl: string;
+  hashtag: string;
+  description: string;
 };
 
-const ShareModal = ({ close }: TProps) => {
-  const urlToShare = window.location.href;
-  const title = "Check this out!";
+const ShareModal = ({ close, shareUrl, title, hashtag }: TProps) => {
   const [copySuccess, setCopySuccess] = useState("");
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(urlToShare);
+    navigator.clipboard.writeText(shareUrl);
     setCopySuccess("Copied!");
   };
 
   return (
-    <div className="w-full md:w-[550px] h-[250px]  md:h-[330px] bg-white fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-2xl text-black shadow-xl z-[9999] overflow-hidden shareModal">
+    <div className="w-full md:w-[550px] h-[250px] md:h-[330px] bg-white fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-2xl text-black shadow-xl z-[9999] overflow-hidden shareModal">
       <div>
         <div className="flex items-center justify-between">
           <span className="transition text-sm ease-in-out delay-75 cursor-pointer absolute left-4 top-4">
@@ -62,11 +62,9 @@ const ShareModal = ({ close }: TProps) => {
             640: {
               slidesPerView: 4,
             },
-
             768: {
               slidesPerView: 4,
             },
-
             1024: {
               slidesPerView: 5,
             },
@@ -74,11 +72,13 @@ const ShareModal = ({ close }: TProps) => {
         >
           <SwiperSlide>
             <div className="text-center">
-              <WhatsappShareButton url={urlToShare} title={title}>
+              <WhatsappShareButton url={shareUrl} title={title}>
                 <Image
                   className="w-10 md:w-14 mx-auto"
-                  src={whatsapp}
+                  src={whatsapp || "/placeholder.svg"}
                   alt="WhatsApp"
+                  width={56}
+                  height={56}
                 />
                 <small className="text-sm text-[12px]">WhatsApp</small>
               </WhatsappShareButton>
@@ -86,11 +86,17 @@ const ShareModal = ({ close }: TProps) => {
           </SwiperSlide>
           <SwiperSlide>
             <div className="text-center">
-              <FacebookShareButton url={urlToShare} title={title}>
+              <FacebookShareButton
+                url={shareUrl}
+                title={title}
+                hashtag={hashtag}
+              >
                 <Image
                   className="w-10 md:w-14 mx-auto"
-                  src={facebook}
+                  src={facebook || "/placeholder.svg"}
                   alt="Facebook"
+                  width={56}
+                  height={56}
                 />
                 <small className="text-sm text-[12px]">Facebook</small>
               </FacebookShareButton>
@@ -98,11 +104,13 @@ const ShareModal = ({ close }: TProps) => {
           </SwiperSlide>
           <SwiperSlide>
             <div className="text-center">
-              <LinkedinShareButton url={urlToShare} title={title}>
+              <LinkedinShareButton url={shareUrl} title={title}>
                 <Image
                   className="w-10 md:w-14 mx-auto"
-                  src={linkedIn}
+                  src={linkedIn || "/placeholder.svg"}
                   alt="LinkedIn"
+                  width={56}
+                  height={56}
                 />
                 <small className="text-sm text-[12px]">LinkedIn</small>
               </LinkedinShareButton>
@@ -110,23 +118,17 @@ const ShareModal = ({ close }: TProps) => {
           </SwiperSlide>
           <SwiperSlide>
             <div className="text-center">
-              <InstapaperShareButton url={urlToShare} title={title}>
+              <TwitterShareButton
+                url={shareUrl}
+                title={title}
+                hashtags={[hashtag]}
+              >
                 <Image
                   className="w-10 md:w-14 mx-auto"
-                  src={instagram}
-                  alt="Instagram"
-                />
-                <small className="text-sm text-[12px]">Instagram</small>
-              </InstapaperShareButton>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="text-center">
-              <TwitterShareButton url={urlToShare} title={title}>
-                <Image
-                  className="w-10 md:w-14 mx-auto"
-                  src={twitter}
+                  src={twitter || "/placeholder.svg"}
                   alt="Twitter"
+                  width={56}
+                  height={56}
                 />
                 <small className="text-sm text-[12px]">Twitter</small>
               </TwitterShareButton>
@@ -134,11 +136,17 @@ const ShareModal = ({ close }: TProps) => {
           </SwiperSlide>
           <SwiperSlide>
             <div className="text-center">
-              <EmailShareButton url={urlToShare} title={title}>
+              <EmailShareButton
+                url={shareUrl}
+                subject={title}
+                body={`Check out this link: ${shareUrl}`}
+              >
                 <Image
                   className="w-10 md:w-14 mx-auto"
-                  src={email}
+                  src={email || "/placeholder.svg"}
                   alt="Email"
+                  width={56}
+                  height={56}
                 />
                 <small className="text-sm text-[12px]">Email</small>
               </EmailShareButton>
@@ -149,9 +157,9 @@ const ShareModal = ({ close }: TProps) => {
       <div>
         <div className="mt-5 border w-[300px] md:w-[500px] h-[50px] p-3 rounded-md mx-auto items-center justify-between flex">
           <input
-            value={urlToShare}
+            value={shareUrl}
             type="text"
-            className=" w-[200px] md:w-full"
+            className="w-[200px] md:w-full"
             readOnly
           />
           <Button
