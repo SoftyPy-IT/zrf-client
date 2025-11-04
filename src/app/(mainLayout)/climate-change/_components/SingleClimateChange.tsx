@@ -1,16 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import React from "react";
-
 import Container from "@/components/share/Container";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
-import ShareLink from "@/components/share/ShareLink/ShareLink";
 import { TWhatWeDo } from "@/types/type";
 import Image from "next/image";
-
 import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 import ClimateChangeSidebar from "./ClimateChangeSidebar";
-import ReactHtmlParser from "react-html-parser";
 import { useLanguage } from "@/provider/LanguageProvider";
 import RenderContent from "@/components/Common/RenderContent";
 

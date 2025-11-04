@@ -23,7 +23,6 @@ async function getActivity(id: string) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const activity = await getActivity(params.id);
-  console.log("get activity tes this ", activity);
   if (!activity) {
     return {
       title: "Activity Not Found",
@@ -34,6 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = activity.english_title || "Activity";
   const description = stripHtml(activity.english_short_description || "");
   const image = activity.eng_images?.[0] || "/default-image.jpg";
+  console.log("seo image check ", image);
   const url = `${process.env.NEXT_PUBLIC_SITE_URL}/activity/${params.id}`;
 
   return {
