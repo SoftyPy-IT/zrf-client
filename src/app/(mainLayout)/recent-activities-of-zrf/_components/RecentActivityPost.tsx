@@ -32,39 +32,37 @@ const RecentActivityPost: React.FC<educatoinProps> = ({ activityData, language }
                 {sortedNewsData?.slice(1, 5).map((data) => (
                     <div key={data._id}>
                         <Link href={`/recent-activities-of-zrf/${data._id}`}>
-                            <div className="flex flex-col md:flex-row border rounded-md p-3  gap-2 ">
-
-                                {
-                                    data.bng_Images?.slice(0, 1).map((img) => (
-                                        <div className="relative w-full aspect-[56/16] rounded-sm h-[120px] md:h-auto " key={img}>
-                                            {
-                                                language === 'ENG' ? (
-                                                    data.eng_images?.slice(0, 1).map((img) => (
-                                                        <Image
-                                                            key={img}
-                                                            src={img}
-                                                            alt=""
-                                                            fill
-                                                            className="object-cover"
-                                                        />
-                                                    ))
-                                                ) : (
-                                                    data.bng_Images?.slice(0, 1).map((img) => (
-                                                        <Image
-                                                            key={img}
-                                                            src={img}
-                                                            alt=""
-                                                            fill
-                                                            className="object-cover"
-                                                        />
-                                                    ))
-                                                )
-                                            }
-                                        </div>
-                                    ))
+                            <div className="flex flex-col md:flex-row border rounded-md gap-2">
+                                {data.bng_Images?.slice(0, 1).map((img) => (
+                                    <div className="relative w-full aspect-[56/16] rounded-sm h-[120px] md:h-auto " key={img}>
+                                        {
+                                            language === 'ENG' ? (
+                                                data.eng_images?.slice(0, 1).map((img) => (
+                                                    <Image
+                                                        key={img}
+                                                        src={img}
+                                                        alt=""
+                                                        fill
+                                                        className="object-cover rounded-sm"
+                                                    />
+                                                ))
+                                            ) : (
+                                                data.bng_Images?.slice(0, 1).map((img) => (
+                                                    <Image
+                                                        key={img}
+                                                        src={img}
+                                                        alt=""
+                                                        fill
+                                                        className="object-cover rounded-sm"
+                                                    />
+                                                ))
+                                            )
+                                        }
+                                    </div>
+                                ))
                                 }
 
-                                <div>
+                                <div className="p-3">
                                     <b className="text-xs">{formatDate(data.date)}</b>
                                     <p className="text-sm">{language === 'ENG' ? truncateText(data.english_short_description, 80) : truncateText(data.bangla_short_description, 100)}</p>
                                 </div>
