@@ -36,6 +36,29 @@ const ClimateChange: React.FC<CovidProps> = ({
     }
   );
 
+   const formatDate = (dateStr: string) => {
+    const date = new Date(dateStr);
+    if (language === "ENG") {
+      return date.toLocaleDateString("en-US", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+      });
+    } else {
+      // Convert to Bangla numerals
+      const banglaFormatted = date
+        .toLocaleDateString("bn-BD", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        })
+        .replace(/[০-৯]/g, (d) =>
+          "০১২৩৪৫৬৭৮৯"["০১২৩৪৫৬৭৮৯".indexOf(d)] ?? d
+        );
+      return banglaFormatted;
+    }
+  };
+
   return (
     <>
       <CommonBanner title={title} />

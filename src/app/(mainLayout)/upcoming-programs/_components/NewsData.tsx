@@ -27,10 +27,33 @@ const NewsData: React.FC<activityProps> = ({ newsData, language }) => {
     setVisibleCount((prevCount) => prevCount + 6);
   };
 
+   const formatDate = (dateStr: string) => {
+    const date = new Date(dateStr);
+    if (language === "ENG") {
+      return date.toLocaleDateString("en-US", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+      });
+    } else {
+      // Convert to Bangla numerals
+      const banglaFormatted = date
+        .toLocaleDateString("bn-BD", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        })
+        .replace(/[০-৯]/g, (d) =>
+          "০১২৩৪৫৬৭৮৯"["০১২৩৪৫৬৭৮৯".indexOf(d)] ?? d
+        );
+      return banglaFormatted;
+    }
+  };
+
   return (
     <div>
       <CommonBanner
-        title={language === "ENG" ? "Upcoming News" : "আসন্ন প্রোগ্রাম"}
+        title={language === "ENG" ? "Upcoming Program" : "আসন্ন প্রোগ্রাম"}
       />
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-16">
@@ -71,7 +94,7 @@ const NewsData: React.FC<activityProps> = ({ newsData, language }) => {
                         ? truncateText(data?.english_title, 80)
                         : truncateText(data?.bangla_title, 80)}
                     </h3>
-                    <p className="mt-2">
+                    {/* <p className="mt-2">
                       <RenderContent
                         content={
                           language === "ENG"
@@ -79,10 +102,10 @@ const NewsData: React.FC<activityProps> = ({ newsData, language }) => {
                             : data.bangla_description
                         }
                       />
-                    </p>
+                    </p> */}
                   </div>
                   <div className="flex justify-between  ">
-                    <b>{data.date}</b>
+                    <b>{formatDate(data.date)}</b>
                     <Link href={`/upcoming-programs/${data._id}`}>
                       <button className=" text-white bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-1 hover:text-white rounded-full uppercase text-sm border">
                         {language === "ENG" ? "Read More" : "আরও পড়ুন"}{" "}

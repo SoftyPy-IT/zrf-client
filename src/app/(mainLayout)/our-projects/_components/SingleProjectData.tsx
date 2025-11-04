@@ -31,14 +31,14 @@ const SingleProjectData = ({ singleProjectData }: SingleProjectProps) => {
       <Container>
         <div className="grid md:grid-cols-12 gap-7 my-10">
           <div className="md:col-span-7 lg:col-span-8">
-            <div className="w-full h-[200px] md:h-[400px] mb-6">
+            <div className=" mb-6">
               {language === "BNG"
                 ? singleProjectData.bng_Images
                     ?.slice(0, 1)
                     .map((img) => (
                       <Image
                         width={500}
-                        height={500}
+                        height={400}
                         key={img}
                         src={img}
                         alt="Top Image"

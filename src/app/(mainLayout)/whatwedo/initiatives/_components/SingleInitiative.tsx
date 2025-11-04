@@ -41,7 +41,7 @@ const SingleInitiative = ({ whatWedoData }: SingleWhatWeDoProps) => {
                         src={img}
                         alt="Top Image"
                         fill
-                        className="object-cover"
+                        className=""
                       />
                     ))
                 : whatWedoData.eng_images
@@ -52,7 +52,7 @@ const SingleInitiative = ({ whatWedoData }: SingleWhatWeDoProps) => {
                         src={img}
                         alt="Top Image"
                         fill
-                        className="object-cover"
+                        className=""
                       />
                     ))}
             </div>

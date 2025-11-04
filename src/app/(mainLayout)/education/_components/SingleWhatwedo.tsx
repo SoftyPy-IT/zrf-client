@@ -43,7 +43,7 @@ const SingleWhatwedo = ({ whatWedoData }: SingleWhatWeDoProps) => {
                   ? whatWedoData.eng_images?.slice(0, 1).map((img) => (
                       <div
                         key={img}
-                        className="w-full h-[200px] md:h-[400px] mb-6"
+                        className="mb-6"
                       >
                         <Image
                           width={500}
@@ -56,7 +56,7 @@ const SingleWhatwedo = ({ whatWedoData }: SingleWhatWeDoProps) => {
                       </div>
                     ))
                   : whatWedoData.bng_Images?.slice(0, 1).map((img) => (
-                      <div key={img} className="lg:h-[700px] md:h-[500px]">
+                      <div key={img} className="">
                         <Image
                           width={500}
                           height={500}

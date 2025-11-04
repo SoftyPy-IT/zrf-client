@@ -4,22 +4,17 @@ import { TWhatWeDo } from "@/types/type";
 import Link from "next/link";
 import truncateText from "@/utils/truncate";
 
-interface educatoinProps {
+interface EducationProps {
   rehabilitationData: TWhatWeDo[];
   language: string;
 }
-const formatDate = (dateString: string | number | Date) => {
-  const date = new Date(dateString);
-  const day = date.getDate().toString().padStart(2, "0");
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const year = date.getFullYear();
-  return `${day}-${month}-${year}`;
-};
 
-const RecentPostFetchData: React.FC<educatoinProps> = ({
+const RecentPostFetchData: React.FC<EducationProps> = ({
   rehabilitationData,
   language,
 }) => {
+  const title = language === "ENG" ? "Recent Post" : "সাম্প্রতিক পোস্ট";
+
   const sortedRehabilitationData = rehabilitationData?.sort(
     (a: TWhatWeDo, b: TWhatWeDo) => {
       const dateA = new Date(a.date).getTime();
@@ -27,58 +22,72 @@ const RecentPostFetchData: React.FC<educatoinProps> = ({
       return dateB - dateA;
     }
   );
+
+  const formatDate = (dateStr: string) => {
+    const date = new Date(dateStr);
+    if (language === "ENG") {
+      return date.toLocaleDateString("en-US", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+      });
+    } else {
+      const banglaFormatted = date
+        .toLocaleDateString("bn-BD", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        })
+        .replace(/[০-৯]/g, (d) =>
+          "০১২৩৪৫৬৭৮৯"["০১২৩৪৫৬৭৮৯".indexOf(d)] ?? d
+        );
+      return banglaFormatted;
+    }
+  };
+
   return (
     <div className="shadow-md rounded p-3">
-      <h3 className="text-xl font-semibold">
-        {language === "ENG" ? "Recent Post" : "সাম্প্রতিক পোস্ট"}
-      </h3>
+      <h3 className="text-xl font-semibold">{title}</h3>
       <hr className="w-16 h-1 bg-gradient-to-r from-yellow-600 to-green-600 border-0 rounded-full mb-5" />
-      <div className="flex flex-col gap-y-3 gap-x-3 mt-5">
-        {sortedRehabilitationData?.slice(0, 5).map((data) => (
-          <div key={data._id}>
-            <Link href={`/whatwedo/rehabilitation/${data._id}`}>
-              <div className="grid grid-cols-12 items-center gap-3 border rounded-md p-2">
-                {data.bng_Images?.slice(0, 1).map((img) => (
-                  <div className="col-span-3" key={img}>
-                    {language === "ENG"
-                      ? data.eng_images
-                          ?.slice(0, 1)
-                          .map((img) => (
-                            <Image
-                              key={img}
-                              src={img}
-                              alt=""
-                              height={100}
-                              width={100}
-                              className="h-12 rounded-md"
-                            />
-                          ))
-                      : data.bng_Images
-                          ?.slice(0, 1)
-                          .map((img) => (
-                            <Image
-                              key={img}
-                              src={img}
-                              alt=""
-                              height={100}
-                              width={100}
-                              className="h-12 rounded-md"
-                            />
-                          ))}
-                  </div>
-                ))}
 
-                <div className="col-span-9">
-                  <b className="text-xs">{formatDate(data.date)}</b>
-                  <p className="text-sm">
-                    {language === "ENG"
-                      ? truncateText(data.english_short_description, 80)
-                      : truncateText(data.bangla_short_description, 80)}
-                  </p>
-                </div>
+      <div className="flex flex-col gap-y-3 mt-5">
+        {sortedRehabilitationData?.slice(0, 5).map((data) => (
+          <Link key={data._id} href={`/whatwedo/rehabilitation/${data._id}`}>
+            <div className="flex items-center  border rounded-md  hover:shadow transition">
+              {/* ✅ Fixed image container */}
+              <div className="relative w-[100px] h-[80px] flex-shrink-0 overflow-hidden rounded-l-md">
+                {language === "ENG"
+                  ? data.eng_images?.slice(0, 1).map((img) => (
+                      <Image
+                        key={img}
+                        src={img}
+                        alt="Rehabilitation"
+                        fill
+                        className=""
+                      />
+                    ))
+                  : data.bng_Images?.slice(0, 1).map((img) => (
+                      <Image
+                        key={img}
+                        src={img}
+                        alt="পুনর্বাসন"
+                        fill
+                        className=""
+                      />
+                    ))}
               </div>
-            </Link>
-          </div>
+
+              {/* ✅ Text section */}
+              <div className="flex-1 p-2">
+                <b className="text-xs block mb-1">{formatDate(data.date)}</b>
+                <p className="text-xs md:text-sm leading-tight">
+                  {language === "ENG"
+                    ? truncateText(data.english_short_description, 80)
+                    : truncateText(data.bangla_short_description, 80)}
+                </p>
+              </div>
+            </div>
+          </Link>
         ))}
       </div>
     </div>

@@ -34,7 +34,7 @@ const SingleRehabilitation = ({ whatWedoData }: SingleWhatWeDoProps) => {
         <div className="grid md:grid-cols-12 gap-7 my-10">
           <div className="md:col-span-7 lg:col-span-8">
             {/* Top Image */}
-            <div className="w-full h-[200px] md:h-[400px] mb-6">
+            <div className=" mb-6">
               {language === "BNG"
                 ? whatWedoData.bng_Images
                     ?.slice(0, 1)
