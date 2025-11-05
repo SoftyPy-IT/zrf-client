@@ -31,26 +31,25 @@ const RecentActivityRightSide = ({
     : activityFilterData?.slice(1, 3);
   return (
     <div className="lg:w-[500px] w-full">
-      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-1 gap-5 bg-gray-100 p-2 md:p-2  lg:mt-0 md:mt-5 mt-5">
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-1 gap-5 md:bg-gray-100 p-0 md:p-2 lg:mt-0 md:mt-5 mt-5">
         {displayedData?.map((data) => (
           <div
             key={data._id}
-            className="flex items-center gap-y-2 md:gap-0 flex-col md:flex-row bg-white lg:h-[100px] rounded shadow-md transition-transform duration-500 transform hover:scale-105 h-[180px] md:h-auto justify-between "
+            className="flex items-center md:gap-0 flex-col md:flex-row bg-white h-[200px] md:h-auto lg:h-[100px] rounded shadow-md transition-transform duration-500 transform hover:scale-105  justify-between "
           >
             {data.bng_Images?.slice(0, 1).map((img) => (
               <Image
                 key={img}
                 src={img}
                 alt="news"
-                className="w-[200px] h-[100px] md:h-[100px] md:w-28 object-cover rounded-t md:rounded-l transition-opacity duration-500"
-                width={100}
-                height={100}
-                // sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                className=" h-[110px] md:h-[100px] w-full md:w-28 rounded transition-opacity duration-500"
+                width={200}
+                height={200}
               />
             ))}
 
-            <div className="p-2 md:p-3 ">
-              <h3 className="text-[10px] md:text-sm font-bold">
+            <div className="p-2">
+              <h3 className="text-[11px] md:text-sm font-bold">
                 {language === "ENG"
                   ? truncateText(data.english_title, 60)
                   : truncateText(data.bangla_title, 60)}
