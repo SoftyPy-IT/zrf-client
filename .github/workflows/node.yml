@@ -23,7 +23,7 @@ jobs:
              git fetch --all
              git reset --hard origin/main
 
-             # Setup environment and dependencies
+
              cp .env.example .env
 
              npm install --legacy-peer-deps
