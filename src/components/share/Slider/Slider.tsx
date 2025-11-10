@@ -74,15 +74,15 @@ const Slider = () => {
               className="w-full h-full"
             />
           ))}
-            <div className="absolute inset-0 flex justify-start items-center text-left text-white p-4 bg-opacity-50 ">
+            <div className="absolute inset-0 flex justify-start items-center text-left text-white p-2 md:p-4 bg-opacity-50 ">
               <Container>
-                <div className="sliderContents max-w-lg lg:max-w-md space-y-3">
-                  <h2 className="md:w-[600px] text-[18px] lg:text-3xl font-bold">
+                <div className="sliderContents max-w-md space-y-3">
+                  <h2 className="w-[150px] md:w-[600px] text-[18px] lg:text-3xl font-bold leading-6">
                     {language === "ENG"
                       ? data.english_title
                       : data.bangla_title}
                   </h2>
-                  <p className="md:w-[600px] block text-[12px] md:text-[20px]">
+                  <p className="hidden md:block md:w-[600px]  text-[12px] md:text-[20px]">
                     {language === "ENG"
                       ? data.english_short_description
                       : data.bangla_short_description}

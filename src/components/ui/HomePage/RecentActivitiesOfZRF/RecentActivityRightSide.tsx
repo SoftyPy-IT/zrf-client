@@ -42,7 +42,7 @@ const RecentActivityRightSide = ({
                 key={img}
                 src={img}
                 alt="news"
-                className=" h-[110px] md:h-[100px] w-full md:w-28 rounded transition-opacity duration-500"
+                className=" h-[110px] md:h-[100px] w-full md:w-32 rounded transition-opacity duration-500"
                 width={200}
                 height={200}
               />

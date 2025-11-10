@@ -45,11 +45,11 @@ const RecentNewsPost: React.FC<newsProps> = ({ newsData, language }) => {
       <h3 className="text-xl font-semibold">{title}</h3>
       <hr className="w-16 h-1 bg-gradient-to-r from-yellow-600 to-green-600 border-0 rounded-full mb-5" />
 
-      <div className="flex flex-col mt-5">
+      <div className="flex flex-col mt-5 space-y-4">
         {sortedNewsData?.slice(1, 5).map((data) => (
           <div key={data._id}>
             <Link href={`/news/${data._id}`}>
-              <div className="flex items-center border rounded-md hover:shadow transition">
+              <div className="flex items-center border rounded-md hover:shadow transition ">
                 {/* ✅ Fixed-size image */}
                 <div className="relative w-[100px] h-[80px] flex-shrink-0 overflow-hidden rounded-l-md">
                   {language === "ENG"

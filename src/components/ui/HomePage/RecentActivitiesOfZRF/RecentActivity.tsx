@@ -59,7 +59,7 @@ const RecentActivity: React.FC<ActivityProps> = ({
                             height={500}
                             src={img}
                             alt="activity"
-                            className=" h-full w-full object-cover transition-transform duration-500 transform group-hover:scale-105"
+                            className=" h-full w-full transition-transform duration-500 transform group-hover:scale-105"
                           />
                         ))
                     : data.eng_images
@@ -71,7 +71,7 @@ const RecentActivity: React.FC<ActivityProps> = ({
                             height={500}
                             src={img}
                             alt="activity"
-                            className="h-full w-full object-cover transition-transform duration-500 transform group-hover:scale-105"
+                            className="h-full w-full transition-transform duration-500 transform group-hover:scale-105"
                           />
                         ))}
                 </div>

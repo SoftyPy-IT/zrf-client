@@ -64,7 +64,7 @@ const Biography: React.FC<introductionProps> = ({
             key={data._id}
             className="rounded shadow-lg p-3 grid grid-cols-1 xl:grid-cols-2 gap-5"
           >
-            <div className="order-1 xl:order-2 md:h-64 object-fill lg:h-64 overflow-hidden">
+            <div className="order-1 xl:order-2 md:h-64  lg:h-full  ">
               {data.bng_images?.slice(0, 1).map((img) => (
                 <Image
                   width={500}
@@ -72,7 +72,7 @@ const Biography: React.FC<introductionProps> = ({
                   key={img}
                   src={img}
                   alt=""
-                  className="w-full h-full rounded"
+                  className=" "
                 />
               ))}
             </div>

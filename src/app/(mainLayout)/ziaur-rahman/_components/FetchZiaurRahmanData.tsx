@@ -233,20 +233,13 @@ const FetchZiaurRahmanData = () => {
                   {language === "ENG" ? "Biography" : "জীবনী"}
                 </h2>
               </div>
-              <div className="w-full text-center space-y-4 mb-2">
-                <h1 className="text-3xl lg:text-5xl xl:text-5xl text-[#FEC909] font-bold ">
-                  {" "}
-                  {language === "ENG"
-                    ? data.english_title
-                    : data.bangla_title}{" "}
-                </h1>
-              </div>
+
 
               <div className="grid grid-cols-1 md:grid-cols-12 my-10">
-                <div className="md:col-span-4 lg:h-[400px]">
+                <div className="md:col-span-4 lg:h-[500px]">
                   {data.bng_images?.slice(0, 1).map((img) => (
                     <Image
-                      width={500}
+                      width={400}
                       height={500}
                       key={img}
                       src={img}
@@ -257,6 +250,14 @@ const FetchZiaurRahmanData = () => {
                 </div>
 
                 <div className="md:col-span-8 bg-gradient-to-r from-yellow-600 to-green-600 text-white p-5 md:rounded-r">
+                  <div className="w-full space-y-4 mb-2">
+                    <h1 className="text-xl lg:text-xl xl:text-3xl text-[#FEC909] font-bold ">
+                      {" "}
+                      {language === "ENG"
+                        ? data.english_title
+                        : data.bangla_title}{" "}
+                    </h1>
+                  </div>
                   <p className="lg:text-xl text-justify lg:leading-loose">
                     {language === "ENG"
                       ? renderContent(data.english_description)
