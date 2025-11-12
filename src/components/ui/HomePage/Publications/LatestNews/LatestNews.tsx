@@ -29,9 +29,7 @@ const Programm = () => {
 
   return (
     <>
-      {/* Category Buttons */}
-
-
+   
       {/* Pass Filtered Data */}
       <LatestNewsFetchData
         language={language}

@@ -83,13 +83,7 @@ export interface TVideo {
   video_title_english: string;
   thumnailImages: string[];
 }
-export type TImgGallery = {
-  _id: string;
-  title_of_bangla: string;
-  title_of_english: string;
-  date: string;
-  thumnailImages: string[];
-};
+
 export type TMessage = {
   filter: any;
   _id:string,
@@ -185,4 +179,13 @@ export type TOverview = {
   images: string[];
   description_bangla: string;
   description_english: string;
+};
+
+
+export type TImgGallery = {
+  _id: string;
+  title_of_bangla: string;
+  title_of_english: string;
+  thumnailImages: string[];
+  date: string;
 };
