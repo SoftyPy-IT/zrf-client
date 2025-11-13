@@ -17,7 +17,7 @@ const VideoGallery = () => {
   const [videos, setVideos] = React.useState<TVideo[]>([]);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
-  const { language } = useLanguage();
+  const { language } = useLanguage(); 
 
   React.useEffect(() => {
     const fetchPrisonData = async () => {
