@@ -30,7 +30,7 @@ const SingleMessage = ({ singleNewsData }: SingleProjectProps) => {
       <Container>
         <div className="grid md:grid-cols-12 gap-7 my-10">
           <div className="md:col-span-7 lg:col-span-8">
-            <div className="relative w-full h-[200px] md:h-auto mb-6">
+            <div className="relative w-full h-auto mb-6">
               {language === "BNG"
                 ? singleNewsData.bng_Images
                     ?.slice(0, 1)

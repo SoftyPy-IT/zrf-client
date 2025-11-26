@@ -15,7 +15,8 @@ const RecentNewsSidebar = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const category = `News`;
+  const category = `Message`;
+  console.log(category)
 
   useEffect(() => {
     const fetchCovidData = async () => {

@@ -68,29 +68,28 @@ const PhotoGallery = () => {
 
   const currentImg = allImages[currentIndex]
   const dims = imageDimensions[currentImg]
-  const displayWidth = dims?.width || 800
-  const displayHeight = dims?.height || 600
 
   return (
     <div>
-      <h2 className="lg:text-3xl text-2xl font-bold uppercase"> {language === "ENG" ? " Photo Gallery" : "ফটো গ্যালারি"} </h2>
+      <h2 className="lg:text-3xl text-2xl font-bold uppercase"> 
+        {language === "ENG" ? " Photo Gallery" : "ফটো গ্যালারি"} 
+      </h2>
       <div className="w-28 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-5"></div>
 
       <div className="w-full flex flex-col items-center gap-4">
-        {/* Image container */}
+        {/* Image container with aspect ratio */}
         <div className="w-full flex justify-center bg-gray-100 p-4 rounded-lg">
-          <div className="flex items-center justify-center h-[370px]">
+          <div className="relative w-full max-w-4xl h-[370px]">
             <Image
               src={currentImg || "/placeholder.svg"}
               alt="gallery"
-              width={displayWidth}
-              height={displayHeight}
+              fill
               priority
+              className="object-contain"
               onLoad={(result) => {
                 const img_element = result.currentTarget as HTMLImageElement
                 handleImageLoad(currentImg, img_element.naturalWidth, img_element.naturalHeight)
               }}
-             className="h-[370px]"
             />
           </div>
         </div>
@@ -98,7 +97,8 @@ const PhotoGallery = () => {
         <div className="flex justify-end mt-5">
           <Link href="/gallery">
             <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-6 py-2 text-white rounded-full uppercase">
-              {language === "ENG" ? "See All" : "সব দেখুন"}{" "} <East fontSize="small" />
+              {language === "ENG" ? "See All" : "সব দেখুন"}{" "} 
+              <East fontSize="small" />
             </button>
           </Link>
         </div>
