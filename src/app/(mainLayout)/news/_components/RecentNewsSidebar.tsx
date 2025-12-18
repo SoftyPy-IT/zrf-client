@@ -15,7 +15,7 @@ const RecentNewsSidebar = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const category = `News`;
+  const category = `Upcoming Programs`;
 
   useEffect(() => {
     const fetchCovidData = async () => {
@@ -25,7 +25,7 @@ const RecentNewsSidebar = () => {
         const res = await axios.get(
           `${process.env.NEXT_PUBLIC_BASE_API_URL}/activity?category=${category}`
         );
-        setNewsData(res.data?.data?.activities || []);
+        setNewsData(res.data?.data?.activities || []); 
       } catch (err) {
         setError("Failed to load news data. Please try again later.");
       } finally {

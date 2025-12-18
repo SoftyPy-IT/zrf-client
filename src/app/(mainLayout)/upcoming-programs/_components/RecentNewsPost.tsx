@@ -48,7 +48,7 @@ const RecentNewsPost: React.FC<newsProps> = ({ newsData, language }) => {
       <div className="flex flex-col mt-5 space-y-4">
         {sortedNewsData?.slice(1, 5).map((data) => (
           <div key={data._id}>
-            <Link href={`/news/${data._id}`}>
+            <Link href={`/upcoming-programs/${data._id}`}>
               <div className="flex items-center border rounded-md hover:shadow transition ">
                 {/* ✅ Fixed-size image */}
                 <div className="relative w-[100px] h-[80px] flex-shrink-0 overflow-hidden rounded-l-md">

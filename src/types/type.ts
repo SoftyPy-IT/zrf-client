@@ -8,6 +8,7 @@ export type TBanner = {
   category: string;
   date: string;
 };
+
 export type TActivity = {
   _id: string;
   img_tagline_bangla: string;
@@ -29,6 +30,7 @@ export type TActivity = {
   slug: string;
   category: string;
 };
+
 export type TProgramm = {
   _id: string;
   admin_name: string;
@@ -99,6 +101,7 @@ export type TMessage = {
   slug: string;
   category:string,
 };
+
 export type TAbout = {
   category_bn: string;
   _id:string,

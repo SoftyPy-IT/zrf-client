@@ -15,8 +15,12 @@ interface newsProps {
   setActiveCategory: (val: string) => void;
 }
 
-const LatestNewsFetchData: React.FC<newsProps> = ({ newsData, language, activeCategory, setActiveCategory }) => {
-
+const LatestNewsFetchData: React.FC<newsProps> = ({
+  newsData,
+  language,
+  activeCategory,
+  setActiveCategory,
+}) => {
   // ✅ Sort all data for marquee (latest first)
   const sortedAllData = [...newsData].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
@@ -54,7 +58,9 @@ const LatestNewsFetchData: React.FC<newsProps> = ({ newsData, language, activeCa
               {sortedAllData.map((item) => (
                 <Link href={`/upcoming-programs/${item._id}`} key={item._id}>
                   <h2 className="capitalize text-nowrap px-4">
-                    {language === "ENG" ? item.english_title : item.bangla_title}
+                    {language === "ENG"
+                      ? item.english_title
+                      : item.bangla_title}
                   </h2>
                 </Link>
               ))}
@@ -67,7 +73,9 @@ const LatestNewsFetchData: React.FC<newsProps> = ({ newsData, language, activeCa
       <div className="flex gap-2 justify-end mb-4">
         <Button
           onClick={() => setActiveCategory("Upcoming Programs")}
-          variant={activeCategory === "Upcoming Programs" ? "contained" : "outlined"}
+          variant={
+            activeCategory === "Upcoming Programs" ? "contained" : "outlined"
+          }
           color="success"
         >
           {language === "ENG" ? "Upcoming Program" : "আসন্ন প্রোগ্রাম"}
@@ -85,7 +93,10 @@ const LatestNewsFetchData: React.FC<newsProps> = ({ newsData, language, activeCa
       {/* Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-1 items-center gap-2 md:gap-4 lg:mt-5 mt-10">
         {displayedData.map((data) => (
-          <div key={data._id} className="h-[220px] md:h-[150px]  items-center shadow-md flex flex-col lg:flex-row gap-2 md:gap-4">
+          <div
+            key={data._id}
+            className="h-[220px] md:h-[150px]  items-center shadow-md flex flex-col lg:flex-row gap-2 md:gap-4"
+          >
             <div className="lg:w-1/3 w-full h-[150px] lg:h-[150px] overflow-hidden rounded">
               <Image
                 className="w-full h-full"
@@ -98,12 +109,22 @@ const LatestNewsFetchData: React.FC<newsProps> = ({ newsData, language, activeCa
 
             <div className="flex-1 p-2 lg:p-5">
               <h4 className="text-[10px] md:text-sm font-semibold uppercase">
-                {language === "ENG" ? truncateText(data.english_title, 50) : truncateText(data.bangla_title, 50)}
+                {language === "ENG"
+                  ? truncateText(data.english_title, 50)
+                  : truncateText(data.bangla_title, 50)}
               </h4>
-              <p className="text-[10px] md:text-sm text-justify mt-1 md:mt-2">
-                {language === "ENG" ? truncateText(data.english_short_description, 80) : truncateText(data.bangla_short_description, 80)}
-                <Link href={`/news/${data._id}`}>
-                  <button className="text-green-600 ml-1">
+              <p className="text-[10px] md:text-sm text-justify mt-1 md:mt-2 ">
+                {language === "ENG"
+                  ? truncateText(data.english_short_description, 80)
+                  : truncateText(data.bangla_short_description, 80)}
+                <Link
+                  href={
+                    data.category?.trim().toLowerCase() === "message"
+                      ? `/message/${data._id}`
+                      : `/upcoming-programs/${data._id}`
+                  }
+                >
+                  <button className="text-green-600 ml-1  ">
                     {language === "ENG" ? "See more" : "আরো দেখুন"}
                   </button>
                 </Link>
@@ -113,10 +134,15 @@ const LatestNewsFetchData: React.FC<newsProps> = ({ newsData, language, activeCa
         ))}
       </div>
 
-      <div className="flex lg:justify-end mt-8 text-center">
-        <Link href="/news">
+      <div className="flex justify-end mt-8 text-center">
+        <Link href={
+    activeCategory.trim().toLowerCase() === "message"
+      ? "/message"
+      : "/upcoming-programs"
+  }>
           <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-6 py-2 text-white rounded-full uppercase">
-            {language === "ENG" ? "See All" : "সব দেখুন"} <EastIcon fontSize="small" />
+            {language === "ENG" ? "See All" : "সব দেখুন"}
+            <EastIcon fontSize="small" />
           </button>
         </Link>
       </div>

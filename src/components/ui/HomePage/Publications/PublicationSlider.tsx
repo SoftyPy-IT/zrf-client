@@ -71,8 +71,7 @@ function PublicationSlider() {
     <div>
       <div>
         <h2 className="text-3xl font-bold uppercase md:w-[400px]">
-          {" "}
-          {language === "ENG" ? " E-Books" : "ই-বুক"}{" "}
+          {language === "ENG" ? " E-Books" : "ই-বুক"}
         </h2>
         <div className="w-28 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-3 "></div>
       </div>
@@ -111,7 +110,7 @@ function PublicationSlider() {
         ))}
       </Swiper>
 
-      <div className="mt-10">
+      <div className="flex flex-col items-end lg:items-start mt-10">
         <Link href="/ebooks">
           <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-6 py-2 text-white rounded-full uppercase">
             {language === "ENG" ? "See All " : "সব দেখুন"}{" "}

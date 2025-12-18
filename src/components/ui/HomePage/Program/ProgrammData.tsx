@@ -118,7 +118,7 @@ const ProgrammData: React.FC<programmProps> = ({ programmData, language }) => {
                             {sortedProgrammData?.slice(0, 4).map((program: TProgramm, index: number) => (
                                 <div
                                     key={program._id}
-                                    className="bg-white p-2 md:p-5 rounded shadow-lg flex flex-col items-center transform transition-transform duration-300 hover:scale-105 h-[180px] lg:h-auto "
+                                    className="bg-white p-2 md:p-5 rounded shadow-lg flex flex-col items-center transform transition-transform duration-300 hover:scale-105 h-[135px] lg:h-auto "
                                 >
                                     <div className="mb-4">
                                         <div className="w-12 h-12  md:h-16 md:w-16  rounded-full p-2 flex items-center justify-center shadow-lg transform transition-transform duration-300 hover:scale-110">
