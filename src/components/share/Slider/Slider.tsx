@@ -8,9 +8,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import Container from "../Container";
 
-const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-  ssr: false,
-});
+ 
 
 type Banner = {
   _id: string;
@@ -49,7 +47,7 @@ const Slider = () => {
     fetchSlides();
   }, []);
 
-  if (loading) return <Loader />;
+   
   if (error) return <p className="text-red-500">{error}</p>;
 
   const filterBannerData = bannerData.filter(

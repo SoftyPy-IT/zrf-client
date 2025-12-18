@@ -35,9 +35,7 @@ const CovidHomePage = () => {
     fetchWhatwedoData();
   }, []);
 
-  if (loading) {
-    return <Loader />;
-  }
+   
   if (error) {
     return <p>Oops covid data not found!</p>;
   }

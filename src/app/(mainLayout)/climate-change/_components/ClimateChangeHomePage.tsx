@@ -7,9 +7,7 @@ import { whatwedoFields } from "@/fields";
 import axios from "axios";
 import ClimateChange from "./ClimateChange";
 
-const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-  ssr: false,
-});
+ 
 
 const ClimateChangeHomePage = () => {
   const { language } = useLanguage();
@@ -40,9 +38,7 @@ const ClimateChangeHomePage = () => {
     fetchCovidData();
   }, [category]);
 
-  if (isLoading) {
-    return <Loader />;
-  }
+   
 
   if (error) {
     return <h2>Oops! data not found.</h2>

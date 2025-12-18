@@ -5,9 +5,7 @@ import RecentNewsPost from "./RecentNewsPost";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import { TActivity } from "@/types/type";
-const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-  ssr: false,
-});
+ 
 
 const RecentNewsSidebar = () => {
   const { language } = useLanguage();
@@ -36,9 +34,7 @@ const RecentNewsSidebar = () => {
     fetchCovidData();
   }, [category]);
 
-  if (isLoading) {
-    return <Loader />;
-  }
+   
 
   if (error) {
     return <h2>Oops! data not found.</h2>

@@ -12,9 +12,7 @@ import Modal from "./Modal";
 import { Box, Paper, Typography } from "@mui/material";
 import dynamic from "next/dynamic";
 import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
-const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-  ssr: false,
-});
+ 
 
 const renderContent = (content: string) => {
   const parsedContent = ReactHtmlParser(content);
@@ -204,9 +202,7 @@ const FetchZiaurRahmanData = () => {
     setIsOpen(false);
     setModalContent(null);
   };
-  if (loading) {
-    return <Loader />;
-  }
+   
 
   return (
     <>

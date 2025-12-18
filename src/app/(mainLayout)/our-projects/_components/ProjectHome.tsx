@@ -5,9 +5,7 @@ import dynamic from "next/dynamic";
 import { TProject } from "@/types/type";
 import { projectsFields } from "@/fields";
 import ProjectData from "./ProjectData";
-const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-  ssr: false,
-});
+ 
 
 const ProjectHome = () => {
   const { language } = useLanguage()
@@ -32,9 +30,7 @@ const ProjectHome = () => {
     fetchWhatwedoData();
   }, []);
 
-  if (loading) {
-    return <Loader />
-  }
+   
   if (error) {
     return <p>Oops covid data not found!</p>
   }

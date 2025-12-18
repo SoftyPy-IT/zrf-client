@@ -5,9 +5,7 @@ import LatestNewsFetchData from "./LatestNewsFetchData";
 import dynamic from "next/dynamic";
 import { useActivityData } from "@/hooks/useActivityData";
 
-const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-  ssr: false,
-});
+ 
 
 const Programm = () => {
   const { activityData, loading, error } = useActivityData();
@@ -24,7 +22,7 @@ const Programm = () => {
       return new Date(b.date).getTime() - new Date(a.date).getTime();
     });
 
-  if (loading) return <Loader />;
+   
   if (error) return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
 
   return (

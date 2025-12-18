@@ -1,18 +1,22 @@
-"use client";
-import { Player } from "@lottiefiles/react-lottie-player";
-import loaderAnimation from "../../../src/assets/images/loader/loading.json";
+// "use client";
 
-const Loader = () => {
-  return (
-    <div className="fixed inset-0 h-screen flex items-center justify-center bg-white z-50">
-      <Player
-        autoplay
-        loop
-        src={loaderAnimation}
-        className="w-[150px] h-[150px] md:w-[250px] md:h-[150px]"
-      />
-    </div>
-  );
-};
+// import { Skeleton, Stack } from "@mui/material";
 
-export default Loader;
+// const Loader = () => {
+//   return (
+//     <div className="fixed inset-0 h-screen flex items-center justify-center bg-white z-50">
+//       <Stack spacing={1}>
+//         <Skeleton variant="rectangular" width={210} height={140} />
+//         <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+//         <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+//         <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+//         <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+//         <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+//         <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+        
+//       </Stack>
+//     </div>
+//   );
+// };
+
+// export default Loader;

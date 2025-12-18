@@ -3,16 +3,12 @@ import FeatureSlider from "./FeatureSlider";
 import { useLanguage } from "@/provider/LanguageProvider";
 import { useProjectdata } from "@/hooks/useProjectdata";
 import dynamic from "next/dynamic";
-const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-  ssr: false,
-});
+ 
 
 const Featured = () => {
   const { language } = useLanguage();
   const { projectData, loading, error } = useProjectdata();
-  if (loading) {
-    return <Loader />;
-  }
+   
   if (error) {
     return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
   }

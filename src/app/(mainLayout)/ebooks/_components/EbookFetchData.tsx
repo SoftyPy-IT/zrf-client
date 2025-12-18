@@ -20,16 +20,13 @@ const StyledModal = styled(Modal)(({ theme }) => ({
   }
 }))
 
-const Loader = dynamic(() => import('@/components/Loading/Loading'), {
-  ssr: false,
-});
+
 
 function EbookFetchData() {
   const { ebookData, loading, error } = useEbookData()
   const [openModal, setOpenModal] = useState(false)
   const [selectedPdf, setSelectedPdf] = useState('')
 
-  if (loading) return <Loader />
   if (error) return <p>Oops Something Went Wrong!</p>
 
   const handleOpenPdf = (pdfUrl: string) => {

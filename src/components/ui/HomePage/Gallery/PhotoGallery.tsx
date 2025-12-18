@@ -8,10 +8,6 @@ import Link from "next/link"
 import { useLanguage } from "@/provider/LanguageProvider"
 import { East } from "@mui/icons-material"
 
-const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-  ssr: false,
-})
-
 interface ImageDimensions {
   [key: string]: { width: number; height: number }
 }
@@ -60,7 +56,6 @@ const PhotoGallery = () => {
     return () => clearInterval(interval)
   }, [allImages.length])
 
-  if (loading) return <Loader />
 
   if (allImages.length === 0) {
     return <div className="text-center text-gray-500">No images available</div>

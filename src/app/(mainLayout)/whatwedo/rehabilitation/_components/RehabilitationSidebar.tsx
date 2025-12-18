@@ -37,9 +37,7 @@ const RehabilitationSidebar = () => {
     fetchWhatwedoData();
   }, [category]);
 
-  if (loading) {
-    return <Loader />;
-  }
+   
   if (error) {
     return <p>Oops data not found!</p>;
   }

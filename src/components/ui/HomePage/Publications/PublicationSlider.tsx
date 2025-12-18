@@ -13,10 +13,20 @@ import { useLanguage } from "@/provider/LanguageProvider";
 import { TEbook } from "@/types/type";
 import { useEbookData } from "@/hooks/useEbookData";
 import dynamic from "next/dynamic";
+import { Skeleton, Stack } from "@mui/material";
 
-const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-  ssr: false,
-});
+const Loader = () => {
+  return (
+    <div className="fixed inset-0 h-screen flex items-center justify-center bg-white z-50">
+      <Stack spacing={1}>
+      <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+      <Skeleton variant="rectangular" width={40} height={40} />
+      <Skeleton variant="rectangular" width={210} height={60} />
+      <Skeleton variant="rectangular" width={210} height={60} />
+    </Stack>
+    </div>
+  );
+};
 
 function PublicationSlider() {
   const [activeIndex, setActiveIndex] = useState(0);

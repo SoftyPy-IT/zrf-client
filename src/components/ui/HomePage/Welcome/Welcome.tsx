@@ -6,9 +6,7 @@ import WelcomeData from "./WelcomeData";
 import { useLanguage } from "@/provider/LanguageProvider";
 import { TBanner } from "@/types/type";
 import dynamic from "next/dynamic";
-const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-  ssr: false,
-});
+ 
 
 const Welcome = () => {
   const [welcomeData, setWelcomeData] = React.useState<TBanner[]>([]);
@@ -36,9 +34,7 @@ const Welcome = () => {
     fetchPrisonData();
   }, []);
 
-  if (loading) {
-    return <Loader />;
-  }
+   
 
   return (
     <>

@@ -7,9 +7,7 @@ import EastIcon from "@mui/icons-material/East";
 import dynamic from "next/dynamic";
 import { useLanguage } from "@/provider/LanguageProvider";
 import { TVideo } from "@/types/type";
-const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-  ssr: false,
-});
+ 
 
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 import "./Gallery.css";
@@ -40,9 +38,7 @@ const VideoGallery = () => {
     fetchPrisonData();
   }, []);
 
-  if (loading) {
-    return <Loader />;
-  }
+   
   if (error) {
     return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
   }

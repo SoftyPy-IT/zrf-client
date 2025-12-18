@@ -7,9 +7,6 @@ import { TActivity } from "@/types/type";
 import truncateText from "@/utils/truncate";
 import { formatDate } from "@/utils/formateDate";
 import RecentActivityRightSide from "./RecentActivityRightSide";
-// const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-//   ssr: false,
-// });
 
 interface ActivityProps {
   activityData: TActivity[];
