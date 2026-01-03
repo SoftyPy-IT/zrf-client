@@ -6,9 +6,7 @@ import { useLanguage } from "@/provider/LanguageProvider";
 import dynamic from "next/dynamic";
 import { TCommitte } from "@/types/type";
 import axios from "axios";
-const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-  ssr: false,
-});
+ 
 
 const Committee = () => {
   const { language } = useLanguage();
@@ -38,9 +36,7 @@ const Committee = () => {
     fetchCovidData();
   }, [category]);
 
-  if (isLoading) {
-    return <Loader />;
-  }
+   
 
   if (error) {
     return <h2>Oops! data not found.</h2>

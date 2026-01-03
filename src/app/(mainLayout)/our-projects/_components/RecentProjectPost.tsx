@@ -4,9 +4,7 @@ import RecentPostFetchData from "./RecentPostFetchData";
 import dynamic from "next/dynamic";
 import { projectsFields } from "@/fields";
 import { TProject } from "@/types/type";
-const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-  ssr: false,
-});
+ 
 
 const RecentProjectPost = () => {
   const { language } = useLanguage();
@@ -34,9 +32,7 @@ const RecentProjectPost = () => {
     fetchWhatwedoData();
   }, []);
 
-  if (loading) {
-    return <Loader />;
-  }
+   
   if (error) {
     return <p>Oops covid data not found!</p>;
   }

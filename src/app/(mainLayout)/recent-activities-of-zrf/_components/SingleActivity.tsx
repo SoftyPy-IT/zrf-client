@@ -47,7 +47,7 @@ const SingleActivity = ({ singleActivityData }: SingleActivityProps) => {
                           key={img}
                           src={img}
                           alt="Top Image"
-                          className="rounded-lg w-full h-full object-cover"
+                          className="rounded-lg w-full h-full object-cover" 
                         />
                       ))
                   : singleActivityData.eng_images

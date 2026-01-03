@@ -30,7 +30,7 @@ const SingleMessage = ({ singleNewsData }: SingleProjectProps) => {
       <Container>
         <div className="grid md:grid-cols-12 gap-7 my-10">
           <div className="md:col-span-7 lg:col-span-8">
-            <div className="relative w-full h-[200px] md:h-[400px] mb-6">
+            <div className="relative w-full h-auto mb-6">
               {language === "BNG"
                 ? singleNewsData.bng_Images
                     ?.slice(0, 1)
@@ -41,7 +41,7 @@ const SingleMessage = ({ singleNewsData }: SingleProjectProps) => {
                         key={img}
                         src={img}
                         alt="Top Image"
-                        className="rounded-md w-full h-full"
+                        className="rounded-lg w-full h-full"
                       />
                     ))
                 : singleNewsData.eng_images
@@ -53,7 +53,7 @@ const SingleMessage = ({ singleNewsData }: SingleProjectProps) => {
                         key={img}
                         src={img}
                         alt="Top Image"
-                        className="rounded-md w-full h-full"
+                        className="rounded-lg w-full h-full object-cover"
                       />
                     ))}
             </div>
@@ -88,14 +88,14 @@ const SingleMessage = ({ singleNewsData }: SingleProjectProps) => {
                 />
               </div>
             </div>
-            <div className="flex justify-between items-center mt-5">
+            {/* <div className="flex justify-between items-center mt-5">
               <a href="#" className="text-green-600">
                 ←{language === "ENG" ? "Prev Post" : "পূর্ববর্তী পোস্ট"}
               </a>
               <a href="#" className="text-green-600">
                 {language === "ENG" ? "Next Post" : "পরবর্তী পোস্ট"} →
               </a>
-            </div>
+            </div> */}
           </div>
 
           <div className="md:col-span-5 lg:col-span-4">

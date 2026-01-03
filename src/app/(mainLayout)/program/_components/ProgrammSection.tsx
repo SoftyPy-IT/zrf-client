@@ -46,9 +46,7 @@ const ProgrammSection = () => {
     setVisibleCount((prevCount) => prevCount + 8);
   };
 
-  if (loading) {
-    return <Loader />;
-  }
+   
 
   if (error) {
     return <h2 className="text-center">Oops! Something Went Wrong!</h2>;

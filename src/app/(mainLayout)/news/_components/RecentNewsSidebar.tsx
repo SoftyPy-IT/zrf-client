@@ -5,9 +5,7 @@ import RecentNewsPost from "./RecentNewsPost";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import { TActivity } from "@/types/type";
-const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-  ssr: false,
-});
+ 
 
 const RecentNewsSidebar = () => {
   const { language } = useLanguage();
@@ -15,7 +13,7 @@ const RecentNewsSidebar = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const category = `News`;
+  const category = `Upcoming Programs`;
 
   useEffect(() => {
     const fetchCovidData = async () => {
@@ -25,7 +23,7 @@ const RecentNewsSidebar = () => {
         const res = await axios.get(
           `${process.env.NEXT_PUBLIC_BASE_API_URL}/activity?category=${category}`
         );
-        setNewsData(res.data?.data?.activities || []);
+        setNewsData(res.data?.data?.activities || []); 
       } catch (err) {
         setError("Failed to load news data. Please try again later.");
       } finally {
@@ -36,9 +34,7 @@ const RecentNewsSidebar = () => {
     fetchCovidData();
   }, [category]);
 
-  if (isLoading) {
-    return <Loader />;
-  }
+   
 
   if (error) {
     return <h2>Oops! data not found.</h2>

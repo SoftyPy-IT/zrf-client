@@ -7,9 +7,7 @@ import axios from "axios";
 import { whatwedoFields } from "@/fields";
 import { TWhatWeDo } from "@/types/type";
 import HealthServices from "./HealthServices";
-const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-  ssr: false,
-});
+ 
 
 const HealthServiceHome = () => {
   const { language } = useLanguage();
@@ -40,9 +38,7 @@ const HealthServiceHome = () => {
     fetchCovidData();
   }, [category]);
 
-  if (isLoading) {
-    return <Loader />;
-  }
+   
 
   if (error) {
     return <h2>Oops! data not found.</h2>

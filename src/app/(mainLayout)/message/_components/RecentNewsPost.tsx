@@ -55,7 +55,7 @@ const RecentNewsPost: React.FC<newsProps> = ({ newsData, language }) => {
       <div className="flex flex-col  gap-y-3 gap-x-3 mt-5">
         {sortedNewsData?.slice(1, 5).map((data) => (
           <div key={data._id}>
-            <Link href={`/news/${data._id}`}>
+            <Link href={`/message/${data._id}`}>
               <div className="grid grid-cols-12 items-center gap-3 border rounded-md p-2">
                 {data.bng_Images?.slice(0, 1).map((img) => (
                   <div className="col-span-3" key={img}>

@@ -7,9 +7,6 @@ import { TActivity } from "@/types/type";
 import truncateText from "@/utils/truncate";
 import { formatDate } from "@/utils/formateDate";
 import RecentActivityRightSide from "./RecentActivityRightSide";
-// const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-//   ssr: false,
-// });
 
 interface ActivityProps {
   activityData: TActivity[];
@@ -59,7 +56,7 @@ const RecentActivity: React.FC<ActivityProps> = ({
                             height={500}
                             src={img}
                             alt="activity"
-                            className=" h-full w-full object-cover transition-transform duration-500 transform group-hover:scale-105"
+                            className=" h-full w-full transition-transform duration-500 transform group-hover:scale-105"
                           />
                         ))
                     : data.eng_images
@@ -71,7 +68,7 @@ const RecentActivity: React.FC<ActivityProps> = ({
                             height={500}
                             src={img}
                             alt="activity"
-                            className="h-full w-full object-cover transition-transform duration-500 transform group-hover:scale-105"
+                            className="h-full w-full transition-transform duration-500 transform group-hover:scale-105"
                           />
                         ))}
                 </div>

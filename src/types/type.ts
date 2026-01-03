@@ -8,6 +8,7 @@ export type TBanner = {
   category: string;
   date: string;
 };
+
 export type TActivity = {
   _id: string;
   img_tagline_bangla: string;
@@ -29,6 +30,7 @@ export type TActivity = {
   slug: string;
   category: string;
 };
+
 export type TProgramm = {
   _id: string;
   admin_name: string;
@@ -83,13 +85,7 @@ export interface TVideo {
   video_title_english: string;
   thumnailImages: string[];
 }
-export type TImgGallery = {
-  _id: string;
-  title_of_bangla: string;
-  title_of_english: string;
-  date: string;
-  thumnailImages: string[];
-};
+
 export type TMessage = {
   filter: any;
   _id:string,
@@ -105,6 +101,7 @@ export type TMessage = {
   slug: string;
   category:string,
 };
+
 export type TAbout = {
   category_bn: string;
   _id:string,
@@ -185,4 +182,13 @@ export type TOverview = {
   images: string[];
   description_bangla: string;
   description_english: string;
+};
+
+
+export type TImgGallery = {
+  _id: string;
+  title_of_bangla: string;
+  title_of_english: string;
+  thumnailImages: string[];
+  date: string;
 };

@@ -4,9 +4,7 @@ import FetchImactData from "./FetchImactData";
 import { useLanguage } from "@/provider/LanguageProvider";
 import { useOverviewCountData } from "@/hooks/useOverviewCountData";
 import dynamic from "next/dynamic";
-const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-  ssr: false,
-});
+ 
 
 const Impact = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -17,9 +15,7 @@ const Impact = () => {
   const { overviewData, loading, error } = useOverviewCountData();
   const { language } = useLanguage();
 
-  if (loading) {
-    return <Loader />;
-  }
+   
 
   if (error) {
     return <h2 className="text-center">Oops! Something Went Wrong!</h2>;

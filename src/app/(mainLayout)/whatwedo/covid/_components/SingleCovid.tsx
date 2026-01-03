@@ -91,14 +91,14 @@ const SingleCovid = ({ whatWedoData }: SingleWhatWeDoProps) => {
                 />
               </div>
             </div>
-            <div className="flex justify-between items-center mt-5">
+            {/* <div className="flex justify-between items-center mt-5">
               <a href="#" className="text-green-600">
                 ←{language === "ENG" ? "Prev Post" : "পূর্ববর্তী পোস্ট"}
               </a>
               <a href="#" className="text-green-600">
                 {language === "ENG" ? "Next Post" : "পরবর্তী পোস্ট"} →
               </a>
-            </div>
+            </div> */}
           </div>
 
           <div className="md:col-span-4 lg:col-span-4">
