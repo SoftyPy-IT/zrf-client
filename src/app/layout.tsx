@@ -98,7 +98,7 @@ export default function RootLayout({
         />
       </head>
       <Providers>
-        <body className={balooDa2.className}>
+        <body className="mourning-mode">
           <Toaster position="bottom-right" richColors />
           <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
         </body>
