@@ -3,12 +3,8 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import "./Slider.css";
 import { useLanguage } from "@/provider/LanguageProvider";
-import { TBanner } from "@/types/type";
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import Container from "../Container";
-
- 
 
 type Banner = {
   _id: string;
@@ -21,7 +17,7 @@ type Banner = {
 };
 
 const Slider = () => {
-  const [bannerData, setBannerData] = useState<Banner[]>([]); // Specify the type here
+  const [bannerData, setBannerData] = useState<Banner[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { language } = useLanguage();
@@ -47,7 +43,6 @@ const Slider = () => {
     fetchSlides();
   }, []);
 
-   
   if (error) return <p className="text-red-500">{error}</p>;
 
   const filterBannerData = bannerData.filter(
@@ -72,27 +67,25 @@ const Slider = () => {
               className="w-full h-full"
             />
           ))}
-            <div className="absolute inset-0 flex justify-start items-center text-left text-white p-2 md:p-4 bg-opacity-50 ">
-              <Container>
-                <div className="sliderContents max-w-md space-y-3">
-                  <h2 className="w-[150px] md:w-[600px] text-[18px] lg:text-3xl font-bold leading-6">
-                    {language === "ENG"
-                      ? data.english_title
-                      : data.bangla_title}
-                  </h2>
-                  <p className="hidden md:block md:w-[600px]  text-[12px] md:text-[20px]">
-                    {language === "ENG"
-                      ? data.english_short_description
-                      : data.bangla_short_description}
-                  </p>
-                  <Link href="/about">
-                    <button className="bg-[#FEC909] text-white text-sm font-semibold px-3 md:px-6 py-1 md:py-2 rounded-full hover:bg-[#216740] transition duration-300 md:mt-5 mt-2">
-                      {language === "ENG" ? "Learn More" : "আরও জানুন"}
-                    </button>
-                  </Link>
-                </div>
-              </Container>
-            </div>
+          <div className="absolute inset-0 flex justify-start items-center text-left text-white p-2 md:p-4 bg-opacity-50 ">
+            <Container>
+              <div className="sliderContents max-w-md space-y-3">
+                <h2 className="w-[150px] md:w-[600px] text-[18px] lg:text-3xl font-bold leading-6">
+                  {language === "ENG" ? data.english_title : data.bangla_title}
+                </h2>
+                <p className="hidden md:block md:w-[600px]  text-[12px] md:text-[20px]">
+                  {language === "ENG"
+                    ? data.english_short_description
+                    : data.bangla_short_description}
+                </p>
+                <Link href="/about">
+                  <button className="bg-[#FEC909] text-white text-sm font-semibold px-3 md:px-6 py-1 md:py-2 rounded-full hover:bg-[#216740] transition duration-300 md:mt-5 mt-2">
+                    {language === "ENG" ? "Learn More" : "আরও জানুন"}
+                  </button>
+                </Link>
+              </div>
+            </Container>
+          </div>
         </div>
       ))}
     </div>
