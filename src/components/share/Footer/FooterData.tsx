@@ -41,7 +41,7 @@ const FooterData = ({ language }: FooterProps) => {
           <div className="relative md:gap-0 gap-y-3 flex flex-col md:flex-row justify-between items-center py-8 z-10">
             <p className="text-xl  lg:text-3xl text-white font-sans uppercase">
               {language === "ENG"
-                ? " Join Our Newsletter"  
+                ? " Join Our Newsletter"
                 : "আমাদের নিউজলেটার যোগদান"}
             </p>
             <Subscribe />
@@ -163,8 +163,8 @@ const FooterData = ({ language }: FooterProps) => {
             <div className="mt-8 text-center text-gray-500">
               &copy;{" "}
               {language === "ENG"
-                ? " Copyrights Ziaur Rahman Foundation 2024. All Rights Reserved "
-                : "কপিরাইট জিয়াউর রহমান ফাউন্ডেশন 2024. সর্বস্বত্ব সংরক্ষিত"}
+                ? " Copyrights Ziaur Rahman Foundation 2026. All Rights Reserved "
+                : "কপিরাইট জিয়াউর রহমান ফাউন্ডেশন ২০২৬. সর্বস্বত্ব সংরক্ষিত"}
             </div>
           </div>
         </Container>
