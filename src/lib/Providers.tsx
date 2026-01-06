@@ -4,12 +4,12 @@ import { ThemeProvider } from "@mui/material";
 import { Provider } from "react-redux";
 
 import { store } from "@/redux/store";
-import { darkTheme } from "./Theme/Theme";
+import { theme } from "./Theme/Theme";
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
     <Provider store={store}>
-      <ThemeProvider theme={darkTheme}>{children}</ThemeProvider>
+      <ThemeProvider theme={theme}>{children}</ThemeProvider>
     </Provider>
   );
 };

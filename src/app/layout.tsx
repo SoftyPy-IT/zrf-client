@@ -98,7 +98,7 @@ export default function RootLayout({
         />
       </head>
       <Providers>
-        <body className="mourning-mode">
+        <body>
           <Toaster position="bottom-right" richColors />
           <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
         </body>

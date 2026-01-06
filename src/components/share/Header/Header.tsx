@@ -10,7 +10,6 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useLanguage } from "@/provider/LanguageProvider";
 import { MdOutlineMenu } from "react-icons/md";
 import { MdClose } from "react-icons/md";
-import MourningHeader from "./MourningHeader";
 
 const Header = () => {
   const { language, setLanguage } = useLanguage();
@@ -32,7 +31,7 @@ const Header = () => {
 
   return (
     <div className="sticky top-0 w-full bg-white shadow-md  z-[999999]">
-      <MourningHeader />
+      {/* <MourningHeader /> */}
       <Container>
         <div className="flex justify-between items-center py-1 md:py-0">
           <Box component={Link} href="/">
