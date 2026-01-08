@@ -1,19 +1,19 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState, useEffect, useCallback } from "react"
-import Image from "next/image"
-import { Close } from "@mui/icons-material"
-import type { TImgGallery } from "@/types/type"
-import { useLanguage } from "@/provider/LanguageProvider"
+import type React from "react";
+import { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
+import { Close } from "@mui/icons-material";
+import type { TImgGallery } from "@/types/type";
+import { useLanguage } from "@/provider/LanguageProvider";
 
 export interface ImageGalleryProps {
-  galleryData: TImgGallery[]
-  language?: "ENG" | "BN"
-  loading?: boolean
-  error?: string | null
-  onImageClick?: (image: TImgGallery, index: number) => void
-  className?: string
+  galleryData: TImgGallery[];
+  language?: "ENG" | "BN";
+  loading?: boolean;
+  error?: string | null;
+  onImageClick?: (image: TImgGallery, index: number) => void;
+  className?: string;
 }
 
 const ImageGallery: React.FC<ImageGalleryProps> = ({
@@ -23,186 +23,193 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({
   onImageClick,
   className = "",
 }) => {
-  const { language } = useLanguage()
-  const [selectedImage, setSelectedImage] = useState<TImgGallery | null>(null)
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0)
-  const [zoomLevel, setZoomLevel] = useState<number>(1)
-  const [isZoomed, setIsZoomed] = useState<boolean>(false)
-  const [isDragging, setIsDragging] = useState<boolean>(false)
-  const [position, setPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 })
-  const [touchStart, setTouchStart] = useState<{ x: number; y: number }>({ x: 0, y: 0 })
+  const { language } = useLanguage();
+  const [selectedImage, setSelectedImage] = useState<TImgGallery | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
+  const [zoomLevel, setZoomLevel] = useState<number>(1);
+  const [isZoomed, setIsZoomed] = useState<boolean>(false);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [position, setPosition] = useState<{ x: number; y: number }>({
+    x: 0,
+    y: 0,
+  });
+  const [touchStart, setTouchStart] = useState<{ x: number; y: number }>({
+    x: 0,
+    y: 0,
+  });
 
   const openModal = (image: TImgGallery, index: number) => {
-    setSelectedImage(image)
-    setCurrentImageIndex(index)
-    setIsModalOpen(true)
-    setZoomLevel(1)
-    setIsZoomed(false)
-    setPosition({ x: 0, y: 0 })
-    document.body.style.overflow = "hidden"
+    setSelectedImage(image);
+    setCurrentImageIndex(index);
+    setIsModalOpen(true);
+    setZoomLevel(1);
+    setIsZoomed(false);
+    setPosition({ x: 0, y: 0 });
+    document.body.style.overflow = "hidden";
 
     if (onImageClick) {
-      onImageClick(image, index)
+      onImageClick(image, index);
     }
-  }
+  };
 
   const closeModal = useCallback(() => {
-    setIsModalOpen(false)
-    setSelectedImage(null)
-    setZoomLevel(1)
-    setIsZoomed(false)
-    setPosition({ x: 0, y: 0 })
-    document.body.style.overflow = "auto"
-  }, [])
+    setIsModalOpen(false);
+    setSelectedImage(null);
+    setZoomLevel(1);
+    setIsZoomed(false);
+    setPosition({ x: 0, y: 0 });
+    document.body.style.overflow = "auto";
+  }, []);
 
   const nextImage = () => {
-    if (!selectedImage || galleryData.length === 0) return
-    const nextIndex = (currentImageIndex + 1) % galleryData.length
-    const nextImage = galleryData[nextIndex]
-    setSelectedImage(nextImage)
-    setCurrentImageIndex(nextIndex)
-    setZoomLevel(1)
-    setIsZoomed(false)
-    setPosition({ x: 0, y: 0 })
-  }
+    if (!selectedImage || galleryData.length === 0) return;
+    const nextIndex = (currentImageIndex + 1) % galleryData.length;
+    const nextImage = galleryData[nextIndex];
+    setSelectedImage(nextImage);
+    setCurrentImageIndex(nextIndex);
+    setZoomLevel(1);
+    setIsZoomed(false);
+    setPosition({ x: 0, y: 0 });
+  };
 
   const prevImage = () => {
-    if (!selectedImage || galleryData.length === 0) return
-    const prevIndex = (currentImageIndex - 1 + galleryData.length) % galleryData.length
-    const prevImage = galleryData[prevIndex]
-    setSelectedImage(prevImage)
-    setCurrentImageIndex(prevIndex)
-    setZoomLevel(1)
-    setIsZoomed(false)
-    setPosition({ x: 0, y: 0 })
-  }
+    if (!selectedImage || galleryData.length === 0) return;
+    const prevIndex =
+      (currentImageIndex - 1 + galleryData.length) % galleryData.length;
+    const prevImage = galleryData[prevIndex];
+    setSelectedImage(prevImage);
+    setCurrentImageIndex(prevIndex);
+    setZoomLevel(1);
+    setIsZoomed(false);
+    setPosition({ x: 0, y: 0 });
+  };
 
   const toggleZoom = () => {
     if (isZoomed) {
-      setZoomLevel(1)
-      setIsZoomed(false)
-      setPosition({ x: 0, y: 0 })
+      setZoomLevel(1);
+      setIsZoomed(false);
+      setPosition({ x: 0, y: 0 });
     } else {
-      setZoomLevel(2)
-      setIsZoomed(true)
+      setZoomLevel(2);
+      setIsZoomed(true);
     }
-  }
+  };
 
   const handleDoubleClick = () => {
-    toggleZoom()
-  }
+    toggleZoom();
+  };
 
   const handleImageWheel = (e: React.WheelEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
+    e.preventDefault();
+    e.stopPropagation();
 
-    const delta = e.deltaY > 0 ? -0.1 : 0.1
-    const newZoomLevel = Math.max(0.5, Math.min(5, zoomLevel + delta))
+    const delta = e.deltaY > 0 ? -0.1 : 0.1;
+    const newZoomLevel = Math.max(0.5, Math.min(5, zoomLevel + delta));
 
-    setZoomLevel(newZoomLevel)
-    setIsZoomed(newZoomLevel !== 1)
+    setZoomLevel(newZoomLevel);
+    setIsZoomed(newZoomLevel !== 1);
 
     if (newZoomLevel <= 1) {
-      setPosition({ x: 0, y: 0 })
+      setPosition({ x: 0, y: 0 });
     }
-  }
+  };
 
   useEffect(() => {
     if (isModalOpen) {
-      document.body.style.overflow = "hidden"
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "auto"
+      document.body.style.overflow = "auto";
     }
 
     return () => {
-      document.body.style.overflow = "auto"
-    }
-  }, [isModalOpen])
+      document.body.style.overflow = "auto";
+    };
+  }, [isModalOpen]);
 
   const handleMouseDown = (e: React.MouseEvent) => {
-    if (!isZoomed) return
-    setIsDragging(true)
-  }
+    if (!isZoomed) return;
+    setIsDragging(true);
+  };
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || !isZoomed) return
+    if (!isDragging || !isZoomed) return;
 
     setPosition((prev) => ({
       x: prev.x + e.movementX,
       y: prev.y + e.movementY,
-    }))
-  }
+    }));
+  };
 
   const handleMouseUp = () => {
-    setIsDragging(false)
-  }
+    setIsDragging(false);
+  };
 
   const handleTouchStart = (e: React.TouchEvent) => {
-    if (!isZoomed) return
+    if (!isZoomed) return;
     setTouchStart({
       x: e.touches[0].clientX,
       y: e.touches[0].clientY,
-    })
-  }
+    });
+  };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isZoomed) return
-    e.preventDefault()
+    if (!isZoomed) return;
+    e.preventDefault();
 
-    const touch = e.touches[0]
-    const deltaX = touch.clientX - touchStart.x
-    const deltaY = touch.clientY - touchStart.y
+    const touch = e.touches[0];
+    const deltaX = touch.clientX - touchStart.x;
+    const deltaY = touch.clientY - touchStart.y;
 
     setPosition((prev) => ({
       x: prev.x + deltaX,
       y: prev.y + deltaY,
-    }))
+    }));
 
     setTouchStart({
       x: touch.clientX,
       y: touch.clientY,
-    })
-  }
+    });
+  };
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      if (!isModalOpen) return
+      if (!isModalOpen) return;
 
       switch (e.key) {
         case "Escape":
-          closeModal()
-          break
+          closeModal();
+          break;
         case "ArrowRight":
-          nextImage()
-          break
+          nextImage();
+          break;
         case "ArrowLeft":
-          prevImage()
-          break
+          prevImage();
+          break;
         case "z":
         case "Z":
-          toggleZoom()
-          break
+          toggleZoom();
+          break;
         default:
-          break
+          break;
       }
     },
-    [isModalOpen, closeModal],
-  )
+    [isModalOpen, closeModal, nextImage, prevImage, toggleZoom]
+  );
 
   useEffect(() => {
-    window.addEventListener("keydown", handleKeyDown)
+    window.addEventListener("keydown", handleKeyDown);
     return () => {
-      window.removeEventListener("keydown", handleKeyDown)
-    }
-  }, [handleKeyDown])
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleKeyDown]);
 
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
         <p className="text-lg">Loading...</p>
       </div>
-    )
+    );
   }
 
   if (error) {
@@ -210,7 +217,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({
       <div className="flex justify-center items-center h-64">
         <p className="text-red-500 text-lg">{error}</p>
       </div>
-    )
+    );
   }
 
   return (
@@ -228,7 +235,11 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({
                 <Image
                   className="w-full h-auto transition-transform duration-500 group-hover:scale-110"
                   src={data.thumnailImages[0] || "/placeholder.svg"}
-                  alt={language === "ENG" ? data.title_of_english : data.title_of_bangla || data.title_of_english}
+                  alt={
+                    language === "ENG"
+                      ? data.title_of_english
+                      : data.title_of_bangla || data.title_of_english
+                  }
                   height={400}
                   width={400}
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
@@ -239,7 +250,9 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({
 
                 <div className="absolute bottom-0 left-0 w-full p-2 sm:p-3 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500">
                   <h3 className="text-white font-semibold text-xs sm:text-sm md:text-base line-clamp-2">
-                    {language === "ENG" ? data.title_of_english : data.title_of_bangla || data.title_of_english}
+                    {language === "ENG"
+                      ? data.title_of_english
+                      : data.title_of_bangla || data.title_of_english}
                   </h3>
                 </div>
               </div>
@@ -270,7 +283,13 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({
                 onWheel={handleImageWheel}
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
-                style={{ cursor: isZoomed ? (isDragging ? "grabbing" : "grab") : "zoom-in" }}
+                style={{
+                  cursor: isZoomed
+                    ? isDragging
+                      ? "grabbing"
+                      : "grab"
+                    : "zoom-in",
+                }}
               >
                 {selectedImage.thumnailImages?.[0] && (
                   <div
@@ -280,11 +299,14 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({
                     }}
                   >
                     <Image
-                      src={selectedImage.thumnailImages[0] || "/placeholder.svg"}
+                      src={
+                        selectedImage.thumnailImages[0] || "/placeholder.svg"
+                      }
                       alt={
                         language === "ENG"
                           ? selectedImage.title_of_english
-                          : selectedImage.title_of_bangla || selectedImage.title_of_english
+                          : selectedImage.title_of_bangla ||
+                            selectedImage.title_of_english
                       }
                       width={1000}
                       height={800}
@@ -307,7 +329,8 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({
                   <h2 className="text-white font-semibold text-sm sm:text-base md:text-lg lg:text-xl text-center line-clamp-2">
                     {language === "ENG"
                       ? selectedImage.title_of_english
-                      : selectedImage.title_of_bangla || selectedImage.title_of_english}
+                      : selectedImage.title_of_bangla ||
+                        selectedImage.title_of_english}
                   </h2>
                 </div>
 
@@ -316,13 +339,17 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({
                   onClick={prevImage}
                   className="absolute left-1 sm:left-2 md:left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-1 sm:p-2 md:p-3 rounded-full hover:bg-opacity-70 transition z-10 w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 lg:w-12 lg:h-12 flex items-center justify-center"
                 >
-                  <span className="text-base sm:text-lg md:text-xl">&#10094;</span>
+                  <span className="text-base sm:text-lg md:text-xl">
+                    &#10094;
+                  </span>
                 </button>
                 <button
                   onClick={nextImage}
                   className="absolute right-1 sm:right-2 md:right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-1 sm:p-2 md:p-3 rounded-full hover:bg-opacity-70 transition z-10 w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 lg:w-12 lg:h-12 flex items-center justify-center"
                 >
-                  <span className="text-base sm:text-lg md:text-xl">&#10095;</span>
+                  <span className="text-base sm:text-lg md:text-xl">
+                    &#10095;
+                  </span>
                 </button>
 
                 {/* Image counter */}
@@ -349,7 +376,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default ImageGallery
+export default ImageGallery;
