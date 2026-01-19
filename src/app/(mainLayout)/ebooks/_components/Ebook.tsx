@@ -6,7 +6,7 @@ import "./Ebook.css";
 import { useLanguage } from "@/provider/LanguageProvider";
 
 const Ebook = () => {
-  const { language } = useLanguage()
+  const { language } = useLanguage() 
   return (
     <div className="ebook">
       <Container>

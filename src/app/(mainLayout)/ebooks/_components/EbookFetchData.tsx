@@ -27,6 +27,8 @@ function EbookFetchData() {
   const [openModal, setOpenModal] = useState(false)
   const [selectedPdf, setSelectedPdf] = useState('')
 
+  console.log(ebookData)
+
   if (error) return <p>Oops Something Went Wrong!</p>
 
   const handleOpenPdf = (pdfUrl: string) => {
@@ -46,7 +48,7 @@ function EbookFetchData() {
         <div className="my-20">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-10">
             {ebookData?.map((book: TEbook) => (
-              <div key={book._id} className="bg-white p-5 shadow-lg border">
+              <div key={book._id} className=" p-5 shadow-lg border">
                 <div
                   className="relative w-full h-[450px] overflow-hidden group cursor-pointer"
                   onClick={() => handleOpenPdf(book.ebook)}

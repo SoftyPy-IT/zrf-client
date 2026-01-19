@@ -17,13 +17,13 @@ import { Skeleton, Stack } from "@mui/material";
 
 const Loader = () => {
   return (
-    <div className="fixed inset-0 h-screen flex items-center justify-center bg-white z-50">
-      <Stack spacing={1}>
-      <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
-      <Skeleton variant="rectangular" width={40} height={40} />
-      <Skeleton variant="rectangular" width={210} height={60} />
-      <Skeleton variant="rectangular" width={210} height={60} />
-    </Stack>
+    <div className="fixed inset-0 h-screen flex items-center justify-center  z-50">
+      {/* <Stack spacing={1}>
+        <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+        <Skeleton variant="rectangular" width={40} height={40} />
+        <Skeleton variant="rectangular" width={210} height={60} />
+        <Skeleton variant="rectangular" width={210} height={60} />
+      </Stack> */}
     </div>
   );
 };
@@ -39,9 +39,12 @@ function PublicationSlider() {
   useEffect(() => {
     const fetchEbookData = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/ebook?limit=99999999&fields=images`, {
-          cache: "no-store",
-        });
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/ebook?limit=99999999&fields=images`,
+          {
+            cache: "no-store",
+          },
+        );
         const data = await response.json();
         setEbookData(data.data?.ebooks || []);
       } catch (err) {
@@ -71,9 +74,9 @@ function PublicationSlider() {
     };
   }, [updateIndex]);
 
-  if (loading) {
-    return <Loader />;
-  }
+  // if (loading) {
+  //   return <Loader />;
+  // }
   if (error) {
     return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
   }

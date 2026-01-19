@@ -34,9 +34,9 @@ const Sidebar = () => {
     fetchCovidData();
   }, [category]);
 
-  if (isLoading) {
-    return <Loader/>;
-  }
+  // if (isLoading) {
+  //   return <Loader/>;
+  // }
 
   if (error) {
     return <h2>Oops! data not found.</h2>
