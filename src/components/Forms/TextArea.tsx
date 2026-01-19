@@ -1,7 +1,8 @@
 import * as React from "react";
-import { SxProps } from "@mui/system";
+// import { SxProps } from "@mui/system";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import { Controller, useFormContext } from "react-hook-form";
+import { SxProps } from "@mui/material";
 
 type TTextareaProps = {
   name: string;
