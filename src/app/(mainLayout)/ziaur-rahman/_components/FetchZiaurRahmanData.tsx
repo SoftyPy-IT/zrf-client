@@ -11,9 +11,8 @@ import Biography from "./Biography";
 import Modal from "./Modal";
 import { Box, Paper, Typography } from "@mui/material";
 import dynamic from "next/dynamic";
-const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-  ssr: false,
-});
+import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
+ 
 
 const renderContent = (content: string) => {
   const parsedContent = ReactHtmlParser(content);
@@ -159,7 +158,7 @@ const FetchZiaurRahmanData = () => {
           `${process.env.NEXT_PUBLIC_BASE_API_URL}/introduction?limit=1000`,
           {
             cache: "no-store",
-          },
+          }
         );
         const data = await response.json();
         const sortedData = data.data?.introductions?.sort(
@@ -167,7 +166,7 @@ const FetchZiaurRahmanData = () => {
             return (
               new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
             );
-          },
+          }
         );
 
         stIntroductionData(sortedData || []);
@@ -190,7 +189,7 @@ const FetchZiaurRahmanData = () => {
     englishTitle: string,
     banglaDescription: string,
     banglaTitle: string,
-    englishDescription: string,
+    englishDescription: string
   ) => {
     setModalContent({
       title: language === "ENG" ? englishTitle : banglaTitle,
@@ -203,110 +202,84 @@ const FetchZiaurRahmanData = () => {
     setIsOpen(false);
     setModalContent(null);
   };
-  if (loading) {
-    return <Loader />;
-  }
+   
 
   return (
-    <Container>
-      <div className="my-5  md:my-16">
-        <Container>
-          <Paper elevation={3} className=" md:px-14 h-auto p-3  md:h-[220px] flex flex-col items-center justify-center ">
-            <Box
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-              textAlign="center"
+    <>
+      <CommonBanner title="Biography" />
+      <Container>
+        <div className="my-5 md:my-16">
+          <div className="shadow-md rounded md:p-10 p-5">
+            <h1 className="md:text-4xl text-2xl font-bold text-center text-green-800 mb-5">
+              {language === "ENG"
+                ? "Biography of Shaheed President Ziaur Rahman"
+                : "  শহীদ প্রেসিডেন্ট জিয়াউর রহমান  এর জীবনী"}
+            </h1>
+            <p className="lg:text-center text-justify">
+              {language === "ENG"
+                ? "Lieutenant General Ziaur Rahman Bir Uttam (1936-1981) was the founder of Bangladesh Nationalist Party. He was the declarer of independence and a valiant freedom fighter. He was also Chief of Army Staff and later became the elected President of Bangladesh. He opened up multi-party democracy in Bangladesh and defined Bangladeshi Nationalism."
+                : "লেফটেন্যান্ট জেনারেল জিয়াউর রহমান বীর উত্তম (১৯৩৬-১৯৮১) ছিলেন স্বাধীনতার ঘোষক এবং বাংলাদেশের নির্বাচিত রাষ্ট্রপতি। তিনি একজন বীর মুক্তিযোদ্ধা, সেনাপ্রধান এবং বাংলাদেশে বহুদলীয় গণতন্ত্রের প্রতিষ্ঠাতা, সেই সাথে বাংলাদেশী জাতীয়তাবাদ এবং বাংলাদেশ জাতীয়তাবাদী দল-বিএনপি'র প্রতিষ্ঠাতা ছিলেন."}
+            </p>
+          </div>
 
-            >
-              <Typography
-                variant="h4"
-                color="#216740"
-                gutterBottom
-                fontWeight="bold"
-                sx={{
-                  fontSize: {
-                    xs: "1.5rem",
-                    sm: "1.75rem",
-                    md: "2rem",
-                    lg: "2.5rem",
-                    xl: "3rem",
-                  },
-                }}
-              >
-                {language === "ENG"
-                  ? "Biography of Shaheed President Ziaur Rahman"
-                  : "  শহীদ প্রেসিডেন্ট জিয়াউর রহমান  এর জীবনী"}
-              </Typography>
-              <Typography variant="body1" color="textSecondary">
-                {language === "ENG"
-                  ? "Lieutenant General Ziaur Rahman Bir Uttam (1936-1981) was the founder of Bangladesh Nationalist Party. He was the declarer of independence and a valiant freedom fighter. He was also Chief of Army Staff and later became the elected President of Bangladesh. He opened up multi-party democracy in Bangladesh and defined Bangladeshi Nationalism."
-                  : "লেফটেন্যান্ট জেনারেল জিয়াউর রহমান বীর উত্তম (১৯৩৬-১৯৮১) ছিলেন স্বাধীনতার ঘোষক এবং বাংলাদেশের নির্বাচিত রাষ্ট্রপতি। তিনি একজন বীর মুক্তিযোদ্ধা, সেনাপ্রধান এবং বাংলাদেশে বহুদলীয় গণতন্ত্রের প্রতিষ্ঠাতা, সেই সাথে বাংলাদেশী জাতীয়তাবাদ এবং বাংলাদেশ জাতীয়তাবাদী দল-বিএনপি'র প্রতিষ্ঠাতা ছিলেন."}
-              </Typography>
-            </Box>
-          </Paper>
-        </Container>
+          {introductionData?.slice(0, 1).map((data) => (
+            <div key={data._id} className="mt-20 ">
+              <div className="flex flex-row items-center justify-center content-center">
+                <h2 className="bg-gradient-to-r from-red-600 to-green-600 bg-clip-text text-transparent text-base mb-4 border rounded-full text-center w-[105px] bg-white">
+                  {language === "ENG" ? "Biography" : "জীবনী"}
+                </h2>
+              </div>
 
-        {introductionData?.slice(0, 1).map((data) => (
-          <div key={data._id} className="mt-10 ">
-            <div className="flex flex-row items-center justify-center content-center">
-              <h2 className="bg-gradient-to-r from-red-600 to-green-600 bg-clip-text text-transparent text-base mb-4 border rounded-full text-center w-[105px] bg-white">
-                {language === "ENG" ? "Biography" : "জীবনী"}
-              </h2>
-            </div>
-            <div className="w-full text-center space-y-4 mb-2">
-              <h1 className="text-3xl lg:text-5xl xl:text-5xl text-[#FEC909] font-bold ">
-                {" "}
-                {language === "ENG"
-                  ? data.english_title
-                  : data.bangla_title}{" "}
-              </h1>
-            </div>
-            <div className="shadow-lg rounded-lg lg:rounded-3xl  lg:h-[450px] lg:w-[1000px] mx-auto overflow-hidden grid grid-cols-12 my-10 border">
-              <div className="col-span-12 lg:col-span-5">
-                <div className="bg-[#fdf7f4] shadow-lg  rounded-xl">
-                  <div className="w-full h-[400px] lg:h-full object-cover ">
-                    {data.bng_images?.slice(0, 1).map((img) => (
-                      <Image
-                        width={500}
-                        height={500}
-                        key={img}
-                        src={img}
-                        alt="তারেক রহমান"
-                        className="w-full h-full object-cover  "
-                      />
-                    ))}
+
+              <div className="grid grid-cols-1 md:grid-cols-12 my-10">
+                <div className="md:col-span-4 lg:h-[500px]">
+                  {data.bng_images?.slice(0, 1).map((img) => (
+                    <Image
+                      width={400}
+                      height={500}
+                      key={img}
+                      src={img}
+                      alt="তারেক রহমান"
+                      className="w-full h-full md:rounded-l"
+                    />
+                  ))}
+                </div>
+
+                <div className="md:col-span-8 bg-gradient-to-r from-yellow-600 to-green-600 text-white p-5 md:rounded-r">
+                  <div className="w-full space-y-4 mb-2">
+                    <h1 className="text-xl lg:text-xl xl:text-3xl text-[#FEC909] font-bold ">
+                      {" "}
+                      {language === "ENG"
+                        ? data.english_title
+                        : data.bangla_title}{" "}
+                    </h1>
                   </div>
+                  <p className="lg:text-xl text-justify lg:leading-loose">
+                    {language === "ENG"
+                      ? renderContent(data.english_description)
+                      : renderContent(data.bangla_description)}
+                  </p>
                 </div>
               </div>
-
-              <div className="col-span-12 lg:col-span-7 lg:h-auto p-2 lg:p-6 space-y-6 bg-gradient-to-r from-yellow-600 to-green-600 text-white">
-                <b className="text-justify text-xl">
-                  {language === "ENG"
-                    ? renderContent(data.english_description)
-                    : renderContent(data.bangla_description)}
-                </b>
-              </div>
             </div>
-          </div>
-        ))}
-        <Biography
-          introductionData={introductionData}
-          language={language}
-          handleOpen={handleOpen}
-        />
-        {modalContent && (
-          <Modal
-            isOpen={isOpen}
-            onClose={handleClose}
-            title={modalContent.title}
-          >
-            <p>{renderContent(modalContent.content)}</p>
-          </Modal>
-        )}
-      </div>
-    </Container>
+          ))}
+          <Biography
+            introductionData={introductionData}
+            language={language}
+            handleOpen={handleOpen}
+          />
+          {modalContent && (
+            <Modal
+              isOpen={isOpen}
+              onClose={handleClose}
+              title={modalContent.title}
+            >
+              <p className="text-justify">{renderContent(modalContent.content)}</p>
+            </Modal>
+          )}
+        </div>
+      </Container>
+    </>
   );
 };
 

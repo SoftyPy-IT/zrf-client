@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true, // optional but recommended
   images: {
     remotePatterns: [
       {
@@ -11,6 +12,9 @@ const nextConfig = {
         hostname: "res.cloudinary.com",
       },
     ],
+  },
+  experimental: {
+    trustHostHeader: true, // ADD THIS LINE
   },
 };
 

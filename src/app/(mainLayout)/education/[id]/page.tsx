@@ -1,49 +1,18 @@
-'use client'
+import { notFound } from "next/navigation";
+import { Metadata } from "next";
+import { fetchWithSEO } from "@/utils/fetchWithSEO";
+import SingleWhatwedo from "../_components/SingleWhatwedo";
 
-import React, { useEffect, useState } from 'react';
-import { useLanguage } from '@/provider/LanguageProvider';
-import SingleWhatwedo from '../_components/SingleWhatwedo';
+type Props = { params: { id: string } };
 
-
-interface paramsId {
-  params: {
-    id: string;
-  };
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { metadata } = await fetchWithSEO("whatwedo", params.id, "Project");
+  return metadata;
 }
-const Whatwedo = ({ params }: paramsId) => {
-  const { language } = useLanguage();
-  const { id } = params;
 
-  const [data, setData] = useState(null);
-  const [error, setError] = useState<string | null>(null);
+export default async function ProjectPage({ params }: Props) {
+  const { data } = await fetchWithSEO("whatwedo", params.id, "Project");
+  if (!data) notFound();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo/${id}`);
-        const result = await res.json();
-        if (result?.data) {
-          setData(result.data);
-        } else {
-          setError("Report data not found");
-        }
-      } catch (error) {
-        setError("An error occurred while fetching data.");
-      }
-    };
-
-    fetchData();
-  }, [id]);
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-  return (
-    <>
-      <>{data && <SingleWhatwedo language={language} whatWedoData={data} />}</>
-
-    </>
-  );
-};
-
-export default Whatwedo;
+  return <SingleWhatwedo whatWedoData={data} />;
+}

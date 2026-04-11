@@ -5,9 +5,7 @@ import { useLanguage } from "@/provider/LanguageProvider";
 import React from "react";
 import ReactHtmlParser from "react-html-parser";
 import dynamic from "next/dynamic";
-const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-  ssr: false,
-});
+ 
 
 const renderContent = (content: string) => {
   const parsedContent = ReactHtmlParser(content);
@@ -110,9 +108,7 @@ const JoinUs = () => {
   const filterJoinUsData = aboutData.filter(
     (item) => item.category === "Join Us",
   );
-  if (loading) {
-    return <Loader />;
-  }
+   
   if (error) {
     return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
   }

@@ -6,9 +6,7 @@ import NewsData from "./NewsData";
 import dynamic from "next/dynamic";
 import { TActivity } from "@/types/type";
 import axios from "axios";
-const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-  ssr: false,
-});
+ 
 
 const News = () => {
 
@@ -38,9 +36,7 @@ const News = () => {
     fetchCovidData();
   }, [category]);
 
-  if (isLoading) {
-    return <Loader />;
-  }
+   
 
   if (error) {
     return <h2>Oops! data not found.</h2>

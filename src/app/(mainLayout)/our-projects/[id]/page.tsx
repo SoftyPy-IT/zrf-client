@@ -1,70 +1,66 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
-import { useLanguage } from "@/provider/LanguageProvider";
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { stripHtml } from "@/utils/stripHtml";
 import SingleProjectData from "../_components/SingleProjectData";
-import dynamic from "next/dynamic";
-const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-  ssr: false,
-});
 
-interface PressId {
-  params: {
-    id: string;
+type Props = {
+  params: { id: string };
+};
+
+// ✅ Fetch Project Data
+async function getProjectData(id: string) {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/project/${id}`,
+      { cache: "no-store" }
+    );
+
+    if (!res.ok) return null;
+    const result = await res.json();
+
+    return result?.data || null;
+  } catch (error) {
+    return null;
+  }
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const project = await getProjectData(params.id);
+
+  if (!project) {
+    return {
+      title: "Project Not Found",
+      description: "The requested project could not be loaded.",
+    };
+  }
+
+  const title = project.english_title || "Project Details";
+  const description = stripHtml(project.english_short_description || "");
+  const image = project.eng_images?.[0] || "/default-image.jpg";
+  const url = `${process.env.NEXT_PUBLIC_SITE_URL}/project/${params.id}`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "article",
+      url,
+      images: [{ url: image, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [image],
+    },
   };
 }
 
-const Project = ({ params }: PressId) => {
-  const { language } = useLanguage();
-  const { id } = params;
+export default async function ProjectPage({ params }: Props) {
+  const data = await getProjectData(params.id);
+  if (!data) notFound();
 
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true); 
-      setError(null);
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/project/${id}`,
-        );
-        const result = await res.json();
-        if (result?.data) {
-          setData(result.data);
-        } else {
-          setError("Project data not found");
-        }
-      } catch (error) {
-        setError("An error occurred while fetching data.");
-      } finally {
-        setLoading(false); 
-      }
-    };
-
-    fetchData();
-  }, [id]);
-
-  if (loading) {
-    return <Loader />;
-  }
-
-  if (error) {
-    return (
-      <div className="text-center text-red-600">
-        <h2>Ooops! Something Went Wrong!</h2>
-      </div>
-    );
-  }
-
-  return (
-    <div>
-      {data && (
-        <SingleProjectData language={language} singleProjectData={data} />
-      )}
-    </div>
-  );
-};
-
-export default Project;
+  return <SingleProjectData singleProjectData={data} />;
+}

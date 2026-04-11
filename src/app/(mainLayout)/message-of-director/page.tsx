@@ -7,16 +7,12 @@ import { useMessageData } from "@/hooks/useMessageData";
 import MessageDirector from "./MessageDirector";
 import MessageBanner from "../message-of-vice-president/_components/MessageBanner";
 import dynamic from "next/dynamic";
-const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-  ssr: false,
-});
+ 
 
 const Message = () => {
   const { language } = useLanguage();
   const { messageData, loading, error } = useMessageData();
-  if (loading) {
-    return <Loader />;
-  }
+   
   if (error) {
     return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
   }

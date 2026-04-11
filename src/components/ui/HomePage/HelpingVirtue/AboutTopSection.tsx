@@ -5,9 +5,7 @@ import AboutTopSectionData from "./AboutTopSectionData";
 import dynamic from "next/dynamic";
 import { TAbout } from "@/types/type";
 import axios from "axios";
-const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-  ssr: false,
-});
+ 
 
 const AboutTopSection = () => {
   const { language } = useLanguage();
@@ -36,9 +34,7 @@ const AboutTopSection = () => {
     fetchCovidData();
   }, [categories]);
 
-  if (isLoading) {
-    return <Loader />;
-  }
+   
 
   if (error) {
     return <h2>Oops! data not found.</h2>

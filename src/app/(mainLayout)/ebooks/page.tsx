@@ -8,6 +8,7 @@ const EbookPage = () => {
   return (
     <>
       <Head>
+        {/*  */}
         <title>Ebooks Collection | Explore Our Library</title>
         <meta
           name="description"

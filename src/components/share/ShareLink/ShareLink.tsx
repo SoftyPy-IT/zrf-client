@@ -1,65 +1,129 @@
-'use client'
+"use client";
 
-import { Share } from '@mui/icons-material';
-import Image from 'next/image';
-import { FacebookShareButton, TwitterShareButton, LinkedinShareButton } from 'react-share';
-import facebook from '../../assets/icon/facebook.png';
-import linkedIn from '../../assets/icon/linkedin.png';
-import instagram from '../../assets/icon/instagram.png';
-import { useState } from 'react';
-import ShareModal from './ShareModal';
-import FacebookIcon from "@mui/icons-material/Facebook";
-import XIcon from "@mui/icons-material/X";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import Link from 'next/link';
+import { useState } from "react";
+import {
+  FacebookShareButton,
+  LinkedinShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+  EmailShareButton,
+} from "react-share";
+import { Tooltip } from "@mui/material";
+import Image from "next/image";
+import { FaLink } from "react-icons/fa";
 
+import facebook from "../../../../src/assets/icon/facebook.png";
+import linkedIn from "../../../../src/assets/icon/linkedin.png";
+import whatsapp from "../../../../src/assets/icon/chat3.png";
+import twitter from "../../../../src/assets/icon/twitter.png";
+import email from "../../../../src/assets/icon/email.png";
 
-const ShareLink = () => {
-    const [open, setOpen] = useState(false)
-    const handleOpen = () => setOpen(true)
-    const handleClose = () => setOpen(false)
+type ShareProps = {
+  shareUrl: string;
+  title?: string;
+  hashtag: string;
+  description?: string;
+};
 
+const ShareLink = ({ shareUrl, title, hashtag }: ShareProps) => {
+  const [copied, setCopied] = useState(false);
 
-    const urlToShare = "https://facebook.com";
-    const title = "Facebook!";
+  const handleCopy = () => {
+    navigator.clipboard.writeText(shareUrl);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
-    return (
-        <>
-            <div className="socialMedia flex-col md:flex-row gap-5 lg:gap-0 flex ">
-                <div className="flex items-center space-x-3">
+  return (
+    <div className="w-full flex flex-col items-center md:flex-row md:items-center md:justify-between gap-4 py-6 border-t border-gray-200 mt-6">
+      {/* Left Section */}
+      <h4 className="text-sm md:text-base font-semibold text-gray-700">
+        Share this article:
+      </h4>
 
+      {/* Share Buttons */}
+      <div className="flex flex-wrap justify-center gap-4">
+        <Tooltip title="Share on WhatsApp" arrow>
+          <WhatsappShareButton url={shareUrl} title={title}>
+            <Image
+              src={whatsapp}
+              alt="WhatsApp"
+              width={40}
+              height={40}
+              className="rounded-full transition-transform duration-200 hover:scale-110"
+            />
+          </WhatsappShareButton>
+        </Tooltip>
 
+        <Tooltip title="Share on Facebook" arrow>
+          <FacebookShareButton url={shareUrl} hashtag={hashtag}>
+            <Image
+              src={facebook}
+              alt="Facebook"
+              width={40}
+              height={40}
+              className="rounded-full transition-transform duration-200 hover:scale-110"
+            />
+          </FacebookShareButton>
+        </Tooltip>
 
-                    <div className="flex gap-5 p-5">
-                        <span onClick={handleOpen} className='cursor-pointer'><Share /> </span>
-                        <span>Share</span>
-                        <span className="cursor-pointer">
-                            <Link href='https://www.facebook.com/webnpfamily'>
-                                <FacebookIcon fontSize="small" />
-                            </Link>
-                        </span>
-                        <span className="cursor-pointer">
-                            <Link href='https://x.com/i/flow/login?redirect_after_login=%2Fwebnpfamily'>
-                                <XIcon fontSize="small" />
-                            </Link>
+        <Tooltip title="Share on LinkedIn" arrow>
+          <LinkedinShareButton url={shareUrl} title={title}>
+            <Image
+              src={linkedIn}
+              alt="LinkedIn"
+              width={40}
+              height={40}
+              className="rounded-full transition-transform duration-200 hover:scale-110"
+            />
+          </LinkedinShareButton>
+        </Tooltip>
 
-                        </span>
-                        <span className="cursor-pointer">
-                            <InstagramIcon fontSize="small" />
-                        </span>
-                        <span className="cursor-pointer">
-                            <LinkedInIcon fontSize="small" />
-                        </span>
-                    </div>
-                </div>
-            </div>
+        <Tooltip title="Share on Twitter" arrow>
+          <TwitterShareButton url={shareUrl} title={title} hashtags={[hashtag]}>
+            <Image
+              src={twitter}
+              alt="Twitter"
+              width={40}
+              height={40}
+              className="rounded-full transition-transform duration-200 hover:scale-110"
+            />
+          </TwitterShareButton>
+        </Tooltip>
 
-            {
-                open && <ShareModal close={handleClose} />
-            }
-        </>
-    );
+        <Tooltip title="Share via Email" arrow>
+          <EmailShareButton
+            url={shareUrl}
+            subject={title}
+            body={`Check this out: ${shareUrl}`}
+          >
+            <Image
+              src={email}
+              alt="Email"
+              width={40}
+              height={40}
+              className="rounded-full transition-transform duration-200 hover:scale-110"
+            />
+          </EmailShareButton>
+        </Tooltip>
+      </div>
+
+      {/* Copy Link Section */}
+      <div
+        onClick={handleCopy}
+        className={`flex items-center gap-2 px-4 py-2 rounded-full border cursor-pointer transition-all duration-300 ${
+          copied
+            ? "bg-green-100 border-green-400 text-green-700"
+            : "bg-gray-50 hover:bg-gray-100 border-gray-300 text-gray-700"
+        }`}
+      >
+        <FaLink className="text-gray-600" />
+        <span className="text-xs md:text-sm font-medium truncate max-w-[140px] md:max-w-[180px]">
+          {copied ? "Link copied!" : shareUrl}
+        </span>
+      </div>
+    </div>
+  );
 };
 
 export default ShareLink;

@@ -1,42 +1,37 @@
 .sliderWrap {
   width: 100%;
-  height: 600px;
   position: relative;
 }
 
 .sliderContents {
-  width: 557px;
-  left: 327px;
-  position: absolute;
+  width: 550px;
+  left: 320px;
+  /* position: absolute; */
 }
 
 @media only screen and (max-width: 1440px) {
   .sliderContents {
-    left: 70px;
+    width: 100%;
+    /* left: 70px; */
   }
 }
 @media only screen and (max-width: 1024px) {
   .sliderContents {
-    left: 33px;
+    width: 100%;
+    /* left: 33px; */
   }
 }
 @media only screen and (max-width: 768px) {
   .sliderContents {
     width: 100%;
-    left: 29px;
-  }
-  .sliderWrap {
-    height: 341px;
+    /* left: 29px; */
   }
 }
 
 @media only screen and (max-width: 350px) {
   .sliderContents {
-    left: 10px;
+    /* left: 10px; */
     padding: 2px;
-  }
-  .sliderWrap {
-    height: 270px;
   }
   .sliderWrap img {
     width: 100%;

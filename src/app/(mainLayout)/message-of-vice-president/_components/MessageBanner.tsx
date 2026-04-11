@@ -8,14 +8,13 @@ type TProps = {
 }
 const MessageBanner = ({title, text}:TProps) => {
   return (
-    <div className="president-banner">
+    <div className="president-banner md:h-[300px] h-[170px]">
       <Container>
         <div className="content">
           <div className="text-center">
-            <h1 className="lg:text-5xl text-3xl font-bold uppercase">
+            <h1 className="md:text-4xl text-2xl font-bold uppercase">
              {title}
             </h1>
-            {/* <p>{text}</p> */}
           </div>
         </div>
       </Container>

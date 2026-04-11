@@ -8,9 +8,7 @@ import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 import { Button } from "@mui/material";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import dynamic from "next/dynamic";
-const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-  ssr: false,
-});
+ 
 
 const VideoGallery = () => {
   const { videoData, loading, error } = useVideoData();
@@ -27,9 +25,7 @@ const VideoGallery = () => {
     setMounted(true);
   }, []);
 
-  if (loading) {
-    return <Loader />;
-  }
+   
   if (error) {
     return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
   }

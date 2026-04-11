@@ -90,7 +90,7 @@ const ProjectsFetchData: React.FC<projectProps> = ({
                     key={index}
                     className="justify-center items-center z-10 p-5"
                   >
-                    <div className="relative h-[530px] bg-white shadow-lg overflow-hidden group hover:scale-105 transition-transform duration-300 animate-fadeIn rounded-md">
+                    <div className="relative h-[440px] md:h-[530px] bg-white shadow-lg overflow-hidden group hover:scale-105 transition-transform duration-300 animate-fadeIn rounded-md">
                       <div
                         className="relative h-full w-full bg-cover bg-center"
                         style={{

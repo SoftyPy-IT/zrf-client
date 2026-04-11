@@ -107,7 +107,7 @@ type MessageProps = {
 
 const MessageVicePresident = ({ language, messageData }: MessageProps) => {
   const filterPresidentData = messageData.filter(
-    (item: any) => item.category == "vice president",
+    (item: any) => item.category == "vice president"
   );
 
   return (
@@ -115,7 +115,7 @@ const MessageVicePresident = ({ language, messageData }: MessageProps) => {
       <Container>
         {filterPresidentData?.map((message: TMessage) => (
           <section key={message._id} className="my-16">
-            <div className="sticky lg:top-[75px] top-20 bg-gradient-to-r from-yellow-600 to-green-600">
+            <div className="sticky lg:top-[85px] md:top-[88px] top-[60px] bg-gradient-to-r from-yellow-600 to-green-600">
               <div className="flex flex-col md:flex-row items-center justify-center mb-8 py-3">
                 <div className="relative w-40 h-40 mb-6 md:mb-0">
                   {message.bng_Images?.slice(0, 1).map((img) => (

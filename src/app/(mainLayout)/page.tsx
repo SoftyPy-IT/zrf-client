@@ -17,7 +17,7 @@ const Slider = dynamic(() => import("@/components/share/Slider/Slider"), {
 });
 const GallerySection = dynamic(
   () => import("@/components/ui/HomePage/Gallery/Gallery"),
-  { ssr: false },
+  { ssr: false }
 );
 
 const Home = () => {
@@ -77,25 +77,25 @@ const Home = () => {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "NonProfitOrganization",
-              "name": "Ziaur Rahman Foundation",
-              "url": "https://www.zrf.org",
-              "logo": "https://www.zrf.org/images/logo.png",
-              "description":
+              name: "Ziaur Rahman Foundation",
+              url: "https://www.zrf.org",
+              logo: "https://www.zrf.org/images/logo.png",
+              description:
                 "Ziaur Rahman Foundation works on community empowerment, education, health programs, and climate change initiatives.",
-              "address": {
+              address: {
                 "@type": "PostalAddress",
-                "streetAddress": "123 Hope Street",
-                "addressLocality": "City Name",
-                "addressRegion": "Region Name",
-                "postalCode": "12345",
-                "addressCountry": "Country",
+                streetAddress: "123 Hope Street",
+                addressLocality: "City Name",
+                addressRegion: "Region Name",
+                postalCode: "12345",
+                addressCountry: "Country",
               },
-              "contactPoint": {
+              contactPoint: {
                 "@type": "ContactPoint",
-                "telephone": "+123-456-7890",
-                "contactType": "Customer Support",
+                telephone: "+123-456-7890",
+                contactType: "Customer Support",
               },
-              "sameAs": [
+              sameAs: [
                 "https://facebook.com/zrf",
                 "https://twitter.com/zrf",
                 "https://instagram.com/zrf",

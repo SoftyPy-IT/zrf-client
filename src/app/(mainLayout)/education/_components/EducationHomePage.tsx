@@ -9,9 +9,7 @@ import { TWhatWeDo } from "@/types/type";
 import axios from "axios";
 import { whatwedoFields } from "@/fields";
 import Education from "./Education";
-const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-  ssr: false,
-});
+ 
 
 const EducationHomePage = () => {
   const { language } = useLanguage();
@@ -39,9 +37,7 @@ const EducationHomePage = () => {
     fetchCovidData();
   }, [category]);
 
-  if (isLoading) {
-    return <Loader />;
-  }
+   
 
   if (error) {
     return <h2>Oops! data not found.</h2>

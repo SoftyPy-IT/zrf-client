@@ -1,49 +1,18 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
-import { useLanguage } from "@/provider/LanguageProvider";
+import { notFound } from "next/navigation";
+import { Metadata } from "next";
+import { fetchWithSEO } from "@/utils/fetchWithSEO";
 import SingleNews from "../_components/SingleNews";
 
-interface pressId {
-  params: {
-    id: string;
-  };
+type Props = { params: { id: string } };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { metadata } = await fetchWithSEO("activity", params.id, "News");
+  return metadata;
 }
-const Project = ({ params }: pressId) => {
-  const { language } = useLanguage();
-  const { id } = params;
 
-  const [data, setData] = useState(null);
-  const [error, setError] = useState<string | null>(null);
+export default async function NewsPage({ params }: Props) {
+  const { data } = await fetchWithSEO("activity", params.id, "News");
+  if (!data) notFound();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/activity/${id}`,
-        );
-        const result = await res.json();
-        if (result?.data) {
-          setData(result.data);
-        } else {
-          setError("Project data not found");
-        }
-      } catch (error) {
-        setError("An error occurred while fetching data.");
-      }
-    };
-
-    fetchData();
-  }, [id]);
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-  return (
-    <>
-      <>{data && <SingleNews language={language} singleNewsData={data} />}</>
-    </>
-  );
-};
-
-export default Project;
+  return <SingleNews singleNewsData={data} />;
+}

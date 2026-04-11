@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
 
-import React from 'react';
-import Head from 'next/head';
-import ProjectHome from './_components/ProjectHome';
+import React from "react";
+import Head from "next/head";
+import ProjectHome from "./_components/ProjectHome";
 
 const OurProjectsPage = () => {
   return (
@@ -22,18 +22,27 @@ const OurProjectsPage = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         {/* Open Graph / Facebook Meta Tags */}
-        <meta property="og:title" content="Our Projects | Explore Our Impact and Initiatives" />
+        <meta
+          property="og:title"
+          content="Our Projects | Explore Our Impact and Initiatives"
+        />
         <meta
           property="og:description"
           content="Explore our various projects and the positive impact we're making. Get inspired by the initiatives we lead to create meaningful change."
         />
         <meta property="og:image" content="/projects-og-image.png" />
-        <meta property="og:url" content="https://www.ziaurrahmanfoundation.com/projects" />
+        <meta
+          property="og:url"
+          content="https://www.ziaurrahmanfoundation.com/projects"
+        />
         <meta property="og:type" content="website" />
 
         {/* Twitter Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Our Projects | Explore Our Impact and Initiatives" />
+        <meta
+          name="twitter:title"
+          content="Our Projects | Explore Our Impact and Initiatives"
+        />
         <meta
           name="twitter:description"
           content="Discover the impact of our projects and the initiatives we are driving to bring about positive change."
@@ -41,7 +50,10 @@ const OurProjectsPage = () => {
         <meta name="twitter:image" content="/projects-twitter-image.png" />
 
         {/* Canonical URL */}
-        <link rel="canonical" href="https://www.ziaurrahmanfoundation.com/projects" />
+        <link
+          rel="canonical"
+          href="https://www.ziaurrahmanfoundation.com/projects"
+        />
 
         {/* JSON-LD Structured Data */}
         <script

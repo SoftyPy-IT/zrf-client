@@ -4,21 +4,22 @@ import RecentPostFetchData from "./RecentPostFetchData";
 import dynamic from "next/dynamic";
 import { projectsFields } from "@/fields";
 import { TProject } from "@/types/type";
-const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-  ssr: false,
-});
+ 
 
 const RecentProjectPost = () => {
-  const { language } = useLanguage()
+  const { language } = useLanguage();
   const [projectData, setProjectData] = useState<TProject[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   useEffect(() => {
     const fetchWhatwedoData = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/project?&fields=${projectsFields}`, {
-          cache: "no-store",
-        });
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/project?&fields=${projectsFields}`,
+          {
+            cache: "no-store",
+          }
+        );
         const data = await response.json();
         setProjectData(data.data?.projects || []);
       } catch (err) {
@@ -31,13 +32,10 @@ const RecentProjectPost = () => {
     fetchWhatwedoData();
   }, []);
 
-  if (loading) {
-    return <Loader />
-  }
+   
   if (error) {
-    return <p>Oops covid data not found!</p>
+    return <p>Oops covid data not found!</p>;
   }
-
 
   return (
     <>

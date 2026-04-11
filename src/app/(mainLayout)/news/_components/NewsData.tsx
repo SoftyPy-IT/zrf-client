@@ -110,59 +110,79 @@ interface activityProps {
 }
 
 const NewsData: React.FC<activityProps> = ({ newsData, language }) => {
-
-  const sortedNewsData = newsData?.sort(
-    (a: TActivity, b: TActivity) => {
-      const dateA = new Date(a.date).getTime();
-      const dateB = new Date(b.date).getTime();
-      return dateB - dateA;
-    },
-  );
+  const sortedNewsData = newsData?.sort((a: TActivity, b: TActivity) => {
+    const dateA = new Date(a.date).getTime();
+    const dateB = new Date(b.date).getTime();
+    return dateB - dateA;
+  });
   const [visibleCount, setVisibleCount] = useState(6);
   const loadMore = () => {
     setVisibleCount((prevCount) => prevCount + 6);
   };
 
 
+   const formatDate = (dateStr: string) => {
+    const date = new Date(dateStr);
+    if (language === "ENG") {
+      return date.toLocaleDateString("en-US", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+      });
+    } else {
+      // Convert to Bangla numerals
+      const banglaFormatted = date
+        .toLocaleDateString("bn-BD", {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        })
+        .replace(/[০-৯]/g, (d) =>
+          "০১২৩৪৫৬৭৮৯"["০১২৩৪৫৬৭৮৯".indexOf(d)] ?? d
+        );
+      return banglaFormatted;
+    }
+  };
   return (
     <div>
-      <CommonBanner title={language === "ENG" ? "Upcoming News" : "আসন্ন প্রোগ্রাম"} />
+      <CommonBanner
+        title={language === "ENG" ? "Upcoming Program" : "আসন্ন প্রোগ্রাম"}
+      />
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-16">
           {sortedNewsData?.slice(0, visibleCount).map((data, index: number) => (
             <div key={index}>
-              <div className="shadow-lg flex flex-col justify-between bg-gray-100  lg:h-[480px] md:h-[400px] relative">
-                <div className="relative h-[250px]">
-                  {
-                    language === 'ENG' ? (
-                      data.eng_images?.slice(0, 1).map((img) => (
-                        <Image
-                          width={500}
-                          height={500}
-                          key={img}
-                          src={img}
-                          alt=""
-                          className="h-[240px] object-cover"
-                        />
-                      ))
-                    ) : (
-                      data.bng_Images?.slice(0, 1).map((img) => (
-                        <Image
-                          width={500}
-                          height={500}
-                          key={img}
-                          src={img}
-                          alt=""
-                          className="h-[240px] object-cover"
-                        />
-                      ))
-                    )
-                  }
-
+              <div className="shadow-md flex flex-col justify-between rounded-md">
+                <div className="h-[250px]">
+                  {language === "ENG"
+                    ? data.eng_images
+                        ?.slice(0, 1)
+                        .map((img) => (
+                          <Image
+                            width={500}
+                            height={500}
+                            key={img}
+                            src={img}
+                            alt=""
+                            className="h-[240px] rounded-t-md"
+                          />
+                        ))
+                    : data.bng_Images
+                        ?.slice(0, 1)
+                        .map((img) => (
+                          <Image
+                            width={500}
+                            height={500}
+                            key={img}
+                            src={img}
+                            alt=""
+                            className="h-[240px] rounded-t-md"
+                          />
+                        ))}
                 </div>
-                <div className="p-3  flex flex-col justify-between  ">
+                <div className="p-3 flex flex-col justify-between">
                   <div>
-                    <h3 className="text-xl font-semibold">
+                    <h3 className="font-semibold text-gray-600">
                       {language === "ENG"
                         ? truncateText(data?.english_title, 80)
                         : truncateText(data?.bangla_title, 80)}
@@ -170,17 +190,15 @@ const NewsData: React.FC<activityProps> = ({ newsData, language }) => {
                     <p className="mt-2">
                       {language == "ENG"
                         ? renderContent(
-                          truncateText(data?.english_description, 100),
-                        )
+                            truncateText(data?.english_description, 100)
+                          )
                         : renderContent(
-                          truncateText(data?.bangla_description, 100),
-                        )}
+                            truncateText(data?.bangla_description, 100)
+                          )}
                     </p>
                   </div>
                   <div className="flex justify-between  ">
-                    <b>
-                      {data.date}
-                    </b>
+                    <b>{formatDate(data.date)}</b>
                     <Link href={`/news/${data._id}`}>
                       <button className=" text-white bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-1 hover:text-white rounded-full uppercase text-sm border">
                         {language === "ENG" ? "Read More" : "আরও পড়ুন"}{" "}
@@ -193,12 +211,16 @@ const NewsData: React.FC<activityProps> = ({ newsData, language }) => {
             </div>
           ))}
         </div>
-        {visibleCount < sortedNewsData?.length && (<div className="flex items-center justify-center">
-          <Button onClick={loadMore} className="bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white">
-            {language === "ENG" ? "Load More" : "আরো লোড"}
-          </Button>
-        </div>)}
-
+        {visibleCount < sortedNewsData?.length && (
+          <div className="flex items-center justify-center">
+            <Button
+              onClick={loadMore}
+              className="bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white"
+            >
+              {language === "ENG" ? "Load More" : "আরো লোড"}
+            </Button>
+          </div>
+        )}
       </Container>
     </div>
   );

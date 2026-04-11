@@ -5,208 +5,97 @@ import Image from "next/image";
 import Container from "@/components/share/Container";
 import ShareLink from "@/components/share/ShareLink/ShareLink";
 import { TProject } from "@/types/type";
-import ReactHtmlParser from "react-html-parser";
 import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 import RecentProjectPost from "./RecentProjectPost";
-
+import { useLanguage } from "@/provider/LanguageProvider";
+import { stripHtml } from "@/utils/stripHtml";
+import RenderContent from "@/components/Common/RenderContent";
 
 type SingleProjectProps = {
-    singleProjectData: TProject,
-    language: string
-}
-
-const renderContent = (content: string) => {
-    const parsedContent = ReactHtmlParser(content);
-
-    return parsedContent.map((element, index) => {
-        if (element.type === "h1") {
-            return (
-                <h1 key={index} className="text-2xl font-bold mb-2">
-                    {element.props.children}
-                </h1>
-            );
-        } else if (element.type === "h2") {
-            return (
-                <h2 key={index} className="text-xl font-bold mb-2">
-                    {element.props.children}
-                </h2>
-            );
-        } else if (element.type === "h4") {
-            return (
-                <h2 key={index} className=" font-bold mb-2">
-                    {element.props.children}
-                </h2>
-            );
-        } else if (element.type === "h3") {
-            return (
-                <h3 key={index} className="text-lg font-bold mb-2">
-                    {element.props.children}
-                </h3>
-            );
-        } else if (element.type === "b") {
-            return (
-                <b key={index} className="font-bold">
-                    {element.props.children}
-                </b>
-
-            );
-        } else if (element.type === "b") {
-            return (
-                <small key={index} className="text-sm">
-                    {element.props.children}
-                </small>
-
-            );
-        } else if (element.type === "b") {
-            return (
-                <span key={index} className="inline-block">
-                    {element.props.children}
-                </span>
-
-            );
-        } else if (element.type === "img") {
-            return (
-                <div key={index} className="w-[700px] h-[400px]">
-                    <Image
-
-                        src={element.props.src}
-                        alt="this is image"
-                        className="mb-2"
-                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                    />
-                </div>
-            );
-        } else if (element.type === "ol") {
-            return (
-                <ol key={index} className="list-decimal list-inside mb-5">
-                    {element.props.children}
-                </ol>
-            );
-        } else if (element.type === "ul") {
-            return (
-                <ul key={index} className="list-disc list-inside mb-5">
-                    {element.props.children}
-                </ul>
-            );
-        }
-        else if (element.type === "p") {
-            return (
-                <p key={index} className="mb-2">
-                    {element.props.children}
-                </p>
-            );
-        } else if (element.type === "video") {
-            return (
-                <video
-                    key={index}
-                    className="w-full h-auto mb-4"
-                    controls
-                    src={element.props.src}
-                >
-                    Your browser does not support the video tag.
-                </video>
-            );
-        } else if (element.type === "iframe") {
-            return (
-                <iframe
-                    key={index}
-                    className="w-full h-[500px] mb-4"
-                    src={element.props.src}
-                    title={`iframe-${index}`}
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                ></iframe>
-            );
-        } else if (
-            element.type === "div" &&
-            element.props.className === "ql-align-center"
-        ) {
-            return (
-                <div key={index} className="text-center mb-2">
-                    {element.props.children}
-                </div>
-            );
-        } else if (
-            element.type === "div" &&
-            element.props.className === "ql-align-right"
-        ) {
-            return (
-                <div key={index} className="text-right mb-2">
-                    {element.props.children}
-                </div>
-            );
-        } else if (
-            element.type === "div" &&
-            element.props.className === "ql-align-left"
-        ) {
-            return (
-                <div key={index} className="text-left mb-2">
-                    {element.props.children}
-                </div>
-            );
-        } else {
-            return null;
-        }
-    });
+  singleProjectData: TProject;
 };
 
-const SingleProjectData = ({ singleProjectData, language }: SingleProjectProps) => {
+const SingleProjectData = ({ singleProjectData }: SingleProjectProps) => {
+  const shareUrl = typeof window !== "undefined" ? window.location.href : "";
+  const { language } = useLanguage();
+  const description =
+    language === "ENG"
+      ? stripHtml(singleProjectData?.english_description ?? "")
+      : stripHtml(singleProjectData?.bangla_description ?? "");
 
+  return (
+    <div>
+      <CommonBanner
+        title={language === "ENG" ? "Our Projects" : "আমাদের প্রকল্প"}
+      />
+      <Container>
+        <div className="grid md:grid-cols-12 gap-7 my-10">
+          <div className="md:col-span-7 lg:col-span-8">
+            <div className=" mb-6">
+              {language === "BNG"
+                ? singleProjectData.bng_Images
+                    ?.slice(0, 1)
+                    .map((img) => (
+                      <Image
+                        width={500}
+                        height={400}
+                        key={img}
+                        src={img}
+                        alt="Top Image"
+                        className="rounded-md w-full h-full"
+                      />
+                    ))
+                : singleProjectData.eng_images
+                    ?.slice(0, 1)
+                    .map((img) => (
+                      <Image
+                        width={500}
+                        height={500}
+                        key={img}
+                        src={img}
+                        alt="Top Image"
+                        className="rounded-md w-full h-full"
+                      />
+                    ))}
+            </div>
+            <div className="mt-5">
+              <h3 className="text-2xl font-semibold">
+                {language === "ENG"
+                  ? singleProjectData.english_title
+                  : singleProjectData.bangla_title}
+              </h3>
+              <p className="text-justify mt-5">
+                <RenderContent
+                  content={
+                    language === "ENG"
+                      ? singleProjectData.english_description
+                      : singleProjectData.bangla_description
+                  }
+                />
+              </p>
+            </div>
+          </div>
 
-    return (
-        <div>
-            <CommonBanner title={language === 'ENG' ? 'Our Projects' : 'আমাদের প্রকল্প'} />
-            <Container>
-                <div className="lg:flex md:flex gap-10  mt-10 ">
-                    <div className="w-full grid grid-cols-1">
-                        <div className="h-full w-full">
-
-                            <div className="relative w-full h-[200px] md:h-[400px] mb-6">
-                                {
-                                    language === 'BNG' ? singleProjectData.bng_Images?.slice(0, 1).map((img) => (
-                                        <Image
-                                            width={500}
-                                            height={500}
-                                            key={img}
-                                            src={img}
-                                            alt="Top Image"
-
-                                            className="rounded-lg w-full h-full object-cover"
-                                        />
-                                    )) : singleProjectData.eng_images?.slice(0, 1).map((img) => (
-                                        <Image
-                                            width={500}
-                                            height={500}
-                                            key={img}
-                                            src={img}
-                                            alt="Top Image"
-
-                                            className="rounded-lg w-full h-full object-cover"
-                                        />
-                                    ))
-                                }
-                            </div>
-                            <div className="mt-5">
-                                <h3 className="text-2xl font-semibold">{language === 'ENG' ? singleProjectData.english_title : singleProjectData.bangla_title}</h3>
-                                <p className="text-justify mt-5"> {language === 'ENG' ? renderContent(singleProjectData.english_description) : renderContent(singleProjectData.bangla_description)} </p>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div>
-                        <div className="sticky top-24">
-                            <RecentProjectPost />
-                        </div>
-                    </div>
-                </div>
-
-
-                <ShareLink />
-            </Container>
+          <div className="md:col-span-5 lg:col-span-4">
+            <div className="sticky top-24">
+              <RecentProjectPost />
+            </div>
+          </div>
         </div>
-    );
+
+        <ShareLink
+          shareUrl={shareUrl}
+          title={
+            language === "ENG"
+              ? singleProjectData?.english_title
+              : singleProjectData?.bangla_title
+          }
+          hashtag={`#${singleProjectData?.bangla_title}`}
+          description={description}
+        />
+      </Container>
+    </div>
+  );
 };
 
 export default SingleProjectData;

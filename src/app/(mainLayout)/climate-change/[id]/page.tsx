@@ -1,71 +1,18 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
-import { useLanguage } from "@/provider/LanguageProvider";
+import { notFound } from "next/navigation";
+import { Metadata } from "next";
+import { fetchWithSEO } from "@/utils/fetchWithSEO";
 import SingleClimateChange from "../_components/SingleClimateChange";
-import dynamic from "next/dynamic";
-const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-  ssr: false,
-});
-interface ParamsId {
-  params: {
-    id: string;
-  };
+
+type Props = { params: { id: string } };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { metadata } = await fetchWithSEO("whatwedo", params.id, "Project");
+  return metadata;
 }
 
-const Rehabilitation = ({ params }: ParamsId) => {
-  const { language } = useLanguage();
-  const { id } = params;
+export default async function WhatWeDoPage({ params }: Props) {
+  const { data } = await fetchWithSEO("whatwedo", params.id, "Project");
+  if (!data) notFound();
 
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo/${id}`,
-        );
-        const result = await res.json();
-        if (result?.data) {
-          setData(result.data);
-        } else {
-          setError("Report data not found");
-        }
-      } catch (err) {
-        setError("An error occurred while fetching data.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [id]);
-
-  if (loading) {
-    return (
-      <>
-        <Loader />
-      </>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="text-center text-red-600">
-        <h2>Oops! Something Went Wrong!</h2>
-      </div>
-    );
-  }
-
-  return (
-    <>
-      {data && <SingleClimateChange language={language} whatWedoData={data} />}
-    </>
-  );
-};
-
-export default Rehabilitation;
+  return <SingleClimateChange whatWedoData={data} />;
+}

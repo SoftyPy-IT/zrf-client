@@ -17,13 +17,13 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
 
-            cd /var/www/html/zrf/client
+            cd /var/www/zrf/client
 
              # Fetch latest changes and reset to main branch
              git fetch --all
              git reset --hard origin/main
 
-             # Setup environment and dependencies
+
              cp .env.example .env
 
              npm install --legacy-peer-deps

@@ -23,7 +23,8 @@ const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <LanguageProvider>
       <LandingPageProvider>
-        <Suspense fallback={<div><Loader /></div>}>
+        {/* <Suspense fallback={<div><Loader /></div>}> */}
+        <Suspense fallback={<div></div>}>
           <Header />
           {children}
           <CursorCustomize />

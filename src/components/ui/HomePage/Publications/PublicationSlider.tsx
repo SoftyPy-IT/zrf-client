@@ -13,10 +13,20 @@ import { useLanguage } from "@/provider/LanguageProvider";
 import { TEbook } from "@/types/type";
 import { useEbookData } from "@/hooks/useEbookData";
 import dynamic from "next/dynamic";
+import { Skeleton, Stack } from "@mui/material";
 
-const Loader = dynamic(() => import("@/components/Loading/Loading"), {
-  ssr: false,
-});
+const Loader = () => {
+  return (
+    <div className="fixed inset-0 h-screen flex items-center justify-center  z-50">
+      {/* <Stack spacing={1}>
+        <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+        <Skeleton variant="rectangular" width={40} height={40} />
+        <Skeleton variant="rectangular" width={210} height={60} />
+        <Skeleton variant="rectangular" width={210} height={60} />
+      </Stack> */}
+    </div>
+  );
+};
 
 function PublicationSlider() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -29,9 +39,12 @@ function PublicationSlider() {
   useEffect(() => {
     const fetchEbookData = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/ebook?limit=99999999&fields=images`, {
-          cache: "no-store",
-        });
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/ebook?limit=99999999&fields=images`,
+          {
+            cache: "no-store",
+          },
+        );
         const data = await response.json();
         setEbookData(data.data?.ebooks || []);
       } catch (err) {
@@ -61,9 +74,9 @@ function PublicationSlider() {
     };
   }, [updateIndex]);
 
-  if (loading) {
-    return <Loader />;
-  }
+  // if (loading) {
+  //   return <Loader />;
+  // }
   if (error) {
     return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
   }
@@ -71,8 +84,7 @@ function PublicationSlider() {
     <div>
       <div>
         <h2 className="text-3xl font-bold uppercase md:w-[400px]">
-          {" "}
-          {language === "ENG" ? " E-Books" : "ই-বুক"}{" "}
+          {language === "ENG" ? " E-Books" : "ই-বুক"}
         </h2>
         <div className="w-28 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-3 "></div>
       </div>
@@ -111,7 +123,7 @@ function PublicationSlider() {
         ))}
       </Swiper>
 
-      <div className="mt-10">
+      <div className="flex flex-col items-end lg:items-start mt-10">
         <Link href="/ebooks">
           <button className="bg-gradient-to-r from-yellow-600 to-green-600 px-6 py-2 text-white rounded-full uppercase">
             {language === "ENG" ? "See All " : "সব দেখুন"}{" "}

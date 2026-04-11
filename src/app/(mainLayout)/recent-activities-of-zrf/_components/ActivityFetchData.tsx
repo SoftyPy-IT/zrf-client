@@ -27,9 +27,9 @@ const ActivityFetchData = () => {
         const dateB = new Date(b.date).getTime();
         return dateB - dateA;
     });
-    if (loading) {
-        return <Loader />;
-    }
+    // if (loading) {
+    //     return <Loader />;
+    // }
     if (error) {
         return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
     }

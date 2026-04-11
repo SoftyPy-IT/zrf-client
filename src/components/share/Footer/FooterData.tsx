@@ -38,7 +38,7 @@ const FooterData = ({ language }: FooterProps) => {
     <>
       <div className="bg-[#20bd86] relative sectionMargin">
         <Container>
-          <div className="relative md:gap-0 gap-y-3 flex flex-col md:flex-row justify-between items-start md:items-center py-8 z-10">
+          <div className="relative md:gap-0 gap-y-3 flex flex-col md:flex-row justify-between items-center py-8 z-10">
             <p className="text-xl  lg:text-3xl text-white font-sans uppercase">
               {language === "ENG"
                 ? " Join Our Newsletter"
@@ -58,14 +58,22 @@ const FooterData = ({ language }: FooterProps) => {
           <div className="container mx-auto">
             <div className="flex flex-col md:flex-row justify-between items-start mt-8">
               <div className="w-full md:w-1/4 mb-8 md:mb-0">
-                <Link href='/'> <div className="space-y-3 flex flex-col items-center">
-                  <Image src={logo} alt="Seville Logo" width={90} height={90} />
-                  <h3 className="font-bold text-lg text-center">
-                    {language === "ENG"
-                      ? "Ziaur Rahman Foundation"
-                      : "জিয়াউর রহমান ফাউন্ডেশন"}
-                  </h3>
-                </div></Link>
+                <Link href="/">
+                  {" "}
+                  <div className="space-y-3 flex flex-col items-center">
+                    <Image
+                      src={logo}
+                      alt="Seville Logo"
+                      width={90}
+                      height={90}
+                    />
+                    <h3 className="font-bold text-lg text-center">
+                      {language === "ENG"
+                        ? "Ziaur Rahman Foundation"
+                        : "জিয়াউর রহমান ফাউন্ডেশন"}
+                    </h3>
+                  </div>
+                </Link>
               </div>
 
               <div className="w-full md:w-1/4 mb-8 md:mb-0 text-center">
@@ -76,8 +84,8 @@ const FooterData = ({ language }: FooterProps) => {
                 <p>
                   {" "}
                   {language === "ENG"
-                    ? "House#4, Road#7, Niketon Gate #2, Gulshan-1, Dhaka-1212, Bangladesh."
-                    : "বাড়ি#৪, রোড#৭, নিকেতন গেট#২, গুলশান-১, ঢাকা-১২১২, বাংলাদেশ।"}{" "}
+                    ? "House#2, Road#23/A, Gulshan-1, Near Gulshan 1 Post Office, Dhaka-1212, Bangladesh."
+                    : "বাড়ি #২, রোড #২৩/এ, গুলশান-১, গুলশান ১ পোস্ট অফিস, ঢাকা-১২১২, বাংলাদেশ।"}{" "}
                 </p>
               </div>
               <div className="w-full md:w-1/4 mb-8 md:mb-0 text-center">
@@ -155,8 +163,8 @@ const FooterData = ({ language }: FooterProps) => {
             <div className="mt-8 text-center text-gray-500">
               &copy;{" "}
               {language === "ENG"
-                ? " Copyrights Ziaur Rahman Foundation 2024. All Rights Reserved "
-                : "কপিরাইট জিয়াউর রহমান ফাউন্ডেশন 2024. সর্বস্বত্ব সংরক্ষিত"}
+                ? " Copyrights Ziaur Rahman Foundation 2026. All Rights Reserved "
+                : "কপিরাইট জিয়াউর রহমান ফাউন্ডেশন ২০২৬. সর্বস্বত্ব সংরক্ষিত"}
             </div>
           </div>
         </Container>
