@@ -1,3 +1,4 @@
+// app/activities/[id]/page.tsx
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { fetchWithSEO } from "@/utils/fetchWithSEO";
@@ -15,7 +16,7 @@ export default async function ActivityPage({ params }: Props) {
   const { data } = await fetchWithSEO("activity", params.id, "Activity");
 
   if (!data) notFound();
-  console.log("Fetched activity data:", data); // Debug log to check fetched data
+
   // Get language from cookies to pass to client component
   const cookieStore = cookies();
   const language = cookieStore.get("language")?.value || "ENG";

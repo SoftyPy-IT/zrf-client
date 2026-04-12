@@ -9,14 +9,11 @@ export async function fetchWithSEO(
   fallbackTitle: string = "Item Details",
 ): Promise<{ data: any; metadata: Metadata }> {
   try {
-    // ✅ Read language from cookie on server side
-    const cookieStore = cookies();
-    const language = cookieStore.get("language")?.value || "ENG";
-    const isEnglish = language === "ENG";
-
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API_URL}/${endpoint}/${id}`,
-      { cache: "no-store" },
+      {
+        cache: "no-store",
+      },
     );
 
     if (!res.ok) {
@@ -42,30 +39,27 @@ export async function fetchWithSEO(
       };
     }
 
-    // ✅ Language-aware title, description, image
-    const title = isEnglish
-      ? data.english_title || data.bangla_title || fallbackTitle
-      : data.bangla_title || data.english_title || fallbackTitle;
+    // Get language from cookies
+    const cookieStore = cookies();
+    const language = cookieStore.get("language")?.value || "ENG";
+    const isEnglish = language === "ENG";
 
-    const description = isEnglish
-      ? stripHtml(
-          data.english_short_description || data.bangla_short_description || "",
-        )
-      : stripHtml(
-          data.bangla_short_description || data.english_short_description || "",
-        );
+    // Use language-specific content for metadata
+    const title = isEnglish
+      ? data.english_title || fallbackTitle
+      : data.bangla_title || fallbackTitle;
+
+    const description = stripHtml(
+      isEnglish
+        ? data.english_short_description || ""
+        : data.bangla_short_description || "",
+    );
 
     const image = isEnglish
-      ? data.eng_images?.[0] || data.bng_Images?.[0] || "/default-image.jpg"
-      : data.bng_Images?.[0] || data.eng_images?.[0] || "/default-image.jpg";
+      ? data.eng_images?.[0] || "/default-image.jpg"
+      : data.bng_Images?.[0] || "/default-image.jpg";
 
     const url = `${process.env.NEXT_PUBLIC_SITE_URL}/${endpoint}/${id}`;
-
-    // Debug log
-    console.log("Server language:", language);
-    console.log("Is English:", isEnglish);
-    console.log("Title:", title);
-    console.log("Description:", description);
 
     const metadata: Metadata = {
       title,
@@ -83,7 +77,9 @@ export async function fetchWithSEO(
         description,
         images: [image],
       },
-      alternates: { canonical: url },
+      alternates: {
+        canonical: url,
+      },
     };
 
     return { data, metadata };

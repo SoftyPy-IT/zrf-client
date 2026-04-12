@@ -8,9 +8,11 @@ import logo from "../../../assets/images/logo/logo.svg";
 import Container from "../Container";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useLanguage } from "@/provider/LanguageProvider";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
   const { language, setLanguage } = useLanguage();
+  const router = useRouter();
 
   const [open, setOpen] = useState(true);
   const [mobileMenu, setMobileMenu] = useState(true);
@@ -22,6 +24,30 @@ const Header = () => {
 
   const closeMobileMenu = () => {
     setOpen(true);
+  };
+
+  // Function to handle language change with cookie update
+  const handleLanguageChange = async (newLang: "ENG" | "BNG") => {
+    if (newLang === language) return; // Don't change if same language
+
+    setLanguage(newLang);
+
+    // Set cookie for server-side rendering
+    document.cookie = `language=${newLang}; path=/; max-age=31536000; SameSite=Lax`;
+
+    // Optional: Call API to set cookie (more reliable)
+    try {
+      await fetch("/api/set-language", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ language: newLang }),
+      });
+    } catch (error) {
+      console.error("Failed to set language cookie:", error);
+    }
+
+    // Refresh the page to update server-side metadata
+    router.refresh();
   };
 
   const dropdown =
@@ -219,18 +245,18 @@ const Header = () => {
               </ul>
             </>
           </div>
-          <div className=" xl:block space-x-1 md:space-x-3 mr-[30px] text-center lg:mr-20 md:mr-12 xl:mr-0 ">
+          <div className="xl:block space-x-1 md:space-x-3 mr-[30px] text-center lg:mr-20 md:mr-12 xl:mr-0">
             <button
-              onClick={() => setLanguage("ENG")}
-              className={`bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white ${
+              onClick={() => handleLanguageChange("ENG")}
+              className={`bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm md:px-3 md:py-1 rounded text-white ${
                 language === "ENG" ? "opacity-100" : "opacity-60"
               }`}
             >
               ENG
             </button>
             <button
-              onClick={() => setLanguage("BNG")}
-              className={`bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3 rounded text-white ${
+              onClick={() => handleLanguageChange("BNG")}
+              className={`bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm md:px-3 rounded text-white ${
                 language === "BNG" ? "opacity-100" : "opacity-60"
               }`}
             >
