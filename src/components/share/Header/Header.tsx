@@ -40,20 +40,6 @@ const Header = () => {
                 width={80}
                 height={80}
               />
-              <Typography component="span" fontWeight={600} color="black">
-                <Box component="span" color="primary.main" fontWeight="bold">
-                  <p className="md:font-bold text-[12px] md:text-[20px]">
-                    {language === "ENG" ? "Ziaur Rahman" : "জিয়াউর রহমান"}
-                  </p>
-
-                  <p
-                    className="md:font-bold text-[12px] md:text-[20px]"
-                    style={{ letterSpacing: "0.15em" }}
-                  >
-                    {language === "ENG" ? "Foundation" : " ফাউন্ডেশন"}
-                  </p>
-                </Box>
-              </Typography>
             </div>
           </Box>
 

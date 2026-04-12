@@ -18,10 +18,22 @@ type SingleActivityProps = {
 const SingleActivity = ({ singleActivityData }: SingleActivityProps) => {
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
   const { language } = useLanguage();
-  const description =
-    language === "ENG"
-      ? stripHtml(singleActivityData?.english_description ?? "")
-      : stripHtml(singleActivityData?.bangla_description ?? "");
+  const isEnglish = language === "ENG";
+
+  const title = isEnglish
+    ? singleActivityData.english_title
+    : singleActivityData.bangla_title;
+
+  const description = isEnglish
+    ? stripHtml(singleActivityData.english_description ?? "")
+    : stripHtml(singleActivityData.bangla_description ?? "");
+
+  const hashtag = isEnglish
+    ? `#${singleActivityData.english_title?.replace(/\s+/g, "")}`
+    : `#${singleActivityData.bangla_title?.replace(/\s+/g, "")}`;
+  const shareImage = isEnglish
+    ? singleActivityData.eng_images?.[0]
+    : singleActivityData.bng_Images?.[0];
 
   return (
     <div>
@@ -37,8 +49,8 @@ const SingleActivity = ({ singleActivityData }: SingleActivityProps) => {
           <div className="w-full grid grid-cols-1">
             <div className="h-full w-full">
               <div className="relative overflow-hidden">
-                {language === "BNG"
-                  ? singleActivityData.bng_Images
+                {isEnglish
+                  ? singleActivityData.eng_images
                       ?.slice(0, 1)
                       .map((img) => (
                         <Image
@@ -46,11 +58,11 @@ const SingleActivity = ({ singleActivityData }: SingleActivityProps) => {
                           height={500}
                           key={img}
                           src={img}
-                          alt="Top Image"
-                          className="rounded-lg w-full h-full object-cover" 
+                          alt={title || "Activity Image"}
+                          className="rounded-lg w-full h-full object-cover"
                         />
                       ))
-                  : singleActivityData.eng_images
+                  : singleActivityData.bng_Images
                       ?.slice(0, 1)
                       .map((img) => (
                         <Image
@@ -58,21 +70,17 @@ const SingleActivity = ({ singleActivityData }: SingleActivityProps) => {
                           height={500}
                           key={img}
                           src={img}
-                          alt="Top Image"
+                          alt={title || "Activity Image"}
                           className="rounded-lg w-full h-full object-cover"
                         />
                       ))}
               </div>
               <div className="mt-5">
-                <h3 className="text-2xl font-semibold">
-                  {language === "ENG"
-                    ? singleActivityData.english_title
-                    : singleActivityData.bangla_title}
-                </h3>
+                <h3 className="text-2xl font-semibold">{title}</h3>
                 <p className="text-justify mt-5">
                   <RenderContent
                     content={
-                      language === "ENG"
+                      isEnglish
                         ? singleActivityData.english_description
                         : singleActivityData.bangla_description
                     }
@@ -91,13 +99,10 @@ const SingleActivity = ({ singleActivityData }: SingleActivityProps) => {
 
         <ShareLink
           shareUrl={shareUrl}
-          title={
-            language === "ENG"
-              ? singleActivityData?.english_title
-              : singleActivityData?.bangla_title
-          }
-          hashtag={`#${singleActivityData?.bangla_title}`}
+          title={title || ""}
+          hashtag={hashtag}
           description={description}
+          imageUrl={shareImage}
         />
       </Container>
     </div>

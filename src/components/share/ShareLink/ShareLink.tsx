@@ -20,12 +20,19 @@ import email from "../../../../src/assets/icon/email.png";
 
 type ShareProps = {
   shareUrl: string;
-  title?: string;
+  title: string;
   hashtag: string;
-  description?: string;
+  description: any;
+  imageUrl?: string;
 };
 
-const ShareLink = ({ shareUrl, title, hashtag }: ShareProps) => {
+const ShareLink = ({
+  shareUrl,
+  title,
+  hashtag,
+  description,
+  imageUrl,
+}: ShareProps) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -56,6 +63,7 @@ const ShareLink = ({ shareUrl, title, hashtag }: ShareProps) => {
         </Tooltip>
 
         <Tooltip title="Share on Facebook" arrow>
+          {/* Facebook only accepts url and hashtag - no quote/description/image props in v5+ */}
           <FacebookShareButton url={shareUrl} hashtag={hashtag}>
             <Image
               src={facebook}
@@ -68,7 +76,12 @@ const ShareLink = ({ shareUrl, title, hashtag }: ShareProps) => {
         </Tooltip>
 
         <Tooltip title="Share on LinkedIn" arrow>
-          <LinkedinShareButton url={shareUrl} title={title}>
+          <LinkedinShareButton
+            url={shareUrl}
+            title={title}
+            summary={description}
+            source={shareUrl}
+          >
             <Image
               src={linkedIn}
               alt="LinkedIn"
@@ -95,7 +108,7 @@ const ShareLink = ({ shareUrl, title, hashtag }: ShareProps) => {
           <EmailShareButton
             url={shareUrl}
             subject={title}
-            body={`Check this out: ${shareUrl}`}
+            body={`${description}\n\nCheck this out: ${shareUrl}`}
           >
             <Image
               src={email}
