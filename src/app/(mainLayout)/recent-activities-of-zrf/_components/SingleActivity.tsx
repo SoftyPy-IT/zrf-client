@@ -9,7 +9,6 @@ import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 import ActivitySidebar from "./ActivitySidebar";
 import { useLanguage } from "@/provider/LanguageProvider";
 import RenderContent from "@/components/Common/RenderContent";
-import { stripHtml } from "@/utils/stripHtml";
 
 type SingleActivityProps = {
   singleActivityData: TActivity;
@@ -25,8 +24,8 @@ const SingleActivity = ({ singleActivityData }: SingleActivityProps) => {
     : singleActivityData.bangla_title;
 
   const description = isEnglish
-    ? stripHtml(singleActivityData.english_description ?? "")
-    : stripHtml(singleActivityData.bangla_description ?? "");
+    ? singleActivityData?.english_short_description
+    : singleActivityData?.bangla_short_description;
 
   const hashtag = isEnglish
     ? `#${singleActivityData.english_title?.replace(/\s+/g, "")}`
