@@ -24,6 +24,23 @@ type ShareProps = {
   hashtag: string;
   description: string;
   imageUrl?: string;
+  imageAlt?: string;
+};
+
+// Helper function to set/update meta tags
+const setMetaTag = (
+  selector: string,
+  attribute: string,
+  value: string,
+  content: string,
+) => {
+  let meta = document.querySelector(selector);
+  if (!meta) {
+    meta = document.createElement("meta");
+    meta.setAttribute(attribute, value);
+    document.head.appendChild(meta);
+  }
+  meta.setAttribute("content", content);
 };
 
 const ShareLink = ({
@@ -32,6 +49,7 @@ const ShareLink = ({
   hashtag,
   description,
   imageUrl,
+  imageAlt,
 }: ShareProps) => {
   const [copied, setCopied] = useState(false);
 
@@ -43,75 +61,65 @@ const ShareLink = ({
 
   // Update meta tags dynamically when language changes
   useEffect(() => {
-    const updateMetaTags = () => {
-      // Update Open Graph meta tags
-      let metaOgTitle = document.querySelector('meta[property="og:title"]');
-      let metaOgDescription = document.querySelector(
-        'meta[property="og:description"]',
-      );
-      let metaOgImage = document.querySelector('meta[property="og:image"]');
-      let metaTwitterTitle = document.querySelector(
-        'meta[name="twitter:title"]',
-      );
-      let metaTwitterDescription = document.querySelector(
-        'meta[name="twitter:description"]',
-      );
-      let metaTwitterImage = document.querySelector(
+    if (!title || !description) return;
+
+    // Update Open Graph meta tags
+    setMetaTag('meta[property="og:title"]', "property", "og:title", title);
+    setMetaTag(
+      'meta[property="og:description"]',
+      "property",
+      "og:description",
+      description,
+    );
+    setMetaTag('meta[property="og:url"]', "property", "og:url", shareUrl);
+
+    if (imageUrl) {
+      setMetaTag('meta[property="og:image"]', "property", "og:image", imageUrl);
+      if (imageAlt) {
+        setMetaTag(
+          'meta[property="og:image:alt"]',
+          "property",
+          "og:image:alt",
+          imageAlt,
+        );
+      }
+    }
+
+    // Update Twitter meta tags
+    setMetaTag('meta[name="twitter:title"]', "name", "twitter:title", title);
+    setMetaTag(
+      'meta[name="twitter:description"]',
+      "name",
+      "twitter:description",
+      description,
+    );
+    setMetaTag(
+      'meta[name="twitter:card"]',
+      "name",
+      "twitter:card",
+      "summary_large_image",
+    );
+
+    if (imageUrl) {
+      setMetaTag(
         'meta[name="twitter:image"]',
+        "name",
+        "twitter:image",
+        imageUrl,
       );
+      if (imageAlt) {
+        setMetaTag(
+          'meta[name="twitter:image:alt"]',
+          "name",
+          "twitter:image:alt",
+          imageAlt,
+        );
+      }
+    }
 
-      // Create meta tags if they don't exist
-      if (!metaOgTitle) {
-        metaOgTitle = document.createElement("meta");
-        metaOgTitle.setAttribute("property", "og:title");
-        document.head.appendChild(metaOgTitle);
-      }
-      if (!metaOgDescription) {
-        metaOgDescription = document.createElement("meta");
-        metaOgDescription.setAttribute("property", "og:description");
-        document.head.appendChild(metaOgDescription);
-      }
-      if (!metaOgImage) {
-        metaOgImage = document.createElement("meta");
-        metaOgImage.setAttribute("property", "og:image");
-        document.head.appendChild(metaOgImage);
-      }
-      if (!metaTwitterTitle) {
-        metaTwitterTitle = document.createElement("meta");
-        metaTwitterTitle.setAttribute("name", "twitter:title");
-        document.head.appendChild(metaTwitterTitle);
-      }
-      if (!metaTwitterDescription) {
-        metaTwitterDescription = document.createElement("meta");
-        metaTwitterDescription.setAttribute("name", "twitter:description");
-        document.head.appendChild(metaTwitterDescription);
-      }
-      if (!metaTwitterImage) {
-        metaTwitterImage = document.createElement("meta");
-        metaTwitterImage.setAttribute("name", "twitter:image");
-        document.head.appendChild(metaTwitterImage);
-      }
-
-      // Update meta tags with current language content
-      metaOgTitle.setAttribute("content", title);
-      metaOgDescription.setAttribute("content", description);
-      if (imageUrl) {
-        metaOgImage.setAttribute("content", imageUrl);
-      }
-      metaTwitterTitle.setAttribute("content", title);
-      metaTwitterDescription.setAttribute("content", description);
-      if (imageUrl) {
-        metaTwitterImage.setAttribute("content", imageUrl);
-      }
-    };
-
-    updateMetaTags();
-  }, [title, description, imageUrl]);
-
-  // Log for debugging
-  useEffect(() => {
-    console.log("ShareLink Props:", { title, description, imageUrl, hashtag });
-  }, [title, description, imageUrl, hashtag]);
+    // Update page title
+    document.title = title;
+  }, [title, description, imageUrl, imageAlt, shareUrl]);
 
   return (
     <div className="w-full flex flex-col items-center md:flex-row md:items-center md:justify-between gap-4 py-6 border-t border-gray-200 mt-6">

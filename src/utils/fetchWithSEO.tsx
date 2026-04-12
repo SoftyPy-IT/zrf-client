@@ -49,15 +49,22 @@ export async function fetchWithSEO(
       ? data.english_title || fallbackTitle
       : data.bangla_title || fallbackTitle;
 
+    // FIXED: Use correct short description based on language
     const description = stripHtml(
       isEnglish
-        ? data.bangla_short_description || ""
+        ? data.english_short_description || ""
         : data.bangla_short_description || "",
     );
 
+    // Use language-specific images
     const image = isEnglish
       ? data.eng_images?.[0] || "/default-image.jpg"
       : data.bng_Images?.[0] || "/default-image.jpg";
+
+    // Use img_tagline for image alt text
+    const imageAlt = isEnglish
+      ? data.img_tagline_english || title
+      : data.img_tagline_bangla || title;
 
     const url = `${process.env.NEXT_PUBLIC_SITE_URL}/${endpoint}/${id}`;
 
@@ -69,7 +76,7 @@ export async function fetchWithSEO(
         description,
         type: "article",
         url,
-        images: [{ url: image, width: 1200, height: 630, alt: title }],
+        images: [{ url: image, width: 1200, height: 630, alt: imageAlt }],
       },
       twitter: {
         card: "summary_large_image",

@@ -39,24 +39,29 @@ const SingleActivity = ({
 
   const isEnglish = language === "ENG";
 
-  // Use bangla_title and bangla_short_description when language is BNG
+  // Use language-specific content
   const title = isEnglish
     ? singleActivityData.english_title
     : singleActivityData.bangla_title;
 
-  // FIX: Use correct short description based on language
+  // FIXED: Use correct short description based on language
   const description = isEnglish
-    ? stripHtml(singleActivityData.bangla_short_description ?? "")
+    ? stripHtml(singleActivityData.english_short_description ?? "")
     : stripHtml(singleActivityData.bangla_short_description ?? "");
 
   const hashtag = isEnglish
     ? `#${singleActivityData.english_title?.replace(/\s+/g, "")}`
     : `#${singleActivityData.bangla_title?.replace(/\s+/g, "")}`;
 
-  // FIX: Use correct images based on language
+  // Use language-specific images
   const shareImage = isEnglish
     ? singleActivityData.eng_images?.[0]
     : singleActivityData.bng_Images?.[0];
+
+  // Use img_tagline for image alt text
+  const imageAlt = isEnglish
+    ? singleActivityData.img_tagline_english || title
+    : singleActivityData.img_tagline_bangla || title;
 
   // Debug log to verify data
   console.log("Current language:", language);
@@ -64,6 +69,7 @@ const SingleActivity = ({
   console.log("Title:", title);
   console.log("Description:", description);
   console.log("Share Image:", shareImage);
+  console.log("Image Alt:", imageAlt);
 
   return (
     <div>
@@ -82,25 +88,25 @@ const SingleActivity = ({
                 {isEnglish
                   ? singleActivityData.eng_images
                       ?.slice(0, 1)
-                      .map((img: string) => (
+                      .map((img: string, idx: number) => (
                         <Image
                           width={500}
                           height={500}
-                          key={img}
+                          key={idx}
                           src={img}
-                          alt={title || "Activity Image"}
+                          alt={imageAlt}
                           className="rounded-lg w-full h-full object-cover"
                         />
                       ))
                   : singleActivityData.bng_Images
                       ?.slice(0, 1)
-                      .map((img: string) => (
+                      .map((img: string, idx: number) => (
                         <Image
                           width={500}
                           height={500}
-                          key={img}
+                          key={idx}
                           src={img}
-                          alt={title || "Activity Image"}
+                          alt={imageAlt}
                           className="rounded-lg w-full h-full object-cover"
                         />
                       ))}
@@ -133,6 +139,7 @@ const SingleActivity = ({
           hashtag={hashtag}
           description={description}
           imageUrl={shareImage}
+          imageAlt={imageAlt}
         />
       </Container>
     </div>
