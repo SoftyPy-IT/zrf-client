@@ -1,3 +1,4 @@
+// components/share/ShareLink/ShareLink.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -26,6 +27,22 @@ type ShareProps = {
   imageUrl?: string;
 };
 
+// ✅ Helper: meta tag set/create করার utility
+const setMetaTag = (
+  selector: string,
+  attribute: string,
+  value: string,
+  content: string,
+) => {
+  let meta = document.querySelector(selector);
+  if (!meta) {
+    meta = document.createElement("meta");
+    meta.setAttribute(attribute, value);
+    document.head.appendChild(meta);
+  }
+  meta.setAttribute("content", content);
+};
+
 const ShareLink = ({
   shareUrl,
   title,
@@ -41,78 +58,50 @@ const ShareLink = ({
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // Update meta tags dynamically when language changes
+  // ✅ title, description, imageUrl যেকোনো একটা বদলালেই সব meta tag update হবে
   useEffect(() => {
-    // Update Open Graph meta tags dynamically
-    let metaOgTitle = document.querySelector('meta[property="og:title"]');
-    let metaOgDescription = document.querySelector(
+    if (!title || !description) return;
+
+    // Open Graph
+    setMetaTag('meta[property="og:title"]', "property", "og:title", title);
+    setMetaTag(
       'meta[property="og:description"]',
+      "property",
+      "og:description",
+      description,
     );
-    let metaOgImage = document.querySelector('meta[property="og:image"]');
-    let metaTwitterTitle = document.querySelector('meta[name="twitter:title"]');
-    let metaTwitterDescription = document.querySelector(
+    setMetaTag('meta[property="og:url"]', "property", "og:url", shareUrl);
+    if (imageUrl) {
+      setMetaTag('meta[property="og:image"]', "property", "og:image", imageUrl);
+    }
+
+    // Twitter
+    setMetaTag('meta[name="twitter:title"]', "name", "twitter:title", title);
+    setMetaTag(
       'meta[name="twitter:description"]',
+      "name",
+      "twitter:description",
+      description,
     );
-    let metaTwitterImage = document.querySelector('meta[name="twitter:image"]');
-
-    // Create meta tags if they don't exist
-    if (!metaOgTitle) {
-      metaOgTitle = document.createElement("meta");
-      metaOgTitle.setAttribute("property", "og:title");
-      document.head.appendChild(metaOgTitle);
-    }
-
-    if (!metaOgDescription) {
-      metaOgDescription = document.createElement("meta");
-      metaOgDescription.setAttribute("property", "og:description");
-      document.head.appendChild(metaOgDescription);
-    }
-
-    if (!metaOgImage) {
-      metaOgImage = document.createElement("meta");
-      metaOgImage.setAttribute("property", "og:image");
-      document.head.appendChild(metaOgImage);
-    }
-
-    if (!metaTwitterTitle) {
-      metaTwitterTitle = document.createElement("meta");
-      metaTwitterTitle.setAttribute("name", "twitter:title");
-      document.head.appendChild(metaTwitterTitle);
-    }
-
-    if (!metaTwitterDescription) {
-      metaTwitterDescription = document.createElement("meta");
-      metaTwitterDescription.setAttribute("name", "twitter:description");
-      document.head.appendChild(metaTwitterDescription);
-    }
-
-    if (!metaTwitterImage) {
-      metaTwitterImage = document.createElement("meta");
-      metaTwitterImage.setAttribute("name", "twitter:image");
-      document.head.appendChild(metaTwitterImage);
-    }
-
-    // Update meta tags with current language content
-    metaOgTitle.setAttribute("content", title);
-    metaOgDescription.setAttribute("content", description);
     if (imageUrl) {
-      metaOgImage.setAttribute("content", imageUrl);
+      setMetaTag(
+        'meta[name="twitter:image"]',
+        "name",
+        "twitter:image",
+        imageUrl,
+      );
     }
-    metaTwitterTitle.setAttribute("content", title);
-    metaTwitterDescription.setAttribute("content", description);
-    if (imageUrl) {
-      metaTwitterImage.setAttribute("content", imageUrl);
-    }
-  }, [title, description, imageUrl]);
+
+    // Page title
+    document.title = title;
+  }, [title, description, imageUrl, shareUrl]); // ✅ সব dependency সঠিকভাবে আছে
 
   return (
     <div className="w-full flex flex-col items-center md:flex-row md:items-center md:justify-between gap-4 py-6 border-t border-gray-200 mt-6">
-      {/* Left Section */}
       <h4 className="text-sm md:text-base font-semibold text-gray-700">
         Share this article:
       </h4>
 
-      {/* Share Buttons */}
       <div className="flex flex-wrap justify-center gap-4">
         <Tooltip title="Share on WhatsApp" arrow>
           <WhatsappShareButton url={shareUrl} title={title}>
@@ -184,7 +173,6 @@ const ShareLink = ({
         </Tooltip>
       </div>
 
-      {/* Copy Link Section */}
       <div
         onClick={handleCopy}
         className={`flex items-center gap-2 px-4 py-2 rounded-full border cursor-pointer transition-all duration-300 ${
