@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Container from "@/components/share/Container";
 import ShareLink from "@/components/share/ShareLink/ShareLink";
@@ -9,14 +9,27 @@ import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 import ActivitySidebar from "./ActivitySidebar";
 import { useLanguage } from "@/provider/LanguageProvider";
 import RenderContent from "@/components/Common/RenderContent";
+import { stripHtml } from "@/utils/stripHtml";
 
 type SingleActivityProps = {
   singleActivityData: TActivity;
+  initialLanguage?: string;
 };
 
-const SingleActivity = ({ singleActivityData }: SingleActivityProps) => {
+const SingleActivity = ({
+  singleActivityData,
+  initialLanguage = "ENG",
+}: any) => {
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
-  const { language } = useLanguage();
+  const { language, setLanguage } = useLanguage();
+
+  // Sync client language with server language
+  useEffect(() => {
+    if (initialLanguage && setLanguage) {
+      setLanguage(initialLanguage);
+    }
+  }, [initialLanguage, setLanguage]);
+
   const isEnglish = language === "ENG";
 
   const title = isEnglish
@@ -24,12 +37,13 @@ const SingleActivity = ({ singleActivityData }: SingleActivityProps) => {
     : singleActivityData.bangla_title;
 
   const description = isEnglish
-    ? singleActivityData?.english_short_description
-    : singleActivityData?.bangla_short_description;
+    ? stripHtml(singleActivityData.english_short_description ?? "")
+    : stripHtml(singleActivityData.bangla_short_description ?? "");
 
   const hashtag = isEnglish
     ? `#${singleActivityData.english_title?.replace(/\s+/g, "")}`
     : `#${singleActivityData.bangla_title?.replace(/\s+/g, "")}`;
+
   const shareImage = isEnglish
     ? singleActivityData.eng_images?.[0]
     : singleActivityData.bng_Images?.[0];
@@ -51,7 +65,7 @@ const SingleActivity = ({ singleActivityData }: SingleActivityProps) => {
                 {isEnglish
                   ? singleActivityData.eng_images
                       ?.slice(0, 1)
-                      .map((img) => (
+                      .map((img: any) => (
                         <Image
                           width={500}
                           height={500}
@@ -63,7 +77,7 @@ const SingleActivity = ({ singleActivityData }: SingleActivityProps) => {
                       ))
                   : singleActivityData.bng_Images
                       ?.slice(0, 1)
-                      .map((img) => (
+                      .map((img: any) => (
                         <Image
                           width={500}
                           height={500}
