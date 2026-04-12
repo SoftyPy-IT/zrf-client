@@ -49,11 +49,9 @@ export async function fetchWithSEO(
       ? data.english_title || fallbackTitle
       : data.bangla_title || fallbackTitle;
 
-    const description = stripHtml(
-      isEnglish
-        ? data.english_short_description || ""
-        : data.bangla_short_description || "",
-    );
+    const description = isEnglish
+      ? data.english_short_description
+      : data.bangla_short_description;
 
     const image = isEnglish
       ? data.eng_images?.[0] || "/default-image.jpg"
