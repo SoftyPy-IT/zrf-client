@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Container from "@/components/share/Container";
 import ShareLink from "@/components/share/ShareLink/ShareLink";
@@ -22,20 +22,29 @@ const SingleActivity = ({
 }: any) => {
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
   const { language, setLanguage } = useLanguage();
+  const [mounted, setMounted] = useState(false);
 
   // Sync client language with server language
   useEffect(() => {
     if (initialLanguage && setLanguage) {
       setLanguage(initialLanguage);
     }
+    setMounted(true);
   }, [initialLanguage, setLanguage]);
+
+  // Don't render until mounted to avoid hydration mismatch
+  if (!mounted) {
+    return null;
+  }
 
   const isEnglish = language === "ENG";
 
+  // Use bangla_title and bangla_short_description when language is BNG
   const title = isEnglish
     ? singleActivityData.english_title
     : singleActivityData.bangla_title;
 
+  // FIX: Use correct short description based on language
   const description = isEnglish
     ? stripHtml(singleActivityData.english_short_description ?? "")
     : stripHtml(singleActivityData.bangla_short_description ?? "");
@@ -44,9 +53,17 @@ const SingleActivity = ({
     ? `#${singleActivityData.english_title?.replace(/\s+/g, "")}`
     : `#${singleActivityData.bangla_title?.replace(/\s+/g, "")}`;
 
+  // FIX: Use correct images based on language
   const shareImage = isEnglish
     ? singleActivityData.eng_images?.[0]
     : singleActivityData.bng_Images?.[0];
+
+  // Debug log to verify data
+  console.log("Current language:", language);
+  console.log("Is English:", isEnglish);
+  console.log("Title:", title);
+  console.log("Description:", description);
+  console.log("Share Image:", shareImage);
 
   return (
     <div>
@@ -65,7 +82,7 @@ const SingleActivity = ({
                 {isEnglish
                   ? singleActivityData.eng_images
                       ?.slice(0, 1)
-                      .map((img: any) => (
+                      .map((img: string) => (
                         <Image
                           width={500}
                           height={500}
@@ -77,7 +94,7 @@ const SingleActivity = ({
                       ))
                   : singleActivityData.bng_Images
                       ?.slice(0, 1)
-                      .map((img: any) => (
+                      .map((img: string) => (
                         <Image
                           width={500}
                           height={500}

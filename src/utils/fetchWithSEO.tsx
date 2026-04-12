@@ -1,7 +1,6 @@
 // utils/fetchWithSEO.ts
 import { Metadata } from "next";
 import { stripHtml } from "./stripHtml";
-import { cookies } from "next/headers";
 
 export async function fetchWithSEO(
   endpoint: string,
@@ -39,24 +38,13 @@ export async function fetchWithSEO(
       };
     }
 
-    // Get language from cookies (or default to ENG)
-    const cookieStore = cookies();
-    const language = cookieStore.get("language")?.value || "ENG";
-    const isEnglish = language === "ENG";
-
-    // Use language-specific content for metadata
-    const title = isEnglish
-      ? data.english_title || fallbackTitle
-      : data.bangla_title || fallbackTitle;
-
-    const description = isEnglish
-      ? data.english_short_description
-      : data.bangla_short_description;
-
-    const image = isEnglish
-      ? data.eng_images?.[0] || "/default-image.jpg"
-      : data.bng_Images?.[0] || "/default-image.jpg";
-
+    // For metadata, use English as default (or you can use both)
+    const title = data.english_title || data.bangla_title || fallbackTitle;
+    const description = stripHtml(
+      data.english_short_description || data.bangla_short_description || "",
+    );
+    const image =
+      data.eng_images?.[0] || data.bng_Images?.[0] || "/default-image.jpg";
     const url = `${process.env.NEXT_PUBLIC_SITE_URL}/${endpoint}/${id}`;
 
     const metadata: Metadata = {
@@ -77,10 +65,6 @@ export async function fetchWithSEO(
       },
       alternates: {
         canonical: url,
-        languages: {
-          en: `${process.env.NEXT_PUBLIC_SITE_URL}/en/${endpoint}/${id}`,
-          bn: `${process.env.NEXT_PUBLIC_SITE_URL}/bn/${endpoint}/${id}`,
-        },
       },
     };
 

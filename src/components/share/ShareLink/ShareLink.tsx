@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   FacebookShareButton,
   LinkedinShareButton,
@@ -22,7 +22,7 @@ type ShareProps = {
   shareUrl: string;
   title: string;
   hashtag: string;
-  description: any;
+  description: string;
   imageUrl?: string;
 };
 
@@ -40,6 +40,70 @@ const ShareLink = ({
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  // Update meta tags dynamically when language changes
+  useEffect(() => {
+    // Update Open Graph meta tags dynamically
+    let metaOgTitle = document.querySelector('meta[property="og:title"]');
+    let metaOgDescription = document.querySelector(
+      'meta[property="og:description"]',
+    );
+    let metaOgImage = document.querySelector('meta[property="og:image"]');
+    let metaTwitterTitle = document.querySelector('meta[name="twitter:title"]');
+    let metaTwitterDescription = document.querySelector(
+      'meta[name="twitter:description"]',
+    );
+    let metaTwitterImage = document.querySelector('meta[name="twitter:image"]');
+
+    // Create meta tags if they don't exist
+    if (!metaOgTitle) {
+      metaOgTitle = document.createElement("meta");
+      metaOgTitle.setAttribute("property", "og:title");
+      document.head.appendChild(metaOgTitle);
+    }
+
+    if (!metaOgDescription) {
+      metaOgDescription = document.createElement("meta");
+      metaOgDescription.setAttribute("property", "og:description");
+      document.head.appendChild(metaOgDescription);
+    }
+
+    if (!metaOgImage) {
+      metaOgImage = document.createElement("meta");
+      metaOgImage.setAttribute("property", "og:image");
+      document.head.appendChild(metaOgImage);
+    }
+
+    if (!metaTwitterTitle) {
+      metaTwitterTitle = document.createElement("meta");
+      metaTwitterTitle.setAttribute("name", "twitter:title");
+      document.head.appendChild(metaTwitterTitle);
+    }
+
+    if (!metaTwitterDescription) {
+      metaTwitterDescription = document.createElement("meta");
+      metaTwitterDescription.setAttribute("name", "twitter:description");
+      document.head.appendChild(metaTwitterDescription);
+    }
+
+    if (!metaTwitterImage) {
+      metaTwitterImage = document.createElement("meta");
+      metaTwitterImage.setAttribute("name", "twitter:image");
+      document.head.appendChild(metaTwitterImage);
+    }
+
+    // Update meta tags with current language content
+    metaOgTitle.setAttribute("content", title);
+    metaOgDescription.setAttribute("content", description);
+    if (imageUrl) {
+      metaOgImage.setAttribute("content", imageUrl);
+    }
+    metaTwitterTitle.setAttribute("content", title);
+    metaTwitterDescription.setAttribute("content", description);
+    if (imageUrl) {
+      metaTwitterImage.setAttribute("content", imageUrl);
+    }
+  }, [title, description, imageUrl]);
 
   return (
     <div className="w-full flex flex-col items-center md:flex-row md:items-center md:justify-between gap-4 py-6 border-t border-gray-200 mt-6">
@@ -63,7 +127,6 @@ const ShareLink = ({
         </Tooltip>
 
         <Tooltip title="Share on Facebook" arrow>
-          {/* Facebook only accepts url and hashtag - no quote/description/image props in v5+ */}
           <FacebookShareButton url={shareUrl} hashtag={hashtag}>
             <Image
               src={facebook}
