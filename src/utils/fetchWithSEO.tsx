@@ -51,7 +51,7 @@ export async function fetchWithSEO(
 
     const description = stripHtml(
       isEnglish
-        ? data.english_short_description || ""
+        ? data.bangla_short_description || ""
         : data.bangla_short_description || "",
     );
 

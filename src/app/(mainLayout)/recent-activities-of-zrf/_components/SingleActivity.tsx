@@ -46,7 +46,7 @@ const SingleActivity = ({
 
   // FIX: Use correct short description based on language
   const description = isEnglish
-    ? stripHtml(singleActivityData.english_short_description ?? "")
+    ? stripHtml(singleActivityData.bangla_short_description ?? "")
     : stripHtml(singleActivityData.bangla_short_description ?? "");
 
   const hashtag = isEnglish
