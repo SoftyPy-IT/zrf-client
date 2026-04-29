@@ -22,14 +22,13 @@ import {
 } from "@mui/material";
 import { KeyboardArrowUp } from "@mui/icons-material";
 import DonationModal from "@/components/Donation/DonationModal";
+import { useLanguage } from "@/provider/LanguageProvider";
 
-type FooterProps = {
-  language: string;
-};
 
-const FooterData = ({ language }: FooterProps) => {
+
+const FooterData = () => {
   const [modalOpen, setModalOpen] = useState(false);
-
+  const { language } = useLanguage()
   const buttonStyle = {
     width: "120px",
     height: "30px",
@@ -52,7 +51,7 @@ const FooterData = ({ language }: FooterProps) => {
 
   return (
     <>
-      <div className="bg-[#20bd86] relative sectionMargin">
+      <div className="bg-[#20bd86] relative ">
         <Container>
           <div className="relative md:gap-0 gap-y-3 flex flex-col md:flex-row justify-between items-center py-8 z-10">
             <p className="text-xl lg:text-3xl text-white font-sans uppercase">

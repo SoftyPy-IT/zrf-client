@@ -125,13 +125,13 @@ const FetchImactData: React.FC<overviewProps> = ({
   }, []);
   const impactStats = [
     {
-      number: "100K+",
+      number: "1000K+",
       labelEn: "Lives Impacted",
       labelBn: "উপকৃত মানুষ",
       icon: <People className="w-6 h-6" />,
     },
     {
-      number: "50+",
+      number: "300K+",
       labelEn: "Projects Completed",
       labelBn: "সম্পন্ন প্রকল্প",
       icon: <CheckCircle className="w-6 h-6" />,

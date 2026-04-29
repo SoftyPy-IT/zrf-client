@@ -1,410 +1,242 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./Header.css";
 import Link from "next/link";
 import Image from "next/image";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import logo from "../../../assets/images/logo/logo.svg";
 import Container from "../Container";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import MenuIcon from "@mui/icons-material/Menu";
-import CloseIcon from "@mui/icons-material/Close";
 import { useLanguage } from "@/provider/LanguageProvider";
-import {
-  Home,
-  Info,
-  Work,
-  Book,
-  Event,
-  Language,
-  VolunteerActivism,
-  School,
-  HealthAndSafety,
-  Agriculture,
-  WaterDrop,
-  Forest,
-  KeyboardArrowDown,
-  DonutLarge,
-  People,
-  Description,
-  Campaign,
-} from "@mui/icons-material";
 
 const Header = () => {
   const { language, setLanguage } = useLanguage();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const [activeMobileDropdown, setActiveMobileDropdown] = useState<
-    string | null
-  >(null);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 100) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
+  const [open, setOpen] = useState(true);
+  const [mobileMenu, setMobileMenu] = useState(true);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
-    document.body.style.overflow = !mobileMenuOpen ? "hidden" : "auto";
+    setOpen((open) => !open);
   };
 
   const closeMobileMenu = () => {
-    setMobileMenuOpen(false);
-    document.body.style.overflow = "auto";
+    setOpen(true);
   };
 
-  const toggleMobileDropdown = (name: string) => {
-    if (activeMobileDropdown === name) {
-      setActiveMobileDropdown(null);
-    } else {
-      setActiveMobileDropdown(name);
-    }
-  };
-
-  const navItems = [
-    { nameEn: "Home", nameBn: "প্রচ্ছদ", href: "/", icon: <Home /> },
-    {
-      nameEn: "Who We Are",
-      nameBn: "আমাদের সম্পর্কে",
-      href: "#",
-      hasDropdown: true,
-      dropdownItems: [
-        {
-          nameEn: "Message of President",
-          nameBn: "প্রেসিডেন্ট এর বাণী",
-          href: "/message-of-president",
-          icon: <Campaign />,
-        },
-        {
-          nameEn: "Message of Vice President",
-          nameBn: "ভাইস প্রেসিডেন্ট এর বাণী",
-          href: "/message-of-vice-president",
-          icon: <Campaign />,
-        },
-        {
-          nameEn: "Message of Executive Director",
-          nameBn: "নির্বাহী পরিচালক এর বাণী",
-          href: "/message-of-director",
-          icon: <Campaign />,
-        },
-        {
-          nameEn: "Committee",
-          nameBn: "কমিটি",
-          href: "/committee",
-          icon: <People />,
-        },
-        {
-          nameEn: "About Us",
-          nameBn: "আমাদের সম্পর্কে",
-          href: "/about",
-          icon: <Info />,
-        },
-        {
-          nameEn: "Our Volunteers",
-          nameBn: "আমাদের স্বেচ্ছাসেবক",
-          href: "/volunteer",
-          icon: <VolunteerActivism />,
-        },
-      ],
-    },
-    {
-      nameEn: "What We Do",
-      nameBn: "আমাদের কার্যক্রম",
-      href: "#",
-      hasDropdown: true,
-      icon: <Work />,
-      dropdownItems: [
-        {
-          nameEn: "Our Projects",
-          nameBn: "আমাদের প্রকল্প",
-          href: "/our-projects",
-          icon: <Work />,
-        },
-        {
-          nameEn: "ZRF Education Programs",
-          nameBn: "জেডআরএফ শিক্ষা কার্যক্রম",
-          href: "/education",
-          icon: <School />,
-        },
-        {
-          nameEn: "ZRF Rehabilitation Programs",
-          nameBn: "জেডআরএফ পুনর্বাসন কার্যক্রম",
-          href: "/whatwedo/rehabilitation",
-          icon: <VolunteerActivism />,
-        },
-        {
-          nameEn: "Covid Programs",
-          nameBn: "কোভিড কার্যক্রম",
-          href: "/whatwedo/covid",
-          icon: <HealthAndSafety />,
-        },
-        {
-          nameEn: "Climate Change Programs",
-          nameBn: "জলবায়ু পরিবর্তন কার্যক্রম",
-          href: "/climate-change",
-          icon: <Forest />,
-        },
-        {
-          nameEn: "Health Services Programs",
-          nameBn: "স্বাস্থ্য সেবা কার্যক্রম",
-          href: "/health-services",
-          icon: <HealthAndSafety />,
-        },
-        {
-          nameEn: "Our Initiatives",
-          nameBn: "আমাদের উদ্যোগ",
-          href: "/whatwedo/initiatives",
-          icon: <Agriculture />,
-        },
-        {
-          nameEn: "Our Programs",
-          nameBn: "আমাদের কর্মসূচি",
-          href: "/program",
-          icon: <WaterDrop />,
-        },
-      ],
-    },
-    {
-      nameEn: "Biography",
-      nameBn: "জীবনী",
-      href: "/ziaur-rahman",
-      icon: <Description />,
-    },
-    { nameEn: "E-Books", nameBn: "ই-বুক", href: "/ebooks", icon: <Book /> },
-    {
-      nameEn: "Upcoming Programs",
-      nameBn: "আসন্ন প্রোগ্রাম",
-      href: "/news",
-      icon: <Event />,
-    },
-  ];
+  const dropdown =
+    "dropdownMenu absolute flex flex-col justify-center mt-[20px] md:mt-[15px] lg:mt-[30px] xl:mt-[18px] rounded-md bg-white shadow-md border border-t-4 border-t-green-600 invisible opacity-0  origin-top z-50 text-black ";
 
   return (
-    <>
-      <header className={`header ${scrolled ? "header-scrolled" : ""}`}>
-        <Container>
-          <div className="header-container">
-            {/* Logo */}
-            <Box
-              component={Link}
-              href="/"
-              className="logo-link"
-              onClick={closeMobileMenu}
-            >
-              <div className="logo-wrapper">
-                <div className="logo-image-wrapper">
-                  <Image
-                    src={logo}
-                    alt="Ziaur Rahman Foundation Logo"
-                    className="logo-image"
-                    width={60}
-                    height={60}
-                    priority
-                  />
-                  <div className="logo-glow"></div>
-                </div>
+    <div className="sticky top-0 w-full bg-white shadow-md  z-[999999]">
+      <Container>
+        <div className="flex justify-between items-center py-1 md:py-0">
+          <Box component={Link} href="/">
+            <div className="flex items-center md:gap-3">
+              <Image
+                src={logo}
+                alt="logo"
+                className="rounded-full logo "
+                width={80}
+                height={80}
+              />
+            </div>
+          </Box>
+
+          <div>
+            {open ? (
+              <div onClick={handleClose} className="bar1">
+                <span></span>
+                <span></span>
+                <span></span>
               </div>
-            </Box>
+            ) : (
+              <div
+                onClick={handleOpen}
+                className={`bar2 ${open ? "" : "activeBar"}`}
+              >
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            )}
 
-            {/* Desktop Navigation */}
-            <nav className="nav-desktop">
-              <ul className="nav-list">
-                {navItems.map((item, index) => (
-                  <li
-                    key={index}
-                    className={`nav-item ${item.hasDropdown ? "has-dropdown" : ""}`}
-                    onMouseEnter={() =>
-                      item.hasDropdown && setActiveDropdown(item.nameEn)
-                    }
-                    onMouseLeave={() =>
-                      item.hasDropdown && setActiveDropdown(null)
-                    }
-                  >
-                    <Link
-                      href={item.href}
-                      className="nav-link"
-                      onClick={closeMobileMenu}
-                    >
-                      {/* <span className="nav-icon">{item.icon}</span> */}
-                      <span>
-                        {language === "ENG" ? item.nameEn : item.nameBn}
-                      </span>
-                      {item.hasDropdown && (
-                        <KeyboardArrowDown className="dropdown-icon" />
-                      )}
-                    </Link>
-
-                    {item.hasDropdown && (
-                      <ul
-                        className={`dropdown-menu ${activeDropdown === item.nameEn ? "active" : ""}`}
+            <>
+              <ul
+                className={`lg:w-full xl:w-full lg:py-2 flex justify-center text-sm lg:text-base xl:text-bas  navItems ${open ? "" : "activeMenu z-50"
+                  }`}
+              >
+                <li className="lg:border-none border-b lg:py-0 py-1">
+                  <Link href="/" onClick={closeMobileMenu}>
+                    {language === "ENG" ? "Home" : "প্রচ্ছদ"}
+                  </Link>
+                </li>
+                <li className="dropdownMenuWrap relative">
+                  <Link href="#">
+                    {language === "ENG" ? "Who We Are" : "আমাদের সম্পর্কে"}
+                    <KeyboardArrowDownIcon />
+                  </Link>
+                  <ul className={`w-[290px] h-[160px]  ${dropdown}`}>
+                    <li>
+                      <Link
+                        href="/message-of-president"
+                        onClick={closeMobileMenu}
                       >
-                        {item.dropdownItems?.map((subItem, subIndex) => (
-                          <li key={subIndex} className="dropdown-item">
-                            <Link href={subItem.href} onClick={closeMobileMenu}>
-                              <span className="dropdown-icon-small">
-                                {subItem.icon}
-                              </span>
-                              <span>
-                                {language === "ENG"
-                                  ? subItem.nameEn
-                                  : subItem.nameBn}
-                              </span>
-                              <span className="dropdown-arrow">
-                                <KeyboardArrowDown />
-                              </span>
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </nav>
-
-            {/* Language Switcher */}
-            <div className="language-switcher ">
-              <button
-                onClick={() => setLanguage("ENG")}
-                className={`lang-btn ${language === "ENG" ? "active" : ""}`}
-              >
-                <Language className="lang-icon" />
-                <span>ENG</span>
-              </button>
-              <button
-                onClick={() => setLanguage("BNG")}
-                className={`lang-btn ${language === "BNG" ? "active" : ""}`}
-              >
-                <span>বাংলা</span>
-              </button>
-            </div>
-
-            {/* Donate Button */}
-            <Link href="/donations">
-              <button className="donate-btn ">
-                <DonutLarge className="donate-icon" />
-                <span>{language === "ENG" ? "Donate Now" : "দান করুন"}</span>
-              </button>
-            </Link>
-
-            {/* Mobile Menu Button */}
-            <button className="mobile-menu-btn" onClick={toggleMobileMenu}>
-              {mobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
-            </button>
-          </div>
-        </Container>
-      </header>
-
-      {/* Mobile Menu Overlay */}
-      <div
-        className={`mobile-overlay ${mobileMenuOpen ? "active" : ""}`}
-        onClick={closeMobileMenu}
-      />
-
-      {/* Mobile Navigation */}
-      <nav className={`nav-mobile ${mobileMenuOpen ? "active" : ""}`}>
-        <div className="mobile-nav-header">
-          <div className="mobile-logo">
-            <div className="mobile-logo-image">
-              <Image src={logo} alt="Logo" width={40} height={40} />
-            </div>
-            <div>
-              <div className="mobile-logo-title">Ziaur Rahman</div>
-              <div className="mobile-logo-subtitle">Foundation</div>
-            </div>
-          </div>
-          <button className="mobile-close-btn" onClick={closeMobileMenu}>
-            <CloseIcon />
-          </button>
-        </div>
-
-        <ul className="mobile-nav-list">
-          {navItems.map((item, index) => (
-            <li key={index} className="mobile-nav-item">
-              {item.hasDropdown ? (
-                <>
-                  <div
-                    className={`mobile-nav-link mobile-dropdown-trigger ${activeMobileDropdown === item.nameEn ? "active" : ""}`}
-                    onClick={() => toggleMobileDropdown(item.nameEn)}
-                  >
-                    <span className="nav-icon">{item.icon}</span>
-                    <span>
-                      {language === "ENG" ? item.nameEn : item.nameBn}
-                    </span>
-                    <KeyboardArrowDownIcon className="dropdown-icon-mobile" />
-                  </div>
-                  <ul
-                    className={`mobile-dropdown ${activeMobileDropdown === item.nameEn ? "active" : ""}`}
-                  >
-                    {item.dropdownItems?.map((subItem, subIndex) => (
-                      <li key={subIndex}>
-                        <Link href={subItem.href} onClick={closeMobileMenu}>
-                          <span className="dropdown-icon-small">
-                            {subItem.icon}
-                          </span>
-                          <span>
-                            {language === "ENG"
-                              ? subItem.nameEn
-                              : subItem.nameBn}
-                          </span>
-                        </Link>
-                      </li>
-                    ))}
+                        {language === "ENG"
+                          ? "Message of President"
+                          : "প্রেসিডেন্ট এর বাণী"}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/message-of-vice-president"
+                        onClick={closeMobileMenu}
+                      >
+                        {language === "ENG"
+                          ? "Message of Vice President"
+                          : "ভাইস প্রেসিডেন্ট এর বাণী"}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/message-of-director"
+                        onClick={closeMobileMenu}
+                      >
+                        {language === "ENG"
+                          ? "Message of Executive Director"
+                          : "নির্বাহী পরিচালক এর বাণী"}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/committee" onClick={closeMobileMenu}>
+                        {language === "ENG" ? "Committee" : "কমিটি"}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/about" onClick={closeMobileMenu}>
+                        {language === "ENG" ? "About Us" : "আমাদের সম্পর্কে"}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/volunteer" onClick={closeMobileMenu}>
+                        {language === "ENG"
+                          ? "Our Volunteers"
+                          : "আমাদের স্বেচ্ছাসেবক"}
+                      </Link>
+                    </li>
                   </ul>
-                </>
-              ) : (
-                <Link
-                  href={item.href}
-                  className="mobile-nav-link"
-                  onClick={closeMobileMenu}
-                >
-                  <span className="nav-icon">{item.icon}</span>
-                  <span>{language === "ENG" ? item.nameEn : item.nameBn}</span>
-                </Link>
-              )}
-            </li>
-          ))}
-        </ul>
+                </li>
+                <li className="dropdownMenuWrap relative">
+                  <Link href="#">
+                    {language === "ENG" ? "What We Do" : "আমাদের কার্যক্রম"}
+                    <KeyboardArrowDownIcon />
+                  </Link>
+                  <ul className={`w-[240px] submenu  ${dropdown}`}>
+                    <li className="lg:border-none border-b lg:py-0 py-2">
+                      <Link href="/our-projects" onClick={closeMobileMenu}>
+                        {language === "ENG" ? "Our Projects" : "আমাদের প্রকল্প"}
+                      </Link>
+                    </li>
+                    <li className="lg:border-none border-b lg:py-0 py-2">
+                      <Link href="/education" onClick={closeMobileMenu}>
+                        {language === "ENG"
+                          ? "ZRF Education Programs"
+                          : "জেডআরএফ শিক্ষা কার্যক্রম"}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/whatwedo/rehabilitation"
+                        onClick={closeMobileMenu}
+                      >
+                        {language === "ENG"
+                          ? "ZRF Rehabilitation Programs"
+                          : "জেডআরএফ পুনর্বাসন কার্যক্রম"}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/whatwedo/covid" onClick={closeMobileMenu}>
+                        {language === "ENG"
+                          ? "Covid Programs "
+                          : "কোভিড কার্যক্রম"}
+                      </Link>
+                    </li>
+                    <li className="lg:border-none border-b lg:py-0 py-2">
+                      <Link href="/climate-change" onClick={closeMobileMenu}>
+                        {language === "ENG"
+                          ? "Climate Change Programs "
+                          : "জলবায়ু পরিবর্তন কার্যক্রম"}
+                      </Link>
+                    </li>
+                    <li className="lg:border-none border-b lg:py-0 py-2">
+                      <Link href="/health-services" onClick={closeMobileMenu}>
+                        {language === "ENG"
+                          ? "Health Services Programs "
+                          : " স্বাস্থ্য সেবা  কার্যক্রম"}
+                      </Link>
+                    </li>
 
-        <div className="mobile-donate ">
-          <Link href="/donations" onClick={closeMobileMenu}>
-            <button className="mobile-donate-btn">
-              <DonutLarge />
-              <span>{language === "ENG" ? "Donate Now" : "দান করুন"}</span>
+                    <li>
+                      <Link
+                        href="/whatwedo/initiatives"
+                        onClick={closeMobileMenu}
+                      >
+                        {language === "ENG"
+                          ? "Our Initiatives"
+                          : "আমাদের উদ্যোগ"}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/program" onClick={closeMobileMenu}>
+                        {language === "ENG"
+                          ? "Our Programs"
+                          : "আমাদের কর্মসূচি"}
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+                <li className="dropdownMenuWrap relative">
+                  <Link href="/ziaur-rahman" onClick={closeMobileMenu}>
+                    {language === "ENG"
+                      ? "Biography Of Ziaur Rahman"
+                      : "জিয়াউর রহমান এর জীবনী"}
+                  </Link>
+                </li>
+
+                <li className="lg:border-none border-b lg:py-0 py-2">
+                  <Link href="/ebooks" onClick={closeMobileMenu}>
+                    {language === "ENG" ? "E-Books" : "ই-বুক"}
+                  </Link>
+                </li>
+                <li className="lg:border-none border-b lg:py-0 py-2">
+                  <Link href="/news" onClick={closeMobileMenu}>
+                    {language === "ENG"
+                      ? "Upcoming Programs"
+                      : "আসন্ন প্রোগ্রাম"}
+                  </Link>
+                </li>
+              </ul>
+            </>
+          </div>
+          <div className=" xl:block space-x-1 md:space-x-3 mr-[30px] text-center lg:mr-20 md:mr-12 xl:mr-0 ">
+            <button
+              onClick={() => setLanguage("ENG")}
+              className={`bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white ${language === "ENG" ? "opacity-100" : "opacity-60"
+                }`}
+            >
+              ENG
             </button>
-          </Link>
+            <button
+              onClick={() => setLanguage("BNG")}
+              className={`bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3 rounded text-white ${language === "BNG" ? "opacity-100" : "opacity-60"
+                }`}
+            >
+              বাংলা
+            </button>
+          </div>
         </div>
-
-        <div className="mobile-language">
-          <button
-            onClick={() => {
-              setLanguage("ENG");
-              closeMobileMenu();
-            }}
-            className={`mobile-lang-btn ${language === "ENG" ? "active" : ""}`}
-          >
-            English
-          </button>
-          <button
-            onClick={() => {
-              setLanguage("BNG");
-              closeMobileMenu();
-            }}
-            className={`mobile-lang-btn ${language === "BNG" ? "active" : ""}`}
-          >
-            বাংলা
-          </button>
-        </div>
-      </nav>
-    </>
+      </Container>
+    </div>
   );
 };
 
