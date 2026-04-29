@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import EastIcon from "@mui/icons-material/East";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { motion } from "framer-motion";
 import { TActivity } from "@/types/type";
@@ -77,7 +76,6 @@ const RecentActivityRightSide = ({
           >
             <Link href={`/recent-activities-of-zrf/${data._id}`}>
               <div className="flex gap-4 p-4 cursor-pointer">
-                {/* Image Section */}
                 <div className="relative flex-shrink-0 w-24 h-24 md:w-28 md:h-28 rounded-lg overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/20 to-green-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
                   {(language === "ENG" ? data.bng_Images : data.eng_images)
@@ -92,10 +90,7 @@ const RecentActivityRightSide = ({
                         height={120}
                       />
                     ))}
-                  {/* Number Badge */}
-                  <div className="absolute -top-2 -left-2 w-8 h-8 bg-gradient-to-r from-yellow-500 to-green-500 rounded-full flex items-center justify-center text-white font-bold text-sm shadow-lg z-20">
-                    {idx + 1}
-                  </div>
+
                 </div>
 
                 {/* Content Section */}
@@ -129,7 +124,7 @@ const RecentActivityRightSide = ({
         ))}
       </motion.div>
 
-      {/* See All Button */}
+
       <div
 
         className="mt-3 md:mt-5 flex justify-end "

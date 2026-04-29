@@ -118,22 +118,8 @@ const RecentActivity: React.FC<ActivityProps> = ({
                         />
                       ))}
 
-                    {/* Date Badge - Smaller on mobile */}
-                    <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-20 bg-white/95 backdrop-blur-sm px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-lg shadow-md">
-                      <div className="flex items-center gap-0.5 sm:gap-1">
-                        <CalendarTodayIcon className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-green-600" />
-                        <span className="text-[9px] xs:text-xs sm:text-xs font-medium text-gray-800">
-                          {formatDate(data.date)}
-                        </span>
-                      </div>
-                    </div>
 
-                    {/* Category Badge - Smaller on mobile */}
-                    <div className="absolute bottom-2 left-2 sm:bottom-3 sm:left-3 z-20">
-                      <span className="px-1.5 py-0.5 sm:px-2 sm:py-0.5 md:px-3 md:py-1 bg-gradient-to-r from-yellow-500 to-green-500 text-white text-[8px] xs:text-[10px] sm:text-xs font-semibold rounded-full">
-                        {language === "ENG" ? "Activity" : "কার্যক্রম"}
-                      </span>
-                    </div>
+
                   </div>
 
                   <div className="p-2.5 sm:p-3 md:p-4 lg:p-5">
@@ -172,7 +158,6 @@ const RecentActivity: React.FC<ActivityProps> = ({
             </div>
           </motion.div>
 
-          {/* This div is HIDDEN on mobile (hidden), visible on md and up (md:block) */}
           <div className="hidden md:block w-full lg:w-1/3 mt-4 lg:mt-0">
             <RecentActivityRightSide
               activityFilterData={sortedActivityData}

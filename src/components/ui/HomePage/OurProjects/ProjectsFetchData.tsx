@@ -231,7 +231,7 @@ const ProjectsFetchData: React.FC<projectProps> = ({
         </Container>
       </div>
       <StatisticsSection language={language} />
-      <CTASection language={language} />
+      {/* <CTASection language={language} /> */}
     </div>
   );
 };

@@ -18,7 +18,7 @@ import { CheckCircle } from "@mui/icons-material";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import DonationHeader from "@/components/Donation/DonationHeader";
-import DonationForm from "@/components/forms/DonationForm";
+import DonationForm from "@/components/Forms/DonationForm";
 import TestimonialsSection from "@/components/Donation/TestimonialsSection";
 import PartnerSection from "@/components/Donation/PartnerSection";
 

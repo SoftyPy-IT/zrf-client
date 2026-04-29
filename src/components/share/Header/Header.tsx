@@ -375,7 +375,7 @@ const Header = () => {
         </ul>
 
         <div className="mobile-donate ">
-          <Link href="/donation" onClick={closeMobileMenu}>
+          <Link href="/donations" onClick={closeMobileMenu}>
             <button className="mobile-donate-btn">
               <DonutLarge />
               <span>{language === "ENG" ? "Donate Now" : "দান করুন"}</span>
