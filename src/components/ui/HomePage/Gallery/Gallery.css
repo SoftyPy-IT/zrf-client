@@ -7,12 +7,99 @@
 
 .videoCard {
   width: 100%;
-  /* background: #fff;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
-    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-  border-radius: 5px; */
   overflow: hidden;
-  /* height: 400px; */
+}
+.video-swiper {
+  padding: 30px 0 !important;
+}
+
+@media (min-width: 768px) {
+  .video-swiper {
+    padding: 40px 0 !important;
+  }
+}
+
+.video-swiper .swiper-slide {
+  transition: all 0.5s ease;
+}
+
+.video-swiper .swiper-pagination-bullet {
+  background: #216740;
+  opacity: 0.5;
+}
+
+.video-swiper .swiper-pagination-bullet-active {
+  background: #fec909;
+  opacity: 1;
+}
+
+.video-swiper .swiper-button-prev,
+.video-swiper .swiper-button-next {
+  color: #fec909;
+  background: rgba(0, 0, 0, 0.5);
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  backdrop-filter: blur(4px);
+}
+
+@media (min-width: 640px) {
+  .video-swiper .swiper-button-prev,
+  .video-swiper .swiper-button-next {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .video-swiper .swiper-button-prev,
+  .video-swiper .swiper-button-next {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.video-swiper .swiper-button-prev:after,
+.video-swiper .swiper-button-next:after {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+@media (min-width: 640px) {
+  .video-swiper .swiper-button-prev:after,
+  .video-swiper .swiper-button-next:after {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .video-swiper .swiper-button-prev:after,
+  .video-swiper .swiper-button-next:after {
+    font-size: 20px;
+  }
+}
+
+.video-swiper .swiper-button-prev:hover,
+.video-swiper .swiper-button-next:hover {
+  background: rgba(33, 103, 64, 0.8);
+  transform: scale(1.1);
+}
+
+.thumbnail-swiper .swiper-slide {
+  opacity: 0.6;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.thumbnail-swiper .swiper-slide-thumb-active {
+  opacity: 1;
+}
+
+@media (max-width: 640px) {
+  .video-swiper .swiper-button-prev,
+  .video-swiper .swiper-button-next {
+    transform: scale(0.8);
+  }
 }
 
 @media only screen and (max-width:1024px) {
