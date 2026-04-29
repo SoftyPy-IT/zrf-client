@@ -225,22 +225,7 @@ const FooterData = () => {
                   : "কপিরাইট জিয়াউর রহমান ফাউন্ডেশন ২০২৬. সর্বস্বত্ব সংরক্ষিত"}
               </div>
 
-              <IconButton
-                onClick={scrollToTop}
-                sx={{
-                  background: "rgba(33, 103, 64, 0.2)",
-                  color: "#FEC909",
-                  border: "1px solid rgba(254, 201, 9, 0.3)",
-                  "&:hover": {
-                    background: "#216740",
-                    color: "#FEC909",
-                    transform: "translateY(-3px)",
-                  },
-                }}
-                size="small"
-              >
-                <KeyboardArrowUp />
-              </IconButton>
+
             </div>
           </div>
         </Container>
