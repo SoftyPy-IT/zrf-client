@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   FacebookShareButton,
   LinkedinShareButton,
@@ -20,12 +20,37 @@ import email from "../../../../src/assets/icon/email.png";
 
 type ShareProps = {
   shareUrl: string;
-  title?: string;
+  title: string;
   hashtag: string;
-  description?: string;
+  description: string;
+  imageUrl?: string;
+  imageAlt?: string;
 };
 
-const ShareLink = ({ shareUrl, title, hashtag }: ShareProps) => {
+// Helper function to set/update meta tags
+const setMetaTag = (
+  selector: string,
+  attribute: string,
+  value: string,
+  content: string,
+) => {
+  let meta = document.querySelector(selector);
+  if (!meta) {
+    meta = document.createElement("meta");
+    meta.setAttribute(attribute, value);
+    document.head.appendChild(meta);
+  }
+  meta.setAttribute("content", content);
+};
+
+const ShareLink = ({
+  shareUrl,
+  title,
+  hashtag,
+  description,
+  imageUrl,
+  imageAlt,
+}: ShareProps) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -34,14 +59,74 @@ const ShareLink = ({ shareUrl, title, hashtag }: ShareProps) => {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  // Update meta tags dynamically when language changes
+  useEffect(() => {
+    if (!title || !description) return;
+
+    // Update Open Graph meta tags
+    setMetaTag('meta[property="og:title"]', "property", "og:title", title);
+    setMetaTag(
+      'meta[property="og:description"]',
+      "property",
+      "og:description",
+      description,
+    );
+    setMetaTag('meta[property="og:url"]', "property", "og:url", shareUrl);
+
+    if (imageUrl) {
+      setMetaTag('meta[property="og:image"]', "property", "og:image", imageUrl);
+      if (imageAlt) {
+        setMetaTag(
+          'meta[property="og:image:alt"]',
+          "property",
+          "og:image:alt",
+          imageAlt,
+        );
+      }
+    }
+
+    // Update Twitter meta tags
+    setMetaTag('meta[name="twitter:title"]', "name", "twitter:title", title);
+    setMetaTag(
+      'meta[name="twitter:description"]',
+      "name",
+      "twitter:description",
+      description,
+    );
+    setMetaTag(
+      'meta[name="twitter:card"]',
+      "name",
+      "twitter:card",
+      "summary_large_image",
+    );
+
+    if (imageUrl) {
+      setMetaTag(
+        'meta[name="twitter:image"]',
+        "name",
+        "twitter:image",
+        imageUrl,
+      );
+      if (imageAlt) {
+        setMetaTag(
+          'meta[name="twitter:image:alt"]',
+          "name",
+          "twitter:image:alt",
+          imageAlt,
+        );
+      }
+    }
+
+    // Update page title
+    document.title = title;
+  }, [title, description, imageUrl, imageAlt, shareUrl]);
+
   return (
     <div className="w-full flex flex-col items-center md:flex-row md:items-center md:justify-between gap-4 py-6 border-t border-gray-200 mt-6">
-      {/* Left Section */}
       <h4 className="text-sm md:text-base font-semibold text-gray-700">
         Share this article:
       </h4>
 
-      {/* Share Buttons */}
       <div className="flex flex-wrap justify-center gap-4">
         <Tooltip title="Share on WhatsApp" arrow>
           <WhatsappShareButton url={shareUrl} title={title}>
@@ -68,7 +153,12 @@ const ShareLink = ({ shareUrl, title, hashtag }: ShareProps) => {
         </Tooltip>
 
         <Tooltip title="Share on LinkedIn" arrow>
-          <LinkedinShareButton url={shareUrl} title={title}>
+          <LinkedinShareButton
+            url={shareUrl}
+            title={title}
+            summary={description}
+            source={shareUrl}
+          >
             <Image
               src={linkedIn}
               alt="LinkedIn"
@@ -95,7 +185,7 @@ const ShareLink = ({ shareUrl, title, hashtag }: ShareProps) => {
           <EmailShareButton
             url={shareUrl}
             subject={title}
-            body={`Check this out: ${shareUrl}`}
+            body={`${description}\n\nCheck this out: ${shareUrl}`}
           >
             <Image
               src={email}
@@ -108,7 +198,6 @@ const ShareLink = ({ shareUrl, title, hashtag }: ShareProps) => {
         </Tooltip>
       </div>
 
-      {/* Copy Link Section */}
       <div
         onClick={handleCopy}
         className={`flex items-center gap-2 px-4 py-2 rounded-full border cursor-pointer transition-all duration-300 ${

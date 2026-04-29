@@ -15,11 +15,11 @@ interface welcomeProps {
 
 const WelcomeData: React.FC<welcomeProps> = ({ welcomeData, language }) => {
   const welcomeFilterData = welcomeData.filter(
-    (welcome: any) => welcome.category === "Welcome"
+    (welcome: any) => welcome.category === "Welcome",
   );
   return (
     <Container>
-      <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-10 py-24 text-center md:text-left">
+      <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-10 mt-10 md:mt-12 text-center md:text-left">
         {welcomeFilterData?.map((data: TBanner) => (
           <div key={data._id} className="order-2 md:order-1">
             <div className="h-full xl:w-[500px] mx-0 md:mx-5 lg:mx-0 mb-4 md:mb-0 lg:mb-0 space-y-3">

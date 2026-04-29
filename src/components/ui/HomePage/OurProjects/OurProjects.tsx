@@ -4,7 +4,6 @@ import React from "react";
 import { useLanguage } from "@/provider/LanguageProvider";
 import ProjectsFetchData from "./ProjectsFetchData";
 import { useProjectdata } from "@/hooks/useProjectdata";
-import dynamic from "next/dynamic";
  
 
 const OurProjects = () => {

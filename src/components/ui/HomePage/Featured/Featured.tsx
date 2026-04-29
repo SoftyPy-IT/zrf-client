@@ -4,7 +4,6 @@ import { useLanguage } from "@/provider/LanguageProvider";
 import { useProjectdata } from "@/hooks/useProjectdata";
 import FeatureSliderSkeleton from "./FeatureSkeleton";
 
-
 const Featured = () => {
   const { language } = useLanguage();
   const { projectData, loading, error } = useProjectdata();
@@ -25,4 +24,3 @@ const Featured = () => {
 };
 
 export default Featured;
-

@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Container from "@/components/share/Container";
 import ShareLink from "@/components/share/ShareLink/ShareLink";
@@ -13,15 +13,63 @@ import { stripHtml } from "@/utils/stripHtml";
 
 type SingleActivityProps = {
   singleActivityData: TActivity;
+  initialLanguage?: string;
 };
 
-const SingleActivity = ({ singleActivityData }: SingleActivityProps) => {
+const SingleActivity = ({
+  singleActivityData,
+  initialLanguage = "ENG",
+}: any) => {
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
-  const { language } = useLanguage();
-  const description =
-    language === "ENG"
-      ? stripHtml(singleActivityData?.english_description ?? "")
-      : stripHtml(singleActivityData?.bangla_description ?? "");
+  const { language, setLanguage } = useLanguage();
+  const [mounted, setMounted] = useState(false);
+
+  // Sync client language with server language
+  useEffect(() => {
+    if (initialLanguage && setLanguage) {
+      setLanguage(initialLanguage);
+    }
+    setMounted(true);
+  }, [initialLanguage, setLanguage]);
+
+  // Don't render until mounted to avoid hydration mismatch
+  if (!mounted) {
+    return null;
+  }
+
+  const isEnglish = language === "ENG";
+
+  // Use language-specific content
+  const title = isEnglish
+    ? singleActivityData.english_title
+    : singleActivityData.bangla_title;
+
+  // FIXED: Use correct short description based on language
+  const description = isEnglish
+    ? stripHtml(singleActivityData.english_short_description ?? "")
+    : stripHtml(singleActivityData.bangla_short_description ?? "");
+
+  const hashtag = isEnglish
+    ? `#${singleActivityData.english_title?.replace(/\s+/g, "")}`
+    : `#${singleActivityData.bangla_title?.replace(/\s+/g, "")}`;
+
+  // Use language-specific images
+  const shareImage = isEnglish
+    ? singleActivityData.eng_images?.[0]
+    : singleActivityData.bng_Images?.[0];
+
+  // Use img_tagline for image alt text
+  const imageAlt = isEnglish
+    ? singleActivityData.img_tagline_english || title
+    : singleActivityData.img_tagline_bangla || title;
+
+  // Debug log to verify data
+  console.log("Current language:", language);
+  console.log("Is English:", isEnglish);
+  console.log("Title:", title);
+  console.log("Description:", description);
+  console.log("Share Image:", shareImage);
+  console.log("Image Alt:", imageAlt);
 
   return (
     <div>
@@ -37,42 +85,38 @@ const SingleActivity = ({ singleActivityData }: SingleActivityProps) => {
           <div className="w-full grid grid-cols-1">
             <div className="h-full w-full">
               <div className="relative overflow-hidden">
-                {language === "BNG"
-                  ? singleActivityData.bng_Images
+                {isEnglish
+                  ? singleActivityData.eng_images
                       ?.slice(0, 1)
-                      .map((img) => (
+                      .map((img: string, idx: number) => (
                         <Image
                           width={500}
                           height={500}
-                          key={img}
+                          key={idx}
                           src={img}
-                          alt="Top Image"
-                          className="rounded-lg w-full h-full object-cover" 
+                          alt={imageAlt}
+                          className="rounded-lg w-full h-full object-cover"
                         />
                       ))
-                  : singleActivityData.eng_images
+                  : singleActivityData.bng_Images
                       ?.slice(0, 1)
-                      .map((img) => (
+                      .map((img: string, idx: number) => (
                         <Image
                           width={500}
                           height={500}
-                          key={img}
+                          key={idx}
                           src={img}
-                          alt="Top Image"
+                          alt={imageAlt}
                           className="rounded-lg w-full h-full object-cover"
                         />
                       ))}
               </div>
               <div className="mt-5">
-                <h3 className="text-2xl font-semibold">
-                  {language === "ENG"
-                    ? singleActivityData.english_title
-                    : singleActivityData.bangla_title}
-                </h3>
+                <h3 className="text-2xl font-semibold">{title}</h3>
                 <p className="text-justify mt-5">
                   <RenderContent
                     content={
-                      language === "ENG"
+                      isEnglish
                         ? singleActivityData.english_description
                         : singleActivityData.bangla_description
                     }
@@ -91,13 +135,11 @@ const SingleActivity = ({ singleActivityData }: SingleActivityProps) => {
 
         <ShareLink
           shareUrl={shareUrl}
-          title={
-            language === "ENG"
-              ? singleActivityData?.english_title
-              : singleActivityData?.bangla_title
-          }
-          hashtag={`#${singleActivityData?.bangla_title}`}
+          title={title || ""}
+          hashtag={hashtag}
           description={description}
+          imageUrl={shareImage}
+          imageAlt={imageAlt}
         />
       </Container>
     </div>

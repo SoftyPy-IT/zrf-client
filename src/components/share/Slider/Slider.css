@@ -1,6 +1,7 @@
 .sliderWrap {
   width: 100%;
   position: relative;
+  margin-top: 90px;
 }
 
 .sliderContents {
@@ -26,6 +27,9 @@
     width: 100%;
     /* left: 29px; */
   }
+  .sliderWrap {
+    margin-top: 65px;
+}
 }
 
 @media only screen and (max-width: 350px) {
