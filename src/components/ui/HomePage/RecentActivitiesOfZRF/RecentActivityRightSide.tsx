@@ -75,8 +75,8 @@ const RecentActivityRightSide = ({
             className="group relative bg-white rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500"
           >
             <Link href={`/recent-activities-of-zrf/${data._id}`}>
-              <div className="flex gap-4 p-4 cursor-pointer">
-                <div className="relative flex-shrink-0 w-24 h-24 md:w-28 md:h-28 rounded-lg overflow-hidden">
+              <div className="flex gap-2 p-4 cursor-pointer">
+                <div className="relative flex-shrink-0 w-20 h-20 md:w-[105px] md:h-[105px] rounded-lg overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/20 to-green-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
                   {(language === "ENG" ? data.bng_Images : data.eng_images)
                     ?.slice(0, 1)
@@ -95,16 +95,16 @@ const RecentActivityRightSide = ({
 
                 {/* Content Section */}
                 <div className="flex-1">
-                  <h3 className="text-sm md:text-base font-bold text-gray-800 mb-2 line-clamp-2 group-hover:text-green-700 transition-colors">
+                  <h3 className="text-sm md:text-base font-bold text-gray-800  line-clamp-2 group-hover:text-green-700 transition-colors">
                     {language === "ENG"
                       ? truncateText(data.english_title, 55)
                       : truncateText(data.bangla_title, 55)}
                   </h3>
-                  <p className="text-xs text-gray-600 line-clamp-2 mb-2">
+                  {/* <p className="text-xs text-gray-600 line-clamp-2 mb-2">
                     {language === "ENG"
                       ? truncateText(data.english_short_description, 70)
                       : truncateText(data.bangla_short_description, 70)}
-                  </p>
+                  </p> */}
 
                   {/* Read More Indicator */}
                   <motion.div
