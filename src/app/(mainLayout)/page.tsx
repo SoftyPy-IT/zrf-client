@@ -11,20 +11,19 @@ import Featured from "@/components/ui/HomePage/Featured/Featured";
 import Statistics from "@/components/ui/HomePage/Statistics/Statistics";
 import dynamic from "next/dynamic";
 import Head from "next/head";
+import LatestNews from "@/components/ui/HomePage/Publications/LatestNews/LatestNews";
+import PhotoGallery from "@/components/ui/HomePage/Gallery/PhotoGallery";
+import VideoGallery from "@/components/ui/HomePage/Gallery/VideoGallery";
 
 const Slider = dynamic(() => import("@/components/share/Slider/Slider"), {
   ssr: false,
 });
-const GallerySection = dynamic(
-  () => import("@/components/ui/HomePage/Gallery/Gallery"),
-  { ssr: false }
-);
 
 const Home = () => {
   return (
     <>
       <Head>
-        {/* Essential Meta Tags */}
+
         <title>Home - Ziaur Rahman Foundation | Empowering Communities</title>
         <meta
           name="description"
@@ -37,8 +36,6 @@ const Home = () => {
         <meta name="author" content="Ziaur Rahman Foundation" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="robots" content="index, follow" />
-
-        {/* Open Graph / Facebook */}
         <meta
           property="og:title"
           content="Ziaur Rahman Foundation | Empowering Communities through Education & Health"
@@ -51,8 +48,6 @@ const Home = () => {
         <meta property="og:url" content="https://www.zrf.org" />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="en_US" />
-
-        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:title"
@@ -63,14 +58,8 @@ const Home = () => {
           content="Join Ziaur Rahman Foundation in creating a better future through impactful projects, health programs, education, and climate change initiatives."
         />
         <meta name="twitter:image" content="/images/twitter-image.jpg" />
-
-        {/* Canonical URL */}
         <link rel="canonical" href="https://www.zrf.org" />
-
-        {/* Favicon */}
         <link rel="icon" href="/favicon.ico" />
-
-        {/* Structured Data (JSON-LD) */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -108,13 +97,18 @@ const Home = () => {
         <Slider />
         <Featured />
         <Welcome />
-        <Statistics />
-        <Impact />
-        <RecentActivitiesOfZRF />
-        <Program />
         <OurProjects />
+        <RecentActivitiesOfZRF />
+        <LatestNews />
+
+
+        <Program />
         <Publications />
-        <GallerySection />
+
+        {/* <Statistics /> */}
+        <Impact />
+        <VideoGallery />
+        <PhotoGallery />
       </main>
     </>
   );

@@ -34,7 +34,7 @@ export type TActivity = {
 export type TProgramm = {
   _id: string;
   admin_name: string;
-  createdAt:string;
+  createdAt: string;
   date: string;
   bangla_title: string;
   english_title: string;
@@ -44,7 +44,7 @@ export type TProgramm = {
 
 export type TProject = {
   _id: string;
-  createdAt:string;
+  createdAt: string;
   img_tagline_bangla: string;
   img_tagline_english: string;
   admin_name: string;
@@ -62,6 +62,10 @@ export type TProject = {
   eng_images: string[];
   bng_Images: string[];
   slug: string;
+  english_Images: string[];
+  category: string;
+  location: string;
+  beneficiaries: string;
 };
 
 export type TEbook = {
@@ -78,17 +82,19 @@ export type TEbook = {
   images: string[];
 };
 
-export interface TVideo {
-  _id: string,
+export type TVideo = {
+  _id: string;
   video_url: string;
-  video_title_bangla: string;
   video_title_english: string;
-  thumnailImages: string[];
-}
+  video_title_bangla: string;
+  thumbnail_url?: string;
+  createdAt?: string;
+};
+
 
 export type TMessage = {
   filter: any;
-  _id:string,
+  _id: string,
   admin_name: string;
   date: string;
   name_bangla: string;
@@ -99,40 +105,40 @@ export type TMessage = {
   english_description: string;
   bng_Images: string[];
   slug: string;
-  category:string,
+  category: string,
 };
 
 export type TAbout = {
   category_bn: string;
-  _id:string,
+  _id: string,
   title_bangla: string;
   title_english: string;
   description_banlga: string;
   description_enlgish: string;
   category: string;
   images: string[];
-  date:string;
-  admin_name:string;
+  date: string;
+  admin_name: string;
 };
 export type TIntroduction = {
-  _id:string,
+  _id: string,
   admin_name: string;
-  date: string; 
+  date: string;
   bangla_title: string;
   english_title: string;
   bangla_description: string;
   english_description: string;
-  eng_images:string[],
-  bng_images:string[],
-  createdAt:string,
+  eng_images: string[],
+  bng_images: string[],
+  createdAt: string,
 
 };
 export type TWhatWeDo = {
-  _id:string;
+  _id: string;
   img_tagline_bangla: string;
   img_tagline_english: string;
   admin_name: string;
-  date: string; 
+  date: string;
   bangla_title: string;
   english_title: string;
   bangla_short_description: string;
@@ -142,27 +148,27 @@ export type TWhatWeDo = {
   meta_title: string;
   meta_keywords: string[];
   meta_description: string;
-  thumnail_img:string,
-  eng_images:string[],
-  bng_Images:string[],
-  slug:string,
-  category:string,
+  thumnail_img: string,
+  eng_images: string[],
+  bng_Images: string[],
+  slug: string,
+  category: string,
 
 };
 export type TCommitte = {
-  _id:string,
+  _id: string,
   bangla_name: string;
   english_name: string;
   designation_bangla: string;
   designation_english: string;
   images: string[];
-  category: string; 
-  date:string,
-  committee:string,
-  createdAt:string,
+  category: string;
+  date: string,
+  committee: string,
+  createdAt: string,
 };
 export type TOverview = {
-  _id:string,
+  _id: string,
   year_count_bangla: string;
   year_count_english: string;
   year_text_bangla: string;
@@ -185,10 +191,49 @@ export type TOverview = {
 };
 
 
+
 export type TImgGallery = {
   _id: string;
   title_of_bangla: string;
   title_of_english: string;
   thumnailImages: string[];
   date: string;
+  createdAt: string;
+  updatedAt: string;
 };
+export type TImageGallery = {
+  id: string;
+  title: {
+    bn: string;
+    en: string;
+  };
+  thumbnailImages: string[];
+  date: string;
+  createdAt: string;
+  updatedAt: string;
+};
+export const transformGalleryData = (data: any): TImageGallery => ({
+  id: data._id,
+  title: {
+    bn: data.title_of_bangla,
+    en: data.title_of_english,
+  },
+  thumbnailImages: data.thumnailImages,
+  date: data.date,
+  createdAt: data.createdAt,
+  updatedAt: data.updatedAt,
+});
+
+export interface overviewProps {
+  overviewData: TOverview[];
+  language: string;
+  handleModalOpen: () => void;
+  modalOpen: boolean;
+  handleModalClose: () => void;
+}
+export interface VideoSlideProps {
+  video: TVideo;
+  idx: number;
+  language: string;
+  onOpenModal: (video: TVideo, e: React.MouseEvent<HTMLButtonElement>) => void;
+}

@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true, // optional but recommended
+  reactStrictMode: true,
   images: {
     remotePatterns: [
       {
@@ -11,10 +11,16 @@ const nextConfig = {
         protocol: "http",
         hostname: "res.cloudinary.com",
       },
+      {
+        protocol: "https",
+        hostname: "img.youtube.com",
+        port: "",
+        pathname: "/vi/**",
+      },
     ],
   },
   experimental: {
-    trustHostHeader: true, // ADD THIS LINE
+    trustHostHeader: true,
   },
 };
 

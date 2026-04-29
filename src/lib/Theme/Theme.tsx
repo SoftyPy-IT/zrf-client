@@ -4,37 +4,41 @@ export const theme = createTheme({
   palette: {
     primary: {
       main: "#216740",
+      light: "#2E8B57",
+      dark: "#1A4F32",
+      contrastText: "#FFFFFF",
     },
     secondary: {
       main: "#FEC909",
-      light: "#0863FD",
+      light: "#FFD633",
+      dark: "#D4A800",
+      contrastText: "#1A1A1A",
+    },
+    background: {
+      default: "#0A1A12",
+      paper: "rgba(10, 26, 18, 0.85)",
+    },
+    text: {
+      primary: "#FFFFFF",
+      secondary: "#C8E0D0",
     },
   },
+  typography: {
+    fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
+    h1: { fontWeight: 800, letterSpacing: "-0.02em" },
+    h2: { fontWeight: 700, letterSpacing: "-0.01em" },
+    h3: { fontWeight: 700 },
+    h4: { fontWeight: 600 },
+    h5: { fontWeight: 600 },
+    h6: { fontWeight: 600 },
+  },
+  shape: { borderRadius: 12 },
   components: {
     MuiButton: {
-      defaultProps: {
-        variant: "contained",
-      },
       styleOverrides: {
-        root: {
-          padding: "8px 24px",
-          boxShadow: "none",
-        },
+        root: { textTransform: "none", fontWeight: 600 },
       },
-    },
-    MuiContainer: {
-      defaultProps: {
-        maxWidth: "lg",
-      },
-    },
-  },
-
-  typography: {
-    fontFamily: "'Baloo Da 2', 'Roboto', 'Arial', sans-serif",
-    body1: {
-      color: "#0B1134CC",
     },
   },
 });
-
 theme.shadows[1] = "0px 5px 22px lightgray";

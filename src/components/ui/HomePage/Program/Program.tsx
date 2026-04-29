@@ -2,14 +2,12 @@
 
 import { useLanguage } from "@/provider/LanguageProvider";
 import { useProgrammData } from "@/hooks/useProgrammData";
-import dynamic from "next/dynamic";
 import ProgrammData from "./ProgrammData";
- 
 
 const Programm = () => {
-  const { programmData, loading, error } = useProgrammData();
+  const { programmData, error } = useProgrammData();
   const { language } = useLanguage();
-   
+
   if (error) {
     return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
   }

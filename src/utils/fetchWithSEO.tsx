@@ -1,18 +1,19 @@
 // utils/fetchWithSEO.ts
 import { Metadata } from "next";
 import { stripHtml } from "./stripHtml";
+import { cookies } from "next/headers";
 
 export async function fetchWithSEO(
   endpoint: string,
   id: string,
-  fallbackTitle: string = "Item Details"
+  fallbackTitle: string = "Item Details",
 ): Promise<{ data: any; metadata: Metadata }> {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API_URL}/${endpoint}/${id}`,
       {
         cache: "no-store",
-      }
+      },
     );
 
     if (!res.ok) {
@@ -38,12 +39,33 @@ export async function fetchWithSEO(
       };
     }
 
-    const title = data.english_title || data.bangla_title || fallbackTitle;
+    // Get language from cookies
+    const cookieStore = cookies();
+    const language = cookieStore.get("language")?.value || "ENG";
+    const isEnglish = language === "ENG";
+
+    // Use language-specific content for metadata
+    const title = isEnglish
+      ? data.english_title || fallbackTitle
+      : data.bangla_title || fallbackTitle;
+
+    // FIXED: Use correct short description based on language
     const description = stripHtml(
-      data.english_short_description || data.bangla_short_description || ""
+      isEnglish
+        ? data.english_short_description || ""
+        : data.bangla_short_description || "",
     );
-    const image =
-      data.eng_images?.[0] || data.bng_Images?.[0] || "/default-image.jpg";
+
+    // Use language-specific images
+    const image = isEnglish
+      ? data.eng_images?.[0] || "/default-image.jpg"
+      : data.bng_Images?.[0] || "/default-image.jpg";
+
+    // Use img_tagline for image alt text
+    const imageAlt = isEnglish
+      ? data.img_tagline_english || title
+      : data.img_tagline_bangla || title;
+
     const url = `${process.env.NEXT_PUBLIC_SITE_URL}/${endpoint}/${id}`;
 
     const metadata: Metadata = {
@@ -54,7 +76,7 @@ export async function fetchWithSEO(
         description,
         type: "article",
         url,
-        images: [{ url: image, width: 1200, height: 630 }],
+        images: [{ url: image, width: 1200, height: 630, alt: imageAlt }],
       },
       twitter: {
         card: "summary_large_image",
@@ -62,10 +84,14 @@ export async function fetchWithSEO(
         description,
         images: [image],
       },
+      alternates: {
+        canonical: url,
+      },
     };
 
     return { data, metadata };
   } catch (error) {
+    console.error("Error fetching data for SEO:", error);
     return {
       data: null,
       metadata: {

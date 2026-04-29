@@ -87,7 +87,7 @@ const FeatureSlider: React.FC<projectProps> = ({ projectData, language }) => {
                         ? truncateText(program.english_short_description, 100)
                         : truncateText(
                             program.bangla_short_description,
-                            80
+                            80,
                           )}{" "}
                     </p>
                     <Link href={`/our-projects/${program._id}`}>
