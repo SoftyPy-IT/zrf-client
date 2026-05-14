@@ -122,17 +122,18 @@ const RecentActivity: React.FC<ActivityProps> = ({
 
                   </div>
 
-                  <div className="p-2.5 sm:p-3 md:p-4 lg:p-5">
+                  <div className="p-2.5 sm:p-3 md:p-3">
                     <h3 className="text-xs xs:text-sm sm:text-base md:text-lg font-bold text-gray-800 mb-1 sm:mb-2 line-clamp-2 group-hover:text-green-700 transition-colors min-h-[2.5rem] sm:min-h-[3rem]">
                       {language === "ENG"
-                        ? truncateText(data.english_title, 40)
-                        : truncateText(data.bangla_title, 40)}
+                        ? truncateText(data.english_title, 80)
+                        : truncateText(data.bangla_title, 80)}
                     </h3>
                     <p className="text-gray-600 text-[10px] xs:text-xs sm:text-sm mb-2 sm:mb-3 line-clamp-2 sm:line-clamp-3">
                       {language === "ENG"
-                        ? truncateText(data.english_short_description, 60)
-                        : truncateText(data.bangla_short_description, 60)}
+                        ? truncateText(data.english_short_description, 105)
+                        : truncateText(data.bangla_short_description, 105)}
                     </p>
+
 
                     <div className="scale-90 sm:scale-100 origin-left">
                       <BNPButton

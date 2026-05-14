@@ -64,7 +64,7 @@ const RecentActivityRightSide = ({
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="space-y-4"
+        className="space-y-2"
       >
         {displayedData?.slice(0, 3)?.map((data, idx) => (
           <motion.div
@@ -75,7 +75,7 @@ const RecentActivityRightSide = ({
             className="group relative bg-white rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500"
           >
             <Link href={`/recent-activities-of-zrf/${data._id}`}>
-              <div className="flex gap-2 p-4 cursor-pointer">
+              <div className="flex gap-3 p-4 cursor-pointer">
                 <div className="relative flex-shrink-0 w-20 h-20 md:w-[105px] md:h-[105px] rounded-lg overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/20 to-green-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
                   {(language === "ENG" ? data.bng_Images : data.eng_images)
@@ -95,18 +95,13 @@ const RecentActivityRightSide = ({
 
                 {/* Content Section */}
                 <div className="flex-1">
-                  <h3 className="text-sm md:text-base font-bold text-gray-800  line-clamp-2 group-hover:text-green-700 transition-colors">
+                  <h3 className="text-sm  font-bold text-gray-800   group-hover:text-green-700 transition-colors">
                     {language === "ENG"
-                      ? truncateText(data.english_title, 55)
-                      : truncateText(data.bangla_title, 55)}
+                      ? data.english_title
+                      : data.bangla_title}
                   </h3>
-                  {/* <p className="text-xs text-gray-600 line-clamp-2 mb-2">
-                    {language === "ENG"
-                      ? truncateText(data.english_short_description, 70)
-                      : truncateText(data.bangla_short_description, 70)}
-                  </p> */}
 
-                  {/* Read More Indicator */}
+
                   <motion.div
                     animate={{ x: hoveredIndex === idx ? 5 : 0 }}
                     className="inline-flex items-center gap-1 text-xs font-semibold text-green-600"
@@ -116,8 +111,6 @@ const RecentActivityRightSide = ({
                   </motion.div>
                 </div>
               </div>
-
-              {/* Animated Border on Hover */}
               <div className="absolute inset-0 rounded-xl border-2 border-transparent group-hover:border-green-500/30 transition-all duration-500 pointer-events-none"></div>
             </Link>
           </motion.div>

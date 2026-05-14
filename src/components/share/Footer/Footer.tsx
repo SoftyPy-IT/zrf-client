@@ -15,39 +15,67 @@ import { YouTube } from "@mui/icons-material";
 import Subscribe from "./Subscribe";
 import {
   Box,
-  Typography,
-  IconButton,
-  Stack,
   Divider,
 } from "@mui/material";
-import { KeyboardArrowUp } from "@mui/icons-material";
 import DonationModal from "@/components/Donation/DonationModal";
 import { useLanguage } from "@/provider/LanguageProvider";
 
-
-
 const FooterData = () => {
   const [modalOpen, setModalOpen] = useState(false);
-  const { language } = useLanguage()
-  const buttonStyle = {
-    width: "120px",
-    height: "30px",
-    borderRadius: "10px",
-    color: "white",
-    background: "#216740",
-    padding: "0px",
-    "&:hover": {
-      background: "#FEC909",
-      color: "#1A1A1A",
-    },
-  };
+  const { language } = useLanguage();
+
 
   const handleModalOpen = () => setModalOpen(true);
   const handleModalClose = () => setModalOpen(false);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  // Footer links data
+  const footerLinks = {
+    support: [
+      { name: language === "ENG" ? "Contact Us" : "যোগাযোগ করুন", href: "/contact" },
+      { name: language === "ENG" ? "Join Us" : "যোগ দিন", href: "#", onClick: handleModalOpen },
+    ],
+    about: [
+      { name: language === "ENG" ? "About Us" : "আমাদের সম্পর্কে", href: "/about" },
+      { name: language === "ENG" ? "Contact Us" : "যোগাযোগ করুন", href: "/contact" },
+      { name: language === "ENG" ? "Our Committee" : "আমাদের কমিটি", href: "/committee" },
+    ],
   };
+
+
+
+
+  const socialLinks = [
+    {
+      name: "Facebook",
+      icon: <FacebookIcon className="text-2xl" />,
+      href: "https://www.facebook.com/zrf.org/",
+      color: "hover:text-blue-600",
+    },
+    {
+      name: "YouTube",
+      icon: <YouTube className="text-2xl" />,
+      href: "https://www.youtube.com/@ZiaurRahmanFoundationZRF",
+      color: "hover:text-red-600",
+    },
+    {
+      name: "X",
+      icon: <XIcon className="text-2xl" />,
+      href: "https://x.com",
+      color: "hover:text-blue-600",
+    },
+    {
+      name: "Instagram",
+      icon: <InstagramIcon className="text-2xl" />,
+      href: "https://instagram.com",
+      color: "hover:text-pink-500",
+    },
+    {
+      name: "LinkedIn",
+      icon: <LinkedInIcon className="text-2xl" />,
+      href: "https://linkedin.com",
+      color: "hover:text-blue-700",
+    },
+  ];
 
   return (
     <>
@@ -62,11 +90,7 @@ const FooterData = () => {
             <Subscribe />
           </div>
         </Container>
-        <Image
-          src={footer}
-          alt="Descriptive text"
-          className="absolute inset-0 object-cover w-full h-full"
-        />
+
       </div>
 
       <Box
@@ -77,39 +101,17 @@ const FooterData = () => {
           color: "#C8E0D0",
           pt: 8,
           pb: 4,
-          position: "relative",
-          overflow: "hidden",
-          borderTop: "1px solid rgba(33, 103, 64, 0.3)",
-          "&::before": {
-            content: '""',
-            position: "absolute",
-            top: 0,
-            right: 0,
-            width: 400,
-            height: 400,
-            background:
-              "radial-gradient(circle, rgba(33, 103, 64, 0.08) 0%, transparent 70%)",
-            borderRadius: "50%",
-            pointerEvents: "none",
-          },
-          "&::after": {
-            content: '""',
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            width: 300,
-            height: 300,
-            background:
-              "radial-gradient(circle, rgba(254, 201, 9, 0.05) 0%, transparent 70%)",
-            borderRadius: "50%",
-            pointerEvents: "none",
-          },
+
+
+
         }}
       >
         <Container>
-          <div className="container mx-auto">
-            <div className="flex flex-col md:flex-row justify-between items-start mt-8">
-              <div className="w-full md:w-1/4 mb-8 md:mb-0">
+          <div className="container ">
+            {/* Main Footer Content */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-8 mt-8">
+              {/* Logo and Description Section - Centered */}
+              <div >
                 <Link href="/">
                   <div className="space-y-3 flex flex-col items-center">
                     <Image
@@ -117,6 +119,7 @@ const FooterData = () => {
                       alt="Seville Logo"
                       width={90}
                       height={90}
+                      className="cursor-pointer"
                     />
                     <h3 className="font-bold text-lg text-center text-white">
                       {language === "ENG"
@@ -125,85 +128,86 @@ const FooterData = () => {
                     </h3>
                   </div>
                 </Link>
+
               </div>
 
-              <div className="w-full md:w-1/4 mb-8 md:mb-0 text-center">
-                <h4 className="font-semibold text-white">
-                  {language === "ENG" ? "Our Address" : "আমাদের ঠিকানা"}
+              {/* Support Links */}
+              <div className="text-center sm:text-left">
+                <h4 className="font-semibold text-white text-lg mb-4 relative inline-block sm:inline-block">
+                  {language === "ENG" ? "Support" : "সহায়তা"}
+                  <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-[#FEC909] hidden sm:block"></span>
                 </h4>
-                <p className="text-[#B8D9C4]">
-                  {language === "ENG"
-                    ? "House#2, Road#23/A, Gulshan-1, Near Gulshan 1 Post Office, Dhaka-1212, Bangladesh."
-                    : "বাড়ি #২, রোড #২৩/এ, গুলশান-১, গুলশান ১ পোস্ট অফিস, ঢাকা-১২১২, বাংলাদেশ।"}
-                </p>
-              </div>
-
-              <div className="w-full md:w-1/4 mb-8 md:mb-0 text-center">
                 <ul className="space-y-3">
-                  <li>
-                    <Button component={Link} href="/contact" sx={buttonStyle}>
-                      {language === "ENG" ? "Contact Us" : "যোগাযোগ করুন"}
-                    </Button>
-                  </li>
-                  <li>
-                    <Button onClick={handleModalOpen} sx={buttonStyle}>
-                      {language === "ENG" ? "Join Us" : "যোগ দিন"}
-                    </Button>
-                  </li>
+                  {footerLinks.support.map((link, index) => (
+                    <li key={index}>
+                      {link.onClick ? (
+                        <Button
+                          onClick={link.onClick}
+                          sx={{
+                            color: "#B8D9C4",
+                            "&:hover": {
+                              color: "#FEC909",
+                              background: "transparent",
+                            },
+                            textTransform: "none",
+                            padding: 0,
+                            minWidth: "auto",
+                          }}
+                        >
+                          {link.name}
+                        </Button>
+                      ) : (
+                        <Link
+                          href={link.href}
+                          className="text-[#B8D9C4] hover:text-[#FEC909] transition-colors duration-300 text-sm"
+                        >
+                          {link.name}
+                        </Link>
+                      )}
+                    </li>
+                  ))}
                 </ul>
               </div>
 
-              <div className="w-full md:w-1/4">
-                <div className="mt-4 text-center md:text-left lg:text-left xl:text-left">
-                  <h4 className="font-semibold text-center text-white">
-                    {language === "ENG"
-                      ? "Follow Us"
-                      : "আমাদের অনুসরণ করুন"}
-                  </h4>
-                  <div className="flex justify-center">
-                    <div className="mt-4 flex space-x-4">
-                      <a
-                        href="https://www.facebook.com/zrf.org/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:text-white transition-colors"
+              {/* Legal Links */}
+              <div className="text-center sm:text-left">
+                <h4 className="font-semibold text-white text-lg mb-4 relative inline-block sm:inline-block">
+                  {language === "ENG" ? "About" : "আমাদের সম্পর্কে"}
+                  <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-[#FEC909] hidden sm:block"></span>
+                </h4>
+                <ul className="space-y-3">
+                  {footerLinks.about.map((link, index) => (
+                    <li key={index}>
+                      <Link
+                        href={link.href}
+                        className="text-[#B8D9C4] hover:text-[#FEC909] transition-colors duration-300 text-sm"
                       >
-                        <FacebookIcon className="text-blue-600 hover:text-blue-700" />
-                      </a>
-                      <a
-                        href="https://www.youtube.com/@ZiaurRahmanFoundationZRF"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:text-white transition-colors"
-                      >
-                        <YouTube className="text-red-600 hover:text-red-700" />
-                      </a>
-                      <a
-                        href="https://x.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:text-white transition-colors"
-                      >
-                        <XIcon className="text-blue-600 hover:text-blue-700" />
-                      </a>
-                      <a
-                        href="https://instagram.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:text-white transition-colors"
-                      >
-                        <InstagramIcon className="text-pink-500 hover:text-pink-600" />
-                      </a>
-                      <a
-                        href="https://linkedin.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:text-white transition-colors"
-                      >
-                        <LinkedInIcon className="text-blue-700 hover:text-blue-800" />
-                      </a>
-                    </div>
-                  </div>
+                        {link.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Social Media Section - Flex Items */}
+              <div className="text-center sm:text-left">
+                <h4 className="font-semibold text-white text-lg mb-4 relative inline-block sm:inline-block">
+                  {language === "ENG" ? "Follow Us" : "আমাদের অনুসরণ করুন"}
+                  <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-[#FEC909] hidden sm:block"></span>
+                </h4>
+                <div className="flex justify-center sm:justify-start items-center gap-4 mt-4">
+                  {socialLinks.map((social, index) => (
+                    <a
+                      key={index}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`transform transition-all duration-300 hover:scale-110 ${social.color} text-[#B8D9C4]`}
+                      aria-label={social.name}
+                    >
+                      {social.icon}
+                    </a>
+                  ))}
                 </div>
               </div>
             </div>
@@ -217,21 +221,21 @@ const FooterData = () => {
               }}
             />
 
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-              <div className="text-center text-gray-500">
-                &copy;{" "}
+            {/* Copyright Section */}
+            <div className=" text-center">
+              <div className="text-gray-500 text-sm">
+                &copy; {new Date().getFullYear()}{" "}
                 {language === "ENG"
-                  ? " Copyrights Ziaur Rahman Foundation 2026. All Rights Reserved "
-                  : "কপিরাইট জিয়াউর রহমান ফাউন্ডেশন ২০২৬. সর্বস্বত্ব সংরক্ষিত"}
+                  ? "Ziaur Rahman Foundation. All Rights Reserved."
+                  : "জিয়াউর রহমান ফাউন্ডেশন। সর্বস্বত্ব সংরক্ষিত।"}
               </div>
-
 
             </div>
           </div>
         </Container>
       </Box>
 
-      {/* Donation Modal - Only renders when modalOpen is true */}
+      {/* Donation Modal */}
       {modalOpen && <DonationModal onClose={handleModalClose} open={modalOpen} />}
     </>
   );

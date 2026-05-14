@@ -18,13 +18,13 @@ import BNPButton from "@/components/Button";
 
 const Loader = () => {
   return (
-    <div className="fixed inset-0 h-screen flex items-center justify-center  z-50">
-      {/* <Stack spacing={1}>
+    <div className="fixed inset-0 h-screen flex items-center justify-center z-50">
+      <Stack spacing={1}>
         <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
         <Skeleton variant="rectangular" width={40} height={40} />
         <Skeleton variant="rectangular" width={210} height={60} />
         <Skeleton variant="rectangular" width={210} height={60} />
-      </Stack> */}
+      </Stack>
     </div>
   );
 };
@@ -33,10 +33,10 @@ function PublicationSlider() {
   const [activeIndex, setActiveIndex] = useState(0);
   const swiperRef = useRef<SwiperClass | null>(null);
   const { language } = useLanguage();
-  // const { ebookData, loading, error } = useEbookData();
   const [ebookData, setEbookData] = useState<TEbook[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
     const fetchEbookData = async () => {
       try {
@@ -57,6 +57,7 @@ function PublicationSlider() {
 
     fetchEbookData();
   }, []);
+
   const updateIndex = useCallback(() => {
     if (swiperRef.current) {
       setActiveIndex(swiperRef.current.realIndex);
@@ -75,12 +76,20 @@ function PublicationSlider() {
     };
   }, [updateIndex]);
 
-  // if (loading) {
-  //   return <Loader />;
-  // }
+  // Show loader while loading
+  if (loading) {
+    return <Loader />;
+  }
+
   if (error) {
     return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
   }
+
+  // Show message if no data available
+  if (ebookData.length === 0) {
+    return <h2 className="text-center">No eBooks Available</h2>;
+  }
+
   return (
     <div>
       <Swiper
@@ -103,17 +112,22 @@ function PublicationSlider() {
         modules={[EffectCoverflow, Autoplay, Zoom]}
         speed={900}
         onSwiper={(swiper) => (swiperRef.current = swiper)}
+        // Add observer to handle dynamic slides
+        observer={true}
+        observeParents={true}
       >
         {ebookData.map((ebook: TEbook) => (
           <SwiperSlide key={ebook._id} className="swiperSlide">
-            <Image
-              className="swiperImg"
-              alt={ebook.title || "E-Book"}
-              src={ebook.images[0] || "/path/to/default/image.jpg"}
-              width={300}
-              height={400}
-              objectFit="cover"
-            />
+            <div className="swiper-zoom-container">
+              <Image
+                className="swiperImg"
+                alt={ebook.title || "E-Book"}
+                src={ebook.images[0] || "/path/to/default/image.jpg"}
+                width={300}
+                height={400}
+                objectFit="cover"
+              />
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>
@@ -126,7 +140,6 @@ function PublicationSlider() {
           size="md"
           showIcon={true}
           iconPosition="right"
-
         >
           {language === "ENG" ? "See All" : "সব দেখুন"}
         </BNPButton>

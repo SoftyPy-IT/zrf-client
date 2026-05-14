@@ -100,12 +100,8 @@ const Home = () => {
         <OurProjects />
         <RecentActivitiesOfZRF />
         <LatestNews />
-
-
         <Program />
         <Publications />
-
-        {/* <Statistics /> */}
         <Impact />
         <VideoGallery />
         <PhotoGallery />
