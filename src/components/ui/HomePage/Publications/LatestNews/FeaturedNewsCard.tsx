@@ -12,9 +12,8 @@ const FeaturedNewsCard = ({
   activeTab,
   onHover,
 }: any) => {
-  const images =
-    news.bng_Images?.length > 0 ? news.bng_Images : news.english_Images;
-
+  const img = language === 'BNG' ? news?.bng_Images[0] : news?.eng_images[0];
+  console.log('nes check', news);
   return (
     <motion.div
       initial={{ opacity: 0, x: idx === 0 ? -30 : 30 }}
@@ -27,8 +26,8 @@ const FeaturedNewsCard = ({
       <div className="relative w-full h-[220px] sm:h-[260px] md:h-[320px] lg:h-[380px] rounded-xl sm:rounded-2xl overflow-hidden shadow-lg sm:shadow-2xl cursor-pointer">
         {/* Image */}
         <Image
-          src={images?.[0] || "/placeholder.jpg"}
-          alt={language === "ENG" ? news.english_title : news.bangla_title}
+          src={img || "/placeholder.jpg"}
+          alt={language === "ENG" ? news?.english_title : news?.bangla_title}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="object-cover transition-transform duration-1000 group-hover:scale-110"
