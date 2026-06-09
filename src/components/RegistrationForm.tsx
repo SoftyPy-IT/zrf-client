@@ -37,6 +37,9 @@ import {
     Zoom,
     LinearProgress,
     alpha,
+    Snackbar,
+    RadioGroup,
+    Radio,
 } from '@mui/material';
 import {
     CloudUpload as CloudUploadIcon,
@@ -48,16 +51,22 @@ import {
     School as SchoolIcon,
     Person as PersonIcon,
     Group as GroupIcon,
-    AttachFile as AttachFileIcon,
-    VideoLibrary as VideoLibraryIcon,
     Science as ScienceIcon,
     EmojiEvents as EmojiEventsIcon,
+    Warning as WarningIcon,
+    Visibility as VisibilityIcon,
+    Close as CloseIcon,
+    Image as ImageIcon,
 } from '@mui/icons-material';
 
 import { scientificFields, divisions, genders } from '@/lib/constant';
 import { useCreateRegistrationMutation } from '@/redux/api/allApi';
 import { uploadMultipleFiles, uploadFile } from './Upload';
 import axios from 'axios';
+import Image from 'next/image';
+import registrationImg from '../../src/assets/images/registration.jpg';
+import { useLanguage } from '@/provider/LanguageProvider';
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 interface TeamMember {
@@ -66,7 +75,6 @@ interface TeamMember {
 }
 
 interface FormData {
-    // Participant Information
     full_name: string;
     date_of_birth: string;
     gender: string;
@@ -74,33 +82,23 @@ interface FormData {
     email: string;
     division: string;
     current_class_year: string;
-
-    // Institution Information
     institution_name: string;
     institution_address: string;
     district: string;
     mentor_name: string;
     mentor_contact: string;
-
-    // Project Information
     project_title: string;
     scientific_field: string;
     project_abstract: string;
     objectives: string;
     innovation_novelty: string;
     expected_impact: string;
-
-    // Team Information
-    is_team_project: boolean;
+    project_type: 'individual' | 'team';
     team_members: TeamMember[];
-
-    // Upload Section
     pdfFile: File | null;
     proposalFile: File | null;
     photoFiles: File[];
     video_link: string;
-
-    // Declaration
     info_correct: boolean;
     project_original: boolean;
     agree_rules: boolean;
@@ -108,13 +106,13 @@ interface FormData {
 
 // ─── Steps ────────────────────────────────────────────────────────────────────
 
-const steps = [
-    { label: 'Participant Info', icon: PersonIcon, description: 'Your personal details' },
-    { label: 'Institution Info', icon: SchoolIcon, description: 'Your school/college details' },
-    { label: 'Project Details', icon: ScienceIcon, description: 'Tell us about your project' },
-    { label: 'Team Info', icon: GroupIcon, description: 'Team members information' },
-    { label: 'Uploads', icon: CloudUploadIcon, description: 'Project files & media' },
-    { label: 'Declaration', icon: CheckCircleIcon, description: 'Terms & confirmation' },
+const getSteps = (language: string) => [
+    { label: language === 'BNG' ? 'অংশগ্রহণকারীর তথ্য' : 'Participant Info', icon: PersonIcon, description: language === 'BNG' ? 'আপনার ব্যক্তিগত বিবরণ' : 'Your personal details' },
+    { label: language === 'BNG' ? 'প্রতিষ্ঠানের তথ্য' : 'Institution Info', icon: SchoolIcon, description: language === 'BNG' ? 'আপনার স্কুল/কলেজের বিবরণ' : 'Your school/college details' },
+    { label: language === 'BNG' ? 'প্রকল্পের বিবরণ' : 'Project Details', icon: ScienceIcon, description: language === 'BNG' ? 'আপনার প্রকল্প সম্পর্কে জানান' : 'Tell us about your project' },
+    { label: language === 'BNG' ? 'দলের তথ্য' : 'Team Info', icon: GroupIcon, description: language === 'BNG' ? 'প্রকল্পের ধরন ও দলের সদস্য' : 'Project type & team members' },
+    { label: language === 'BNG' ? 'ফাইল আপলোড' : 'Uploads', icon: CloudUploadIcon, description: language === 'BNG' ? 'প্রকল্পের ফাইল ও মিডিয়া' : 'Project files & media' },
+    { label: language === 'BNG' ? 'ঘোষণাপত্র' : 'Declaration', icon: CheckCircleIcon, description: language === 'BNG' ? 'শর্তাবলী ও নিশ্চিতকরণ' : 'Terms & confirmation' },
 ];
 
 // ─── Initial State ─────────────────────────────────────────────────────────────
@@ -138,7 +136,7 @@ const initialFormData: FormData = {
     objectives: '',
     innovation_novelty: '',
     expected_impact: '',
-    is_team_project: false,
+    project_type: 'individual',
     team_members: [],
     pdfFile: null,
     proposalFile: null,
@@ -149,11 +147,18 @@ const initialFormData: FormData = {
     agree_rules: false,
 };
 
+// File size limits (in bytes)
+const FILE_SIZE_LIMITS = {
+    pdf: 10 * 1024 * 1024,
+    proposal: 10 * 1024 * 1024,
+    photo: 5 * 1024 * 1024,
+};
+
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-const OptionalChip = () => (
+const OptionalChip = ({ language }: { language: string }) => (
     <Chip
-        label="Optional"
+        label={language === 'BNG' ? 'ঐচ্ছিক' : 'Optional'}
         size="small"
         sx={{
             height: 18,
@@ -166,19 +171,51 @@ const OptionalChip = () => (
     />
 );
 
-const RequiredLabel = ({ label }: { label: string }) => (
+const RequiredLabel = ({ label, language }: { label: string; language: string }) => (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.3 }}>
         <span>{label}</span>
         <Typography component="span" sx={{ color: '#f44336', lineHeight: 1 }}>*</Typography>
     </Box>
 );
 
-const OptionalLabel = ({ label }: { label: string }) => (
+const OptionalLabel = ({ label, language }: { label: string; language: string }) => (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <span>{label}</span>
-        <OptionalChip />
+        <OptionalChip language={language} />
     </Box>
 );
+
+const formatFileSize = (bytes: number): string => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+};
+
+const calculateAge = (dob: string): number | null => {
+    if (!dob) return null;
+    const birthDate = new Date(dob);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
+};
+
+// Get the minimum allowed date (100 years ago)
+const getMinDate = () => {
+    const date = new Date();
+    date.setFullYear(date.getFullYear() - 100);
+    return date.toISOString().split('T')[0];
+};
+
+// Get the maximum allowed date (today)
+const getMaxDate = () => {
+    return new Date().toISOString().split('T')[0];
+};
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -191,28 +228,74 @@ export default function RegistrationForm() {
     const [uploadStatus, setUploadStatus] = useState('');
     const [touchedFields, setTouchedFields] = useState<Set<string>>(new Set());
     const [formData, setFormData] = useState<FormData>(initialFormData);
+    const [dateError, setDateError] = useState('');
+    const [fileErrors, setFileErrors] = useState<{ [key: string]: string }>({});
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [snackbarSeverity, setSnackbarSeverity] = useState<'error' | 'warning' | 'info' | 'success'>('error');
+    const [openImageDialog, setOpenImageDialog] = useState(false);
+    const { language } = useLanguage();
 
     const [createRegistration, { isLoading: submitting }] = useCreateRegistrationMutation();
 
-    // ── Field handlers ──────────────────────────────────────────────────────
+    const steps = getSteps(language);
+
+    const showToast = (message: string, severity: 'error' | 'warning' | 'info' | 'success' = 'error') => {
+        setSnackbarMessage(message);
+        setSnackbarSeverity(severity);
+        setSnackbarOpen(true);
+    };
+
+    const validateFileSize = (file: File, type: 'pdf' | 'proposal' | 'photo'): boolean => {
+        const limit = FILE_SIZE_LIMITS[type];
+        if (file.size > limit) {
+            const errorMsg = language === 'BNG'
+                ? `${file.name} খুব বড় (${formatFileSize(file.size)}). সর্বোচ্চ অনুমোদিত সাইজ ${formatFileSize(limit)}.`
+                : `${file.name} is too large (${formatFileSize(file.size)}). Maximum allowed size is ${formatFileSize(limit)}.`;
+            setFileErrors(prev => ({ ...prev, [type]: errorMsg }));
+            showToast(errorMsg, 'error');
+            return false;
+        }
+        setFileErrors(prev => {
+            const newErrors = { ...prev };
+            delete newErrors[type];
+            return newErrors;
+        });
+        return true;
+    };
 
     const handleChange = (e: any | { name?: string; value: any }) => {
         const { name, value } = e.target as any;
+
+        if (name === 'date_of_birth') {
+            const selectedDate = new Date(value);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            if (selectedDate > today) {
+                setDateError(language === 'BNG' ? 'জন্ম তারিখ ভবিষ্যতের হতে পারবে না' : 'Date of birth cannot be in the future');
+                return;
+            } else {
+                setDateError('');
+            }
+        }
+
         setFormData(prev => ({ ...prev, [name]: value }));
         if (name) setTouchedFields(prev => new Set(prev).add(name));
     };
 
+    const handleProjectTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value as 'individual' | 'team';
+        setFormData(prev => ({
+            ...prev,
+            project_type: value,
+            team_members: value === 'individual' ? [] : prev.team_members,
+        }));
+    };
+
     const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, checked } = e.target;
-        if (name === 'is_team_project') {
-            setFormData(prev => ({
-                ...prev,
-                is_team_project: checked,
-                team_members: checked ? prev.team_members : [],
-            }));
-        } else {
-            setFormData(prev => ({ ...prev, [name]: checked }));
-        }
+        setFormData(prev => ({ ...prev, [name]: checked }));
     };
 
     const handleTeamMemberChange = (index: number, field: keyof TeamMember, value: string) => {
@@ -239,70 +322,107 @@ export default function RegistrationForm() {
         }));
     };
 
-    // ── File handlers ─────────────────────────────────────────
-
     const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>, fileType: 'pdf' | 'proposal' | 'photos') => {
         const { files } = e.target;
         if (!files) return;
 
         if (fileType === 'photos') {
-            setFormData(prev => ({ ...prev, photoFiles: Array.from(files) }));
+            const photoArray = Array.from(files);
+            let hasError = false;
+
+            for (const photo of photoArray) {
+                if (!validateFileSize(photo, 'photo')) {
+                    hasError = true;
+                    break;
+                }
+            }
+
+            if (!hasError) {
+                setFormData(prev => ({ ...prev, photoFiles: photoArray }));
+                showToast(language === 'BNG' ? `${photoArray.length}টি ছবি নির্বাচিত হয়েছে` : `${photoArray.length} photo(s) selected successfully`, 'success');
+            }
         } else if (fileType === 'pdf') {
-            setFormData(prev => ({ ...prev, pdfFile: files[0] }));
+            const pdfFile = files[0];
+            if (validateFileSize(pdfFile, 'pdf')) {
+                setFormData(prev => ({ ...prev, pdfFile: pdfFile }));
+                showToast(language === 'BNG' ? 'PDF ফাইল নির্বাচিত হয়েছে' : 'PDF file selected successfully', 'success');
+            } else {
+                e.target.value = '';
+            }
         } else if (fileType === 'proposal') {
-            setFormData(prev => ({ ...prev, proposalFile: files[0] }));
+            const proposalFile = files[0];
+            if (validateFileSize(proposalFile, 'proposal')) {
+                setFormData(prev => ({ ...prev, proposalFile: proposalFile }));
+                showToast(language === 'BNG' ? 'প্রস্তাবনা ফাইল নির্বাচিত হয়েছে' : 'Proposal file selected successfully', 'success');
+            } else {
+                e.target.value = '';
+            }
         }
     };
 
     const clearFile = (fileType: 'pdf' | 'proposal' | 'photos') => {
         if (fileType === 'photos') {
             setFormData(prev => ({ ...prev, photoFiles: [] }));
+            setFileErrors(prev => {
+                const newErrors = { ...prev };
+                delete newErrors.photos;
+                return newErrors;
+            });
         } else if (fileType === 'pdf') {
             setFormData(prev => ({ ...prev, pdfFile: null }));
+            setFileErrors(prev => {
+                const newErrors = { ...prev };
+                delete newErrors.pdf;
+                return newErrors;
+            });
         } else if (fileType === 'proposal') {
             setFormData(prev => ({ ...prev, proposalFile: null }));
+            setFileErrors(prev => {
+                const newErrors = { ...prev };
+                delete newErrors.proposal;
+                return newErrors;
+            });
         }
     };
-
-    // ── Validation ──────────────────────────────────────────────────────────
 
     const validateStep = (step: number): boolean => {
         switch (step) {
             case 0:
-                if (!formData.full_name) { setError('Full name is required'); return false; }
-                if (!formData.email) { setError('Email is required'); return false; }
-                if (!formData.mobile_number) { setError('Mobile number is required'); return false; }
-                if (!formData.date_of_birth) { setError('Date of birth is required'); return false; }
-                if (!formData.gender) { setError('Gender is required'); return false; }
-                if (!formData.division) { setError('Division is required'); return false; }
-                if (!formData.current_class_year) { setError('Current class/year is required'); return false; }
+                if (!formData.full_name) { setError(language === 'BNG' ? 'পুরো নাম প্রয়োজন' : 'Full name is required'); return false; }
+                if (!formData.email) { setError(language === 'BNG' ? 'ইমেইল প্রয়োজন' : 'Email is required'); return false; }
+                if (!formData.mobile_number) { setError(language === 'BNG' ? 'মোবাইল নম্বর প্রয়োজন' : 'Mobile number is required'); return false; }
+                if (!formData.date_of_birth) { setError(language === 'BNG' ? 'জন্ম তারিখ প্রয়োজন' : 'Date of birth is required'); return false; }
+                if (dateError) { setError(dateError); return false; }
+                if (!formData.gender) { setError(language === 'BNG' ? 'লিঙ্গ নির্বাচন প্রয়োজন' : 'Gender is required'); return false; }
+                if (!formData.division) { setError(language === 'BNG' ? 'বিভাগ নির্বাচন প্রয়োজন' : 'Division is required'); return false; }
+                if (!formData.current_class_year) { setError(language === 'BNG' ? 'বর্তমান শ্রেণী/বছর প্রয়োজন' : 'Current class/year is required'); return false; }
                 return true;
             case 1:
-                if (!formData.institution_name) { setError('Institution name is required'); return false; }
-                if (!formData.institution_address) { setError('Institution address is required'); return false; }
-                if (!formData.district) { setError('District is required'); return false; }
+                if (!formData.institution_name) { setError(language === 'BNG' ? 'প্রতিষ্ঠানের নাম প্রয়োজন' : 'Institution name is required'); return false; }
+                if (!formData.institution_address) { setError(language === 'BNG' ? 'প্রতিষ্ঠানের ঠিকানা প্রয়োজন' : 'Institution address is required'); return false; }
+                if (!formData.district) { setError(language === 'BNG' ? 'জেলা প্রয়োজন' : 'District is required'); return false; }
                 return true;
             case 2:
-                if (!formData.project_title) { setError('Project title is required'); return false; }
-                if (!formData.scientific_field) { setError('Scientific field is required'); return false; }
-                if (!formData.project_abstract) { setError('Project abstract is required'); return false; }
-                if (!formData.objectives) { setError('Objectives are required'); return false; }
-                if (!formData.innovation_novelty) { setError('Innovation & novelty is required'); return false; }
-                if (!formData.expected_impact) { setError('Expected impact is required'); return false; }
+                if (!formData.project_title) { setError(language === 'BNG' ? 'প্রকল্পের শিরোনাম প্রয়োজন' : 'Project title is required'); return false; }
+                if (!formData.scientific_field) { setError(language === 'BNG' ? 'বৈজ্ঞানিক ক্ষেত্র নির্বাচন প্রয়োজন' : 'Scientific field is required'); return false; }
+                if (!formData.project_abstract) { setError(language === 'BNG' ? 'প্রকল্পের সারসংক্ষেপ প্রয়োজন' : 'Project abstract is required'); return false; }
+                if (!formData.objectives) { setError(language === 'BNG' ? 'উদ্দেশ্য প্রয়োজন' : 'Objectives are required'); return false; }
+                if (!formData.innovation_novelty) { setError(language === 'BNG' ? 'উদ্ভাবন/নতুনত্ব প্রয়োজন' : 'Innovation & novelty is required'); return false; }
+                if (!formData.expected_impact) { setError(language === 'BNG' ? 'প্রত্যাশিত প্রভাব প্রয়োজন' : 'Expected impact is required'); return false; }
                 return true;
             case 3:
-                if (formData.is_team_project) {
+                if (formData.project_type === 'team') {
                     if (formData.team_members.length === 0) {
-                        setError('Add at least one team member');
+                        setError(language === 'BNG' ? 'কমপক্ষে একজন দলের সদস্য যোগ করুন' : 'Add at least one team member');
                         return false;
                     }
                     for (let i = 0; i < formData.team_members.length; i++) {
                         if (!formData.team_members[i].name) {
-                            setError(`Team member ${i + 1} name is required`);
+                            setError(language === 'BNG' ? `দলের সদস্য ${i + 1} এর নাম প্রয়োজন` : `Team member ${i + 1} name is required`);
                             return false;
                         }
                         if (!formData.team_members[i].contact) {
-                            setError(`Team member ${i + 1} contact is required`);
+                            setError(language === 'BNG' ? `দলের সদস্য ${i + 1} এর যোগাযোগ প্রয়োজন` : `Team member ${i + 1} contact is required`);
                             return false;
                         }
                     }
@@ -310,13 +430,17 @@ export default function RegistrationForm() {
                 return true;
             case 4:
                 if (!formData.pdfFile) {
-                    setError('Project summary PDF is required');
+                    setError(language === 'BNG' ? 'প্রকল্পের সারাংশ PDF প্রয়োজন' : 'Project summary PDF is required');
+                    return false;
+                }
+                if (Object.keys(fileErrors).length > 0) {
+                    setError(language === 'BNG' ? 'ফাইলের সাইজের সমস্যা সমাধান করুন' : 'Please fix file size issues before proceeding');
                     return false;
                 }
                 return true;
             case 5:
                 if (!formData.info_correct || !formData.project_original || !formData.agree_rules) {
-                    setError('All declarations must be checked');
+                    setError(language === 'BNG' ? 'সব ঘোষণাপত্রে টিক দিতে হবে' : 'All declarations must be checked');
                     return false;
                 }
                 return true;
@@ -324,8 +448,6 @@ export default function RegistrationForm() {
                 return true;
         }
     };
-
-    // ── Navigation ──────────────────────────────────────────────────────────
 
     const handleNext = () => {
         setError('');
@@ -339,15 +461,45 @@ export default function RegistrationForm() {
         setError('');
     };
 
-    // ── Submit with proper camelCase mapping ─────────────────────────────────
-
-    // In your RegistrationForm component, update the handleSubmit function:
-
     const handleSubmit = async () => {
-        // Validate all steps
         for (let i = 0; i <= 5; i++) {
             if (!validateStep(i)) {
                 setActiveStep(i);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+            }
+        }
+
+        if (formData.pdfFile && formData.pdfFile.size > FILE_SIZE_LIMITS.pdf) {
+            const errorMsg = language === 'BNG'
+                ? `PDF ফাইল খুব বড় (${formatFileSize(formData.pdfFile.size)}). সর্বোচ্চ সাইজ ${formatFileSize(FILE_SIZE_LIMITS.pdf)}.`
+                : `PDF file is too large (${formatFileSize(formData.pdfFile.size)}). Maximum size is ${formatFileSize(FILE_SIZE_LIMITS.pdf)}.`;
+            showToast(errorMsg, 'error');
+            setError(errorMsg);
+            setActiveStep(4);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            return;
+        }
+
+        if (formData.proposalFile && formData.proposalFile.size > FILE_SIZE_LIMITS.proposal) {
+            const errorMsg = language === 'BNG'
+                ? `প্রস্তাবনা ফাইল খুব বড় (${formatFileSize(formData.proposalFile.size)}). সর্বোচ্চ সাইজ ${formatFileSize(FILE_SIZE_LIMITS.proposal)}.`
+                : `Proposal file is too large (${formatFileSize(formData.proposalFile.size)}). Maximum size is ${formatFileSize(FILE_SIZE_LIMITS.proposal)}.`;
+            showToast(errorMsg, 'error');
+            setError(errorMsg);
+            setActiveStep(4);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            return;
+        }
+
+        for (const photo of formData.photoFiles) {
+            if (photo.size > FILE_SIZE_LIMITS.photo) {
+                const errorMsg = language === 'BNG'
+                    ? `ছবি ${photo.name} খুব বড় (${formatFileSize(photo.size)}). প্রতি ছবির সর্বোচ্চ সাইজ ${formatFileSize(FILE_SIZE_LIMITS.photo)}.`
+                    : `Photo ${photo.name} is too large (${formatFileSize(photo.size)}). Maximum size per photo is ${formatFileSize(FILE_SIZE_LIMITS.photo)}.`;
+                showToast(errorMsg, 'error');
+                setError(errorMsg);
+                setActiveStep(4);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
                 return;
             }
@@ -357,9 +509,8 @@ export default function RegistrationForm() {
             setIsUploading(true);
             setError('');
             setUploadProgress(0);
-            setUploadStatus('Starting upload process...');
+            setUploadStatus(language === 'BNG' ? 'আপলোড প্রক্রিয়া শুরু হচ্ছে...' : 'Starting upload process...');
 
-            // Upload files
             const filesToUpload = [
                 formData.pdfFile,
                 formData.proposalFile,
@@ -372,33 +523,50 @@ export default function RegistrationForm() {
                 setUploadProgress(Math.round((uploadedCount / filesToUpload.length) * 100));
             };
 
-            // Upload PDF
-            setUploadStatus('Uploading project summary PDF...');
+            setUploadStatus(language === 'BNG' ? 'প্রকল্পের সারাংশ PDF আপলোড হচ্ছে...' : 'Uploading project summary PDF...');
             let pdfUrl = '';
             if (formData.pdfFile) {
-                pdfUrl = await uploadFile(formData.pdfFile);
-                updateProgress();
+                try {
+                    pdfUrl = await uploadFile(formData.pdfFile);
+                    updateProgress();
+                } catch (uploadErr: any) {
+                    if (uploadErr.message?.includes('File size too large')) {
+                        throw new Error(language === 'BNG' ? 'PDF ফাইল খুব বড়। সর্বোচ্চ সাইজ 10 MB.' : 'PDF file too large. Maximum size is 10 MB.');
+                    }
+                    throw uploadErr;
+                }
             }
 
-            // Upload Proposal
-            setUploadStatus('Uploading project proposal...');
+            setUploadStatus(language === 'BNG' ? 'প্রকল্পের প্রস্তাবনা আপলোড হচ্ছে...' : 'Uploading project proposal...');
             let proposalUrl = '';
             if (formData.proposalFile) {
-                proposalUrl = await uploadFile(formData.proposalFile);
-                updateProgress();
+                try {
+                    proposalUrl = await uploadFile(formData.proposalFile);
+                    updateProgress();
+                } catch (uploadErr: any) {
+                    if (uploadErr.message?.includes('File size too large')) {
+                        throw new Error(language === 'BNG' ? 'প্রস্তাবনা ফাইল খুব বড়। সর্বোচ্চ সাইজ 10 MB.' : 'Proposal file too large. Maximum size is 10 MB.');
+                    }
+                    throw uploadErr;
+                }
             }
 
-            // Upload Images
-            setUploadStatus('Uploading images...');
+            setUploadStatus(language === 'BNG' ? 'ছবি আপলোড হচ্ছে...' : 'Uploading images...');
             let photoUrls: string[] = [];
             if (formData.photoFiles.length > 0) {
-                photoUrls = await uploadMultipleFiles(formData.photoFiles);
-                updateProgress();
+                try {
+                    photoUrls = await uploadMultipleFiles(formData.photoFiles);
+                    updateProgress();
+                } catch (uploadErr: any) {
+                    if (uploadErr.message?.includes('File size too large')) {
+                        throw new Error(language === 'BNG' ? 'এক বা একাধিক ছবি খুব বড়। প্রতি ছবির সর্বোচ্চ সাইজ 5 MB.' : 'One or more images are too large. Maximum size per image is 5 MB.');
+                    }
+                    throw uploadErr;
+                }
             }
 
-            setUploadStatus('Submitting registration...');
+            setUploadStatus(language === 'BNG' ? 'রেজিস্ট্রেশন জমা দেওয়া হচ্ছে...' : 'Submitting registration...');
 
-            // Prepare payload
             const payload = {
                 full_name: formData.full_name,
                 date_of_birth: formData.date_of_birth,
@@ -418,9 +586,9 @@ export default function RegistrationForm() {
                 objectives: formData.objectives,
                 innovation_novelty: formData.innovation_novelty,
                 expected_impact: formData.expected_impact,
-                is_team_project: formData.is_team_project,
-                team_member_count: formData.is_team_project ? formData.team_members.length : 0,
-                team_members: formData.is_team_project ? formData.team_members : [],
+                project_type: formData.project_type,
+                team_member_count: formData.project_type === 'team' ? formData.team_members.length : 0,
+                team_members: formData.project_type === 'team' ? formData.team_members : [],
                 project_summary_pdf: pdfUrl,
                 project_proposal: proposalUrl || undefined,
                 photos_diagrams: photoUrls.length > 0 ? photoUrls : undefined,
@@ -430,23 +598,18 @@ export default function RegistrationForm() {
                 agree_rules: formData.agree_rules,
             };
 
-            console.log('Submitting payload:', payload);
-
-            // Submit to backend
             const API_URL = process.env.NEXT_PUBLIC_BASE_API_URL || 'https://api.zrf.info/api/v1';
             const response = await axios.post(`${API_URL}/registrations`, payload, {
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 30000,
             });
 
-            console.log('Server response:', response.data);
-
             if (response.data.success || response.status === 201) {
                 setUploadProgress(100);
                 setUploadStatus('Success!');
+                showToast(language === 'BNG' ? 'রেজিস্ট্রেশন সফল হয়েছে!' : 'Registration submitted successfully!', 'success');
                 setShowSuccess(true);
 
-                // Reset form
                 setTimeout(() => {
                     setFormData(initialFormData);
                     setActiveStep(0);
@@ -454,493 +617,63 @@ export default function RegistrationForm() {
                     setShowSuccess(false);
                     setUploadProgress(0);
                     setUploadStatus('');
+                    setDateError('');
+                    setFileErrors({});
                 }, 3000);
             } else {
-                throw new Error(response.data.message || 'Submission failed');
+                throw new Error(response.data.message || (language === 'BNG' ? 'জমা দেওয়া ব্যর্থ হয়েছে' : 'Submission failed'));
             }
 
         } catch (err: any) {
             console.error('Submission error:', err);
 
-            let errorMessage = 'Submission failed. Please try again.';
+            let errorMessage = language === 'BNG' ? 'জমা দেওয়া ব্যর্থ হয়েছে। আবার চেষ্টা করুন।' : 'Submission failed. Please try again.';
 
             if (err.code === 'ECONNABORTED') {
-                errorMessage = 'Request timeout. Please check your connection and try again.';
+                errorMessage = language === 'BNG' ? 'সময় শেষ। আপনার সংযোগ পরীক্ষা করুন এবং আবার চেষ্টা করুন।' : 'Request timeout. Please check your connection and try again.';
             } else if (err.response) {
-                // Server responded with error
-                errorMessage = err.response.data?.message ||
-                    err.response.data?.error ||
-                    `Server error (${err.response.status})`;
-
-                // Log detailed error for debugging
-                console.error('Error details:', {
-                    status: err.response.status,
-                    data: err.response.data,
-                    headers: err.response.headers
-                });
+                if (err.response.data?.error?.message?.includes('File size too large')) {
+                    errorMessage = language === 'BNG' ? 'ফাইল খুব বড়। PDF ফাইলের জন্য সর্বোচ্চ সাইজ 10 MB এবং ছবির জন্য 5 MB।' : 'File size too large. Maximum allowed size is 10 MB for PDF files and 5 MB for images.';
+                } else {
+                    errorMessage = err.response.data?.message ||
+                        err.response.data?.error ||
+                        `Server error (${err.response.status})`;
+                }
             } else if (err.request) {
-                // No response received
-                errorMessage = 'Cannot connect to server. Please check if the backend is running.';
+                errorMessage = language === 'BNG' ? 'সার্ভারে সংযোগ করা যাচ্ছে না। ব্যাকএন্ড চালু আছে কিনা যাচাই করুন।' : 'Cannot connect to server. Please check if the backend is running.';
+            } else if (err.message) {
+                errorMessage = err.message;
             }
 
             setError(errorMessage);
+            showToast(errorMessage, 'error');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         } finally {
             setIsUploading(false);
         }
     };
-    const isLoading = submitting || isUploading;
 
-    // ─── Helper to check if a field has error ───────────────────────────────
+    const isLoading = submitting || isUploading;
+    const age = calculateAge(formData.date_of_birth);
+
     const getFieldError = (fieldName: string): boolean => {
         return touchedFields.has(fieldName) && !(formData as any)[fieldName];
     };
 
-    // ── Render Form Fields (same as before, but I'll show the key parts) ────
+    const getCategoryColor = (age: number | null) => {
+        if (!age) return '#C8E0D0';
+        if (age >= 9 && age <= 12) return '#4CAF50';
+        if (age >= 13 && age <= 17) return '#FEC909';
+        if (age >= 18) return '#FF6B6B';
+        return '#C8E0D0';
+    };
 
-    const renderStepContent = () => {
-        switch (activeStep) {
-            case 0:
-                return (
-                    <Grid container spacing={3}>
-                        <Grid item xs={12} md={6}>
-                            <TextField
-                                fullWidth
-                                label={<RequiredLabel label="Full Name" />}
-                                name="full_name"
-                                value={formData.full_name}
-                                onChange={handleChange}
-                                onBlur={() => setTouchedFields(prev => new Set(prev).add('full_name'))}
-                                error={getFieldError('full_name')}
-                                helperText={getFieldError('full_name') ? 'Full name is required' : ''}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <TextField
-                                fullWidth
-                                label={<RequiredLabel label="Email" />}
-                                name="email"
-                                type="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                onBlur={() => setTouchedFields(prev => new Set(prev).add('email'))}
-                                error={getFieldError('email')}
-                                helperText={getFieldError('email') ? 'Email is required' : ''}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <TextField
-                                fullWidth
-                                label={<RequiredLabel label="Mobile Number" />}
-                                name="mobile_number"
-                                value={formData.mobile_number}
-                                onChange={handleChange}
-                                onBlur={() => setTouchedFields(prev => new Set(prev).add('mobile_number'))}
-                                error={getFieldError('mobile_number')}
-                                helperText={getFieldError('mobile_number') ? 'Mobile number is required' : ''}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <TextField
-                                fullWidth
-                                label={<RequiredLabel label="Date of Birth" />}
-                                name="date_of_birth"
-                                type="date"
-                                value={formData.date_of_birth}
-                                onChange={handleChange}
-                                onBlur={() => setTouchedFields(prev => new Set(prev).add('date_of_birth'))}
-                                InputLabelProps={{ shrink: true }}
-                                error={getFieldError('date_of_birth')}
-                                helperText={getFieldError('date_of_birth') ? 'Date of birth is required' : ''}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <FormControl fullWidth error={getFieldError('gender')}>
-                                <InputLabel>Gender *</InputLabel>
-                                <Select
-                                    name="gender"
-                                    value={formData.gender}
-                                    onChange={handleChange}
-                                    label="Gender *"
-                                >
-                                    {genders.map(g => <MenuItem key={g} value={g}>{g}</MenuItem>)}
-                                </Select>
-                                {getFieldError('gender') && <FormHelperText>Gender is required</FormHelperText>}
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <FormControl fullWidth error={getFieldError('division')}>
-                                <InputLabel>Division *</InputLabel>
-                                <Select
-                                    name="division"
-                                    value={formData.division}
-                                    onChange={handleChange}
-                                    label="Division *"
-                                >
-                                    {divisions.map(d => <MenuItem key={d} value={d}>{d}</MenuItem>)}
-                                </Select>
-                                {getFieldError('division') && <FormHelperText>Division is required</FormHelperText>}
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                label={<RequiredLabel label="Current Class / Year" />}
-                                name="current_class_year"
-                                value={formData.current_class_year}
-                                onChange={handleChange}
-                                onBlur={() => setTouchedFields(prev => new Set(prev).add('current_class_year'))}
-                                error={getFieldError('current_class_year')}
-                                helperText={getFieldError('current_class_year') ? 'Current class/year is required' : ''}
-                            />
-                        </Grid>
-                    </Grid>
-                );
-
-            case 1:
-                return (
-                    <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                label={<RequiredLabel label="Institution Name" />}
-                                name="institution_name"
-                                value={formData.institution_name}
-                                onChange={handleChange}
-                                onBlur={() => setTouchedFields(prev => new Set(prev).add('institution_name'))}
-                                error={getFieldError('institution_name')}
-                                helperText={getFieldError('institution_name') ? 'Institution name is required' : ''}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                multiline
-                                rows={3}
-                                label={<RequiredLabel label="Institution Address" />}
-                                name="institution_address"
-                                value={formData.institution_address}
-                                onChange={handleChange}
-                                onBlur={() => setTouchedFields(prev => new Set(prev).add('institution_address'))}
-                                error={getFieldError('institution_address')}
-                                helperText={getFieldError('institution_address') ? 'Institution address is required' : ''}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <TextField
-                                fullWidth
-                                label={<RequiredLabel label="District" />}
-                                name="district"
-                                value={formData.district}
-                                onChange={handleChange}
-                                onBlur={() => setTouchedFields(prev => new Set(prev).add('district'))}
-                                error={getFieldError('district')}
-                                helperText={getFieldError('district') ? 'District is required' : ''}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <TextField
-                                fullWidth
-                                label={<OptionalLabel label="Teacher / Mentor Name" />}
-                                name="mentor_name"
-                                value={formData.mentor_name}
-                                onChange={handleChange}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <TextField
-                                fullWidth
-                                label={<OptionalLabel label="Teacher / Mentor Contact" />}
-                                name="mentor_contact"
-                                value={formData.mentor_contact}
-                                onChange={handleChange}
-                            />
-                        </Grid>
-                    </Grid>
-                );
-
-            case 2:
-                return (
-                    <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                label={<RequiredLabel label="Project Title" />}
-                                name="project_title"
-                                value={formData.project_title}
-                                onChange={handleChange}
-                                onBlur={() => setTouchedFields(prev => new Set(prev).add('project_title'))}
-                                error={getFieldError('project_title')}
-                                helperText={getFieldError('project_title') ? 'Project title is required' : ''}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <FormControl fullWidth error={getFieldError('scientific_field')}>
-                                <InputLabel>Scientific Field *</InputLabel>
-                                <Select
-                                    name="scientific_field"
-                                    value={formData.scientific_field}
-                                    onChange={handleChange}
-                                    label="Scientific Field *"
-                                >
-                                    {scientificFields.map(f => <MenuItem key={f} value={f}>{f}</MenuItem>)}
-                                </Select>
-                                {getFieldError('scientific_field') && <FormHelperText>Scientific field is required</FormHelperText>}
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                multiline
-                                rows={5}
-                                label={<RequiredLabel label="Project Abstract" />}
-                                name="project_abstract"
-                                value={formData.project_abstract}
-                                onChange={handleChange}
-                                onBlur={() => setTouchedFields(prev => new Set(prev).add('project_abstract'))}
-                                error={getFieldError('project_abstract')}
-                                helperText={getFieldError('project_abstract') ? 'Project abstract is required' : ''}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                multiline
-                                rows={3}
-                                label={<RequiredLabel label="Objectives" />}
-                                name="objectives"
-                                value={formData.objectives}
-                                onChange={handleChange}
-                                onBlur={() => setTouchedFields(prev => new Set(prev).add('objectives'))}
-                                error={getFieldError('objectives')}
-                                helperText={getFieldError('objectives') ? 'Objectives are required' : ''}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                multiline
-                                rows={3}
-                                label={<RequiredLabel label="Innovation / Novelty" />}
-                                name="innovation_novelty"
-                                value={formData.innovation_novelty}
-                                onChange={handleChange}
-                                onBlur={() => setTouchedFields(prev => new Set(prev).add('innovation_novelty'))}
-                                error={getFieldError('innovation_novelty')}
-                                helperText={getFieldError('innovation_novelty') ? 'Innovation/novelty is required' : ''}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                multiline
-                                rows={3}
-                                label={<RequiredLabel label="Expected Impact" />}
-                                name="expected_impact"
-                                value={formData.expected_impact}
-                                onChange={handleChange}
-                                onBlur={() => setTouchedFields(prev => new Set(prev).add('expected_impact'))}
-                                error={getFieldError('expected_impact')}
-                                helperText={getFieldError('expected_impact') ? 'Expected impact is required' : ''}
-                            />
-                        </Grid>
-                    </Grid>
-                );
-
-            case 3:
-                return (
-                    <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                            <Paper sx={{ p: 3, background: alpha('#2E8B57', 0.05), borderRadius: 2 }}>
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            name="is_team_project"
-                                            checked={formData.is_team_project}
-                                            onChange={handleCheckbox}
-                                            sx={{ color: '#2E8B57', '&.Mui-checked': { color: '#2E8B57' } }}
-                                        />
-                                    }
-                                    label="This is a team project"
-                                />
-                            </Paper>
-                        </Grid>
-                        {formData.is_team_project && (
-                            <>
-                                {formData.team_members.map((member, idx) => (
-                                    <Grid item xs={12} key={idx}>
-                                        <Paper sx={{ p: 3, position: 'relative', background: alpha('#2E8B57', 0.08), borderRadius: 2 }}>
-                                            <Typography variant="subtitle1" sx={{ color: '#2E8B57', mb: 2 }}>
-                                                Team Member {idx + 1}
-                                            </Typography>
-                                            <Grid container spacing={2}>
-                                                <Grid item xs={12} md={6}>
-                                                    <TextField
-                                                        fullWidth
-                                                        label="Name *"
-                                                        value={member.name}
-                                                        onChange={e => handleTeamMemberChange(idx, 'name', e.target.value)}
-                                                    />
-                                                </Grid>
-                                                <Grid item xs={12} md={6}>
-                                                    <TextField
-                                                        fullWidth
-                                                        label="Contact *"
-                                                        value={member.contact}
-                                                        onChange={e => handleTeamMemberChange(idx, 'contact', e.target.value)}
-                                                    />
-                                                </Grid>
-                                            </Grid>
-                                            <IconButton
-                                                onClick={() => removeTeamMember(idx)}
-                                                sx={{ position: 'absolute', top: 8, right: 8, color: '#f44336' }}
-                                            >
-                                                <DeleteIcon />
-                                            </IconButton>
-                                        </Paper>
-                                    </Grid>
-                                ))}
-                                <Grid item xs={12}>
-                                    <Button
-                                        variant="outlined"
-                                        onClick={addTeamMember}
-                                        startIcon={<AddIcon />}
-                                        sx={{ color: '#FEC909', borderColor: '#FEC909' }}
-                                    >
-                                        Add Team Member
-                                    </Button>
-                                </Grid>
-                            </>
-                        )}
-                    </Grid>
-                );
-
-            case 4:
-                return (
-                    <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                            <Alert severity="info" sx={{ mb: 2 }}>
-                                Files will be uploaded to Cloudinary when you submit
-                            </Alert>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Paper sx={{ p: 3, borderRadius: 2 }}>
-                                <Typography variant="subtitle1" sx={{ color: '#2E8B57', mb: 2 }}>
-                                    Project Summary PDF <Typography component="span" color="error">*</Typography>
-                                </Typography>
-                                <Button variant="contained" component="label">
-                                    Choose PDF
-                                    <input hidden accept=".pdf" type="file" onChange={(e) => handleFileSelect(e, 'pdf')} />
-                                </Button>
-                                {formData.pdfFile && (
-                                    <Chip
-                                        label={formData.pdfFile.name}
-                                        onDelete={() => clearFile('pdf')}
-                                        sx={{ ml: 2 }}
-                                    />
-                                )}
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <Paper sx={{ p: 3, borderRadius: 2 }}>
-                                <Typography variant="subtitle1" sx={{ mb: 2 }}>
-                                    Project Proposal <OptionalChip />
-                                </Typography>
-                                <Button variant="outlined" component="label">
-                                    Choose File
-                                    <input hidden accept=".pdf,.doc,.docx" type="file" onChange={(e) => handleFileSelect(e, 'proposal')} />
-                                </Button>
-                                {formData.proposalFile && (
-                                    <Chip
-                                        label={formData.proposalFile.name}
-                                        onDelete={() => clearFile('proposal')}
-                                        sx={{ ml: 2 }}
-                                    />
-                                )}
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                            <Paper sx={{ p: 3, borderRadius: 2 }}>
-                                <Typography variant="subtitle1" sx={{ mb: 2 }}>
-                                    Photos/Diagrams <OptionalChip />
-                                </Typography>
-                                <Button variant="outlined" component="label">
-                                    Choose Images
-                                    <input hidden accept="image/*" type="file" multiple onChange={(e) => handleFileSelect(e, 'photos')} />
-                                </Button>
-                                {formData.photoFiles.length > 0 && (
-                                    <Chip
-                                        label={`${formData.photoFiles.length} file(s)`}
-                                        onDelete={() => clearFile('photos')}
-                                        sx={{ ml: 2 }}
-                                    />
-                                )}
-                            </Paper>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                label={<OptionalLabel label="Video Link" />}
-                                name="video_link"
-                                value={formData.video_link}
-                                onChange={handleChange}
-                                placeholder="https://youtube.com/watch?v=..."
-                            />
-                        </Grid>
-                    </Grid>
-                );
-
-            case 5:
-                return (
-                    <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                            <Paper sx={{ p: 4, borderRadius: 2 }}>
-                                <Typography variant="h6" sx={{ color: '#2E8B57', mb: 3 }}>
-                                    Declaration
-                                </Typography>
-                                <Stack spacing={2}>
-                                    <FormControlLabel
-                                        control={
-                                            <Checkbox
-                                                name="info_correct"
-                                                checked={formData.info_correct}
-                                                onChange={handleCheckbox}
-                                                sx={{ color: '#2E8B57' }}
-                                            />
-                                        }
-                                        label="I declare that all information provided is correct and accurate."
-                                    />
-                                    <FormControlLabel
-                                        control={
-                                            <Checkbox
-                                                name="project_original"
-                                                checked={formData.project_original}
-                                                onChange={handleCheckbox}
-                                                sx={{ color: '#2E8B57' }}
-                                            />
-                                        }
-                                        label="I confirm that this project is my/our original work."
-                                    />
-                                    <FormControlLabel
-                                        control={
-                                            <Checkbox
-                                                name="agree_rules"
-                                                checked={formData.agree_rules}
-                                                onChange={handleCheckbox}
-                                                sx={{ color: '#2E8B57' }}
-                                            />
-                                        }
-                                        label="I agree to abide by the ZRF Science Fair rules and regulations."
-                                    />
-                                </Stack>
-                            </Paper>
-                        </Grid>
-                    </Grid>
-                );
-
-            default:
-                return null;
-        }
+    const getCategoryName = (age: number | null) => {
+        if (!age) return '';
+        if (age >= 9 && age <= 12) return language === 'BNG' ? 'ক' : 'Ka';
+        if (age >= 13 && age <= 17) return language === 'BNG' ? 'খ' : 'Kha';
+        if (age >= 18) return language === 'BNG' ? 'গ' : 'Ga';
+        return '';
     };
 
     const cardSx = {
@@ -959,15 +692,7 @@ export default function RegistrationForm() {
             <Container maxWidth="lg" sx={{ py: 4 }}>
                 {/* Header */}
                 <Fade in timeout={800}>
-                    <Box sx={{ mb: 6, textAlign: 'center' }}>
-                        <Zoom in timeout={600}>
-                            <EmojiEventsIcon sx={{
-                                fontSize: 80,
-                                color: '#FEC909',
-                                mb: 2,
-                                filter: 'drop-shadow(0 0 20px rgba(254,201,9,0.3))',
-                            }} />
-                        </Zoom>
+                    <Box sx={{ mb: 4, textAlign: 'center' }}>
                         <Typography variant="h2" sx={{
                             fontWeight: 800,
                             background: 'linear-gradient(135deg, #2E8B57 0%, #FEC909 100%)',
@@ -977,13 +702,128 @@ export default function RegistrationForm() {
                             mb: 2,
                             fontSize: { xs: '2rem', md: '3.5rem' },
                         }}>
-                            Science Project Registration
-                        </Typography>
-                        <Typography variant="body1" sx={{ color: '#C8E0D0', maxWidth: 600, mx: 'auto' }}>
-                            Join the next generation of innovators and showcase your scientific brilliance
+                            {language === 'BNG' ? 'বিজ্ঞান মেলা রেজিস্ট্রেশন - ২০২৬' : 'Science Fair Registration - 2026'}
                         </Typography>
                     </Box>
                 </Fade>
+
+                {/* Info Button and Simple Banner */}
+                <Fade in timeout={900}>
+                    <Box sx={{ mb: 4 }}>
+                        {/* Centered Button to View Full Details */}
+                        <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
+                            <Button
+                                variant="contained"
+                                onClick={() => setOpenImageDialog(true)}
+                                startIcon={<ImageIcon />}
+                                sx={{
+                                    background: 'linear-gradient(135deg, #FEC909 0%, #FFD633 100%)',
+                                    color: '#1A1A1A',
+                                    fontWeight: 700,
+                                    px: 4,
+                                    py: 1.5,
+                                    fontSize: '1rem',
+                                    borderRadius: 3,
+                                    '&:hover': {
+                                        background: 'linear-gradient(135deg, #FFD633 0%, #FEC909 100%)',
+                                        transform: 'translateY(-2px)',
+                                    }
+                                }}
+                            >
+                                {language === 'BNG' ? '📋 বিস্তারিত তথ্য দেখুন ' : '📋 View Details'}
+                            </Button>
+                        </Box>
+                    </Box>
+                </Fade>
+
+                {/* Full Image Dialog - Modal */}
+                <Dialog
+                    open={openImageDialog}
+                    onClose={() => setOpenImageDialog(false)}
+                    maxWidth="lg"
+                    fullWidth
+                    PaperProps={{
+                        sx: {
+                            bgcolor: 'rgba(0,0,0,0.95)',
+                            borderRadius: 3,
+                            maxWidth: '90vw',
+                            maxHeight: '90vh',
+                            overflow: 'hidden',
+                            zIndex: '999px'
+                        }
+                    }}
+                >
+                    <DialogTitle sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        color: '#FEC909',
+                        borderBottom: '1px solid rgba(254,201,9,0.3)',
+                        bgcolor: 'rgba(0,0,0,0.8)',
+                    }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <SchoolIcon />
+                            <Typography variant="h6">{language === 'BNG' ? 'বিজ্ঞান মেলা ২০২৬ - বিস্তারিত তথ্য' : 'Science Fair 2026 - Details'}</Typography>
+                        </Box>
+                        <IconButton onClick={() => setOpenImageDialog(false)} sx={{ color: '#FEC909' }}>
+                            <CloseIcon />
+                        </IconButton>
+                    </DialogTitle>
+                    <DialogContent sx={{
+                        p: 3,
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        bgcolor: '#000',
+                        minHeight: '60vh',
+                    }}>
+                        <Box sx={{
+                            position: 'relative',
+                            width: '100%',
+                            maxHeight: '70vh',
+                            overflow: 'auto',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}>
+                            <Image
+                                src={registrationImg}
+                                alt="Science Fair Competition Details"
+                                width={1000}
+                                height={700}
+                                style={{
+                                    width: 'auto',
+                                    height: 'auto',
+                                    maxWidth: '100%',
+                                    maxHeight: '70vh',
+                                    objectFit: 'contain',
+                                    borderRadius: '8px',
+                                }}
+                                priority
+                            />
+                        </Box>
+                    </DialogContent>
+                    <DialogActions sx={{
+                        justifyContent: 'center',
+                        p: 2,
+                        borderTop: '1px solid rgba(254,201,9,0.3)',
+                        bgcolor: 'rgba(0,0,0,0.8)',
+                    }}>
+                        <Button
+                            onClick={() => setOpenImageDialog(false)}
+                            variant="contained"
+                            sx={{
+                                background: 'linear-gradient(135deg, #2E8B57 0%, #216740 100%)',
+                                px: 4,
+                                '&:hover': {
+                                    background: 'linear-gradient(135deg, #216740 0%, #1a5232 100%)',
+                                }
+                            }}
+                        >
+                            {language === 'BNG' ? 'বন্ধ করুন' : 'Close'}
+                        </Button>
+                    </DialogActions>
+                </Dialog>
 
                 {/* Error Alert */}
                 {error && (
@@ -1061,98 +901,422 @@ export default function RegistrationForm() {
                             }}
                         />
                         <CardContent sx={{ p: 4 }}>
-                            {renderStepContent()}
+                            {activeStep === 0 && (
+                                <Grid container spacing={3}>
+                                    <Grid item xs={12} md={6}>
+                                        <TextField
+                                            fullWidth
+                                            label={<RequiredLabel label={language === 'BNG' ? 'পুরো নাম' : 'Full Name'} language={language} />}
+                                            name="full_name"
+                                            value={formData.full_name}
+                                            onChange={handleChange}
+                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('full_name'))}
+                                            error={getFieldError('full_name')}
+                                            helperText={getFieldError('full_name') ? (language === 'BNG' ? 'পুরো নাম প্রয়োজন' : 'Full name is required') : ''}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <TextField
+                                            fullWidth
+                                            label={<RequiredLabel label={language === 'BNG' ? 'ইমেইল' : 'Email'} language={language} />}
+                                            name="email"
+                                            type="email"
+                                            value={formData.email}
+                                            onChange={handleChange}
+                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('email'))}
+                                            error={getFieldError('email')}
+                                            helperText={getFieldError('email') ? (language === 'BNG' ? 'ইমেইল প্রয়োজন' : 'Email is required') : ''}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <TextField
+                                            fullWidth
+                                            label={<RequiredLabel label={language === 'BNG' ? 'মোবাইল নম্বর' : 'Mobile Number'} language={language} />}
+                                            name="mobile_number"
+                                            value={formData.mobile_number}
+                                            onChange={handleChange}
+                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('mobile_number'))}
+                                            error={getFieldError('mobile_number')}
+                                            helperText={getFieldError('mobile_number') ? (language === 'BNG' ? 'মোবাইল নম্বর প্রয়োজন' : 'Mobile number is required') : ''}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <TextField
+                                            fullWidth
+                                            label={<RequiredLabel label={language === 'BNG' ? 'জন্ম তারিখ' : 'Date of Birth'} language={language} />}
+                                            name="date_of_birth"
+                                            type="date"
+                                            value={formData.date_of_birth}
+                                            onChange={handleChange}
+                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('date_of_birth'))}
+                                            InputLabelProps={{ shrink: true }}
+                                            error={!!dateError || getFieldError('date_of_birth')}
+                                            helperText={dateError || (getFieldError('date_of_birth') ? (language === 'BNG' ? 'জন্ম তারিখ প্রয়োজন' : 'Date of birth is required') : '')}
+                                            inputProps={{
+                                                min: getMinDate(),
+                                                max: getMaxDate()
+                                            }}
+                                        />
+                                    </Grid>
+
+                                    <Grid item xs={12} md={6}>
+                                        <FormControl fullWidth error={getFieldError('gender')}>
+                                            <InputLabel>{language === 'BNG' ? 'লিঙ্গ *' : 'Gender *'}</InputLabel>
+                                            <Select name="gender" value={formData.gender} onChange={handleChange} label={language === 'BNG' ? 'লিঙ্গ *' : 'Gender *'}>
+                                                {genders.map(g => <MenuItem key={g} value={g}>{g}</MenuItem>)}
+                                            </Select>
+                                            {getFieldError('gender') && <FormHelperText>{language === 'BNG' ? 'লিঙ্গ নির্বাচন প্রয়োজন' : 'Gender is required'}</FormHelperText>}
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <FormControl fullWidth error={getFieldError('division')}>
+                                            <InputLabel>{language === 'BNG' ? 'বিভাগ *' : 'Division *'}</InputLabel>
+                                            <Select name="division" value={formData.division} onChange={handleChange} label={language === 'BNG' ? 'বিভাগ *' : 'Division *'}>
+                                                {divisions.map(d => <MenuItem key={d} value={d}>{d}</MenuItem>)}
+                                            </Select>
+                                            {getFieldError('division') && <FormHelperText>{language === 'BNG' ? 'বিভাগ নির্বাচন প্রয়োজন' : 'Division is required'}</FormHelperText>}
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            fullWidth
+                                            label={<RequiredLabel label={language === 'BNG' ? 'বর্তমান শ্রেণী / বছর' : 'Current Class / Year'} language={language} />}
+                                            name="current_class_year"
+                                            value={formData.current_class_year}
+                                            onChange={handleChange}
+                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('current_class_year'))}
+                                            error={getFieldError('current_class_year')}
+                                            helperText={getFieldError('current_class_year') ? (language === 'BNG' ? 'বর্তমান শ্রেণী/বছর প্রয়োজন' : 'Current class/year is required') : ''}
+                                        />
+                                    </Grid>
+                                </Grid>
+                            )}
+
+                            {activeStep === 1 && (
+                                <Grid container spacing={3}>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            fullWidth
+                                            label={<RequiredLabel label={language === 'BNG' ? 'প্রতিষ্ঠানের নাম' : 'Institution Name'} language={language} />}
+                                            name="institution_name"
+                                            value={formData.institution_name}
+                                            onChange={handleChange}
+                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('institution_name'))}
+                                            error={getFieldError('institution_name')}
+                                            helperText={getFieldError('institution_name') ? (language === 'BNG' ? 'প্রতিষ্ঠানের নাম প্রয়োজন' : 'Institution name is required') : ''}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            fullWidth
+                                            multiline
+                                            rows={3}
+                                            label={<RequiredLabel label={language === 'BNG' ? 'প্রতিষ্ঠানের ঠিকানা' : 'Institution Address'} language={language} />}
+                                            name="institution_address"
+                                            value={formData.institution_address}
+                                            onChange={handleChange}
+                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('institution_address'))}
+                                            error={getFieldError('institution_address')}
+                                            helperText={getFieldError('institution_address') ? (language === 'BNG' ? 'প্রতিষ্ঠানের ঠিকানা প্রয়োজন' : 'Institution address is required') : ''}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <TextField
+                                            fullWidth
+                                            label={<RequiredLabel label={language === 'BNG' ? 'জেলা' : 'District'} language={language} />}
+                                            name="district"
+                                            value={formData.district}
+                                            onChange={handleChange}
+                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('district'))}
+                                            error={getFieldError('district')}
+                                            helperText={getFieldError('district') ? (language === 'BNG' ? 'জেলা প্রয়োজন' : 'District is required') : ''}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <TextField
+                                            fullWidth
+                                            label={<OptionalLabel label={language === 'BNG' ? 'শিক্ষক / মেন্টরের নাম' : 'Teacher / Mentor Name'} language={language} />}
+                                            name="mentor_name"
+                                            value={formData.mentor_name}
+                                            onChange={handleChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <TextField
+                                            fullWidth
+                                            label={<OptionalLabel label={language === 'BNG' ? 'শিক্ষক / মেন্টরের যোগাযোগ' : 'Teacher / Mentor Contact'} language={language} />}
+                                            name="mentor_contact"
+                                            value={formData.mentor_contact}
+                                            onChange={handleChange}
+                                        />
+                                    </Grid>
+                                </Grid>
+                            )}
+
+                            {activeStep === 2 && (
+                                <Grid container spacing={3}>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            fullWidth
+                                            label={<RequiredLabel label={language === 'BNG' ? 'প্রকল্পের শিরোনাম' : 'Project Title'} language={language} />}
+                                            name="project_title"
+                                            value={formData.project_title}
+                                            onChange={handleChange}
+                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('project_title'))}
+                                            error={getFieldError('project_title')}
+                                            helperText={getFieldError('project_title') ? (language === 'BNG' ? 'প্রকল্পের শিরোনাম প্রয়োজন' : 'Project title is required') : ''}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <FormControl fullWidth error={getFieldError('scientific_field')}>
+                                            <InputLabel>{language === 'BNG' ? 'বৈজ্ঞানিক ক্ষেত্র *' : 'Scientific Field *'}</InputLabel>
+                                            <Select name="scientific_field" value={formData.scientific_field} onChange={handleChange} label={language === 'BNG' ? 'বৈজ্ঞানিক ক্ষেত্র *' : 'Scientific Field *'}>
+                                                {scientificFields.map(f => <MenuItem key={f} value={f}>{f}</MenuItem>)}
+                                            </Select>
+                                            {getFieldError('scientific_field') && <FormHelperText>{language === 'BNG' ? 'বৈজ্ঞানিক ক্ষেত্র নির্বাচন প্রয়োজন' : 'Scientific field is required'}</FormHelperText>}
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            fullWidth
+                                            multiline
+                                            rows={5}
+                                            label={<RequiredLabel label={language === 'BNG' ? 'প্রকল্পের সারসংক্ষেপ' : 'Project Abstract'} language={language} />}
+                                            name="project_abstract"
+                                            value={formData.project_abstract}
+                                            onChange={handleChange}
+                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('project_abstract'))}
+                                            error={getFieldError('project_abstract')}
+                                            helperText={getFieldError('project_abstract') ? (language === 'BNG' ? 'প্রকল্পের সারসংক্ষেপ প্রয়োজন' : 'Project abstract is required') : ''}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            fullWidth
+                                            multiline
+                                            rows={3}
+                                            label={<RequiredLabel label={language === 'BNG' ? 'উদ্দেশ্য' : 'Objectives'} language={language} />}
+                                            name="objectives"
+                                            value={formData.objectives}
+                                            onChange={handleChange}
+                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('objectives'))}
+                                            error={getFieldError('objectives')}
+                                            helperText={getFieldError('objectives') ? (language === 'BNG' ? 'উদ্দেশ্য প্রয়োজন' : 'Objectives are required') : ''}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            fullWidth
+                                            multiline
+                                            rows={3}
+                                            label={<RequiredLabel label={language === 'BNG' ? 'উদ্ভাবন / নতুনত্ব' : 'Innovation / Novelty'} language={language} />}
+                                            name="innovation_novelty"
+                                            value={formData.innovation_novelty}
+                                            onChange={handleChange}
+                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('innovation_novelty'))}
+                                            error={getFieldError('innovation_novelty')}
+                                            helperText={getFieldError('innovation_novelty') ? (language === 'BNG' ? 'উদ্ভাবন/নতুনত্ব প্রয়োজন' : 'Innovation/novelty is required') : ''}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            fullWidth
+                                            multiline
+                                            rows={3}
+                                            label={<RequiredLabel label={language === 'BNG' ? 'প্রত্যাশিত প্রভাব' : 'Expected Impact'} language={language} />}
+                                            name="expected_impact"
+                                            value={formData.expected_impact}
+                                            onChange={handleChange}
+                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('expected_impact'))}
+                                            error={getFieldError('expected_impact')}
+                                            helperText={getFieldError('expected_impact') ? (language === 'BNG' ? 'প্রত্যাশিত প্রভাব প্রয়োজন' : 'Expected impact is required') : ''}
+                                        />
+                                    </Grid>
+                                </Grid>
+                            )}
+
+                            {activeStep === 3 && (
+                                <Grid container spacing={3}>
+                                    <Grid item xs={12}>
+                                        <Paper sx={{ p: 3, background: alpha('#2E8B57', 0.05), borderRadius: 2 }}>
+                                            <Typography variant="subtitle1" sx={{ color: '#2E8B57', mb: 2, fontWeight: 600 }}>
+                                                {language === 'BNG' ? 'প্রকল্পের ধরন' : 'Project Type'}
+                                            </Typography>
+                                            <RadioGroup value={formData.project_type} onChange={handleProjectTypeChange} sx={{ flexDirection: 'row', gap: 3 }}>
+                                                <FormControlLabel
+                                                    value="individual"
+                                                    control={<Radio sx={{ color: '#2E8B57', '&.Mui-checked': { color: '#2E8B57' } }} />}
+                                                    label={<Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}><PersonIcon /><span>{language === 'BNG' ? 'ব্যক্তিগত প্রকল্প' : 'Individual Project'}</span></Box>}
+                                                />
+                                                <FormControlLabel
+                                                    value="team"
+                                                    control={<Radio sx={{ color: '#2E8B57', '&.Mui-checked': { color: '#2E8B57' } }} />}
+                                                    label={<Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}><GroupIcon /><span>{language === 'BNG' ? 'দলীয় প্রকল্প' : 'Team Project'}</span></Box>}
+                                                />
+                                            </RadioGroup>
+                                        </Paper>
+                                    </Grid>
+                                    {formData.project_type === 'team' && (
+                                        <>
+                                            {formData.team_members.map((member, idx) => (
+                                                <Grid item xs={12} key={idx}>
+                                                    <Paper sx={{ p: 3, position: 'relative', background: alpha('#2E8B57', 0.08), borderRadius: 2 }}>
+                                                        <Typography variant="subtitle1" sx={{ color: '#2E8B57', mb: 2 }}>{language === 'BNG' ? `দলের সদস্য ${idx + 1}` : `Team Member ${idx + 1}`}</Typography>
+                                                        <Grid container spacing={2}>
+                                                            <Grid item xs={12} md={6}>
+                                                                <TextField fullWidth label={language === 'BNG' ? 'নাম *' : 'Name *'} value={member.name} onChange={e => handleTeamMemberChange(idx, 'name', e.target.value)} required />
+                                                            </Grid>
+                                                            <Grid item xs={12} md={6}>
+                                                                <TextField fullWidth label={language === 'BNG' ? 'যোগাযোগ *' : 'Contact *'} value={member.contact} onChange={e => handleTeamMemberChange(idx, 'contact', e.target.value)} placeholder={language === 'BNG' ? 'ইমেইল বা ফোন নম্বর' : 'Email or Phone Number'} required />
+                                                            </Grid>
+                                                        </Grid>
+                                                        <IconButton onClick={() => removeTeamMember(idx)} sx={{ position: 'absolute', top: 8, right: 8, color: '#f44336' }}><DeleteIcon /></IconButton>
+                                                    </Paper>
+                                                </Grid>
+                                            ))}
+                                            <Grid item xs={12}>
+                                                <Button variant="outlined" onClick={addTeamMember} startIcon={<AddIcon />} sx={{ color: '#FEC909', borderColor: '#FEC909' }}>
+                                                    {language === 'BNG' ? 'দলের সদস্য যোগ করুন' : 'Add Team Member'}
+                                                </Button>
+                                            </Grid>
+                                        </>
+                                    )}
+                                    {formData.project_type === 'individual' && (
+                                        <Grid item xs={12}>
+                                            <Alert severity="info" sx={{ borderRadius: 2 }}>
+                                                {language === 'BNG'
+                                                    ? 'আপনি একটি ব্যক্তিগত প্রকল্প নির্বাচন করেছেন। আপনি পরবর্তী ধাপে যেতে পারেন।'
+                                                    : 'You have selected an individual project. You can proceed to the next step.'}
+                                            </Alert>
+                                        </Grid>
+                                    )}
+                                </Grid>
+                            )}
+
+                            {activeStep === 4 && (
+                                <Grid container spacing={3}>
+                                    <Grid item xs={12}>
+                                        <Alert severity="info" sx={{ mb: 2 }}>
+                                            <strong>{language === 'BNG' ? 'ফাইলের সাইজ সীমা:' : 'File Size Limits:'}</strong> {language === 'BNG' ? 'PDF ফাইল 10 MB পর্যন্ত, ছবি 5 MB পর্যন্ত' : 'PDF files up to 10 MB, Images up to 5 MB each'}
+                                        </Alert>
+                                    </Grid>
+                                    {Object.keys(fileErrors).length > 0 && (
+                                        <Grid item xs={12}>
+                                            <Alert severity="error" sx={{ mb: 2 }}>
+                                                {Object.values(fileErrors).map((err, idx) => (<Box key={idx} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}><WarningIcon fontSize="small" />{err}</Box>))}
+                                            </Alert>
+                                        </Grid>
+                                    )}
+                                    <Grid item xs={12}>
+                                        <Paper sx={{ p: 3, borderRadius: 2 }}>
+                                            <Typography variant="subtitle1" sx={{ color: '#2E8B57', mb: 2 }}>
+                                                {language === 'BNG' ? 'প্রকল্পের সারাংশ PDF' : 'Project Summary PDF'} <Typography component="span" color="error">*</Typography>
+                                            </Typography>
+                                            <Button variant="contained" component="label">{language === 'BNG' ? 'PDF নির্বাচন করুন' : 'Choose PDF'}<input hidden accept=".pdf" type="file" onChange={(e) => handleFileSelect(e, 'pdf')} /></Button>
+                                            {formData.pdfFile && <Chip label={`${formData.pdfFile.name} (${formatFileSize(formData.pdfFile.size)})`} onDelete={() => clearFile('pdf')} sx={{ ml: 2 }} />}
+                                        </Paper>
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <Paper sx={{ p: 3, borderRadius: 2 }}>
+                                            <Typography variant="subtitle1" sx={{ mb: 2 }}>
+                                                {language === 'BNG' ? 'প্রকল্পের প্রস্তাবনা' : 'Project Proposal'} <OptionalChip language={language} />
+                                            </Typography>
+                                            <Button variant="outlined" component="label">{language === 'BNG' ? 'ফাইল নির্বাচন করুন' : 'Choose File'}<input hidden accept=".pdf,.doc,.docx" type="file" onChange={(e) => handleFileSelect(e, 'proposal')} /></Button>
+                                            {formData.proposalFile && <Chip label={`${formData.proposalFile.name} (${formatFileSize(formData.proposalFile.size)})`} onDelete={() => clearFile('proposal')} sx={{ ml: 2 }} />}
+                                        </Paper>
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <Paper sx={{ p: 3, borderRadius: 2 }}>
+                                            <Typography variant="subtitle1" sx={{ mb: 2 }}>
+                                                {language === 'BNG' ? 'ছবি/ডায়াগ্রাম' : 'Photos/Diagrams'} <OptionalChip language={language} />
+                                            </Typography>
+                                            <Button variant="outlined" component="label">{language === 'BNG' ? 'ছবি নির্বাচন করুন' : 'Choose Images'}<input hidden accept="image/*" type="file" multiple onChange={(e) => handleFileSelect(e, 'photos')} /></Button>
+                                            {formData.photoFiles.length > 0 && (<Box sx={{ mt: 1 }}>{formData.photoFiles.map((file, idx) => (<Chip key={idx} label={`${file.name} (${formatFileSize(file.size)})`} sx={{ m: 0.5 }} />))}<IconButton size="small" onClick={() => clearFile('photos')}><DeleteIcon fontSize="small" /></IconButton></Box>)}
+                                        </Paper>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField fullWidth label={<OptionalLabel label={language === 'BNG' ? 'ভিডিও লিংক' : 'Video Link'} language={language} />} name="video_link" value={formData.video_link} onChange={handleChange} placeholder="https://youtube.com/watch?v=..." />
+                                    </Grid>
+                                </Grid>
+                            )}
+
+                            {activeStep === 5 && (
+                                <Grid container spacing={3}>
+                                    <Grid item xs={12}>
+                                        <Paper sx={{ p: 4, borderRadius: 2 }}>
+                                            <Typography variant="h6" sx={{ color: '#2E8B57', mb: 3 }}>
+                                                {language === 'BNG' ? 'ঘোষণাপত্র' : 'Declaration'}
+                                            </Typography>
+                                            <Stack spacing={2}>
+                                                <FormControlLabel
+                                                    control={<Checkbox name="info_correct" checked={formData.info_correct} onChange={handleCheckbox} sx={{ color: '#2E8B57' }} />}
+                                                    label={language === 'BNG'
+                                                        ? 'আমি ঘোষণা করছি যে প্রদত্ত সমস্ত তথ্য সঠিক এবং নির্ভুল।'
+                                                        : 'I declare that all information provided is correct and accurate.'}
+                                                />
+                                                <FormControlLabel
+                                                    control={<Checkbox name="project_original" checked={formData.project_original} onChange={handleCheckbox} sx={{ color: '#2E8B57' }} />}
+                                                    label={language === 'BNG'
+                                                        ? 'আমি নিশ্চিত করছি যে এই প্রকল্পটি আমার/আমাদের মূল কাজ।'
+                                                        : 'I confirm that this project is my/our original work.'}
+                                                />
+                                                <FormControlLabel
+                                                    control={<Checkbox name="agree_rules" checked={formData.agree_rules} onChange={handleCheckbox} sx={{ color: '#2E8B57' }} />}
+                                                    label={language === 'BNG'
+                                                        ? 'আমি ZRF বিজ্ঞান মেলার নিয়ম ও শর্তাবলী মেনে চলতে সম্মত আছি।'
+                                                        : 'I agree to abide by the ZRF Science Fair rules and regulations.'}
+                                                />
+                                            </Stack>
+                                        </Paper>
+                                    </Grid>
+                                </Grid>
+                            )}
                         </CardContent>
                     </Card>
                 </Grow>
 
                 {/* Navigation Buttons */}
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
-                    <Button
-                        disabled={activeStep === 0 || isLoading}
-                        onClick={handleBack}
-                        startIcon={<NavigateBeforeIcon />}
-                        variant="outlined"
-                        sx={{
-                            color: '#C8E0D0', borderColor: '#C8E0D0',
-                            '&:hover': { borderColor: '#2E8B57', backgroundColor: alpha('#2E8B57', 0.1) },
-                        }}
-                    >
-                        Back
+                    <Button disabled={activeStep === 0 || isLoading} onClick={handleBack} startIcon={<NavigateBeforeIcon />} variant="outlined" sx={{ color: '#C8E0D0', borderColor: '#C8E0D0', '&:hover': { borderColor: '#2E8B57', backgroundColor: alpha('#2E8B57', 0.1) } }}>
+                        {language === 'BNG' ? 'পিছনে' : 'Back'}
                     </Button>
-
                     {activeStep < steps.length - 1 ? (
-                        <Button
-                            onClick={handleNext}
-                            endIcon={<NavigateNextIcon />}
-                            variant="contained"
-                            sx={{
-                                background: 'linear-gradient(135deg, #2E8B57 0%, #216740 100%)',
-                                minWidth: 120,
-                                '&:hover': {
-                                    background: 'linear-gradient(135deg, #216740 0%, #1a5232 100%)',
-                                    transform: 'translateY(-2px)',
-                                },
-                            }}
-                        >
-                            Next
+                        <Button onClick={handleNext} endIcon={<NavigateNextIcon />} variant="contained" sx={{ background: 'linear-gradient(135deg, #2E8B57 0%, #216740 100%)', minWidth: 120, '&:hover': { background: 'linear-gradient(135deg, #216740 0%, #1a5232 100%)', transform: 'translateY(-2px)' } }}>
+                            {language === 'BNG' ? 'পরবর্তী' : 'Next'}
                         </Button>
                     ) : (
-                        <Button
-                            onClick={handleSubmit}
-                            disabled={isLoading || !formData.info_correct || !formData.project_original || !formData.agree_rules}
-                            variant="contained"
-                            sx={{
-                                background: 'linear-gradient(135deg, #FEC909 0%, #FFD633 100%)',
-                                color: '#1A1A1A',
-                                minWidth: 160,
-                                fontWeight: 700,
-                                '&:hover': {
-                                    background: 'linear-gradient(135deg, #FFD633 0%, #FEC909 100%)',
-                                    transform: 'translateY(-2px)',
-                                },
-                                '&.Mui-disabled': { opacity: 0.6 },
-                            }}
-                        >
-                            {isLoading ? <CircularProgress size={22} sx={{ color: '#1A1A1A' }} /> : 'Submit Registration'}
+                        <Button onClick={handleSubmit} disabled={isLoading || !formData.info_correct || !formData.project_original || !formData.agree_rules || Object.keys(fileErrors).length > 0} variant="contained" sx={{ background: 'linear-gradient(135deg, #FEC909 0%, #FFD633 100%)', color: '#1A1A1A', minWidth: 160, fontWeight: 700 }}>
+                            {isLoading ? <CircularProgress size={22} sx={{ color: '#1A1A1A' }} /> : (language === 'BNG' ? 'রেজিস্ট্রেশন জমা দিন' : 'Submit Registration')}
                         </Button>
                     )}
                 </Box>
 
                 {/* Success Dialog */}
-                <Dialog
-                    open={showSuccess}
-                    onClose={() => setShowSuccess(false)}
-                    PaperProps={{
-                        sx: {
-                            background: 'linear-gradient(135deg, #132620 0%, #0d2a2a 100%)',
-                            borderRadius: 3,
-                            border: '1px solid rgba(46,139,87,0.3)',
-                        },
-                    }}
-                >
+                <Dialog open={showSuccess} onClose={() => setShowSuccess(false)} PaperProps={{ sx: { background: 'linear-gradient(135deg, #132620 0%, #0d2a2a 100%)', borderRadius: 3, border: '1px solid rgba(46,139,87,0.3)' } }}>
                     <DialogTitle sx={{ textAlign: 'center', pt: 3 }}>
                         <CheckCircleIcon sx={{ fontSize: 64, color: '#2E8B57', mb: 1 }} />
                         <Typography variant="h5" sx={{ color: '#2E8B57', fontWeight: 600 }}>
-                            Registration Successful!
+                            {language === 'BNG' ? 'রেজিস্ট্রেশন সফল হয়েছে!' : 'Registration Successful!'}
                         </Typography>
                     </DialogTitle>
                     <DialogContent>
                         <Typography sx={{ color: '#C8E0D0', textAlign: 'center' }}>
-                            Your registration has been submitted successfully.
-                            You will receive a confirmation email shortly.
+                            {language === 'BNG'
+                                ? 'আপনার রেজিস্ট্রেশন সফলভাবে জমা দেওয়া হয়েছে। আপনি শীঘ্রই একটি নিশ্চিতকরণ ইমেইল পাবেন।'
+                                : 'Your registration has been submitted successfully. You will receive a confirmation email shortly.'}
                         </Typography>
                     </DialogContent>
                     <DialogActions sx={{ justifyContent: 'center', pb: 3 }}>
-                        <Button
-                            onClick={() => setShowSuccess(false)}
-                            variant="contained"
-                            sx={{ background: 'linear-gradient(135deg, #2E8B57 0%, #216740 100%)', px: 4 }}
-                        >
-                            Close
+                        <Button onClick={() => setShowSuccess(false)} variant="contained" sx={{ background: 'linear-gradient(135deg, #2E8B57 0%, #216740 100%)', px: 4 }}>
+                            {language === 'BNG' ? 'বন্ধ করুন' : 'Close'}
                         </Button>
                     </DialogActions>
                 </Dialog>
+
+                {/* Snackbar */}
+                <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={() => setSnackbarOpen(false)} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+                    <Alert onClose={() => setSnackbarOpen(false)} severity={snackbarSeverity} sx={{ width: '100%', borderRadius: 2 }}>{snackbarMessage}</Alert>
+                </Snackbar>
             </Container>
         </Box>
     );
