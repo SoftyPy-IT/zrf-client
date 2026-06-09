@@ -14,7 +14,21 @@ const allApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+
+    createRegistration: builder.mutation({
+      query: (payload) => ({
+        url: `/registrations`,
+        method: "POST",
+        body: payload,
+      }),
+    }),
+
+
   }),
 });
 
-export const { useGetAllBannerQuery, useGetAllRecentActivitiesQuery } = allApi;
+export const {
+  useGetAllBannerQuery,
+  useGetAllRecentActivitiesQuery,
+  useCreateRegistrationMutation,
+} = allApi;
