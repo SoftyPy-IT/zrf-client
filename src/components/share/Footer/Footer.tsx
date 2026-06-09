@@ -24,25 +24,46 @@ const FooterData = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const { language } = useLanguage();
 
-
   const handleModalOpen = () => setModalOpen(true);
   const handleModalClose = () => setModalOpen(false);
 
-  // Footer links data
+
   const footerLinks = {
     support: [
-      { name: language === "ENG" ? "Contact Us" : "যোগাযোগ করুন", href: "/contact" },
-      { name: language === "ENG" ? "Join Us" : "যোগ দিন", href: "#", onClick: handleModalOpen },
+      {
+        name: language === "ENG" ? "Contact Us" : "যোগাযোগ করুন",
+        href: "/contact"
+      },
+      {
+        name: language === "ENG" ? "Join Us" : "যোগ দিন",
+        href: "#",
+        onClick: handleModalOpen
+      },
     ],
     about: [
-      { name: language === "ENG" ? "About Us" : "আমাদের সম্পর্কে", href: "/about" },
-      { name: language === "ENG" ? "Contact Us" : "যোগাযোগ করুন", href: "/contact" },
-      { name: language === "ENG" ? "Our Committee" : "আমাদের কমিটি", href: "/committee" },
+      {
+        name: language === "ENG" ? "About Us" : "আমাদের সম্পর্কে",
+        href: "/about"
+      },
+      {
+        name: language === "ENG" ? "Contact Us" : "যোগাযোগ করুন",
+        href: "/contact"
+      },
+      {
+        name: language === "ENG" ? "Our Committee" : "আমাদের কমিটি",
+        href: "/committee"
+      },
+    ],
+    // Add a new section for Registration
+    registration: [
+      {
+        name: language === "ENG" ? "Science Fair Registration" : "বিজ্ঞান মেলা নিবন্ধন",
+        href: "/registration",
+        isRegistration: true // Optional: flag to identify this as registration link
+      },
+
     ],
   };
-
-
-
 
   const socialLinks = [
     {
@@ -90,7 +111,6 @@ const FooterData = () => {
             <Subscribe />
           </div>
         </Container>
-
       </div>
 
       <Box
@@ -101,17 +121,14 @@ const FooterData = () => {
           color: "#C8E0D0",
           pt: 8,
           pb: 4,
-
-
-
         }}
       >
         <Container>
           <div className="container ">
             {/* Main Footer Content */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-8 mt-8">
-              {/* Logo and Description Section - Centered */}
-              <div >
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-x-8 gap-y-8 mt-8">
+              {/* Logo and Description Section */}
+              <div>
                 <Link href="/">
                   <div className="space-y-3 flex flex-col items-center">
                     <Image
@@ -128,7 +145,6 @@ const FooterData = () => {
                     </h3>
                   </div>
                 </Link>
-
               </div>
 
               {/* Support Links */}
@@ -169,7 +185,7 @@ const FooterData = () => {
                 </ul>
               </div>
 
-              {/* Legal Links */}
+              {/* About Links */}
               <div className="text-center sm:text-left">
                 <h4 className="font-semibold text-white text-lg mb-4 relative inline-block sm:inline-block">
                   {language === "ENG" ? "About" : "আমাদের সম্পর্কে"}
@@ -189,7 +205,28 @@ const FooterData = () => {
                 </ul>
               </div>
 
-              {/* Social Media Section - Flex Items */}
+              {/* Registration Links - New Section */}
+              <div className="text-center sm:text-left">
+                <h4 className="font-semibold text-white text-lg mb-4 relative inline-block sm:inline-block">
+                  {language === "ENG" ? "Registration" : "নিবন্ধন"}
+                  <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-[#FEC909] hidden sm:block"></span>
+                </h4>
+                <ul className="space-y-3">
+                  {footerLinks.registration.map((link, index) => (
+                    <li key={index}>
+                      <Link
+                        href={link.href}
+                        className="text-[#B8D9C4] hover:text-[#FEC909] transition-colors duration-300 text-sm flex items-center gap-2 group"
+                      >
+                        <span className="inline-block w-1 h-1 bg-[#FEC909] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                        {link.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Social Media Section */}
               <div className="text-center sm:text-left">
                 <h4 className="font-semibold text-white text-lg mb-4 relative inline-block sm:inline-block">
                   {language === "ENG" ? "Follow Us" : "আমাদের অনুসরণ করুন"}
@@ -222,14 +259,13 @@ const FooterData = () => {
             />
 
             {/* Copyright Section */}
-            <div className=" text-center">
+            <div className="text-center">
               <div className="text-gray-500 text-sm">
                 &copy; {new Date().getFullYear()}{" "}
                 {language === "ENG"
                   ? "Ziaur Rahman Foundation. All Rights Reserved."
                   : "জিয়াউর রহমান ফাউন্ডেশন। সর্বস্বত্ব সংরক্ষিত।"}
               </div>
-
             </div>
           </div>
         </Container>
