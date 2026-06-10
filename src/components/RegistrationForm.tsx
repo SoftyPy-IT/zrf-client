@@ -906,13 +906,13 @@ export default function RegistrationForm() {
                                     <Grid item xs={12} md={6}>
                                         <TextField
                                             fullWidth
-                                            label={<RequiredLabel label={language === 'BNG' ? 'পুরো নাম' : 'Full Name'} language={language} />}
+                                            label={<RequiredLabel label={language === 'BNG' ? 'পূর্ণ নাম ' : 'Full Name'} language={language} />}
                                             name="full_name"
                                             value={formData.full_name}
                                             onChange={handleChange}
                                             onBlur={() => setTouchedFields(prev => new Set(prev).add('full_name'))}
                                             error={getFieldError('full_name')}
-                                            helperText={getFieldError('full_name') ? (language === 'BNG' ? 'পুরো নাম প্রয়োজন' : 'Full name is required') : ''}
+                                            helperText={getFieldError('full_name') ? (language === 'BNG' ? 'পূর্ণ নাম ' : 'Full name is required') : ''}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={6}>
