@@ -207,16 +207,17 @@ const FooterData = () => {
 
               {/* Registration Links - New Section */}
               <div className="text-center sm:text-left">
-                <h4 className="font-semibold text-white text-lg mb-4 relative inline-block sm:inline-block">
+                <h4 className="font-semibold text-white text-lg mb-4 relative inline-block">
                   {language === "ENG" ? "Registration" : "নিবন্ধন"}
                   <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-[#FEC909] hidden sm:block"></span>
                 </h4>
+
                 <ul className="space-y-3">
                   {footerLinks.registration.map((link, index) => (
                     <li key={index}>
                       <Link
                         href={link.href}
-                        className="text-[#B8D9C4] hover:text-[#FEC909] transition-colors duration-300 text-sm flex items-center gap-2 group"
+                        className="text-[#B8D9C4] hover:text-[#FEC909] transition-colors duration-300 text-sm flex items-center justify-center sm:justify-start gap-2 group"
                       >
                         <span className="inline-block w-1 h-1 bg-[#FEC909] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                         {link.name}
@@ -232,7 +233,7 @@ const FooterData = () => {
                   {language === "ENG" ? "Follow Us" : "আমাদের অনুসরণ করুন"}
                   <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-[#FEC909] hidden sm:block"></span>
                 </h4>
-                <div className="flex justify-center sm:justify-start items-center gap-4 mt-4">
+                <div className="flex justify-center items-center gap-4 mt-4">
                   {socialLinks.map((social, index) => (
                     <a
                       key={index}

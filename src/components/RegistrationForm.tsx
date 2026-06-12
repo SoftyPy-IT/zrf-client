@@ -1,4 +1,4 @@
-// app/register/page.tsx
+
 'use client';
 
 import React, { useState } from 'react';
@@ -34,7 +34,6 @@ import {
     Paper,
     Fade,
     Grow,
-    Zoom,
     LinearProgress,
     alpha,
     Snackbar,
@@ -52,59 +51,21 @@ import {
     Person as PersonIcon,
     Group as GroupIcon,
     Science as ScienceIcon,
-    EmojiEvents as EmojiEventsIcon,
     Warning as WarningIcon,
-    Visibility as VisibilityIcon,
-    Close as CloseIcon,
+
     Image as ImageIcon,
 } from '@mui/icons-material';
 
 import { scientificFields, divisions, genders } from '@/lib/constant';
-import { useCreateRegistrationMutation } from '@/redux/api/allApi';
 import { uploadMultipleFiles, uploadFile } from './Upload';
 import axios from 'axios';
-import Image from 'next/image';
 import registrationImg from '../../src/assets/images/registration.jpg';
 import { useLanguage } from '@/provider/LanguageProvider';
+import RegistrationDetailsModal from './RegistrationDetailsModal';
+import { FormData, TeamMember } from '@/interface';
 
-// ─── Types ────────────────────────────────────────────────────────────────────
 
-interface TeamMember {
-    name: string;
-    contact: string;
-}
 
-interface FormData {
-    full_name: string;
-    date_of_birth: string;
-    gender: string;
-    mobile_number: string;
-    email: string;
-    division: string;
-    current_class_year: string;
-    institution_name: string;
-    institution_address: string;
-    district: string;
-    mentor_name: string;
-    mentor_contact: string;
-    project_title: string;
-    scientific_field: string;
-    project_abstract: string;
-    objectives: string;
-    innovation_novelty: string;
-    expected_impact: string;
-    project_type: 'individual' | 'team';
-    team_members: TeamMember[];
-    pdfFile: File | null;
-    proposalFile: File | null;
-    photoFiles: File[];
-    video_link: string;
-    info_correct: boolean;
-    project_original: boolean;
-    agree_rules: boolean;
-}
-
-// ─── Steps ────────────────────────────────────────────────────────────────────
 
 const getSteps = (language: string) => [
     { label: language === 'BNG' ? 'অংশগ্রহণকারীর তথ্য' : 'Participant Info', icon: PersonIcon, description: language === 'BNG' ? 'আপনার ব্যক্তিগত বিবরণ' : 'Your personal details' },
@@ -115,7 +76,6 @@ const getSteps = (language: string) => [
     { label: language === 'BNG' ? 'ঘোষণাপত্র' : 'Declaration', icon: CheckCircleIcon, description: language === 'BNG' ? 'শর্তাবলী ও নিশ্চিতকরণ' : 'Terms & confirmation' },
 ];
 
-// ─── Initial State ─────────────────────────────────────────────────────────────
 
 const initialFormData: FormData = {
     full_name: '',
@@ -147,14 +107,13 @@ const initialFormData: FormData = {
     agree_rules: false,
 };
 
-// File size limits (in bytes)
+
 const FILE_SIZE_LIMITS = {
     pdf: 10 * 1024 * 1024,
     proposal: 10 * 1024 * 1024,
     photo: 5 * 1024 * 1024,
 };
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
 
 const OptionalChip = ({ language }: { language: string }) => (
     <Chip
@@ -193,31 +152,18 @@ const formatFileSize = (bytes: number): string => {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 };
 
-const calculateAge = (dob: string): number | null => {
-    if (!dob) return null;
-    const birthDate = new Date(dob);
-    const today = new Date();
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-    }
-    return age;
-};
 
-// Get the minimum allowed date (100 years ago)
 const getMinDate = () => {
     const date = new Date();
     date.setFullYear(date.getFullYear() - 100);
     return date.toISOString().split('T')[0];
 };
 
-// Get the maximum allowed date (today)
+
 const getMaxDate = () => {
     return new Date().toISOString().split('T')[0];
 };
 
-// ─── Component ────────────────────────────────────────────────────────────────
 
 export default function RegistrationForm() {
     const [activeStep, setActiveStep] = useState(0);
@@ -235,8 +181,6 @@ export default function RegistrationForm() {
     const [snackbarSeverity, setSnackbarSeverity] = useState<'error' | 'warning' | 'info' | 'success'>('error');
     const [openImageDialog, setOpenImageDialog] = useState(false);
     const { language } = useLanguage();
-
-    const [createRegistration, { isLoading: submitting }] = useCreateRegistrationMutation();
 
     const steps = getSteps(language);
 
@@ -273,7 +217,7 @@ export default function RegistrationForm() {
             today.setHours(0, 0, 0, 0);
 
             if (selectedDate > today) {
-                setDateError(language === 'BNG' ? 'জন্ম তারিখ ভবিষ্যতের হতে পারবে না' : 'Date of birth cannot be in the future');
+                setDateError('Date of birth cannot be in the future');
                 return;
             } else {
                 setDateError('');
@@ -653,27 +597,10 @@ export default function RegistrationForm() {
         }
     };
 
-    const isLoading = submitting || isUploading;
-    const age = calculateAge(formData.date_of_birth);
+    const isLoading = isUploading;
 
     const getFieldError = (fieldName: string): boolean => {
         return touchedFields.has(fieldName) && !(formData as any)[fieldName];
-    };
-
-    const getCategoryColor = (age: number | null) => {
-        if (!age) return '#C8E0D0';
-        if (age >= 9 && age <= 12) return '#4CAF50';
-        if (age >= 13 && age <= 17) return '#FEC909';
-        if (age >= 18) return '#FF6B6B';
-        return '#C8E0D0';
-    };
-
-    const getCategoryName = (age: number | null) => {
-        if (!age) return '';
-        if (age >= 9 && age <= 12) return language === 'BNG' ? 'ক' : 'Ka';
-        if (age >= 13 && age <= 17) return language === 'BNG' ? 'খ' : 'Kha';
-        if (age >= 18) return language === 'BNG' ? 'গ' : 'Ga';
-        return '';
     };
 
     const cardSx = {
@@ -682,6 +609,30 @@ export default function RegistrationForm() {
         border: '1px solid rgba(46, 139, 87, 0.3)',
         borderRadius: 3,
     };
+
+
+    const renderSteps = () => steps.map((step, index) => {
+        const Icon = step.icon;
+        return (
+            <Step key={step.label} sx={{ minWidth: { xs: 70, sm: 100 } }}>
+                <StepLabel StepIconComponent={() => (
+                    <Icon sx={{
+                        fontSize: { xs: 28, md: 32 },
+
+                        color: index <= activeStep ? '#ffffff' : 'rgba(255, 255, 255, 0.4)',
+                    }} />
+                )}>
+                    <Typography variant="caption" display="block" sx={{
+                        mt: 1,
+                        fontSize: { xs: '0.65rem', md: '0.75rem' },
+                        fontWeight: 500
+                    }}>
+                        {step.label}
+                    </Typography>
+                </StepLabel>
+            </Step>
+        );
+    });
 
     return (
         <Box sx={{
@@ -700,7 +651,7 @@ export default function RegistrationForm() {
                             WebkitBackgroundClip: 'text',
                             WebkitTextFillColor: 'transparent',
                             mb: 2,
-                            fontSize: { xs: '2rem', md: '3.5rem' },
+                            fontSize: { xs: '1rem', md: '3rem' },
                         }}>
                             {language === 'BNG' ? 'বিজ্ঞান মেলা রেজিস্ট্রেশন - ২০২৬' : 'Science Fair Registration - 2026'}
                         </Typography>
@@ -710,19 +661,19 @@ export default function RegistrationForm() {
                 {/* Info Button and Simple Banner */}
                 <Fade in timeout={900}>
                     <Box sx={{ mb: 4 }}>
-                        {/* Centered Button to View Full Details */}
+
                         <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
                             <Button
                                 variant="contained"
                                 onClick={() => setOpenImageDialog(true)}
-                                startIcon={<ImageIcon />}
+
                                 sx={{
                                     background: 'linear-gradient(135deg, #FEC909 0%, #FFD633 100%)',
                                     color: '#1A1A1A',
                                     fontWeight: 700,
-                                    px: 4,
-                                    py: 1.5,
-                                    fontSize: '1rem',
+                                    px: { md: 4, sm: 2 },
+                                    py: { md: 1.5, sm: .5 },
+                                    fontSize: { sm: '1rem', md: '.5rem' },
                                     borderRadius: 3,
                                     '&:hover': {
                                         background: 'linear-gradient(135deg, #FFD633 0%, #FEC909 100%)',
@@ -730,101 +681,19 @@ export default function RegistrationForm() {
                                     }
                                 }}
                             >
-                                {language === 'BNG' ? '📋 বিস্তারিত তথ্য দেখুন ' : '📋 View Details'}
+                                {language === 'BNG' ? ' বিস্তারিত তথ্য দেখুন ' : ' View Details'}
                             </Button>
                         </Box>
                     </Box>
                 </Fade>
 
                 {/* Full Image Dialog - Modal */}
-                <Dialog
+                <RegistrationDetailsModal
                     open={openImageDialog}
                     onClose={() => setOpenImageDialog(false)}
-                    maxWidth="lg"
-                    fullWidth
-                    PaperProps={{
-                        sx: {
-                            bgcolor: 'rgba(0,0,0,0.95)',
-                            borderRadius: 3,
-                            maxWidth: '90vw',
-                            maxHeight: '90vh',
-                            overflow: 'hidden',
-                            zIndex: '999px'
-                        }
-                    }}
-                >
-                    <DialogTitle sx={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        color: '#FEC909',
-                        borderBottom: '1px solid rgba(254,201,9,0.3)',
-                        bgcolor: 'rgba(0,0,0,0.8)',
-                    }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                            <SchoolIcon />
-                            <Typography variant="h6">{language === 'BNG' ? 'বিজ্ঞান মেলা ২০২৬ - বিস্তারিত তথ্য' : 'Science Fair 2026 - Details'}</Typography>
-                        </Box>
-                        <IconButton onClick={() => setOpenImageDialog(false)} sx={{ color: '#FEC909' }}>
-                            <CloseIcon />
-                        </IconButton>
-                    </DialogTitle>
-                    <DialogContent sx={{
-                        p: 3,
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        bgcolor: '#000',
-                        minHeight: '60vh',
-                    }}>
-                        <Box sx={{
-                            position: 'relative',
-                            width: '100%',
-                            maxHeight: '70vh',
-                            overflow: 'auto',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}>
-                            <Image
-                                src={registrationImg}
-                                alt="Science Fair Competition Details"
-                                width={1000}
-                                height={700}
-                                style={{
-                                    width: 'auto',
-                                    height: 'auto',
-                                    maxWidth: '100%',
-                                    maxHeight: '70vh',
-                                    objectFit: 'contain',
-                                    borderRadius: '8px',
-                                }}
-                                priority
-                            />
-                        </Box>
-                    </DialogContent>
-                    <DialogActions sx={{
-                        justifyContent: 'center',
-                        p: 2,
-                        borderTop: '1px solid rgba(254,201,9,0.3)',
-                        bgcolor: 'rgba(0,0,0,0.8)',
-                    }}>
-                        <Button
-                            onClick={() => setOpenImageDialog(false)}
-                            variant="contained"
-                            sx={{
-                                background: 'linear-gradient(135deg, #2E8B57 0%, #216740 100%)',
-                                px: 4,
-                                '&:hover': {
-                                    background: 'linear-gradient(135deg, #216740 0%, #1a5232 100%)',
-                                }
-                            }}
-                        >
-                            {language === 'BNG' ? 'বন্ধ করুন' : 'Close'}
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-
+                    language={language}
+                    imageSrc={registrationImg}
+                />
                 {/* Error Alert */}
                 {error && (
                     <Fade in>
@@ -857,29 +726,34 @@ export default function RegistrationForm() {
 
                 {/* Stepper */}
                 <Card sx={{ mb: 4, ...cardSx }}>
-                    <CardContent>
-                        <Stepper activeStep={activeStep} alternativeLabel>
-                            {steps.map((step, index) => {
-                                const Icon = step.icon;
-                                return (
-                                    <Step key={step.label}>
-                                        <StepLabel StepIconComponent={() => (
-                                            <Icon sx={{
-                                                fontSize: 32,
-                                                color: index <= activeStep ? '#2E8B57' : 'rgba(46,139,87,0.3)',
-                                            }} />
-                                        )}>
-                                            <Typography variant="caption" display="block" sx={{ mt: 1 }}>
-                                                {step.label}
-                                            </Typography>
-                                        </StepLabel>
-                                    </Step>
-                                );
-                            })}
-                        </Stepper>
+                    <CardContent sx={{ px: { xs: 0, sm: 2 }, py: 2 }}>
+                        {/* Scrollable Container for Stepper */}
+                        <Box sx={{
+                            display: 'flex',
+                            overflowX: 'auto',
+                            width: '100%',
+                            alignItems: 'center',
+                            // Hide scrollbar visuals but keep functionality (clean look)
+                            scrollbarWidth: 'thin',
+                            scrollbarColor: '#2E8B57 rgba(46,139,87,0.1)',
+                            '&::-webkit-scrollbar': { height: '6px' },
+                            '&::-webkit-scrollbar-track': { background: 'rgba(46,139,87,0.1)' },
+                            '&::-webkit-scrollbar-thumb': { background: '#2E8B57', borderRadius: '10px' },
+                            '&::-webkit-scrollbar-thumb:hover': { background: '#216740' },
+                        }}>
+                            <Stepper
+                                activeStep={activeStep}
+                                alternativeLabel
+                                sx={{
+                                    minWidth: 'max-content', // Allows stepper to expand beyond screen width
+                                    px: 2,
+                                }}
+                            >
+                                {renderSteps()}
+                            </Stepper>
+                        </Box>
                     </CardContent>
                 </Card>
-
                 {/* Form Card */}
                 <Grow in timeout={500}>
                     <Card sx={{ ...cardSx, overflow: 'hidden', mb: 4 }}>
