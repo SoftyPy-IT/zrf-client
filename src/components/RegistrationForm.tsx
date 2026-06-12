@@ -614,7 +614,7 @@ export default function RegistrationForm() {
     const renderSteps = () => steps.map((step, index) => {
         const Icon = step.icon;
         return (
-            <Step key={step.label} sx={{ minWidth: { xs: 70, sm: 100 } }}>
+            <Step key={step.label} sx={{ minWidth: { xs: 70, sm: 100, } }}>
                 <StepLabel StepIconComponent={() => (
                     <Icon sx={{
                         fontSize: { xs: 28, md: 32 },
@@ -673,7 +673,7 @@ export default function RegistrationForm() {
                                     fontWeight: 700,
                                     px: { md: 4, sm: 2 },
                                     py: { md: 1.5, sm: .5 },
-                                    fontSize: { sm: '1rem', md: '.5rem' },
+                                    fontSize: { sm: '.5rem', md: '1rem' },
                                     borderRadius: 3,
                                     '&:hover': {
                                         background: 'linear-gradient(135deg, #FFD633 0%, #FEC909 100%)',
@@ -730,10 +730,9 @@ export default function RegistrationForm() {
                         {/* Scrollable Container for Stepper */}
                         <Box sx={{
                             display: 'flex',
-                            overflowX: 'auto',
+                            overflowX: 'auto', // Scroll functionality
                             width: '100%',
                             alignItems: 'center',
-                            // Hide scrollbar visuals but keep functionality (clean look)
                             scrollbarWidth: 'thin',
                             scrollbarColor: '#2E8B57 rgba(46,139,87,0.1)',
                             '&::-webkit-scrollbar': { height: '6px' },
@@ -745,7 +744,11 @@ export default function RegistrationForm() {
                                 activeStep={activeStep}
                                 alternativeLabel
                                 sx={{
-                                    minWidth: 'max-content', // Allows stepper to expand beyond screen width
+                                    // Responsive Width Logic:
+                                    // Mobile (xs): 'max-content' so it expands for scrolling
+                                    // Desktop (md): '100%' so it stretches to fill width
+                                    width: { xs: 'auto', md: '100%' },
+                                    minWidth: { xs: 'max-content', md: '100%' },
                                     px: 2,
                                 }}
                             >
