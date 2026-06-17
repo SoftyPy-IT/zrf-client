@@ -1,5 +1,3 @@
-import type { Metadata } from "next";
-import { Inter, Baloo_Da_2 } from "next/font/google";
 import "./globals.css";
 import Providers from "@/lib/Providers";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";

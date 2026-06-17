@@ -205,7 +205,7 @@ const FooterData = () => {
                 </ul>
               </div>
 
-              {/* Registration Links - New Section */}
+              {/* Registration Links */}
               <div className="text-center sm:text-left">
                 <h4 className="font-semibold text-white text-lg mb-4 relative inline-block">
                   {language === "ENG" ? "Registration" : "নিবন্ধন"}
