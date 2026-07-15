@@ -20,6 +20,17 @@ export const scientificFields = [
     'Others',
 ] as const;
 
-export const divisions = ['A', 'B', 'C'] as const;
+
+export const groupDivisions = ['18', '18+'] as const;
 export const genders = ['Male', 'Female', 'Other'] as const;
 export const registrationStatuses = ['pending', 'approved', 'rejected'] as const;
+export const divisions = [
+    'Barisal',
+    'Chattogram',
+    'Dhaka',
+    'Khulna',
+    'Mymensingh',
+    'Rajshahi',
+    'Rangpur',
+    'Sylhet'
+] as const;

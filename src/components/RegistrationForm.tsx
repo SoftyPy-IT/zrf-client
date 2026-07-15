@@ -52,8 +52,6 @@ import {
     Group as GroupIcon,
     Science as ScienceIcon,
     Warning as WarningIcon,
-
-    Image as ImageIcon,
 } from '@mui/icons-material';
 
 import { scientificFields, divisions, genders } from '@/lib/constant';
@@ -105,6 +103,7 @@ const initialFormData: FormData = {
     info_correct: false,
     project_original: false,
     agree_rules: false,
+    groupDivision: '',
 };
 
 
@@ -338,13 +337,18 @@ export default function RegistrationForm() {
                 if (!formData.date_of_birth) { setError(language === 'BNG' ? 'জন্ম তারিখ প্রয়োজন' : 'Date of birth is required'); return false; }
                 if (dateError) { setError(dateError); return false; }
                 if (!formData.gender) { setError(language === 'BNG' ? 'লিঙ্গ নির্বাচন প্রয়োজন' : 'Gender is required'); return false; }
-                if (!formData.division) { setError(language === 'BNG' ? 'বিভাগ নির্বাচন প্রয়োজন' : 'Division is required'); return false; }
+
+                if (!formData.groupDivision) {
+                    setError(language === 'BNG' ? 'গ্রুপ বিভাগ প্রয়োজন' : 'Group division is required');
+                    return false;
+                }
                 if (!formData.current_class_year) { setError(language === 'BNG' ? 'বর্তমান শ্রেণী/বছর প্রয়োজন' : 'Current class/year is required'); return false; }
                 return true;
             case 1:
                 if (!formData.institution_name) { setError(language === 'BNG' ? 'প্রতিষ্ঠানের নাম প্রয়োজন' : 'Institution name is required'); return false; }
                 if (!formData.institution_address) { setError(language === 'BNG' ? 'প্রতিষ্ঠানের ঠিকানা প্রয়োজন' : 'Institution address is required'); return false; }
                 if (!formData.district) { setError(language === 'BNG' ? 'জেলা প্রয়োজন' : 'District is required'); return false; }
+                if (!formData.division) { setError(language === 'BNG' ? 'বিভাগ নির্বাচন প্রয়োজন' : 'Division is required'); return false; }
                 return true;
             case 2:
                 if (!formData.project_title) { setError(language === 'BNG' ? 'প্রকল্পের শিরোনাম প্রয়োজন' : 'Project title is required'); return false; }
@@ -540,6 +544,7 @@ export default function RegistrationForm() {
                 info_correct: formData.info_correct,
                 project_original: formData.project_original,
                 agree_rules: formData.agree_rules,
+                groupDivision: formData.groupDivision || undefined,
             };
 
             const API_URL = process.env.NEXT_PUBLIC_BASE_API_URL || 'https://api.zrf.info/api/v1';
@@ -744,9 +749,7 @@ export default function RegistrationForm() {
                                 activeStep={activeStep}
                                 alternativeLabel
                                 sx={{
-                                    // Responsive Width Logic:
-                                    // Mobile (xs): 'max-content' so it expands for scrolling
-                                    // Desktop (md): '100%' so it stretches to fill width
+
                                     width: { xs: 'auto', md: '100%' },
                                     minWidth: { xs: 'max-content', md: '100%' },
                                     px: 2,
@@ -846,13 +849,28 @@ export default function RegistrationForm() {
                                         </FormControl>
                                     </Grid>
                                     <Grid item xs={12} md={6}>
-                                        <FormControl fullWidth error={getFieldError('division')}>
-                                            <InputLabel>{language === 'BNG' ? 'বিভাগ *' : 'Division *'}</InputLabel>
-                                            <Select name="division" value={formData.division} onChange={handleChange} label={language === 'BNG' ? 'বিভাগ *' : 'Division *'}>
-                                                {divisions.map(d => <MenuItem key={d} value={d}>{d}</MenuItem>)}
-                                            </Select>
-                                            {getFieldError('division') && <FormHelperText>{language === 'BNG' ? 'বিভাগ নির্বাচন প্রয়োজন' : 'Division is required'}</FormHelperText>}
-                                        </FormControl>
+                                        <TextField
+                                            fullWidth
+                                            label={
+                                                <RequiredLabel
+                                                    label={language === 'BNG' ? 'গ গ্রুপ' : 'C group'}
+                                                    language={language}
+                                                />
+                                            }
+                                            name="groupDivision"
+                                            value={formData.groupDivision}
+                                            onChange={handleChange}
+                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('groupDivision'))}
+                                            error={getFieldError('groupDivision')}
+                                            helperText={
+                                                getFieldError('groupDivision')
+                                                    ? (language === 'BNG'
+                                                        ? ' গ্রুপ প্রয়োজন'
+                                                        : 'Group division is required')
+                                                    : ''
+                                            }
+                                            placeholder={language === 'BNG' ? ' ১৮ বছর ও তদুর্ধ্ব' : '18 or 18+'}
+                                        />
                                     </Grid>
                                     <Grid item xs={12}>
                                         <TextField
@@ -909,6 +927,18 @@ export default function RegistrationForm() {
                                             helperText={getFieldError('district') ? (language === 'BNG' ? 'জেলা প্রয়োজন' : 'District is required') : ''}
                                         />
                                     </Grid>
+
+
+                                    <Grid item xs={12} md={6}>
+                                        <FormControl fullWidth error={getFieldError('division')}>
+                                            <InputLabel>{language === 'BNG' ? 'বিভাগ *' : ' Division *'}</InputLabel>
+                                            <Select name="division" value={formData.division} onChange={handleChange} label={language === 'BNG' ? 'বিভাগ *' : ' Division *'}>
+                                                {divisions.map(d => <MenuItem key={d} value={d}>{d}</MenuItem>)}
+                                            </Select>
+                                            {getFieldError('division') && <FormHelperText>{language === 'BNG' ? 'বিভাগ নির্বাচন প্রয়োজন' : ' Division is required'}</FormHelperText>}
+                                        </FormControl>
+                                    </Grid>
+
                                     <Grid item xs={12} md={6}>
                                         <TextField
                                             fullWidth

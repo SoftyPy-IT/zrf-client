@@ -32,4 +32,5 @@ export interface FormData {
     info_correct: boolean;
     project_original: boolean;
     agree_rules: boolean;
+    groupDivision: string;
 }
