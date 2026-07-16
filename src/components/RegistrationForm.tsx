@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState } from 'react';
@@ -103,7 +102,7 @@ const initialFormData: FormData = {
     info_correct: false,
     project_original: false,
     agree_rules: false,
-    groupDivision: '',
+    groupDivision: false,
 };
 
 
@@ -339,7 +338,7 @@ export default function RegistrationForm() {
                 if (!formData.gender) { setError(language === 'BNG' ? 'লিঙ্গ নির্বাচন প্রয়োজন' : 'Gender is required'); return false; }
 
                 if (!formData.groupDivision) {
-                    setError(language === 'BNG' ? 'গ্রুপ বিভাগ প্রয়োজন' : 'Group division is required');
+                    setError(language === 'BNG' ? 'অনুগ্রহ করে নিশ্চিত করুন যে আপনার বয়স ১৮ বছর বা তার বেশি' : 'Please confirm that you are 18 years or older');
                     return false;
                 }
                 if (!formData.current_class_year) { setError(language === 'BNG' ? 'বর্তমান শ্রেণী/বছর প্রয়োজন' : 'Current class/year is required'); return false; }
@@ -544,7 +543,7 @@ export default function RegistrationForm() {
                 info_correct: formData.info_correct,
                 project_original: formData.project_original,
                 agree_rules: formData.agree_rules,
-                groupDivision: formData.groupDivision || undefined,
+                groupDivision: formData.groupDivision ? 'Yes' : 'No', // Convert boolean to string for API
             };
 
             const API_URL = process.env.NEXT_PUBLIC_BASE_API_URL || 'https://api.zrf.info/api/v1';
@@ -849,28 +848,48 @@ export default function RegistrationForm() {
                                         </FormControl>
                                     </Grid>
                                     <Grid item xs={12} md={6}>
-                                        <TextField
-                                            fullWidth
-                                            label={
-                                                <RequiredLabel
-                                                    label={language === 'BNG' ? 'গ গ্রুপ' : 'C group'}
-                                                    language={language}
-                                                />
-                                            }
-                                            name="groupDivision"
-                                            value={formData.groupDivision}
-                                            onChange={handleChange}
-                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('groupDivision'))}
-                                            error={getFieldError('groupDivision')}
-                                            helperText={
-                                                getFieldError('groupDivision')
-                                                    ? (language === 'BNG'
-                                                        ? ' গ্রুপ প্রয়োজন'
-                                                        : 'Group division is required')
-                                                    : ''
-                                            }
-                                            placeholder={language === 'BNG' ? ' ১৮ বছর ও তদুর্ধ্ব' : '18 or 18+'}
-                                        />
+                                        <Box>
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox
+                                                        name="groupDivision"
+                                                        checked={formData.groupDivision}
+                                                        onChange={handleCheckbox}
+                                                        onBlur={() => setTouchedFields(prev => new Set(prev).add('groupDivision'))}
+                                                        sx={{
+                                                            color: '#2E8B57',
+                                                            '&.Mui-checked': {
+                                                                color: '#2E8B57',
+                                                            },
+                                                        }}
+                                                    />
+                                                }
+                                                label={
+                                                    <Box>
+                                                        <RequiredLabel
+                                                            label={language === 'BNG' ? 'গ্রুপ গ ' : 'Group C'}
+                                                            language={language}
+                                                        />
+                                                        <Typography
+                                                            component="span"
+                                                            sx={{
+                                                                display: 'block',
+                                                                fontSize: '0.75rem',
+                                                                color: 'rgba(255,255,255,0.6)',
+                                                                mt: 0.5,
+                                                            }}
+                                                        >
+                                                            {language === 'BNG' ? '১৮ বছর ও তদুর্ধ্ব' : '18 years or above'}
+                                                        </Typography>
+                                                    </Box>
+                                                }
+                                            />
+                                            {getFieldError('groupDivision') && (
+                                                <FormHelperText error>
+                                                    {language === 'BNG' ? 'অনুগ্রহ করে নিশ্চিত করুন যে আপনার বয়স ১৮ বছর বা তার বেশি' : 'Please confirm that you are 18 years or older'}
+                                                </FormHelperText>
+                                            )}
+                                        </Box>
                                     </Grid>
                                     <Grid item xs={12}>
                                         <TextField
