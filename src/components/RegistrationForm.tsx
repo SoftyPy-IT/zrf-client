@@ -1,69 +1,68 @@
 'use client';
 
-import React, { useState } from 'react';
 import {
+    Add as AddIcon,
+    CheckCircle as CheckCircleIcon,
+    CloudUpload as CloudUploadIcon,
+    Delete as DeleteIcon,
+    Group as GroupIcon,
+    NavigateBefore as NavigateBeforeIcon,
+    NavigateNext as NavigateNextIcon,
+    Person as PersonIcon,
+    School as SchoolIcon,
+    Science as ScienceIcon,
+    Warning as WarningIcon,
+} from '@mui/icons-material';
+import {
+    Alert,
+    alpha,
     Box,
     Button,
     Card,
     CardContent,
     CardHeader,
     Checkbox,
+    Chip,
+    CircularProgress,
     Container,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    Fade,
+    FormControl,
     FormControlLabel,
     FormHelperText,
     Grid,
+    Grow,
+    IconButton,
+    InputLabel,
+    LinearProgress,
     MenuItem,
+    Paper,
+    Radio,
+    RadioGroup,
     Select,
+    Snackbar,
     Stack,
     Step,
     StepLabel,
     Stepper,
     TextField,
-    Typography,
-    FormControl,
-    InputLabel,
-    Alert,
-    CircularProgress,
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogActions,
-    Chip,
-    IconButton,
-    Paper,
-    Fade,
-    Grow,
-    LinearProgress,
-    alpha,
-    Snackbar,
-    RadioGroup,
-    Radio,
+    Typography
 } from '@mui/material';
-import {
-    CloudUpload as CloudUploadIcon,
-    Delete as DeleteIcon,
-    Add as AddIcon,
-    CheckCircle as CheckCircleIcon,
-    NavigateNext as NavigateNextIcon,
-    NavigateBefore as NavigateBeforeIcon,
-    School as SchoolIcon,
-    Person as PersonIcon,
-    Group as GroupIcon,
-    Science as ScienceIcon,
-    Warning as WarningIcon,
-} from '@mui/icons-material';
+import React, { useState } from 'react';
 
-import { scientificFields, divisions, genders } from '@/lib/constant';
-import { uploadMultipleFiles, uploadFile } from './Upload';
-import axios from 'axios';
-import registrationImg from '../../src/assets/images/registration.jpg';
-import { useLanguage } from '@/provider/LanguageProvider';
-import RegistrationDetailsModal from './RegistrationDetailsModal';
 import { FormData, TeamMember } from '@/interface';
+import { divisions, genders, scientificFields } from '@/lib/constant';
+import { useLanguage } from '@/provider/LanguageProvider';
+import { selectStyle, StyledTextField } from '@/utils/inputStyle';
+import axios from 'axios';
+import registrationImg from '../../src/assets/images/registration/popup.jpeg';
+import RegistrationDetailsModal from './RegistrationDetailsModal';
+import { uploadFile, uploadMultipleFiles } from './Upload';
 
-
-
-
+import RegistrationBanner from './RegistrationBanner';
 const getSteps = (language: string) => [
     { label: language === 'BNG' ? 'অংশগ্রহণকারীর তথ্য' : 'Participant Info', icon: PersonIcon, description: language === 'BNG' ? 'আপনার ব্যক্তিগত বিবরণ' : 'Your personal details' },
     { label: language === 'BNG' ? 'প্রতিষ্ঠানের তথ্য' : 'Institution Info', icon: SchoolIcon, description: language === 'BNG' ? 'আপনার স্কুল/কলেজের বিবরণ' : 'Your school/college details' },
@@ -161,6 +160,10 @@ const getMinDate = () => {
 const getMaxDate = () => {
     return new Date().toISOString().split('T')[0];
 };
+
+
+
+
 
 
 export default function RegistrationForm() {
@@ -639,611 +642,619 @@ export default function RegistrationForm() {
     });
 
     return (
-        <Box sx={{
-            minHeight: '100vh',
-            background: 'linear-gradient(135deg, #0a1a1a 0%, #0d2a2a 50%, #0a1a1a 100%)',
-            py: 4,
-        }}>
-            <Container maxWidth="lg" sx={{ py: 4 }}>
-                {/* Header */}
-                <Fade in timeout={800}>
-                    <Box sx={{ mb: 4, textAlign: 'center' }}>
-                        <Typography variant="h2" sx={{
-                            fontWeight: 800,
-                            background: 'linear-gradient(135deg, #2E8B57 0%, #FEC909 100%)',
-                            backgroundClip: 'text',
-                            WebkitBackgroundClip: 'text',
-                            WebkitTextFillColor: 'transparent',
-                            mb: 2,
-                            fontSize: { xs: '1rem', md: '3rem' },
-                        }}>
-                            {language === 'BNG' ? 'বিজ্ঞান মেলা রেজিস্ট্রেশন - ২০২৬' : 'Science Fair Registration - 2026'}
-                        </Typography>
-                    </Box>
-                </Fade>
+        <>
+            <RegistrationBanner />
+            <Box sx={{
+                minHeight: '100vh',
+                background: 'linear-gradient(135deg, #0a1a1a 0%, #0d2a2a 50%, #0a1a1a 100%)',
+                py: 4,
+            }}>
 
-                {/* Info Button and Simple Banner */}
-                <Fade in timeout={900}>
-                    <Box sx={{ mb: 4 }}>
 
-                        <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
-                            <Button
-                                variant="contained"
-                                onClick={() => setOpenImageDialog(true)}
-
-                                sx={{
-                                    background: 'linear-gradient(135deg, #FEC909 0%, #FFD633 100%)',
-                                    color: '#1A1A1A',
-                                    fontWeight: 700,
-                                    px: { md: 4, sm: 2 },
-                                    py: { md: 1.5, sm: .5 },
-                                    fontSize: { sm: '.5rem', md: '1rem' },
-                                    borderRadius: 3,
-                                    '&:hover': {
-                                        background: 'linear-gradient(135deg, #FFD633 0%, #FEC909 100%)',
-                                        transform: 'translateY(-2px)',
-                                    }
-                                }}
-                            >
-                                {language === 'BNG' ? ' বিস্তারিত তথ্য দেখুন ' : ' View Details'}
-                            </Button>
-                        </Box>
-                    </Box>
-                </Fade>
-
-                {/* Full Image Dialog - Modal */}
-                <RegistrationDetailsModal
-                    open={openImageDialog}
-                    onClose={() => setOpenImageDialog(false)}
-                    language={language}
-                    imageSrc={registrationImg}
-                />
-                {/* Error Alert */}
-                {error && (
-                    <Fade in>
-                        <Alert severity="error" sx={{ mb: 3, borderRadius: 2 }} onClose={() => setError('')}>
-                            {error}
-                        </Alert>
-                    </Fade>
-                )}
-
-                {/* Upload Progress */}
-                {isUploading && (
-                    <Fade in>
-                        <Box sx={{ mb: 3 }}>
-                            <Typography variant="body2" sx={{ color: '#C8E0D0', mb: 1 }}>
-                                {uploadStatus} - {uploadProgress}%
+                <Container maxWidth="lg" sx={{ py: 4 }}>
+                    {/* Header */}
+                    <Fade in timeout={800}>
+                        <Box sx={{ mb: 4, textAlign: 'center' }}>
+                            <Typography variant="h2" sx={{
+                                fontWeight: 800,
+                                background: 'linear-gradient(135deg, #2E8B57 0%, #FEC909 100%)',
+                                backgroundClip: 'text',
+                                WebkitBackgroundClip: 'text',
+                                WebkitTextFillColor: 'transparent',
+                                mb: 2,
+                                fontSize: { xs: '1rem', md: '3rem' },
+                            }}>
+                                {language === 'BNG' ? 'বিজ্ঞান মেলা রেজিস্ট্রেশন - ২০২৬' : 'Science Fair Registration - 2026'}
                             </Typography>
-                            <LinearProgress
-                                variant="determinate"
-                                value={uploadProgress}
-                                sx={{
-                                    borderRadius: 2,
-                                    height: 8,
-                                    backgroundColor: 'rgba(46,139,87,0.2)',
-                                    '& .MuiLinearProgress-bar': { backgroundColor: '#2E8B57' },
-                                }}
-                            />
                         </Box>
                     </Fade>
-                )}
 
-                {/* Stepper */}
-                <Card sx={{ mb: 4, ...cardSx }}>
-                    <CardContent sx={{ px: { xs: 0, sm: 2 }, py: 2 }}>
-                        {/* Scrollable Container for Stepper */}
-                        <Box sx={{
-                            display: 'flex',
-                            overflowX: 'auto', // Scroll functionality
-                            width: '100%',
-                            alignItems: 'center',
-                            scrollbarWidth: 'thin',
-                            scrollbarColor: '#2E8B57 rgba(46,139,87,0.1)',
-                            '&::-webkit-scrollbar': { height: '6px' },
-                            '&::-webkit-scrollbar-track': { background: 'rgba(46,139,87,0.1)' },
-                            '&::-webkit-scrollbar-thumb': { background: '#2E8B57', borderRadius: '10px' },
-                            '&::-webkit-scrollbar-thumb:hover': { background: '#216740' },
-                        }}>
-                            <Stepper
-                                activeStep={activeStep}
-                                alternativeLabel
-                                sx={{
+                    {/* Info Button and Simple Banner */}
+                    <Fade in timeout={900}>
+                        <Box sx={{ mb: 4 }}>
 
-                                    width: { xs: 'auto', md: '100%' },
-                                    minWidth: { xs: 'max-content', md: '100%' },
-                                    px: 2,
-                                }}
-                            >
-                                {renderSteps()}
-                            </Stepper>
+                            <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
+                                <Button
+                                    variant="contained"
+                                    onClick={() => setOpenImageDialog(true)}
+
+                                    sx={{
+                                        background: 'linear-gradient(135deg, #FEC909 0%, #FFD633 100%)',
+                                        color: '#1A1A1A',
+                                        fontWeight: 700,
+                                        px: { md: 4, sm: 2 },
+                                        py: { md: 1.5, sm: .5 },
+                                        fontSize: { sm: '.5rem', md: '1rem' },
+                                        borderRadius: 3,
+                                        '&:hover': {
+                                            background: 'linear-gradient(135deg, #FFD633 0%, #FEC909 100%)',
+                                            transform: 'translateY(-2px)',
+                                        }
+                                    }}
+                                >
+                                    {language === 'BNG' ? ' বিস্তারিত তথ্য দেখুন ' : ' View Details'}
+                                </Button>
+                            </Box>
                         </Box>
-                    </CardContent>
-                </Card>
-                {/* Form Card */}
-                <Grow in timeout={500}>
-                    <Card sx={{ ...cardSx, overflow: 'hidden', mb: 4 }}>
-                        <CardHeader
-                            avatar={
-                                <Box sx={{
-                                    background: 'linear-gradient(135deg, #2E8B57 0%, #216740 100%)',
-                                    borderRadius: 2, p: 1, display: 'inline-flex',
-                                }}>
-                                    {React.createElement(steps[activeStep].icon, { sx: { color: '#fff' } })}
-                                </Box>
-                            }
-                            title={steps[activeStep].label}
-                            subheader={steps[activeStep].description}
-                            sx={{
-                                borderBottom: '1px solid rgba(46,139,87,0.2)',
-                                pb: 2,
-                                background: alpha('#2E8B57', 0.05),
-                            }}
-                        />
-                        <CardContent sx={{ p: 4 }}>
-                            {activeStep === 0 && (
-                                <Grid container spacing={3}>
-                                    <Grid item xs={12} md={6}>
-                                        <TextField
-                                            fullWidth
-                                            label={<RequiredLabel label={language === 'BNG' ? 'পূর্ণ নাম ' : 'Full Name'} language={language} />}
-                                            name="full_name"
-                                            value={formData.full_name}
-                                            onChange={handleChange}
-                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('full_name'))}
-                                            error={getFieldError('full_name')}
-                                            helperText={getFieldError('full_name') ? (language === 'BNG' ? 'পূর্ণ নাম ' : 'Full name is required') : ''}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} md={6}>
-                                        <TextField
-                                            fullWidth
-                                            label={<RequiredLabel label={language === 'BNG' ? 'ইমেইল' : 'Email'} language={language} />}
-                                            name="email"
-                                            type="email"
-                                            value={formData.email}
-                                            onChange={handleChange}
-                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('email'))}
-                                            error={getFieldError('email')}
-                                            helperText={getFieldError('email') ? (language === 'BNG' ? 'ইমেইল প্রয়োজন' : 'Email is required') : ''}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} md={6}>
-                                        <TextField
-                                            fullWidth
-                                            label={<RequiredLabel label={language === 'BNG' ? 'মোবাইল নম্বর' : 'Mobile Number'} language={language} />}
-                                            name="mobile_number"
-                                            value={formData.mobile_number}
-                                            onChange={handleChange}
-                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('mobile_number'))}
-                                            error={getFieldError('mobile_number')}
-                                            helperText={getFieldError('mobile_number') ? (language === 'BNG' ? 'মোবাইল নম্বর প্রয়োজন' : 'Mobile number is required') : ''}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} md={6}>
-                                        <TextField
-                                            fullWidth
-                                            label={<RequiredLabel label={language === 'BNG' ? 'জন্ম তারিখ' : 'Date of Birth'} language={language} />}
-                                            name="date_of_birth"
-                                            type="date"
-                                            value={formData.date_of_birth}
-                                            onChange={handleChange}
-                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('date_of_birth'))}
-                                            InputLabelProps={{ shrink: true }}
-                                            error={!!dateError || getFieldError('date_of_birth')}
-                                            helperText={dateError || (getFieldError('date_of_birth') ? (language === 'BNG' ? 'জন্ম তারিখ প্রয়োজন' : 'Date of birth is required') : '')}
-                                            inputProps={{
-                                                min: getMinDate(),
-                                                max: getMaxDate()
-                                            }}
-                                        />
-                                    </Grid>
+                    </Fade>
 
-                                    <Grid item xs={12} md={6}>
-                                        <FormControl fullWidth error={getFieldError('gender')}>
-                                            <InputLabel>{language === 'BNG' ? 'লিঙ্গ *' : 'Gender *'}</InputLabel>
-                                            <Select name="gender" value={formData.gender} onChange={handleChange} label={language === 'BNG' ? 'লিঙ্গ *' : 'Gender *'}>
-                                                {genders.map(g => <MenuItem key={g} value={g}>{g}</MenuItem>)}
-                                            </Select>
-                                            {getFieldError('gender') && <FormHelperText>{language === 'BNG' ? 'লিঙ্গ নির্বাচন প্রয়োজন' : 'Gender is required'}</FormHelperText>}
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={12} md={6}>
-                                        <Box>
-                                            <FormControlLabel
-                                                control={
-                                                    <Checkbox
-                                                        name="groupDivision"
-                                                        checked={formData.groupDivision}
-                                                        onChange={handleCheckbox}
-                                                        onBlur={() => setTouchedFields(prev => new Set(prev).add('groupDivision'))}
-                                                        sx={{
-                                                            color: '#2E8B57',
-                                                            '&.Mui-checked': {
-                                                                color: '#2E8B57',
-                                                            },
-                                                        }}
-                                                    />
-                                                }
-                                                label={
-                                                    <Box>
-                                                        <RequiredLabel
-                                                            label={language === 'BNG' ? 'গ্রুপ গ ' : 'Group C'}
-                                                            language={language}
-                                                        />
-                                                        <Typography
-                                                            component="span"
-                                                            sx={{
-                                                                display: 'block',
-                                                                fontSize: '0.75rem',
-                                                                color: 'rgba(255,255,255,0.6)',
-                                                                mt: 0.5,
-                                                            }}
-                                                        >
-                                                            {language === 'BNG' ? '১৮ বছর ও তদুর্ধ্ব' : '18 years or above'}
-                                                        </Typography>
-                                                    </Box>
-                                                }
-                                            />
-                                            {getFieldError('groupDivision') && (
-                                                <FormHelperText error>
-                                                    {language === 'BNG' ? 'অনুগ্রহ করে নিশ্চিত করুন যে আপনার বয়স ১৮ বছর বা তার বেশি' : 'Please confirm that you are 18 years or older'}
-                                                </FormHelperText>
-                                            )}
-                                        </Box>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <TextField
-                                            fullWidth
-                                            label={<RequiredLabel label={language === 'BNG' ? 'বর্তমান শ্রেণী / বছর' : 'Current Class / Year'} language={language} />}
-                                            name="current_class_year"
-                                            value={formData.current_class_year}
-                                            onChange={handleChange}
-                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('current_class_year'))}
-                                            error={getFieldError('current_class_year')}
-                                            helperText={getFieldError('current_class_year') ? (language === 'BNG' ? 'বর্তমান শ্রেণী/বছর প্রয়োজন' : 'Current class/year is required') : ''}
-                                        />
-                                    </Grid>
-                                </Grid>
-                            )}
+                    {/* Full Image Dialog - Modal */}
+                    <RegistrationDetailsModal
+                        open={openImageDialog}
+                        onClose={() => setOpenImageDialog(false)}
+                        language={language}
+                        imageSrc={registrationImg}
+                    />
+                    {/* Error Alert */}
+                    {error && (
+                        <Fade in>
+                            <Alert severity="error" sx={{ mb: 3, borderRadius: 2 }} onClose={() => setError('')}>
+                                {error}
+                            </Alert>
+                        </Fade>
+                    )}
 
-                            {activeStep === 1 && (
-                                <Grid container spacing={3}>
-                                    <Grid item xs={12}>
-                                        <TextField
-                                            fullWidth
-                                            label={<RequiredLabel label={language === 'BNG' ? 'প্রতিষ্ঠানের নাম' : 'Institution Name'} language={language} />}
-                                            name="institution_name"
-                                            value={formData.institution_name}
-                                            onChange={handleChange}
-                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('institution_name'))}
-                                            error={getFieldError('institution_name')}
-                                            helperText={getFieldError('institution_name') ? (language === 'BNG' ? 'প্রতিষ্ঠানের নাম প্রয়োজন' : 'Institution name is required') : ''}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <TextField
-                                            fullWidth
-                                            multiline
-                                            rows={3}
-                                            label={<RequiredLabel label={language === 'BNG' ? 'প্রতিষ্ঠানের ঠিকানা' : 'Institution Address'} language={language} />}
-                                            name="institution_address"
-                                            value={formData.institution_address}
-                                            onChange={handleChange}
-                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('institution_address'))}
-                                            error={getFieldError('institution_address')}
-                                            helperText={getFieldError('institution_address') ? (language === 'BNG' ? 'প্রতিষ্ঠানের ঠিকানা প্রয়োজন' : 'Institution address is required') : ''}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} md={6}>
-                                        <TextField
-                                            fullWidth
-                                            label={<RequiredLabel label={language === 'BNG' ? 'জেলা' : 'District'} language={language} />}
-                                            name="district"
-                                            value={formData.district}
-                                            onChange={handleChange}
-                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('district'))}
-                                            error={getFieldError('district')}
-                                            helperText={getFieldError('district') ? (language === 'BNG' ? 'জেলা প্রয়োজন' : 'District is required') : ''}
-                                        />
-                                    </Grid>
+                    {/* Upload Progress */}
+                    {isUploading && (
+                        <Fade in>
+                            <Box sx={{ mb: 3 }}>
+                                <Typography variant="body2" sx={{ color: '#C8E0D0', mb: 1 }}>
+                                    {uploadStatus} - {uploadProgress}%
+                                </Typography>
+                                <LinearProgress
+                                    variant="determinate"
+                                    value={uploadProgress}
+                                    sx={{
+                                        borderRadius: 2,
+                                        height: 8,
+                                        backgroundColor: 'rgba(46,139,87,0.2)',
+                                        '& .MuiLinearProgress-bar': { backgroundColor: '#2E8B57' },
+                                    }}
+                                />
+                            </Box>
+                        </Fade>
+                    )}
 
+                    {/* Stepper */}
+                    <Card sx={{ mb: 4, ...cardSx }}>
+                        <CardContent sx={{ px: { xs: 0, sm: 2 }, py: 2 }}>
+                            {/* Scrollable Container for Stepper */}
+                            <Box sx={{
+                                display: 'flex',
+                                overflowX: 'auto', // Scroll functionality
+                                width: '100%',
+                                alignItems: 'center',
+                                scrollbarWidth: 'thin',
+                                scrollbarColor: '#2E8B57 rgba(46,139,87,0.1)',
+                                '&::-webkit-scrollbar': { height: '6px' },
+                                '&::-webkit-scrollbar-track': { background: 'rgba(46,139,87,0.1)' },
+                                '&::-webkit-scrollbar-thumb': { background: '#2E8B57', borderRadius: '10px' },
+                                '&::-webkit-scrollbar-thumb:hover': { background: '#216740' },
+                            }}>
+                                <Stepper
+                                    activeStep={activeStep}
+                                    alternativeLabel
+                                    sx={{
 
-                                    <Grid item xs={12} md={6}>
-                                        <FormControl fullWidth error={getFieldError('division')}>
-                                            <InputLabel>{language === 'BNG' ? 'বিভাগ *' : ' Division *'}</InputLabel>
-                                            <Select name="division" value={formData.division} onChange={handleChange} label={language === 'BNG' ? 'বিভাগ *' : ' Division *'}>
-                                                {divisions.map(d => <MenuItem key={d} value={d}>{d}</MenuItem>)}
-                                            </Select>
-                                            {getFieldError('division') && <FormHelperText>{language === 'BNG' ? 'বিভাগ নির্বাচন প্রয়োজন' : ' Division is required'}</FormHelperText>}
-                                        </FormControl>
-                                    </Grid>
-
-                                    <Grid item xs={12} md={6}>
-                                        <TextField
-                                            fullWidth
-                                            label={<OptionalLabel label={language === 'BNG' ? 'শিক্ষক / মেন্টরের নাম' : 'Teacher / Mentor Name'} language={language} />}
-                                            name="mentor_name"
-                                            value={formData.mentor_name}
-                                            onChange={handleChange}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} md={6}>
-                                        <TextField
-                                            fullWidth
-                                            label={<OptionalLabel label={language === 'BNG' ? 'শিক্ষক / মেন্টরের যোগাযোগ' : 'Teacher / Mentor Contact'} language={language} />}
-                                            name="mentor_contact"
-                                            value={formData.mentor_contact}
-                                            onChange={handleChange}
-                                        />
-                                    </Grid>
-                                </Grid>
-                            )}
-
-                            {activeStep === 2 && (
-                                <Grid container spacing={3}>
-                                    <Grid item xs={12}>
-                                        <TextField
-                                            fullWidth
-                                            label={<RequiredLabel label={language === 'BNG' ? 'প্রকল্পের শিরোনাম' : 'Project Title'} language={language} />}
-                                            name="project_title"
-                                            value={formData.project_title}
-                                            onChange={handleChange}
-                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('project_title'))}
-                                            error={getFieldError('project_title')}
-                                            helperText={getFieldError('project_title') ? (language === 'BNG' ? 'প্রকল্পের শিরোনাম প্রয়োজন' : 'Project title is required') : ''}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <FormControl fullWidth error={getFieldError('scientific_field')}>
-                                            <InputLabel>{language === 'BNG' ? 'বৈজ্ঞানিক ক্ষেত্র *' : 'Scientific Field *'}</InputLabel>
-                                            <Select name="scientific_field" value={formData.scientific_field} onChange={handleChange} label={language === 'BNG' ? 'বৈজ্ঞানিক ক্ষেত্র *' : 'Scientific Field *'}>
-                                                {scientificFields.map(f => <MenuItem key={f} value={f}>{f}</MenuItem>)}
-                                            </Select>
-                                            {getFieldError('scientific_field') && <FormHelperText>{language === 'BNG' ? 'বৈজ্ঞানিক ক্ষেত্র নির্বাচন প্রয়োজন' : 'Scientific field is required'}</FormHelperText>}
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <TextField
-                                            fullWidth
-                                            multiline
-                                            rows={5}
-                                            label={<RequiredLabel label={language === 'BNG' ? 'প্রকল্পের সারসংক্ষেপ' : 'Project Abstract'} language={language} />}
-                                            name="project_abstract"
-                                            value={formData.project_abstract}
-                                            onChange={handleChange}
-                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('project_abstract'))}
-                                            error={getFieldError('project_abstract')}
-                                            helperText={getFieldError('project_abstract') ? (language === 'BNG' ? 'প্রকল্পের সারসংক্ষেপ প্রয়োজন' : 'Project abstract is required') : ''}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <TextField
-                                            fullWidth
-                                            multiline
-                                            rows={3}
-                                            label={<RequiredLabel label={language === 'BNG' ? 'উদ্দেশ্য' : 'Objectives'} language={language} />}
-                                            name="objectives"
-                                            value={formData.objectives}
-                                            onChange={handleChange}
-                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('objectives'))}
-                                            error={getFieldError('objectives')}
-                                            helperText={getFieldError('objectives') ? (language === 'BNG' ? 'উদ্দেশ্য প্রয়োজন' : 'Objectives are required') : ''}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <TextField
-                                            fullWidth
-                                            multiline
-                                            rows={3}
-                                            label={<RequiredLabel label={language === 'BNG' ? 'উদ্ভাবন / নতুনত্ব' : 'Innovation / Novelty'} language={language} />}
-                                            name="innovation_novelty"
-                                            value={formData.innovation_novelty}
-                                            onChange={handleChange}
-                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('innovation_novelty'))}
-                                            error={getFieldError('innovation_novelty')}
-                                            helperText={getFieldError('innovation_novelty') ? (language === 'BNG' ? 'উদ্ভাবন/নতুনত্ব প্রয়োজন' : 'Innovation/novelty is required') : ''}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <TextField
-                                            fullWidth
-                                            multiline
-                                            rows={3}
-                                            label={<RequiredLabel label={language === 'BNG' ? 'প্রত্যাশিত প্রভাব' : 'Expected Impact'} language={language} />}
-                                            name="expected_impact"
-                                            value={formData.expected_impact}
-                                            onChange={handleChange}
-                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('expected_impact'))}
-                                            error={getFieldError('expected_impact')}
-                                            helperText={getFieldError('expected_impact') ? (language === 'BNG' ? 'প্রত্যাশিত প্রভাব প্রয়োজন' : 'Expected impact is required') : ''}
-                                        />
-                                    </Grid>
-                                </Grid>
-                            )}
-
-                            {activeStep === 3 && (
-                                <Grid container spacing={3}>
-                                    <Grid item xs={12}>
-                                        <Paper sx={{ p: 3, background: alpha('#2E8B57', 0.05), borderRadius: 2 }}>
-                                            <Typography variant="subtitle1" sx={{ color: '#2E8B57', mb: 2, fontWeight: 600 }}>
-                                                {language === 'BNG' ? 'প্রকল্পের ধরন' : 'Project Type'}
-                                            </Typography>
-                                            <RadioGroup value={formData.project_type} onChange={handleProjectTypeChange} sx={{ flexDirection: 'row', gap: 3 }}>
-                                                <FormControlLabel
-                                                    value="individual"
-                                                    control={<Radio sx={{ color: '#2E8B57', '&.Mui-checked': { color: '#2E8B57' } }} />}
-                                                    label={<Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}><PersonIcon /><span>{language === 'BNG' ? 'ব্যক্তিগত প্রকল্প' : 'Individual Project'}</span></Box>}
-                                                />
-                                                <FormControlLabel
-                                                    value="team"
-                                                    control={<Radio sx={{ color: '#2E8B57', '&.Mui-checked': { color: '#2E8B57' } }} />}
-                                                    label={<Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}><GroupIcon /><span>{language === 'BNG' ? 'দলীয় প্রকল্প' : 'Team Project'}</span></Box>}
-                                                />
-                                            </RadioGroup>
-                                        </Paper>
-                                    </Grid>
-                                    {formData.project_type === 'team' && (
-                                        <>
-                                            {formData.team_members.map((member, idx) => (
-                                                <Grid item xs={12} key={idx}>
-                                                    <Paper sx={{ p: 3, position: 'relative', background: alpha('#2E8B57', 0.08), borderRadius: 2 }}>
-                                                        <Typography variant="subtitle1" sx={{ color: '#2E8B57', mb: 2 }}>{language === 'BNG' ? `দলের সদস্য ${idx + 1}` : `Team Member ${idx + 1}`}</Typography>
-                                                        <Grid container spacing={2}>
-                                                            <Grid item xs={12} md={6}>
-                                                                <TextField fullWidth label={language === 'BNG' ? 'নাম *' : 'Name *'} value={member.name} onChange={e => handleTeamMemberChange(idx, 'name', e.target.value)} required />
-                                                            </Grid>
-                                                            <Grid item xs={12} md={6}>
-                                                                <TextField fullWidth label={language === 'BNG' ? 'যোগাযোগ *' : 'Contact *'} value={member.contact} onChange={e => handleTeamMemberChange(idx, 'contact', e.target.value)} placeholder={language === 'BNG' ? 'ইমেইল বা ফোন নম্বর' : 'Email or Phone Number'} required />
-                                                            </Grid>
-                                                        </Grid>
-                                                        <IconButton onClick={() => removeTeamMember(idx)} sx={{ position: 'absolute', top: 8, right: 8, color: '#f44336' }}><DeleteIcon /></IconButton>
-                                                    </Paper>
-                                                </Grid>
-                                            ))}
-                                            <Grid item xs={12}>
-                                                <Button variant="outlined" onClick={addTeamMember} startIcon={<AddIcon />} sx={{ color: '#FEC909', borderColor: '#FEC909' }}>
-                                                    {language === 'BNG' ? 'দলের সদস্য যোগ করুন' : 'Add Team Member'}
-                                                </Button>
-                                            </Grid>
-                                        </>
-                                    )}
-                                    {formData.project_type === 'individual' && (
-                                        <Grid item xs={12}>
-                                            <Alert severity="info" sx={{ borderRadius: 2 }}>
-                                                {language === 'BNG'
-                                                    ? 'আপনি একটি ব্যক্তিগত প্রকল্প নির্বাচন করেছেন। আপনি পরবর্তী ধাপে যেতে পারেন।'
-                                                    : 'You have selected an individual project. You can proceed to the next step.'}
-                                            </Alert>
-                                        </Grid>
-                                    )}
-                                </Grid>
-                            )}
-
-                            {activeStep === 4 && (
-                                <Grid container spacing={3}>
-                                    <Grid item xs={12}>
-                                        <Alert severity="info" sx={{ mb: 2 }}>
-                                            <strong>{language === 'BNG' ? 'ফাইলের সাইজ সীমা:' : 'File Size Limits:'}</strong> {language === 'BNG' ? 'PDF ফাইল 10 MB পর্যন্ত, ছবি 5 MB পর্যন্ত' : 'PDF files up to 10 MB, Images up to 5 MB each'}
-                                        </Alert>
-                                    </Grid>
-                                    {Object.keys(fileErrors).length > 0 && (
-                                        <Grid item xs={12}>
-                                            <Alert severity="error" sx={{ mb: 2 }}>
-                                                {Object.values(fileErrors).map((err, idx) => (<Box key={idx} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}><WarningIcon fontSize="small" />{err}</Box>))}
-                                            </Alert>
-                                        </Grid>
-                                    )}
-                                    <Grid item xs={12}>
-                                        <Paper sx={{ p: 3, borderRadius: 2 }}>
-                                            <Typography variant="subtitle1" sx={{ color: '#2E8B57', mb: 2 }}>
-                                                {language === 'BNG' ? 'প্রকল্পের সারাংশ PDF' : 'Project Summary PDF'} <Typography component="span" color="error">*</Typography>
-                                            </Typography>
-                                            <Button variant="contained" component="label">{language === 'BNG' ? 'PDF নির্বাচন করুন' : 'Choose PDF'}<input hidden accept=".pdf" type="file" onChange={(e) => handleFileSelect(e, 'pdf')} /></Button>
-                                            {formData.pdfFile && <Chip label={`${formData.pdfFile.name} (${formatFileSize(formData.pdfFile.size)})`} onDelete={() => clearFile('pdf')} sx={{ ml: 2 }} />}
-                                        </Paper>
-                                    </Grid>
-                                    <Grid item xs={12} md={6}>
-                                        <Paper sx={{ p: 3, borderRadius: 2 }}>
-                                            <Typography variant="subtitle1" sx={{ mb: 2 }}>
-                                                {language === 'BNG' ? 'প্রকল্পের প্রস্তাবনা' : 'Project Proposal'} <OptionalChip language={language} />
-                                            </Typography>
-                                            <Button variant="outlined" component="label">{language === 'BNG' ? 'ফাইল নির্বাচন করুন' : 'Choose File'}<input hidden accept=".pdf,.doc,.docx" type="file" onChange={(e) => handleFileSelect(e, 'proposal')} /></Button>
-                                            {formData.proposalFile && <Chip label={`${formData.proposalFile.name} (${formatFileSize(formData.proposalFile.size)})`} onDelete={() => clearFile('proposal')} sx={{ ml: 2 }} />}
-                                        </Paper>
-                                    </Grid>
-                                    <Grid item xs={12} md={6}>
-                                        <Paper sx={{ p: 3, borderRadius: 2 }}>
-                                            <Typography variant="subtitle1" sx={{ mb: 2 }}>
-                                                {language === 'BNG' ? 'ছবি/ডায়াগ্রাম' : 'Photos/Diagrams'} <OptionalChip language={language} />
-                                            </Typography>
-                                            <Button variant="outlined" component="label">{language === 'BNG' ? 'ছবি নির্বাচন করুন' : 'Choose Images'}<input hidden accept="image/*" type="file" multiple onChange={(e) => handleFileSelect(e, 'photos')} /></Button>
-                                            {formData.photoFiles.length > 0 && (<Box sx={{ mt: 1 }}>{formData.photoFiles.map((file, idx) => (<Chip key={idx} label={`${file.name} (${formatFileSize(file.size)})`} sx={{ m: 0.5 }} />))}<IconButton size="small" onClick={() => clearFile('photos')}><DeleteIcon fontSize="small" /></IconButton></Box>)}
-                                        </Paper>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <TextField fullWidth label={<OptionalLabel label={language === 'BNG' ? 'ভিডিও লিংক' : 'Video Link'} language={language} />} name="video_link" value={formData.video_link} onChange={handleChange} placeholder="https://youtube.com/watch?v=..." />
-                                    </Grid>
-                                </Grid>
-                            )}
-
-                            {activeStep === 5 && (
-                                <Grid container spacing={3}>
-                                    <Grid item xs={12}>
-                                        <Paper sx={{ p: 4, borderRadius: 2 }}>
-                                            <Typography variant="h6" sx={{ color: '#2E8B57', mb: 3 }}>
-                                                {language === 'BNG' ? 'ঘোষণাপত্র' : 'Declaration'}
-                                            </Typography>
-                                            <Stack spacing={2}>
-                                                <FormControlLabel
-                                                    control={<Checkbox name="info_correct" checked={formData.info_correct} onChange={handleCheckbox} sx={{ color: '#2E8B57' }} />}
-                                                    label={language === 'BNG'
-                                                        ? 'আমি ঘোষণা করছি যে প্রদত্ত সমস্ত তথ্য সঠিক এবং নির্ভুল।'
-                                                        : 'I declare that all information provided is correct and accurate.'}
-                                                />
-                                                <FormControlLabel
-                                                    control={<Checkbox name="project_original" checked={formData.project_original} onChange={handleCheckbox} sx={{ color: '#2E8B57' }} />}
-                                                    label={language === 'BNG'
-                                                        ? 'আমি নিশ্চিত করছি যে এই প্রকল্পটি আমার/আমাদের মূল কাজ।'
-                                                        : 'I confirm that this project is my/our original work.'}
-                                                />
-                                                <FormControlLabel
-                                                    control={<Checkbox name="agree_rules" checked={formData.agree_rules} onChange={handleCheckbox} sx={{ color: '#2E8B57' }} />}
-                                                    label={language === 'BNG'
-                                                        ? 'আমি ZRF বিজ্ঞান মেলার নিয়ম ও শর্তাবলী মেনে চলতে সম্মত আছি।'
-                                                        : 'I agree to abide by the ZRF Science Fair rules and regulations.'}
-                                                />
-                                            </Stack>
-                                        </Paper>
-                                    </Grid>
-                                </Grid>
-                            )}
+                                        width: { xs: 'auto', md: '100%' },
+                                        minWidth: { xs: 'max-content', md: '100%' },
+                                        px: 2,
+                                    }}
+                                >
+                                    {renderSteps()}
+                                </Stepper>
+                            </Box>
                         </CardContent>
                     </Card>
-                </Grow>
+                    {/* Form Card */}
+                    <Grow in timeout={500}>
+                        <Card sx={{ ...cardSx, overflow: 'hidden', mb: 4 }}>
+                            <CardHeader
+                                avatar={
+                                    <Box sx={{
+                                        background: 'linear-gradient(135deg, #2E8B57 0%, #216740 100%)',
+                                        borderRadius: 2, p: 1, display: 'inline-flex',
+                                    }}>
+                                        {React.createElement(steps[activeStep].icon, { sx: { color: '#fff' } })}
+                                    </Box>
+                                }
+                                title={steps[activeStep].label}
+                                subheader={steps[activeStep].description}
+                                sx={{
+                                    borderBottom: '1px solid rgba(46,139,87,0.2)',
+                                    pb: 2,
+                                    background: alpha('#2E8B57', 0.05),
+                                }}
+                            />
+                            <CardContent sx={{ p: 4 }}>
+                                {activeStep === 0 && (
+                                    <Grid container spacing={3}>
+                                        <Grid item xs={12} md={6}>
 
-                {/* Navigation Buttons */}
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
-                    <Button disabled={activeStep === 0 || isLoading} onClick={handleBack} startIcon={<NavigateBeforeIcon />} variant="outlined" sx={{ color: '#C8E0D0', borderColor: '#C8E0D0', '&:hover': { borderColor: '#2E8B57', backgroundColor: alpha('#2E8B57', 0.1) } }}>
-                        {language === 'BNG' ? 'পিছনে' : 'Back'}
-                    </Button>
-                    {activeStep < steps.length - 1 ? (
-                        <Button onClick={handleNext} endIcon={<NavigateNextIcon />} variant="contained" sx={{ background: 'linear-gradient(135deg, #2E8B57 0%, #216740 100%)', minWidth: 120, '&:hover': { background: 'linear-gradient(135deg, #216740 0%, #1a5232 100%)', transform: 'translateY(-2px)' } }}>
-                            {language === 'BNG' ? 'পরবর্তী' : 'Next'}
-                        </Button>
-                    ) : (
-                        <Button onClick={handleSubmit} disabled={isLoading || !formData.info_correct || !formData.project_original || !formData.agree_rules || Object.keys(fileErrors).length > 0} variant="contained" sx={{ background: 'linear-gradient(135deg, #FEC909 0%, #FFD633 100%)', color: '#1A1A1A', minWidth: 160, fontWeight: 700 }}>
-                            {isLoading ? <CircularProgress size={22} sx={{ color: '#1A1A1A' }} /> : (language === 'BNG' ? 'রেজিস্ট্রেশন জমা দিন' : 'Submit Registration')}
-                        </Button>
-                    )}
-                </Box>
+                                            <StyledTextField
+                                                fullWidth
 
-                {/* Success Dialog */}
-                <Dialog open={showSuccess} onClose={() => setShowSuccess(false)} PaperProps={{ sx: { background: 'linear-gradient(135deg, #132620 0%, #0d2a2a 100%)', borderRadius: 3, border: '1px solid rgba(46,139,87,0.3)' } }}>
-                    <DialogTitle sx={{ textAlign: 'center', pt: 3 }}>
-                        <CheckCircleIcon sx={{ fontSize: 64, color: '#2E8B57', mb: 1 }} />
-                        <Typography variant="h5" sx={{ color: '#2E8B57', fontWeight: 600 }}>
-                            {language === 'BNG' ? 'রেজিস্ট্রেশন সফল হয়েছে!' : 'Registration Successful!'}
-                        </Typography>
-                    </DialogTitle>
-                    <DialogContent>
-                        <Typography sx={{ color: '#C8E0D0', textAlign: 'center' }}>
-                            {language === 'BNG'
-                                ? 'আপনার রেজিস্ট্রেশন সফলভাবে জমা দেওয়া হয়েছে। আপনি শীঘ্রই একটি নিশ্চিতকরণ ইমেইল পাবেন।'
-                                : 'Your registration has been submitted successfully. You will receive a confirmation email shortly.'}
-                        </Typography>
-                    </DialogContent>
-                    <DialogActions sx={{ justifyContent: 'center', pb: 3 }}>
-                        <Button onClick={() => setShowSuccess(false)} variant="contained" sx={{ background: 'linear-gradient(135deg, #2E8B57 0%, #216740 100%)', px: 4 }}>
-                            {language === 'BNG' ? 'বন্ধ করুন' : 'Close'}
-                        </Button>
-                    </DialogActions>
-                </Dialog>
+                                                label={<RequiredLabel label={language === 'BNG' ? 'পূর্ণ নাম ' : 'Full Name'} language={language} />}
+                                                name="full_name"
+                                                value={formData.full_name}
+                                                onChange={handleChange}
+                                                onBlur={() => setTouchedFields(prev => new Set(prev).add('full_name'))}
+                                                error={getFieldError('full_name')}
+                                                helperText={getFieldError('full_name') ? (language === 'BNG' ? 'পূর্ণ নাম ' : 'Full name is required') : ''}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} md={6}>
+                                            <StyledTextField
+                                                fullWidth
+                                                label={<RequiredLabel label={language === 'BNG' ? 'ইমেইল' : 'Email'} language={language} />}
+                                                name="email"
+                                                type="email"
+                                                value={formData.email}
+                                                onChange={handleChange}
+                                                onBlur={() => setTouchedFields(prev => new Set(prev).add('email'))}
+                                                error={getFieldError('email')}
+                                                helperText={getFieldError('email') ? (language === 'BNG' ? 'ইমেইল প্রয়োজন' : 'Email is required') : ''}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} md={6}>
+                                            <StyledTextField
+                                                fullWidth
+                                                label={<RequiredLabel label={language === 'BNG' ? 'মোবাইল নম্বর' : 'Mobile Number'} language={language} />}
+                                                name="mobile_number"
+                                                value={formData.mobile_number}
+                                                onChange={handleChange}
+                                                onBlur={() => setTouchedFields(prev => new Set(prev).add('mobile_number'))}
+                                                error={getFieldError('mobile_number')}
+                                                helperText={getFieldError('mobile_number') ? (language === 'BNG' ? 'মোবাইল নম্বর প্রয়োজন' : 'Mobile number is required') : ''}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} md={6}>
+                                            <StyledTextField
+                                                fullWidth
+                                                label={<RequiredLabel label={language === 'BNG' ? 'জন্ম তারিখ' : 'Date of Birth'} language={language} />}
+                                                name="date_of_birth"
+                                                type="date"
+                                                value={formData.date_of_birth}
+                                                onChange={handleChange}
+                                                onBlur={() => setTouchedFields(prev => new Set(prev).add('date_of_birth'))}
+                                                InputLabelProps={{ shrink: true }}
+                                                error={!!dateError || getFieldError('date_of_birth')}
+                                                helperText={dateError || (getFieldError('date_of_birth') ? (language === 'BNG' ? 'জন্ম তারিখ প্রয়োজন' : 'Date of birth is required') : '')}
+                                                inputProps={{
+                                                    min: getMinDate(),
+                                                    max: getMaxDate()
+                                                }}
+                                            />
+                                        </Grid>
 
-                {/* Snackbar */}
-                <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={() => setSnackbarOpen(false)} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
-                    <Alert onClose={() => setSnackbarOpen(false)} severity={snackbarSeverity} sx={{ width: '100%', borderRadius: 2 }}>{snackbarMessage}</Alert>
-                </Snackbar>
-            </Container>
-        </Box>
+                                        <Grid item xs={12} md={6}>
+                                            <FormControl fullWidth error={getFieldError('gender')}>
+                                                <InputLabel>{language === 'BNG' ? 'লিঙ্গ *' : 'Gender *'}</InputLabel>
+                                                <Select sx={selectStyle}
+                                                    name="gender" value={formData.gender} onChange={handleChange} label={language === 'BNG' ? 'লিঙ্গ *' : 'Gender *'}>
+                                                    {genders.map(g => <MenuItem key={g} value={g}>{g}</MenuItem>)}
+                                                </Select>
+                                                {getFieldError('gender') && <FormHelperText>{language === 'BNG' ? 'লিঙ্গ নির্বাচন প্রয়োজন' : 'Gender is required'}</FormHelperText>}
+                                            </FormControl>
+                                        </Grid>
+                                        <Grid item xs={12} md={6}>
+                                            <Box>
+                                                <FormControlLabel
+                                                    control={
+                                                        <Checkbox
+                                                            name="groupDivision"
+                                                            checked={formData.groupDivision}
+                                                            onChange={handleCheckbox}
+                                                            onBlur={() => setTouchedFields(prev => new Set(prev).add('groupDivision'))}
+                                                            sx={{
+                                                                color: '#2E8B57',
+                                                                '&.Mui-checked': {
+                                                                    color: '#2E8B57',
+                                                                },
+                                                            }}
+                                                        />
+                                                    }
+                                                    label={
+                                                        <Box>
+                                                            <RequiredLabel
+                                                                label={language === 'BNG' ? 'গ্রুপ গ ' : 'Group C'}
+                                                                language={language}
+                                                            />
+                                                            <Typography
+                                                                component="span"
+                                                                sx={{
+                                                                    display: 'block',
+                                                                    fontSize: '0.75rem',
+                                                                    color: 'rgba(255,255,255,0.6)',
+                                                                    mt: 0.5,
+                                                                }}
+                                                            >
+                                                                {language === 'BNG' ? '১৮ বছর ও তদুর্ধ্ব' : '18 years or above'}
+                                                            </Typography>
+                                                        </Box>
+                                                    }
+                                                />
+                                                {getFieldError('groupDivision') && (
+                                                    <FormHelperText error>
+                                                        {language === 'BNG' ? 'অনুগ্রহ করে নিশ্চিত করুন যে আপনার বয়স ১৮ বছর বা তার বেশি' : 'Please confirm that you are 18 years or older'}
+                                                    </FormHelperText>
+                                                )}
+                                            </Box>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <StyledTextField
+                                                fullWidth
+                                                label={<RequiredLabel label={language === 'BNG' ? 'বর্তমান শ্রেণী / বছর' : 'Current Class / Year'} language={language} />}
+                                                name="current_class_year"
+                                                value={formData.current_class_year}
+                                                onChange={handleChange}
+                                                onBlur={() => setTouchedFields(prev => new Set(prev).add('current_class_year'))}
+                                                error={getFieldError('current_class_year')}
+                                                helperText={getFieldError('current_class_year') ? (language === 'BNG' ? 'বর্তমান শ্রেণী/বছর প্রয়োজন' : 'Current class/year is required') : ''}
+                                            />
+                                        </Grid>
+                                    </Grid>
+                                )}
+
+                                {activeStep === 1 && (
+                                    <Grid container spacing={3}>
+                                        <Grid item xs={12}>
+                                            <StyledTextField
+                                                fullWidth
+                                                label={<RequiredLabel label={language === 'BNG' ? 'প্রতিষ্ঠানের নাম' : 'Institution Name'} language={language} />}
+                                                name="institution_name"
+                                                value={formData.institution_name}
+                                                onChange={handleChange}
+                                                onBlur={() => setTouchedFields(prev => new Set(prev).add('institution_name'))}
+                                                error={getFieldError('institution_name')}
+                                                helperText={getFieldError('institution_name') ? (language === 'BNG' ? 'প্রতিষ্ঠানের নাম প্রয়োজন' : 'Institution name is required') : ''}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <StyledTextField
+                                                fullWidth
+                                                multiline
+                                                rows={3}
+                                                label={<RequiredLabel label={language === 'BNG' ? 'প্রতিষ্ঠানের ঠিকানা' : 'Institution Address'} language={language} />}
+                                                name="institution_address"
+                                                value={formData.institution_address}
+                                                onChange={handleChange}
+                                                onBlur={() => setTouchedFields(prev => new Set(prev).add('institution_address'))}
+                                                error={getFieldError('institution_address')}
+                                                helperText={getFieldError('institution_address') ? (language === 'BNG' ? 'প্রতিষ্ঠানের ঠিকানা প্রয়োজন' : 'Institution address is required') : ''}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} md={6}>
+                                            <StyledTextField
+                                                fullWidth
+                                                label={<RequiredLabel label={language === 'BNG' ? 'জেলা' : 'District'} language={language} />}
+                                                name="district"
+                                                value={formData.district}
+                                                onChange={handleChange}
+                                                onBlur={() => setTouchedFields(prev => new Set(prev).add('district'))}
+                                                error={getFieldError('district')}
+                                                helperText={getFieldError('district') ? (language === 'BNG' ? 'জেলা প্রয়োজন' : 'District is required') : ''}
+                                            />
+                                        </Grid>
+
+
+                                        <Grid item xs={12} md={6}>
+                                            <FormControl fullWidth error={getFieldError('division')}>
+                                                <InputLabel>{language === 'BNG' ? 'বিভাগ *' : ' Division *'}</InputLabel>
+                                                <Select name="division" value={formData.division} onChange={handleChange} label={language === 'BNG' ? 'বিভাগ *' : ' Division *'}>
+                                                    {divisions.map(d => <MenuItem key={d} value={d}>{d}</MenuItem>)}
+                                                </Select>
+                                                {getFieldError('division') && <FormHelperText>{language === 'BNG' ? 'বিভাগ নির্বাচন প্রয়োজন' : ' Division is required'}</FormHelperText>}
+                                            </FormControl>
+                                        </Grid>
+
+                                        <Grid item xs={12} md={6}>
+                                            <StyledTextField
+                                                fullWidth
+                                                label={<OptionalLabel label={language === 'BNG' ? 'শিক্ষক / মেন্টরের নাম' : 'Teacher / Mentor Name'} language={language} />}
+                                                name="mentor_name"
+                                                value={formData.mentor_name}
+                                                onChange={handleChange}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} md={6}>
+                                            <StyledTextField
+                                                fullWidth
+                                                label={<OptionalLabel label={language === 'BNG' ? 'শিক্ষক / মেন্টরের যোগাযোগ' : 'Teacher / Mentor Contact'} language={language} />}
+                                                name="mentor_contact"
+                                                value={formData.mentor_contact}
+                                                onChange={handleChange}
+                                            />
+                                        </Grid>
+                                    </Grid>
+                                )}
+
+                                {activeStep === 2 && (
+                                    <Grid container spacing={3}>
+                                        <Grid item xs={12}>
+                                            <StyledTextField
+                                                fullWidth
+                                                label={<RequiredLabel label={language === 'BNG' ? 'প্রকল্পের শিরোনাম' : 'Project Title'} language={language} />}
+                                                name="project_title"
+                                                value={formData.project_title}
+                                                onChange={handleChange}
+                                                onBlur={() => setTouchedFields(prev => new Set(prev).add('project_title'))}
+                                                error={getFieldError('project_title')}
+                                                helperText={getFieldError('project_title') ? (language === 'BNG' ? 'প্রকল্পের শিরোনাম প্রয়োজন' : 'Project title is required') : ''}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <FormControl fullWidth error={getFieldError('scientific_field')}>
+                                                <InputLabel>{language === 'BNG' ? 'বৈজ্ঞানিক ক্ষেত্র *' : 'Scientific Field *'}</InputLabel>
+                                                <Select sx={selectStyle} name="scientific_field" value={formData.scientific_field} onChange={handleChange} label={language === 'BNG' ? 'বৈজ্ঞানিক ক্ষেত্র *' : 'Scientific Field *'}>
+                                                    {scientificFields.map(f => <MenuItem key={f} value={f}>{f}</MenuItem>)}
+                                                </Select>
+                                                {getFieldError('scientific_field') && <FormHelperText>{language === 'BNG' ? 'বৈজ্ঞানিক ক্ষেত্র নির্বাচন প্রয়োজন' : 'Scientific field is required'}</FormHelperText>}
+                                            </FormControl>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <StyledTextField
+                                                fullWidth
+                                                multiline
+                                                rows={5}
+                                                label={<RequiredLabel label={language === 'BNG' ? 'প্রকল্পের সারসংক্ষেপ' : 'Project Abstract'} language={language} />}
+                                                name="project_abstract"
+                                                value={formData.project_abstract}
+                                                onChange={handleChange}
+                                                onBlur={() => setTouchedFields(prev => new Set(prev).add('project_abstract'))}
+                                                error={getFieldError('project_abstract')}
+                                                helperText={getFieldError('project_abstract') ? (language === 'BNG' ? 'প্রকল্পের সারসংক্ষেপ প্রয়োজন' : 'Project abstract is required') : ''}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <StyledTextField
+                                                fullWidth
+                                                multiline
+                                                rows={3}
+                                                label={<RequiredLabel label={language === 'BNG' ? 'উদ্দেশ্য' : 'Objectives'} language={language} />}
+                                                name="objectives"
+                                                value={formData.objectives}
+                                                onChange={handleChange}
+                                                onBlur={() => setTouchedFields(prev => new Set(prev).add('objectives'))}
+                                                error={getFieldError('objectives')}
+                                                helperText={getFieldError('objectives') ? (language === 'BNG' ? 'উদ্দেশ্য প্রয়োজন' : 'Objectives are required') : ''}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <StyledTextField
+                                                fullWidth
+                                                multiline
+                                                rows={3}
+                                                label={<RequiredLabel label={language === 'BNG' ? 'উদ্ভাবন / নতুনত্ব' : 'Innovation / Novelty'} language={language} />}
+                                                name="innovation_novelty"
+                                                value={formData.innovation_novelty}
+                                                onChange={handleChange}
+                                                onBlur={() => setTouchedFields(prev => new Set(prev).add('innovation_novelty'))}
+                                                error={getFieldError('innovation_novelty')}
+                                                helperText={getFieldError('innovation_novelty') ? (language === 'BNG' ? 'উদ্ভাবন/নতুনত্ব প্রয়োজন' : 'Innovation/novelty is required') : ''}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <StyledTextField
+                                                fullWidth
+                                                multiline
+                                                rows={3}
+                                                label={<RequiredLabel label={language === 'BNG' ? 'প্রত্যাশিত প্রভাব' : 'Expected Impact'} language={language} />}
+                                                name="expected_impact"
+                                                value={formData.expected_impact}
+                                                onChange={handleChange}
+                                                onBlur={() => setTouchedFields(prev => new Set(prev).add('expected_impact'))}
+                                                error={getFieldError('expected_impact')}
+                                                helperText={getFieldError('expected_impact') ? (language === 'BNG' ? 'প্রত্যাশিত প্রভাব প্রয়োজন' : 'Expected impact is required') : ''}
+                                            />
+                                        </Grid>
+                                    </Grid>
+                                )}
+
+                                {activeStep === 3 && (
+                                    <Grid container spacing={3}>
+                                        <Grid item xs={12}>
+                                            <Paper sx={{ p: 3, background: alpha('#2E8B57', 0.05), borderRadius: 2 }}>
+                                                <Typography variant="subtitle1" sx={{ color: '#2E8B57', mb: 2, fontWeight: 600 }}>
+                                                    {language === 'BNG' ? 'প্রকল্পের ধরন' : 'Project Type'}
+                                                </Typography>
+                                                <RadioGroup value={formData.project_type} onChange={handleProjectTypeChange} sx={{ flexDirection: 'row', gap: 3 }}>
+                                                    <FormControlLabel
+                                                        value="individual"
+                                                        control={<Radio sx={{ color: '#2E8B57', '&.Mui-checked': { color: '#2E8B57' } }} />}
+                                                        label={<Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}><PersonIcon /><span>{language === 'BNG' ? 'ব্যক্তিগত প্রকল্প' : 'Individual Project'}</span></Box>}
+                                                    />
+                                                    <FormControlLabel
+                                                        value="team"
+                                                        control={<Radio sx={{ color: '#2E8B57', '&.Mui-checked': { color: '#2E8B57' } }} />}
+                                                        label={<Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}><GroupIcon /><span>{language === 'BNG' ? 'দলীয় প্রকল্প' : 'Team Project'}</span></Box>}
+                                                    />
+                                                </RadioGroup>
+                                            </Paper>
+                                        </Grid>
+                                        {formData.project_type === 'team' && (
+                                            <>
+                                                {formData.team_members.map((member, idx) => (
+                                                    <Grid item xs={12} key={idx}>
+                                                        <Paper sx={{ p: 3, position: 'relative', background: alpha('#2E8B57', 0.08), borderRadius: 2 }}>
+                                                            <Typography variant="subtitle1" sx={{ color: '#2E8B57', mb: 2 }}>{language === 'BNG' ? `দলের সদস্য ${idx + 1}` : `Team Member ${idx + 1}`}</Typography>
+                                                            <Grid container spacing={2}>
+                                                                <Grid item xs={12} md={6}>
+                                                                    <TextField fullWidth label={language === 'BNG' ? 'নাম *' : 'Name *'} value={member.name} onChange={e => handleTeamMemberChange(idx, 'name', e.target.value)} required />
+                                                                </Grid>
+                                                                <Grid item xs={12} md={6}>
+                                                                    <TextField fullWidth label={language === 'BNG' ? 'যোগাযোগ *' : 'Contact *'} value={member.contact} onChange={e => handleTeamMemberChange(idx, 'contact', e.target.value)} placeholder={language === 'BNG' ? 'ইমেইল বা ফোন নম্বর' : 'Email or Phone Number'} required />
+                                                                </Grid>
+                                                            </Grid>
+                                                            <IconButton onClick={() => removeTeamMember(idx)} sx={{ position: 'absolute', top: 8, right: 8, color: '#f44336' }}><DeleteIcon /></IconButton>
+                                                        </Paper>
+                                                    </Grid>
+                                                ))}
+                                                <Grid item xs={12}>
+                                                    <Button variant="outlined" onClick={addTeamMember} startIcon={<AddIcon />} sx={{ color: '#FEC909', borderColor: '#FEC909' }}>
+                                                        {language === 'BNG' ? 'দলের সদস্য যোগ করুন' : 'Add Team Member'}
+                                                    </Button>
+                                                </Grid>
+                                            </>
+                                        )}
+                                        {formData.project_type === 'individual' && (
+                                            <Grid item xs={12}>
+                                                <Alert severity="info" sx={{ borderRadius: 2 }}>
+                                                    {language === 'BNG'
+                                                        ? 'আপনি একটি ব্যক্তিগত প্রকল্প নির্বাচন করেছেন। আপনি পরবর্তী ধাপে যেতে পারেন।'
+                                                        : 'You have selected an individual project. You can proceed to the next step.'}
+                                                </Alert>
+                                            </Grid>
+                                        )}
+                                    </Grid>
+                                )}
+
+                                {activeStep === 4 && (
+                                    <Grid container spacing={3}>
+                                        <Grid item xs={12}>
+                                            <Alert severity="info" sx={{ mb: 2 }}>
+                                                <strong>{language === 'BNG' ? 'ফাইলের সাইজ সীমা:' : 'File Size Limits:'}</strong> {language === 'BNG' ? 'PDF ফাইল 10 MB পর্যন্ত, ছবি 5 MB পর্যন্ত' : 'PDF files up to 10 MB, Images up to 5 MB each'}
+                                            </Alert>
+                                        </Grid>
+                                        {Object.keys(fileErrors).length > 0 && (
+                                            <Grid item xs={12}>
+                                                <Alert severity="error" sx={{ mb: 2 }}>
+                                                    {Object.values(fileErrors).map((err, idx) => (<Box key={idx} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}><WarningIcon fontSize="small" />{err}</Box>))}
+                                                </Alert>
+                                            </Grid>
+                                        )}
+                                        <Grid item xs={12}>
+                                            <Paper sx={{ p: 3, borderRadius: 2 }}>
+                                                <Typography variant="subtitle1" sx={{ color: '#2E8B57', mb: 2 }}>
+                                                    {language === 'BNG' ? 'প্রকল্পের সারাংশ PDF' : 'Project Summary PDF'} <Typography component="span" color="error">*</Typography>
+                                                </Typography>
+                                                <Button variant="contained" component="label">{language === 'BNG' ? 'PDF নির্বাচন করুন' : 'Choose PDF'}<input hidden accept=".pdf" type="file" onChange={(e) => handleFileSelect(e, 'pdf')} /></Button>
+                                                {formData.pdfFile && <Chip label={`${formData.pdfFile.name} (${formatFileSize(formData.pdfFile.size)})`} onDelete={() => clearFile('pdf')} sx={{ ml: 2 }} />}
+                                            </Paper>
+                                        </Grid>
+                                        <Grid item xs={12} md={6}>
+                                            <Paper sx={{ p: 3, borderRadius: 2 }}>
+                                                <Typography variant="subtitle1" sx={{ mb: 2 }}>
+                                                    {language === 'BNG' ? 'প্রকল্পের প্রস্তাবনা' : 'Project Proposal'} <OptionalChip language={language} />
+                                                </Typography>
+                                                <Button variant="outlined" component="label">{language === 'BNG' ? 'ফাইল নির্বাচন করুন' : 'Choose File'}<input hidden accept=".pdf,.doc,.docx" type="file" onChange={(e) => handleFileSelect(e, 'proposal')} /></Button>
+                                                {formData.proposalFile && <Chip label={`${formData.proposalFile.name} (${formatFileSize(formData.proposalFile.size)})`} onDelete={() => clearFile('proposal')} sx={{ ml: 2 }} />}
+                                            </Paper>
+                                        </Grid>
+                                        <Grid item xs={12} md={6}>
+                                            <Paper sx={{ p: 3, borderRadius: 2 }}>
+                                                <Typography variant="subtitle1" sx={{ mb: 2 }}>
+                                                    {language === 'BNG' ? 'ছবি/ডায়াগ্রাম' : 'Photos/Diagrams'} <OptionalChip language={language} />
+                                                </Typography>
+                                                <Button variant="outlined" component="label">{language === 'BNG' ? 'ছবি নির্বাচন করুন' : 'Choose Images'}<input hidden accept="image/*" type="file" multiple onChange={(e) => handleFileSelect(e, 'photos')} /></Button>
+                                                {formData.photoFiles.length > 0 && (<Box sx={{ mt: 1 }}>{formData.photoFiles.map((file, idx) => (<Chip key={idx} label={`${file.name} (${formatFileSize(file.size)})`} sx={{ m: 0.5 }} />))}<IconButton size="small" onClick={() => clearFile('photos')}><DeleteIcon fontSize="small" /></IconButton></Box>)}
+                                            </Paper>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <TextField fullWidth label={<OptionalLabel label={language === 'BNG' ? 'ভিডিও লিংক' : 'Video Link'} language={language} />} name="video_link" value={formData.video_link} onChange={handleChange} placeholder="https://youtube.com/watch?v=..." />
+                                        </Grid>
+                                    </Grid>
+                                )}
+
+                                {activeStep === 5 && (
+                                    <Grid container spacing={3}>
+                                        <Grid item xs={12}>
+                                            <Paper sx={{ p: 4, borderRadius: 2 }}>
+                                                <Typography variant="h6" sx={{ color: '#2E8B57', mb: 3 }}>
+                                                    {language === 'BNG' ? 'ঘোষণাপত্র' : 'Declaration'}
+                                                </Typography>
+                                                <Stack spacing={2}>
+                                                    <FormControlLabel
+                                                        control={<Checkbox name="info_correct" checked={formData.info_correct} onChange={handleCheckbox} sx={{ color: '#2E8B57' }} />}
+                                                        label={language === 'BNG'
+                                                            ? 'আমি ঘোষণা করছি যে প্রদত্ত সমস্ত তথ্য সঠিক এবং নির্ভুল।'
+                                                            : 'I declare that all information provided is correct and accurate.'}
+                                                    />
+                                                    <FormControlLabel
+                                                        control={<Checkbox name="project_original" checked={formData.project_original} onChange={handleCheckbox} sx={{ color: '#2E8B57' }} />}
+                                                        label={language === 'BNG'
+                                                            ? 'আমি নিশ্চিত করছি যে এই প্রকল্পটি আমার/আমাদের মূল কাজ।'
+                                                            : 'I confirm that this project is my/our original work.'}
+                                                    />
+                                                    <FormControlLabel
+                                                        control={<Checkbox name="agree_rules" checked={formData.agree_rules} onChange={handleCheckbox} sx={{ color: '#2E8B57' }} />}
+                                                        label={language === 'BNG'
+                                                            ? 'আমি ZRF বিজ্ঞান মেলার নিয়ম ও শর্তাবলী মেনে চলতে সম্মত আছি।'
+                                                            : 'I agree to abide by the ZRF Science Fair rules and regulations.'}
+                                                    />
+                                                </Stack>
+                                            </Paper>
+                                        </Grid>
+                                    </Grid>
+                                )}
+                            </CardContent>
+                        </Card>
+                    </Grow>
+
+                    {/* Navigation Buttons */}
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
+                        <Button disabled={activeStep === 0 || isLoading} onClick={handleBack} startIcon={<NavigateBeforeIcon />} variant="outlined" sx={{ color: '#C8E0D0', borderColor: '#C8E0D0', '&:hover': { borderColor: '#2E8B57', backgroundColor: alpha('#2E8B57', 0.1) } }}>
+                            {language === 'BNG' ? 'পিছনে' : 'Back'}
+                        </Button>
+                        {activeStep < steps.length - 1 ? (
+                            <Button onClick={handleNext} endIcon={<NavigateNextIcon />} variant="contained" sx={{ background: 'linear-gradient(135deg, #2E8B57 0%, #216740 100%)', minWidth: 120, '&:hover': { background: 'linear-gradient(135deg, #216740 0%, #1a5232 100%)', transform: 'translateY(-2px)' } }}>
+                                {language === 'BNG' ? 'পরবর্তী' : 'Next'}
+                            </Button>
+                        ) : (
+                            <Button onClick={handleSubmit} disabled={isLoading || !formData.info_correct || !formData.project_original || !formData.agree_rules || Object.keys(fileErrors).length > 0} variant="contained" sx={{ background: 'linear-gradient(135deg, #FEC909 0%, #FFD633 100%)', color: '#1A1A1A', minWidth: 160, fontWeight: 700 }}>
+                                {isLoading ? <CircularProgress size={22} sx={{ color: '#1A1A1A' }} /> : (language === 'BNG' ? 'রেজিস্ট্রেশন জমা দিন' : 'Submit Registration')}
+                            </Button>
+                        )}
+                    </Box>
+
+                    {/* Success Dialog */}
+                    <Dialog open={showSuccess} onClose={() => setShowSuccess(false)} PaperProps={{ sx: { background: 'linear-gradient(135deg, #132620 0%, #0d2a2a 100%)', borderRadius: 3, border: '1px solid rgba(46,139,87,0.3)' } }}>
+                        <DialogTitle sx={{ textAlign: 'center', pt: 3 }}>
+                            <CheckCircleIcon sx={{ fontSize: 64, color: '#2E8B57', mb: 1 }} />
+                            <Typography variant="h5" sx={{ color: '#2E8B57', fontWeight: 600 }}>
+                                {language === 'BNG' ? 'রেজিস্ট্রেশন সফল হয়েছে!' : 'Registration Successful!'}
+                            </Typography>
+                        </DialogTitle>
+                        <DialogContent>
+                            <Typography sx={{ color: '#C8E0D0', textAlign: 'center' }}>
+                                {language === 'BNG'
+                                    ? 'আপনার রেজিস্ট্রেশন সফলভাবে জমা দেওয়া হয়েছে। আপনি শীঘ্রই একটি নিশ্চিতকরণ ইমেইল পাবেন।'
+                                    : 'Your registration has been submitted successfully. You will receive a confirmation email shortly.'}
+                            </Typography>
+                        </DialogContent>
+                        <DialogActions sx={{ justifyContent: 'center', pb: 3 }}>
+                            <Button onClick={() => setShowSuccess(false)} variant="contained" sx={{ background: 'linear-gradient(135deg, #2E8B57 0%, #216740 100%)', px: 4 }}>
+                                {language === 'BNG' ? 'বন্ধ করুন' : 'Close'}
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+
+                    {/* Snackbar */}
+                    <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={() => setSnackbarOpen(false)} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+                        <Alert onClose={() => setSnackbarOpen(false)} severity={snackbarSeverity} sx={{ width: '100%', borderRadius: 2 }}>{snackbarMessage}</Alert>
+                    </Snackbar>
+                </Container>
+            </Box>
+        </>
     );
 }

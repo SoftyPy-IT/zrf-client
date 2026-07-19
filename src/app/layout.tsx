@@ -3,6 +3,7 @@ import Providers from "@/lib/Providers";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { Toaster } from "sonner";
 import { Noto_Sans, Noto_Sans_Bengali } from "next/font/google";
+import WelcomePopup from "@/components/WelcomePopup";
 // Load Noto Sans for English
 const notoSans = Noto_Sans({
   subsets: ["latin"],
@@ -30,6 +31,7 @@ export default function RootLayout({
       dir="ltr"
       className={`${notoSans.variable} ${notoSansBengali.variable}`}
     >
+      <WelcomePopup />
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
