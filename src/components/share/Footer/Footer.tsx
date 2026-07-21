@@ -206,27 +206,67 @@ const FooterData = () => {
               </div>
 
               {/* Registration Links */}
-              <div className="text-center sm:text-left">
+              {/* Registration Links */}
+              <div className="text-center flex flex-col sm:text-left">
                 <h4 className="font-semibold text-white text-lg mb-4 relative inline-block">
                   {language === "ENG" ? "Registration" : "নিবন্ধন"}
                   <span className="absolute -bottom-2 left-0 w-12 h-0.5 bg-[#FEC909] hidden sm:block"></span>
                 </h4>
 
-                <ul className="space-y-3">
-                  {footerLinks.registration.map((link, index) => (
-                    <li key={index}>
-                      <Link
-                        href={link.href}
-                        className="text-[#B8D9C4] hover:text-[#FEC909] transition-colors duration-300 text-sm flex items-center justify-center sm:justify-start gap-2 group"
-                      >
-                        <span className="inline-block w-1 h-1 bg-[#FEC909] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                        {link.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                {footerLinks.registration.map((link, index) => (
+                  <Link
+                    key={index}
+                    href={link.href}
+                    className="
+    inline-flex
+    items-center
+    justify-center
+    gap-1
+    rounded-md
+    bg-[#FEC909]
+    hover:bg-[#FFD633]
+    text-[#1A1A1A]
+    font-semibold
+    text-[10px]
+    sm:text-[11px]
+    md:text-xs
+    px-2.5
+    sm:px-3
+    py-1.5
+    shadow
+    transition-all
+    duration-300
+    hover:scale-[1.03]
+    hover:shadow-md
+    w-fit
+    max-w-full
+    mx-auto
+    sm:mx-0
+  "
+                  >
+                    <span className="leading-tight whitespace-nowrap">
+                      {language === "ENG"
+                        ? "Science Fair Registration"
+                        : "বিজ্ঞান মেলা নিবন্ধন"}
+                    </span>
 
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-3.5 h-3.5 flex-shrink-0"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </Link>
+                ))}
+              </div>
               {/* Social Media Section */}
               <div className="text-center sm:text-left">
                 <h4 className="font-semibold text-white text-lg mb-4 relative inline-block sm:inline-block">
