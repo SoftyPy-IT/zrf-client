@@ -213,7 +213,7 @@ const ProgrammData: React.FC<programmProps> = ({ programmData, language }) => {
                     </div>
 
                     {/* Learn More Link - Appears on Hover */}
-                    <Link href={`/program/${program._id}`}>
+                    {/* <Link href={`/program/${program._id}`}>
                       <div
                         className={`overflow-hidden transition-all duration-500 ${hoveredCard === index ? "max-h-10 opacity-100 mt-3" : "max-h-0 opacity-0"
                           }`}
@@ -223,7 +223,16 @@ const ProgrammData: React.FC<programmProps> = ({ programmData, language }) => {
                           <EastIcon className="text-xs" />
                         </span>
                       </div>
-                    </Link>
+                    </Link> */}
+                    {/* <div
+                      className={`overflow-hidden transition-all duration-500 ${hoveredCard === index ? "max-h-10 opacity-100 mt-3" : "max-h-0 opacity-0"
+                        }`}
+                    >
+                      <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-600 group-hover:gap-2 transition-all">
+                        {language === "ENG" ? "Learn More" : "বিস্তারিত"}
+                        <EastIcon className="text-xs" />
+                      </span>
+                    </div> */}
                   </div>
 
                   {/* Bottom Border Animation */}
