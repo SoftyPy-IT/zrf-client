@@ -16,6 +16,7 @@ import {
     Close as CloseIcon,
 } from '@mui/icons-material';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface DetailsDialogProps {
     open: boolean;
@@ -70,21 +71,23 @@ export default function RegistrationDetailsModal({ open, onClose, language, imag
                     justifyContent: 'center',
                     alignItems: 'center',
                 }}>
-                    <Image
-                        src={imageSrc}
-                        alt="Science Fair Competition Details"
-                        width={1000}
-                        height={700}
-                        style={{
-                            width: 'auto',
-                            height: 'auto',
-                            maxWidth: '100%',
-                            maxHeight: '70vh',
-                            objectFit: 'contain',
-                            borderRadius: '8px',
-                        }}
-                        priority
-                    />
+                    <Link href='/registration'>
+                        <Image
+                            src={imageSrc}
+                            alt="Science Fair Competition Details"
+                            width={1000}
+                            height={700}
+                            style={{
+                                width: 'auto',
+                                height: 'auto',
+                                maxWidth: '100%',
+                                maxHeight: '70vh',
+                                objectFit: 'contain',
+                                borderRadius: '8px',
+                            }}
+                            priority
+                        />
+                    </Link>
                 </Box>
             </DialogContent>
 

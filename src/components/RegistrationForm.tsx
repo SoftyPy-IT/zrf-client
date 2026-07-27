@@ -714,6 +714,7 @@ export default function RegistrationForm() {
                         </Fade>
                     )}
 
+
                     {/* Upload Progress */}
                     {isUploading && (
                         <Fade in>
