@@ -15,6 +15,11 @@ on:
 env:
   AMPLIFY_BRANCH: main
 
+# One deploy at a time. A second push waits instead of calling StartJob twice.
+concurrency:
+  group: amplify-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   deploy:
     name: Trigger Amplify build
@@ -41,14 +46,48 @@ jobs:
             exit 1
           fi
 
-          echo "Starting Amplify RELEASE job for app ${AMPLIFY_APP_ID} branch ${AMPLIFY_BRANCH}"
+          find_active_job() {
+            aws amplify list-jobs \
+              --app-id "$AMPLIFY_APP_ID" \
+              --branch-name "$AMPLIFY_BRANCH" \
+              --max-items 10 \
+              --query 'jobSummaries[?status==`PENDING` || status==`PROVISIONING` || status==`RUNNING` || status==`CANCELLING`].jobId | [0]' \
+              --output text
+          }
 
-          JOB_ID=$(aws amplify start-job \
-            --app-id "$AMPLIFY_APP_ID" \
-            --branch-name "$AMPLIFY_BRANCH" \
-            --job-type RELEASE \
-            --query 'jobSummary.jobId' \
-            --output text)
+          JOB_ID=$(find_active_job)
+          if [ -n "${JOB_ID}" ] && [ "${JOB_ID}" != "None" ]; then
+            echo "Amplify already has job ${JOB_ID} in progress on ${AMPLIFY_BRANCH}."
+            echo "Waiting for that job instead of starting another (LimitExceededException)."
+          else
+            echo "Starting Amplify RELEASE job for app ${AMPLIFY_APP_ID} branch ${AMPLIFY_BRANCH}"
+            set +e
+            START_ERR=$(mktemp)
+            JOB_ID=$(aws amplify start-job \
+              --app-id "$AMPLIFY_APP_ID" \
+              --branch-name "$AMPLIFY_BRANCH" \
+              --job-type RELEASE \
+              --query 'jobSummary.jobId' \
+              --output text 2>"$START_ERR")
+            START_RC=$?
+            set -e
+            if [ "$START_RC" -ne 0 ]; then
+              if grep -q LimitExceededException "$START_ERR"; then
+                echo "StartJob raced with an in-progress job. Attaching to it."
+                cat "$START_ERR"
+                sleep 5
+                JOB_ID=$(find_active_job)
+              else
+                cat "$START_ERR"
+                exit "$START_RC"
+              fi
+            fi
+          fi
+
+          if [ -z "${JOB_ID}" ] || [ "${JOB_ID}" = "None" ]; then
+            echo "Could not start or find an Amplify job."
+            exit 1
+          fi
 
           echo "Job ID: ${JOB_ID}"
           echo "Watch in the Amplify Console → Hosting → Deployments"

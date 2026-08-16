@@ -170,7 +170,7 @@ If the first deploy already finished **before** you saved these, you must run a 
 
 ## Step 4 — Turn off Amplify auto-build (so only GitHub Actions deploys)
 
-If both Amplify auto-build **and** GitHub Actions run, every push builds **twice**.
+If both Amplify auto-build **and** GitHub Actions run, every push builds **twice**, and Actions fails with `LimitExceededException` (`already have pending or running jobs`).
 
 1. Amplify app → **Hosting** → **Build settings** (or the **main** branch page).
 2. Find **Enable auto-build** / **Automatic builds on every push**.
