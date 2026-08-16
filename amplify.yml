@@ -1,11 +1,14 @@
 # AWS Amplify Hosting — Next.js 14 App Router (SSR / WEB_COMPUTE)
 # Do not set artifacts.baseDirectory to "out". Amplify Compute needs ".next".
+# Compute bundle must stay under 220MB (uncompressed).
 
 version: 1
 frontend:
   phases:
     preBuild:
       commands:
+        # Skip nvm's default globals (cypress, hugo, vuepress, …) — they are unused.
+        - rm -f "$HOME/.nvm/default-packages" /root/.nvm/default-packages || true
         - nvm install 20
         - nvm use 20
         - node -v
@@ -22,6 +25,14 @@ frontend:
         # Copy Amplify Console env vars into files Next.js reads at build time.
         - env | grep -e NEXT_PUBLIC_ >> .env.production || true
         - npm run build
+        # Amplify Compute limit is 220MB. Strip build-only binaries after next build.
+        # See: https://docs.aws.amazon.com/amplify/latest/userguide/troubleshooting-SSR.html
+        - rm -rf .next/cache
+        - rm -f node_modules/@swc/core-linux-x64-gnu/swc.linux-x64-gnu.node
+        - rm -f node_modules/@swc/core-linux-x64-musl/swc.linux-x64-musl.node
+        - rm -rf node_modules/pdfjs-dist/legacy
+        - rm -rf node_modules/typescript node_modules/eslint node_modules/eslint-config-next
+        - du -sh .next node_modules public || true
   artifacts:
     baseDirectory: .next
     files:

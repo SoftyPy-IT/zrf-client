@@ -12,7 +12,8 @@ import { useEbookData } from '@/hooks/useEbookData'
 import Ebook from './Ebook'
 import dynamic from 'next/dynamic'
 import { TEbook } from '@/types/type'
-import PdfFlipBook from './PdfReader'
+
+const PdfFlipBook = dynamic(() => import('./PdfReader'), { ssr: false })
 
 const StyledModal = styled(Modal)(({ theme }) => ({
   '.MuiBackdrop-root': {
@@ -26,8 +27,6 @@ function EbookFetchData() {
   const { ebookData, loading, error } = useEbookData()
   const [openModal, setOpenModal] = useState(false)
   const [selectedPdf, setSelectedPdf] = useState('')
-
-  console.log(ebookData)
 
   if (error) return <p>Oops Something Went Wrong!</p>
 

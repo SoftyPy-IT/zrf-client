@@ -23,8 +23,26 @@ const nextConfig = {
     ],
   },
   experimental: {
-    // Required so Amplify / ALB Host headers are trusted in SSR.
-    trustHostHeader: true,
+    // Rewrites barrel imports so NFT does not pull all of @mui/icons-material (130MB).
+    optimizePackageImports: [
+      "@mui/material",
+      "@mui/icons-material",
+      "lucide-react",
+    ],
+    // Amplify Compute counts traced node_modules toward a 220MB cap.
+    outputFileTracingExcludes: {
+      "*": [
+        "node_modules/@swc/core-linux-x64-gnu/**/*",
+        "node_modules/@swc/core-linux-x64-musl/**/*",
+        "node_modules/@esbuild/**/*",
+        "node_modules/webpack/**/*",
+        "node_modules/terser/**/*",
+        "node_modules/typescript/**/*",
+        "node_modules/eslint/**/*",
+        "node_modules/pdfjs-dist/legacy/**/*",
+        "node_modules/pdfjs-dist/types/**/*",
+      ],
+    },
   },
 };
 
