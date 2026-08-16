@@ -1,0 +1,85 @@
+# Deploy zrf-client to AWS Amplify on every push to main.
+# Same pattern as zrf-server → ECS: GitHub Actions authenticates to AWS, then
+# starts an Amplify Hosting job. Amplify runs amplify.yml (npm ci + next build).
+#
+# Required GitHub secrets are listed in README_AMPLIFY.md.
+
+name: Deploy to AWS Amplify
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  AMPLIFY_BRANCH: main
+
+jobs:
+  deploy:
+    name: Trigger Amplify build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Start Amplify job and wait until SUCCEED
+        env:
+          AMPLIFY_APP_ID: ${{ secrets.AMPLIFY_APP_ID }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${AMPLIFY_APP_ID}" ]; then
+            echo "AMPLIFY_APP_ID GitHub secret is missing."
+            exit 1
+          fi
+
+          echo "Starting Amplify RELEASE job for app ${AMPLIFY_APP_ID} branch ${AMPLIFY_BRANCH}"
+
+          JOB_ID=$(aws amplify start-job \
+            --app-id "$AMPLIFY_APP_ID" \
+            --branch-name "$AMPLIFY_BRANCH" \
+            --job-type RELEASE \
+            --query 'jobSummary.jobId' \
+            --output text)
+
+          echo "Job ID: ${JOB_ID}"
+          echo "Watch in the Amplify Console → Hosting → Deployments"
+
+          DEADLINE=$((SECONDS + 1200))
+          while true; do
+            STATUS=$(aws amplify get-job \
+              --app-id "$AMPLIFY_APP_ID" \
+              --branch-name "$AMPLIFY_BRANCH" \
+              --job-id "$JOB_ID" \
+              --query 'job.summary.status' \
+              --output text)
+
+            echo "Amplify job status: ${STATUS}"
+
+            case "$STATUS" in
+              SUCCEED)
+                echo "Amplify deploy succeeded."
+                exit 0
+                ;;
+              FAILED|CANCELLED)
+                echo "Amplify deploy failed with status ${STATUS}."
+                echo "Open Amplify → Hosting → Deployments → this job for the build log."
+                exit 1
+                ;;
+            esac
+
+            if [ "$SECONDS" -ge "$DEADLINE" ]; then
+              echo "Timed out waiting for Amplify job ${JOB_ID}."
+              exit 1
+            fi
+
+            sleep 20
+          done

@@ -1,0 +1,17 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "StartAndWatchAmplifyJobs",
+      "Effect": "Allow",
+      "Action": [
+        "amplify:StartJob",
+        "amplify:GetJob",
+        "amplify:ListJobs",
+        "amplify:GetApp",
+        "amplify:GetBranch"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

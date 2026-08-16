@@ -1,0 +1,24 @@
+# AWS Amplify Hosting — Next.js 14 App Router (SSR / WEB_COMPUTE)
+# Do not set artifacts.baseDirectory to "out". Amplify Compute needs ".next".
+
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm ci --cache .npm --prefer-offline
+    build:
+      commands:
+        # Copy Amplify Console env vars into files Next.js reads at build time.
+        # NEXT_PUBLIC_* is inlined into the browser bundle — never put secrets here.
+        - env | grep -e NEXT_PUBLIC_ >> .env.production || true
+        - npm run build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - "**/*"
+  cache:
+    paths:
+      - node_modules/**/*
+      - .next/cache/**/*
+      - .npm/**/*

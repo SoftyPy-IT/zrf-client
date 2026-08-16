@@ -41,7 +41,7 @@ function PublicationSlider() {
     const fetchEbookData = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/ebook?limit=99999999&fields=images`,
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/ebook?limit=100&fields=images`,
           {
             cache: "no-store",
           },

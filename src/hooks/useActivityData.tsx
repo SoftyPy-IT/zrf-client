@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { TActivity, } from "@/types/type";
 import { activityFields } from "@/fields";
+import { API_LIST_LIMIT, getPublicApiUrl } from "@/config/env";
 
 export const useActivityData = () => {
     const [activityData, setActivityData] = useState<TActivity[]>([]);
@@ -11,7 +12,7 @@ export const useActivityData = () => {
     useEffect(() => {
         const fetchActivityData = async () => {
             try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/activity?limit=99999999&fields=${activityFields}`, {
+                const response = await fetch(`${getPublicApiUrl()}/activity?limit=${API_LIST_LIMIT}&fields=${activityFields}`, {
                     cache: "no-store",
                 });
                 const data = await response.json();

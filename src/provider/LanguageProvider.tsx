@@ -19,27 +19,27 @@ const LanguageContext = createContext<LanguageContextType | undefined>(
   undefined,
 );
 
+function isLanguage(value: string | null): value is Language {
+  return value === "ENG" || value === "BNG";
+}
+
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [language, setLanguage] = useState<Language>("ENG");
-  const [isClient, setIsClient] = useState(false);
+  const [ready, setReady] = useState(false);
+
   useEffect(() => {
-    setIsClient(true);
+    const saved = localStorage.getItem("language");
+    if (isLanguage(saved)) {
+      setLanguage(saved);
+    }
+    setReady(true);
   }, []);
 
   useEffect(() => {
-    if (isClient) {
-      const savedLanguage = localStorage.getItem("language") as Language;
-      if (savedLanguage) {
-        setLanguage(savedLanguage);
-      }
-    }
-  }, [isClient]);
-
-  useEffect(() => {
-    if (isClient && language) {
+    if (ready) {
       localStorage.setItem("language", language);
     }
-  }, [language, isClient]);
+  }, [language, ready]);
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage }}>
