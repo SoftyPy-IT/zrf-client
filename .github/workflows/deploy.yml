@@ -71,7 +71,27 @@ jobs:
                 ;;
               FAILED|CANCELLED)
                 echo "Amplify deploy failed with status ${STATUS}."
-                echo "Open Amplify → Hosting → Deployments → this job for the build log."
+                echo "---- Amplify job steps ----"
+                aws amplify get-job \
+                  --app-id "$AMPLIFY_APP_ID" \
+                  --branch-name "$AMPLIFY_BRANCH" \
+                  --job-id "$JOB_ID" \
+                  --query 'job.steps[].{name:stepName,status:status,reason:statusReason}' \
+                  --output table || true
+                echo "---- Amplify step logs ----"
+                LOG_URLS=$(aws amplify get-job \
+                  --app-id "$AMPLIFY_APP_ID" \
+                  --branch-name "$AMPLIFY_BRANCH" \
+                  --job-id "$JOB_ID" \
+                  --query 'job.steps[].logUrl' \
+                  --output text)
+                for url in $LOG_URLS; do
+                  if [ -n "$url" ] && [ "$url" != "None" ]; then
+                    echo "----- log: $url -----"
+                    curl -fsSL "$url" || true
+                    echo
+                  fi
+                done
                 exit 1
                 ;;
             esac
