@@ -1,6 +1,5 @@
 "use client";
 import Container from "@/components/share/Container";
-
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CallOutlinedIcon from "@mui/icons-material/CallOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
@@ -19,54 +18,52 @@ const Contact = () => {
           title={language == "ENG" ? "Contact Us" : "আমাদের সাথে যোগাযোগ করুন"}
         />
         <Container>
-          <div className="container mx-auto lg:px-4 my-20 lg:flex gap-10">
+          <div className="container mx-auto lg:px-4 my-5 md:my-20 lg:flex gap-10">
             <div className="lg:w-1/2 mb-12">
-              <div className="bg-green-600 p-5">
+              <div className="bg-green-600 p-5 rounded-lg">
                 <h2 className="text-2xl font-bold mb-4 text-white font-serif">
                   {language == "ENG" ? "Contact Information" : "যোগাযোগের তথ্য"}
                 </h2>
                 <div className="text-white">
                   <div className="mb-4">
-                    <h3 className="text-xl font-semibold">
-                      <LocationOnIcon sx={{ marginRight: "5px" }} />
+                    <h3 className="text-xl font-semibold text-white">
+                      <LocationOnIcon sx={{ marginRight: "5px", color: 'white' }} />
                       {language == "ENG" ? "Location" : "অবস্থান"}
                     </h3>
-                    <p className="text-white">
+                    <p className="text-white/90">
                       {language == "ENG"
-                        ? " House#2, Road#23/A, Gulshan-1, Near Gulshan 1 Post Office, Dhaka-1212, Bangladesh."
-                        : "বাড়ি #২, রোড #২৩/এ, গুলশান-১, গুলশান ১ পোস্ট অফিস, ঢাকা-১২১২, বাংলাদেশ।"}
+                        ? "2nd Floor, House No-02, Road No- 23/A, Gulshan-1, Dhaka-1212, Bangladesh (Near Gulshan-1, Post Office)"
+                        : "২য় তলা, বাড়ি নং-০২, রোড নং-২৩/এ, গুলশান-১, ঢাকা-১২১২, বাংলাদেশ (গুলশান-১ পোস্ট অফিসের নিকটে)।"}
                     </p>
                   </div>
                   <div className="mb-4">
-                    <h3 className="text-xl font-semibold">
-                      <CallOutlinedIcon sx={{ marginRight: "5px" }} />
-                      {language == "ENG" ? "Location" : "আমাদের কল করুন"}
+                    <h3 className="text-xl font-semibold text-white">
+                      <CallOutlinedIcon sx={{ marginRight: "5px", color: 'white' }} />
+                      {language == "ENG" ? "Call Us" : "আমাদের কল করুন"}
                     </h3>
-                    <p className="text-white">
-                      {" "}
-                      {language == "ENG" ? "01819213236" : "01819213236"}{" "}
+                    <p className="text-white/90">
+                      {language == "ENG" ? "01817-226644" : "০১৮১৭-২২৬৬৪৪"}
+                    </p>
+                    <p className="text-white/90">
+                      {language == "ENG" ? "01830-973973" : "০১৮৩০-৯৭৩৯৭৩"}
                     </p>
                   </div>
                   <div className="mb-4">
-                    <h3 className="text-xl font-semibold">
-                      <EmailOutlinedIcon sx={{ marginRight: "5px" }} />
-                      {language == "ENG" ? " Email Us" : "আমাদের ইমেল করুন"}
+                    <h3 className="text-xl font-semibold text-white">
+                      <EmailOutlinedIcon sx={{ marginRight: "5px", color: 'white' }} />
+                      {language == "ENG" ? "Email Us" : "আমাদের ইমেল করুন"}
                     </h3>
-                    <p className="text-white">donaroncolog@gmail.com</p>
+                    <p className="text-white/90">zrfinof.bd@gmail.com</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div>
-              <div className=" bg-white shadow-md p-5 border">
-                <h2 className="text-2xl font-serif font-bold mb-4">
-                  {language == "ENG" ? "Contact Us!" : " যোগাযোগ করুন!"}
+            <div className="lg:w-1/2">
+              <div className="bg-[#0A1A12] rounded-2xl shadow-lg p-6 border border-[#216740]/20">
+                <h2 className="text-2xl font-serif font-bold mb-4 text-white">
+                  {language == "ENG" ? "Contact Us!" : "যোগাযোগ করুন!"}
                 </h2>
-                {/* <p className="text-gray-700 mb-6">
-                  {language == 'ENG' ? ' Contact us to get, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ainim veniam.' : 'পেতে আমাদের সাথে যোগাযোগ করুন, কনসেক্টেটুর adipisising elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ইউটেনিম অ্যানিম ভেনিয়াম।'}
-
-                </p> */}
                 <ContactForm />
               </div>
             </div>

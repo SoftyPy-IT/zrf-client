@@ -7,7 +7,7 @@ type Props = {
   params: { id: string };
 };
 
-// ✅ Fetch Project Data
+
 async function getProjectData(id: string) {
   try {
     const res = await fetch(
