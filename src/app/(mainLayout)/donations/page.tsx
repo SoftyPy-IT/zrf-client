@@ -21,9 +21,10 @@ import DonationHeader from "@/components/Donation/DonationHeader";
 import DonationForm from "@/components/Forms/DonationForm";
 import TestimonialsSection from "@/components/Donation/TestimonialsSection";
 import PartnerSection from "@/components/Donation/PartnerSection";
+import { getPublicApiUrl } from "@/config/env";
 
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_BASE_API_URL || "http://localhost:5001/api/v1";
+const API_BASE_URL = getPublicApiUrl();
 
 const DonationPage = () => {
   const { language } = useLanguage();

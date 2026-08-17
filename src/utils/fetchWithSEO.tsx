@@ -2,6 +2,7 @@
 import { Metadata } from "next";
 import { stripHtml } from "./stripHtml";
 import { cookies } from "next/headers";
+import { getPublicApiUrl } from "@/config/env";
 
 export async function fetchWithSEO(
   endpoint: string,
@@ -10,7 +11,7 @@ export async function fetchWithSEO(
 ): Promise<{ data: any; metadata: Metadata }> {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/${endpoint}/${id}`,
+      `${getPublicApiUrl()}/${endpoint}/${id}`,
       {
         cache: "no-store",
       },

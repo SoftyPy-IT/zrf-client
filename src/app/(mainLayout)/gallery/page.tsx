@@ -20,7 +20,7 @@ const FetchedGallery = () => {
     const fetchGalleryData = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/image-gallery?limit=10000`,
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/image-gallery?limit=100`,
           { cache: "no-store" }
         );
         const data = await response.json();

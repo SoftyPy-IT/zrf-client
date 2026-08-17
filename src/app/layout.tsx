@@ -31,7 +31,6 @@ export default function RootLayout({
       dir="ltr"
       className={`${notoSans.variable} ${notoSansBengali.variable}`}
     >
-      <WelcomePopup />
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
@@ -78,6 +77,7 @@ export default function RootLayout({
           <AppRouterCacheProvider>
             <Toaster position="bottom-right" richColors />
             {children}
+            <WelcomePopup />
           </AppRouterCacheProvider>
         </Providers>
       </body>

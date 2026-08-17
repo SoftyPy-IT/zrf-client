@@ -1,0 +1,144 @@
+# Deploy zrf-client to AWS Amplify on every push to main.
+# Same pattern as zrf-server → ECS: GitHub Actions authenticates to AWS, then
+# starts an Amplify Hosting job. Amplify runs amplify.yml (npm ci + next build).
+#
+# Required GitHub secrets are listed in README_AMPLIFY.md.
+
+name: Deploy to AWS Amplify
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  AMPLIFY_BRANCH: main
+
+# One deploy at a time. A second push waits instead of calling StartJob twice.
+concurrency:
+  group: amplify-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Trigger Amplify build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Start Amplify job and wait until SUCCEED
+        env:
+          AMPLIFY_APP_ID: ${{ secrets.AMPLIFY_APP_ID }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${AMPLIFY_APP_ID}" ]; then
+            echo "AMPLIFY_APP_ID GitHub secret is missing."
+            exit 1
+          fi
+
+          find_active_job() {
+            aws amplify list-jobs \
+              --app-id "$AMPLIFY_APP_ID" \
+              --branch-name "$AMPLIFY_BRANCH" \
+              --max-items 10 \
+              --query 'jobSummaries[?status==`PENDING` || status==`PROVISIONING` || status==`RUNNING` || status==`CANCELLING`].jobId | [0]' \
+              --output text
+          }
+
+          JOB_ID=$(find_active_job)
+          if [ -n "${JOB_ID}" ] && [ "${JOB_ID}" != "None" ]; then
+            echo "Amplify already has job ${JOB_ID} in progress on ${AMPLIFY_BRANCH}."
+            echo "Waiting for that job instead of starting another (LimitExceededException)."
+          else
+            echo "Starting Amplify RELEASE job for app ${AMPLIFY_APP_ID} branch ${AMPLIFY_BRANCH}"
+            set +e
+            START_ERR=$(mktemp)
+            JOB_ID=$(aws amplify start-job \
+              --app-id "$AMPLIFY_APP_ID" \
+              --branch-name "$AMPLIFY_BRANCH" \
+              --job-type RELEASE \
+              --query 'jobSummary.jobId' \
+              --output text 2>"$START_ERR")
+            START_RC=$?
+            set -e
+            if [ "$START_RC" -ne 0 ]; then
+              if grep -q LimitExceededException "$START_ERR"; then
+                echo "StartJob raced with an in-progress job. Attaching to it."
+                cat "$START_ERR"
+                sleep 5
+                JOB_ID=$(find_active_job)
+              else
+                cat "$START_ERR"
+                exit "$START_RC"
+              fi
+            fi
+          fi
+
+          if [ -z "${JOB_ID}" ] || [ "${JOB_ID}" = "None" ]; then
+            echo "Could not start or find an Amplify job."
+            exit 1
+          fi
+
+          echo "Job ID: ${JOB_ID}"
+          echo "Watch in the Amplify Console → Hosting → Deployments"
+
+          DEADLINE=$((SECONDS + 1200))
+          while true; do
+            STATUS=$(aws amplify get-job \
+              --app-id "$AMPLIFY_APP_ID" \
+              --branch-name "$AMPLIFY_BRANCH" \
+              --job-id "$JOB_ID" \
+              --query 'job.summary.status' \
+              --output text)
+
+            echo "Amplify job status: ${STATUS}"
+
+            case "$STATUS" in
+              SUCCEED)
+                echo "Amplify deploy succeeded."
+                exit 0
+                ;;
+              FAILED|CANCELLED)
+                echo "Amplify deploy failed with status ${STATUS}."
+                echo "---- Amplify job steps ----"
+                aws amplify get-job \
+                  --app-id "$AMPLIFY_APP_ID" \
+                  --branch-name "$AMPLIFY_BRANCH" \
+                  --job-id "$JOB_ID" \
+                  --query 'job.steps[].{name:stepName,status:status,reason:statusReason}' \
+                  --output table || true
+                echo "---- Amplify step logs ----"
+                LOG_URLS=$(aws amplify get-job \
+                  --app-id "$AMPLIFY_APP_ID" \
+                  --branch-name "$AMPLIFY_BRANCH" \
+                  --job-id "$JOB_ID" \
+                  --query 'job.steps[].logUrl' \
+                  --output text)
+                for url in $LOG_URLS; do
+                  if [ -n "$url" ] && [ "$url" != "None" ]; then
+                    echo "----- log: $url -----"
+                    curl -fsSL "$url" || true
+                    echo
+                  fi
+                done
+                exit 1
+                ;;
+            esac
+
+            if [ "$SECONDS" -ge "$DEADLINE" ]; then
+              echo "Timed out waiting for Amplify job ${JOB_ID}."
+              exit 1
+            fi
+
+            sleep 20
+          done

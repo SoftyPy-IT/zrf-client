@@ -58,6 +58,7 @@ import { divisions, genders, scientificFields } from '@/lib/constant';
 import { useLanguage } from '@/provider/LanguageProvider';
 import { selectStyle, StyledTextField } from '@/utils/inputStyle';
 import axios from 'axios';
+import { getPublicApiUrl } from '@/config/env';
 import registrationImg from '../../src/assets/images/registration/popup.jpeg';
 import RegistrationDetailsModal from './RegistrationDetailsModal';
 import { uploadFile, uploadMultipleFiles } from './Upload';
@@ -549,7 +550,7 @@ export default function RegistrationForm() {
                 groupDivision: formData.groupDivision ? 'Yes' : 'No', // Convert boolean to string for API
             };
 
-            const API_URL = process.env.NEXT_PUBLIC_BASE_API_URL || 'https://api.zrf.info/api/v1';
+            const API_URL = getPublicApiUrl();
             const response = await axios.post(`${API_URL}/registrations`, payload, {
                 headers: { 'Content-Type': 'application/json' },
                 timeout: 30000,

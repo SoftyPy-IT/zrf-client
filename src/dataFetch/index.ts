@@ -1,6 +1,8 @@
+import { getPublicApiUrl } from "@/config/env";
+
 export async function fetchWelcomeData() {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/banner`,
+    `${getPublicApiUrl()}/banner`,
     {
       cache: "no-store",
     }
@@ -13,7 +15,7 @@ export async function fetchWelcomeData() {
 
 export async function fetchRecentActivityData() {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_API_URL}/activity`,
+    `${getPublicApiUrl()}/activity`,
     {
       cache: "no-store",
     }
