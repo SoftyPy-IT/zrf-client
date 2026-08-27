@@ -28,7 +28,7 @@ const Slider = () => {
     setError(null);
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_API_URL}/banner`
+        `${process.env.NEXT_PUBLIC_BASE_API_URL}/banner`,
       );
       if (!response.ok) throw new Error("Failed to fetch slides data");
       const data = await response.json();
@@ -47,7 +47,7 @@ const Slider = () => {
   if (error) return <p className="text-red-500">{error}</p>;
 
   const filterBannerData = bannerData.filter(
-    (item) => item.category === "Banner"
+    (item) => item.category === "Banner",
   );
 
   return (
@@ -100,7 +100,6 @@ const Slider = () => {
       )}
     </div>
   );
-
 };
 
 export default Slider;

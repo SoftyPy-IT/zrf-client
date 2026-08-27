@@ -5,15 +5,9 @@ import Link from "next/link";
 import { formatDate } from "@/utils/formateDate";
 import truncateText from "@/utils/truncate";
 
-const FeaturedNewsCard = ({
-  news,
-  idx,
-  language,
-  activeTab,
-  onHover,
-}: any) => {
-  const img = language === 'BNG' ? news?.bng_Images[0] : news?.eng_images[0];
-  console.log('nes check', news);
+const FeaturedNewsCard = ({ news, idx, language, activeTab, onHover }: any) => {
+  const img = language === "BNG" ? news?.bng_Images[0] : news?.eng_images[0];
+
   return (
     <motion.div
       initial={{ opacity: 0, x: idx === 0 ? -30 : 30 }}

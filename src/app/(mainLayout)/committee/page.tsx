@@ -3,10 +3,8 @@
 import React, { useEffect, useState } from "react";
 import CommitteeFetchData from "./_components/CommitteeFetchData";
 import { useLanguage } from "@/provider/LanguageProvider";
-import dynamic from "next/dynamic";
 import { TCommitte } from "@/types/type";
 import axios from "axios";
- 
 
 const Committee = () => {
   const { language } = useLanguage();
@@ -14,15 +12,13 @@ const Committee = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const category = `Committee, Advisory Council`;
-
   useEffect(() => {
-    const fetchCovidData = async () => {
+    const fetchCommitteeData = async () => {
       setIsLoading(true);
       setError(null);
       try {
         const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/committee?category=${category}`
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/committee?limit=1000`
         );
         setCommitteeData(res.data?.data?.committees || []);
       } catch (err) {
@@ -33,13 +29,23 @@ const Committee = () => {
       }
     };
 
-    fetchCovidData();
-  }, [category]);
+    fetchCommitteeData();
+  }, []);
 
-   
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-[400px]">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-600"></div>
+      </div>
+    );
+  }
 
   if (error) {
-    return <h2>Oops! data not found.</h2>
+    return (
+      <div className="flex justify-center items-center min-h-[400px]">
+        <h2 className="text-xl text-red-500 font-semibold">{error}</h2>
+      </div>
+    );
   }
 
   return (
@@ -48,6 +54,5 @@ const Committee = () => {
     </>
   );
 };
-
 
 export default Committee;
