@@ -9,7 +9,6 @@ import Container from "@/components/share/Container";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/provider/LanguageProvider";
-import PublicationStats from "./PublicationStats";
 
 const PublicationSlider = dynamic(() => import("./PublicationSlider"), {
   ssr: false,
@@ -59,13 +58,8 @@ const Publication = () => {
           </p>
         </motion.div>
 
-        <div className="flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-8">
-          <div className="w-full lg:w-7/12">
-            <PublicationSlider />
-          </div>
-          <div className="w-full lg:w-5/12 mt-6 lg:mt-0">
-            <PublicationStats />
-          </div>
+        <div className="w-full max-w-4xl mx-auto">
+          <PublicationSlider />
         </div>
       </Container>
     </section>

@@ -6,7 +6,11 @@ import { formatDate } from "@/utils/formateDate";
 import truncateText from "@/utils/truncate";
 
 const FeaturedNewsCard = ({ news, idx, language, activeTab, onHover }: any) => {
-  const img = language === "BNG" ? news?.bng_Images[0] : news?.eng_images[0];
+  const img =
+    (language === "BNG" ? news?.bng_Images?.[0] : news?.eng_images?.[0]) ||
+    news?.eng_images?.[0] ||
+    news?.bng_Images?.[0] ||
+    "/placeholder.jpg";
 
   return (
     <motion.div

@@ -132,7 +132,7 @@ function PublicationSlider() {
         ))}
       </Swiper>
 
-      <div className="flex w-full flex-col items-end lg:items-start mt-10">
+      <div className="flex w-full justify-center items-center mt-10 md:mt-12">
         <BNPButton
           href="/ebooks"
           language={language}

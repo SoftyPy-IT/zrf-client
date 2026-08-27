@@ -8,7 +8,10 @@ import truncateText from "@/utils/truncate";
 
 const RegularNewsCard = ({ news, idx, language, activeTab }: any) => {
   const images =
-    news.bng_Images?.length > 0 ? news.bng_Images : news.english_Images;
+    (language === "BNG" ? news?.bng_Images : news?.eng_images) ||
+    news?.eng_images ||
+    news?.bng_Images ||
+    [];
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (

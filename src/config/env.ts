@@ -36,5 +36,5 @@ export function getPublicSiteUrl(): string {
   return trimSlash(process.env.NEXT_PUBLIC_SITE_URL || "https://zrf.info");
 }
 
-/** Matches the ECS API pagination cap. Do not request unbounded lists. */
-export const API_LIST_LIMIT = 100;
+/** Matches the API pagination cap. */
+export const API_LIST_LIMIT = 1000;

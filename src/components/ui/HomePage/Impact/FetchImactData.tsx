@@ -4,8 +4,6 @@ import Container from "@/components/share/Container";
 import { overviewProps } from "@/types/type";
 import {
   ArrowForward,
-  CheckCircle,
-  People,
   PlayArrow,
   VolunteerActivism
 } from "@mui/icons-material";
@@ -118,26 +116,10 @@ const FetchImactData: React.FC<overviewProps> = ({
   handleModalOpen,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [activeStat, setActiveStat] = useState<number | null>(null);
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
-  const impactStats = [
-    {
-      number: "1000K+",
-      labelEn: "Lives Impacted",
-      labelBn: "উপকৃত মানুষ",
-      icon: <People className="w-6 h-6" />,
-    },
-    {
-      number: "300K+",
-      labelEn: "Projects Completed",
-      labelBn: "সম্পন্ন প্রকল্প",
-      icon: <CheckCircle className="w-6 h-6" />,
-    },
-
-  ];
 
   return (
     <div className="relative w-full overflow-hidden bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-900 py-16 mt-10 md:mt-12 md:py-24">
@@ -226,33 +208,6 @@ const FetchImactData: React.FC<overviewProps> = ({
 
                   </div>
                 ))}
-
-                <div className="hidden sm:grid absolute -bottom-6 -right-6 lg:-bottom-10 lg:-right-10 grid-cols-2 gap-3">
-                  {impactStats.slice(0, 2).map((stat, statIdx) => (
-                    <div
-                      key={statIdx}
-                      className="bg-white rounded-xl shadow-xl p-3 md:p-4 backdrop-blur-sm transform hover:scale-105 transition-all duration-300 cursor-pointer"
-                      onMouseEnter={() => setActiveStat(statIdx)}
-                      onMouseLeave={() => setActiveStat(null)}
-                    >
-                      <div className="flex items-center gap-2">
-                        <div className="text-emerald-600">
-                          {React.cloneElement(stat.icon, {
-                            className: "w-5 h-5 md:w-6 md:h-6",
-                          })}
-                        </div>
-                        <div>
-                          <div className="text-xl md:text-2xl font-bold text-emerald-600">
-                            {stat.number}
-                          </div>
-                          <div className="text-xs text-slate-500">
-                            {language === "ENG" ? stat.labelEn : stat.labelBn}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
               </div>
             </div>
           </div>

@@ -209,7 +209,7 @@ const Header = () => {
                   </Link>
                 </li>
                 <li className="lg:border-none border-b lg:py-0 py-2">
-                  <Link href="/news" onClick={closeMobileMenu}>
+                  <Link href="/upcoming-programs" onClick={closeMobileMenu}>
                     {language === "ENG"
                       ? "Upcoming Programs"
                       : "আসন্ন প্রোগ্রাম"}

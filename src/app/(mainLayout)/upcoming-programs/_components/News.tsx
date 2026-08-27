@@ -2,10 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { useLanguage } from "@/provider/LanguageProvider";
 import NewsData from "./NewsData";
-import dynamic from "next/dynamic";
 import { TActivity } from "@/types/type";
 import axios from "axios";
- 
 
 const News = () => {
   const { language } = useLanguage();
@@ -13,39 +11,47 @@ const News = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const category = `Upcoming Programs`;
+  const category = `Upcoming Programs,upcoming programs,Upcoming Program,upcoming program,Program,Event,Events`;
 
   useEffect(() => {
-    const fetchCovidData = async () => {
+    const fetchUpcomingPrograms = async () => {
       setIsLoading(true);
       setError(null);
       try {
         const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/activity?category=${category}`
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/activity?category=${category}&limit=1000`
         );
         setNewsData(res.data?.data?.activities || []);
       } catch (err) {
-        setError("Failed to load news data. Please try again later.");
+        console.error("Error fetching upcoming programs:", err);
+        setError("Failed to load upcoming programs data. Please try again later.");
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchCovidData();
+    fetchUpcomingPrograms();
   }, [category]);
 
-   
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-[400px]">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-600"></div>
+      </div>
+    );
+  }
 
   if (error) {
-    return <h2>Oops! data not found.</h2>;
+    return (
+      <div className="flex justify-center items-center min-h-[400px]">
+        <h2 className="text-xl text-red-500 font-semibold">{error}</h2>
+      </div>
+    );
   }
+
   return (
     <div>
-      {newsData ? (
-        <NewsData newsData={newsData} language={language} />
-      ) : (
-        <h2>No data uploaded !</h2>
-      )}
+      <NewsData newsData={newsData} language={language} />
     </div>
   );
 };

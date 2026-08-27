@@ -56,77 +56,73 @@ const NewsData: React.FC<activityProps> = ({ newsData, language }) => {
         title={language === "ENG" ? "Upcoming Program" : "আসন্ন প্রোগ্রাম"}
       />
       <Container>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-16">
-          {sortedNewsData?.slice(0, visibleCount).map((data, index: number) => (
-            <div key={index}>
-              <div className="shadow-md flex flex-col justify-between rounded-md">
-                <div className="h-[250px]">
-                  {language === "ENG"
-                    ? data.eng_images
-                        ?.slice(0, 1)
-                        .map((img) => (
-                          <Image
-                            width={500}
-                            height={500}
-                            key={img}
-                            src={img}
-                            alt=""
-                            className="h-[240px] rounded-t-md"
-                          />
-                        ))
-                    : data.bng_Images
-                        ?.slice(0, 1)
-                        .map((img) => (
-                          <Image
-                            width={500}
-                            height={500}
-                            key={img}
-                            src={img}
-                            alt=""
-                            className="h-[240px] rounded-t-md"
-                          />
-                        ))}
-                </div>
-                <div className="p-3 flex flex-col justify-between">
-                  <div>
-                    <h3 className="font-semibold text-gray-600">
-                      {language === "ENG"
-                        ? truncateText(data?.english_title, 80)
-                        : truncateText(data?.bangla_title, 80)}
-                    </h3>
-                    {/* <p className="mt-2">
-                      <RenderContent
-                        content={
-                          language === "ENG"
-                            ? data.english_description
-                            : data.bangla_description
-                        }
-                      />
-                    </p> */}
-                  </div>
-                  <div className="flex justify-between  ">
-                    <b>{formatDate(data.date)}</b>
-                    <Link href={`/upcoming-programs/${data._id}`}>
-                      <button className=" text-white bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-1 hover:text-white rounded-full uppercase text-sm border">
-                        {language === "ENG" ? "Read More" : "আরও পড়ুন"}{" "}
-                        <EastIcon />
-                      </button>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-        {visibleCount < sortedNewsData?.length && (
-          <div className="flex items-center justify-center">
-            <Button
-              onClick={loadMore}
-              className="bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white"
-            >
-              {language === "ENG" ? "Load More" : "আরো লোড"}
-            </Button>
+        {(!sortedNewsData || sortedNewsData.length === 0) ? (
+          <div className="text-center py-20 text-gray-500">
+            <p className="text-lg">
+              {language === "ENG"
+                ? "No upcoming programs found at the moment."
+                : "এই মুহূর্তে কোনো আসন্ন প্রোগ্রাম পাওয়া যায়নি।"}
+            </p>
           </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-16">
+              {sortedNewsData?.slice(0, visibleCount).map((data, index: number) => {
+                const img =
+                  (language === "ENG" ? data.eng_images?.[0] : data.bng_Images?.[0]) ||
+                  data.eng_images?.[0] ||
+                  data.bng_Images?.[0] ||
+                  "/placeholder.jpg";
+
+                const title =
+                  (language === "ENG" ? data?.english_title : data?.bangla_title) ||
+                  data?.bangla_title ||
+                  data?.english_title ||
+                  "";
+
+                return (
+                  <div key={data._id || index}>
+                    <div className="shadow-md flex flex-col justify-between rounded-md overflow-hidden bg-white">
+                      <div className="h-[240px] relative w-full overflow-hidden">
+                        <Image
+                          width={500}
+                          height={500}
+                          src={img}
+                          alt={title}
+                          className="h-[240px] w-full object-cover rounded-t-md"
+                        />
+                      </div>
+                      <div className="p-4 flex flex-col justify-between flex-1">
+                        <div>
+                          <h3 className="font-semibold text-gray-700 text-base mb-3">
+                            {truncateText(title, 80)}
+                          </h3>
+                        </div>
+                        <div className="flex justify-between items-center mt-2 pt-2 border-t border-gray-100">
+                          <b className="text-xs text-gray-500">{formatDate(data.date)}</b>
+                          <Link href={`/upcoming-programs/${data._id}`}>
+                            <button className="text-white bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-1 hover:opacity-90 rounded-full uppercase text-xs font-semibold flex items-center gap-1">
+                              {language === "ENG" ? "Read More" : "আরও পড়ুন"} <EastIcon fontSize="small" />
+                            </button>
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            {visibleCount < (sortedNewsData?.length || 0) && (
+              <div className="flex items-center justify-center mb-16">
+                <Button
+                  onClick={loadMore}
+                  className="bg-gradient-to-r from-yellow-600 to-green-600 px-5 py-2 rounded-full text-white text-sm font-semibold"
+                >
+                  {language === "ENG" ? "Load More" : "আরো লোড"}
+                </Button>
+              </div>
+            )}
+          </>
         )}
       </Container>
     </div>

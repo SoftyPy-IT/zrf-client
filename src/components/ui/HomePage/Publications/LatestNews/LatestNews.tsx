@@ -36,14 +36,36 @@ const LatestNews = () => {
 
   useEffect(() => {
     if (activityData) {
-      const filtered = activityData.filter(
-        (news: TActivity) =>
-          news.category?.trim().toLowerCase() ===
-          (activeTab === "upcoming" ? "upcoming programs" : "message"),
+      const isUpcoming = (cat?: string) => {
+        if (!cat) return false;
+        const c = cat.trim().toLowerCase();
+        return (
+          c === "upcoming programs" ||
+          c === "upcoming program" ||
+          c === "upcoming" ||
+          c === "program" ||
+          c === "programs" ||
+          c === "event" ||
+          c === "events"
+        );
+      };
+
+      const isMessage = (cat?: string) => {
+        if (!cat) return false;
+        const c = cat.trim().toLowerCase();
+        return c === "message" || c === "messages" || c === "latest messages";
+      };
+
+      const filtered = activityData.filter((news: TActivity) =>
+        activeTab === "upcoming"
+          ? isUpcoming(news.category)
+          : isMessage(news.category)
       );
       setFilteredData(
         [...filtered].sort(
-          (a: TActivity, b: TActivity) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+          (a: TActivity, b: TActivity) =>
+            new Date(b.date || (b as any).createdAt || 0).getTime() -
+            new Date(a.date || (a as any).createdAt || 0).getTime(),
         ),
       );
     }
@@ -170,6 +192,20 @@ const LatestNews = () => {
           </div>
         )}
 
+
+        {filteredData.length === 0 && (
+          <div className="text-center py-12 text-gray-500">
+            <p className="text-base sm:text-lg">
+              {language === "ENG"
+                ? activeTab === "upcoming"
+                  ? "No upcoming programs available at the moment."
+                  : "No messages available at the moment."
+                : activeTab === "upcoming"
+                  ? "এই মুহূর্তে কোনো আসন্ন প্রোগ্রাম নেই।"
+                  : "এই মুহূর্তে কোনো বার্তা নেই।"}
+            </p>
+          </div>
+        )}
 
         <AnimatePresence mode="wait">
           <motion.div
