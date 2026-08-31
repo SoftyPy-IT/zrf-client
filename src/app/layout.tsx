@@ -2,20 +2,20 @@ import "./globals.css";
 import Providers from "@/lib/Providers";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { Toaster } from "sonner";
-import { Noto_Sans, Noto_Sans_Bengali } from "next/font/google";
+import { Inter, Noto_Sans_Bengali } from "next/font/google";
 import WelcomePopup from "@/components/WelcomePopup";
-// Load Noto Sans for English
-const notoSans = Noto_Sans({
+// Load Inter for English
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "700"],
+  weight: ["300", "400", "500", "600", "700", "800"],
   display: "swap",
-  variable: "--font-noto-sans",
+  variable: "--font-inter",
 });
 
 // Load Noto Sans Bengali for Bangla
 const notoSansBengali = Noto_Sans_Bengali({
   subsets: ["bengali"],
-  weight: ["400", "700"],
+  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
   variable: "--font-noto-sans-bengali",
 });
@@ -29,7 +29,7 @@ export default function RootLayout({
     <html
       lang="en"
       dir="ltr"
-      className={`${notoSans.variable} ${notoSansBengali.variable}`}
+      className={`${inter.variable} ${notoSansBengali.variable}`}
     >
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />

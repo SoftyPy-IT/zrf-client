@@ -12,7 +12,7 @@ export const useCommitteeData = () => {
     useEffect(() => {
         const fetchAboutData = async () => {
             try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/committee?limit=1000`, {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/committee?limit=1000&sort=serial_no`, {
                     cache: "no-store",
                 });
                 const data = await response.json();

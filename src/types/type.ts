@@ -157,6 +157,7 @@ export type TWhatWeDo = {
 };
 export type TCommitte = {
   _id: string,
+  serial_no?: number;
   bangla_name: string;
   english_name: string;
   designation_bangla: string;

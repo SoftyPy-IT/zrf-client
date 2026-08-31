@@ -16,24 +16,23 @@ const CommitteeFetchData: React.FC<CommitteProps> = ({
   const sortedCommitteeData = (committeeData || [])
     .filter((profile) => profile.category !== "Volunteer" || profile.committee)
     .sort((a, b) => {
-      const dateA = new Date(a.createdAt || 0).getTime();
-      const dateB = new Date(b.createdAt || 0).getTime();
-      return dateB - dateA;
-    })
-    .sort((a, b) => {
+      // Primary sort: by committee group priority
       const committeeA = (a.committee || "").toLowerCase();
       const committeeB = (b.committee || "").toLowerCase();
 
-      if (committeeA === "board of directors") return -1;
-      if (committeeB === "board of directors") return 1;
+      if (committeeA === "board of directors" && committeeB !== "board of directors") return -1;
+      if (committeeB === "board of directors" && committeeA !== "board of directors") return 1;
 
-      if (committeeA === "advisory council" && committeeB !== "board of directors") return -1;
-      if (committeeB === "advisory council" && committeeA !== "board of directors") return 1;
+      if (committeeA === "advisory council" && committeeB !== "advisory council" && committeeB !== "board of directors") return -1;
+      if (committeeB === "advisory council" && committeeA !== "advisory council" && committeeA !== "board of directors") return 1;
 
       if (committeeA < committeeB) return -1;
       if (committeeA > committeeB) return 1;
 
-      return 0;
+      // Secondary sort within same group: by serial_no (0 or undefined goes last)
+      const snA = a.serial_no != null ? a.serial_no : 99999;
+      const snB = b.serial_no != null ? b.serial_no : 99999;
+      return snA - snB;
     });
 
   const committees = sortedCommitteeData.reduce((acc, profile) => {
