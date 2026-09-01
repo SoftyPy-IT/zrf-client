@@ -1,12 +1,13 @@
 import React from 'react';
 import EastIcon from "@mui/icons-material/East";
+import MailOutline from "@mui/icons-material/MailOutline";
 import { useLanguage } from '@/provider/LanguageProvider';
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 const Subscribe = () => {
     const { language } = useLanguage()
-    const placeholder = language === 'ENG' ? 'Enter your email' : 'আপনার ইমেইল লিখুন';
+    const placeholder = language === 'ENG' ? 'Enter your email address' : 'আপনার ইমেইল লিখুন';
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
     const onSubmit = async (data: any) => {
@@ -23,9 +24,11 @@ const Subscribe = () => {
             toast.error('Something went wrong!');
         }
     };
+
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="relative  xl:flex items-center w-full">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full md:w-auto">
+            <div className="relative w-full">
+                <MailOutline className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50 w-5 h-5 pointer-events-none" />
                 <input
                     type="text"
                     placeholder={placeholder}
@@ -36,13 +39,20 @@ const Subscribe = () => {
                             message: 'Invalid email address'
                         }
                     })}
-                    className="w-[250px] md:w-[250px] lg:w-[500px] p-3 md:py-3 lg:py-6 px-2 md:px-4 border border-gray-300 rounded-full text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 text-[14px]"
+                    className="w-full md:w-[380px] lg:w-[440px] bg-white text-gray-800 placeholder-gray-500 text-sm pl-12 pr-32 md:pr-36 py-3.5 md:py-4 rounded-full focus:outline-none focus:ring-2 focus:ring-[#FEC909] border border-white/40 shadow-xl shadow-black/10"
                 />
-                <button className="text-[12px] absolute right-0 py-1 lg:py-4 px-2 lg:px-8 mx-1 md:mx-2  my-2 bg-green-600 text-white rounded-full font-semibold hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-blue-500 ">
-                    {
-                        language === 'ENG' ? 'Subscribe' : 'সাবসক্রাইব'
-                    }  <EastIcon sx={{ fontSize: '20px' }} />
+                <button
+                    type="submit"
+                    className="absolute right-1.5 top-1/2 -translate-y-1/2 inline-flex items-center gap-1.5 bg-gradient-to-r from-[#0F3D26] to-[#1A5C3D] hover:from-[#1A5C3D] hover:to-[#20bd86] text-white text-[13px] md:text-sm font-semibold px-4 md:px-6 py-2.5 rounded-full transition-all duration-300 hover:shadow-lg cursor-pointer"
+                >
+                    {language === 'ENG' ? 'Subscribe' : 'সাবসক্রাইব'}
+                    <EastIcon sx={{ fontSize: 18 }} />
                 </button>
+                {errors.email && (
+                    <p className="text-[#FFD9D9] text-xs mt-2 ml-1">
+                        {errors.email.message as string}
+                    </p>
+                )}
             </div>
         </form>
     );

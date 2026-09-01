@@ -78,7 +78,7 @@ const LatestNews = () => {
   const regularNews = filteredData.slice(2, visibleCount);
 
   return (
-    <section className="relative  py-10 md:py-12 overflow-hidden bg-gradient-to-br from-slate-50 via-white to-slate-50">
+    <section className="relative py-14 md:py-20 overflow-hidden bg-gradient-to-br from-slate-50 via-white to-slate-50">
 
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-gradient-to-r from-[#216740]/10 to-[#FEC909]/10 rounded-full blur-3xl animate-pulse" />
@@ -103,16 +103,26 @@ const LatestNews = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-5"
         >
-          <h2 className="text-2xl md:text-5xl font-bold mb-2">
-            <span className="bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
-              {language === "ENG" ? "Latest" : "সর্বশেষ"}
-            </span>{" "}
-            <span className="bg-gradient-to-r from-[#216740] to-[#FEC909] bg-clip-text text-transparent">
-              {language === "ENG" ? "News" : "সংবাদ"}
+          <div className="flex items-center justify-center gap-2 mb-3">
+            <div className="w-10 h-[3px] bg-gradient-to-r from-[#216740] to-[#FEC909] rounded-full"></div>
+            <div className="w-2 h-2 rotate-45 bg-gradient-to-r from-[#FEC909] to-[#216740]"></div>
+            <span className="text-[11px] md:text-sm font-bold uppercase tracking-[0.2em]" style={{ color: "#216740" }}>
+              {language === "ENG" ? "Stay Updated" : "সর্বশেষ আপডেট"}
             </span>
+            <div className="w-10 h-[3px] bg-gradient-to-r from-[#FEC909] to-[#216740] rounded-full"></div>
+          </div>
+
+          <h2 className="text-3xl md:text-5xl font-extrabold text-gray-800 uppercase tracking-wide">
+            {language === "ENG" ? "Latest News" : "সর্বশেষ সংবাদ"}
           </h2>
 
-          <div className="w-24 h-1.5 bg-gradient-to-r from-[#216740] to-[#FEC909] mx-auto rounded-full mb-2" />
+          <p className="text-gray-500 mt-3 max-w-2xl mx-auto text-sm md:text-base">
+            {language === "ENG"
+              ? "Stay informed with the latest updates, messages and upcoming programs from ZRF."
+              : "জেডআরএফের সর্বশেষ আপডেট, বার্তা এবং আসন্ন প্রোগ্রাম সম্পর্কে অবগত থাকুন।"}
+          </p>
+
+          <div className="w-24 h-1 bg-gradient-to-r from-[#FEC909] to-[#216740] rounded-full mt-5 mx-auto" />
 
         </motion.div>
         <motion.div
@@ -177,7 +187,7 @@ const LatestNews = () => {
 
         {/* Featured News Cards (Hero Style) */}
         {featuredNews.length > 0 && (
-          <div className="grid grid-cols-2 lg:grid-cols-2 gap-x-2 md:gap-x-4 mb-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mb-8">
             {featuredNews.map((news, idx) => (
               <FeaturedNewsCard
                 key={news._id}
