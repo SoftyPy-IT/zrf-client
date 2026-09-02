@@ -189,15 +189,13 @@ const FooterData = () => {
               {/* Brand Section */}
               <div>
                 <Link href="/" className="inline-flex items-center gap-4">
-                  <span className="bg-white rounded-2xl p-2.5 shadow-lg flex-shrink-0">
-                    <Image
-                      src={logo}
-                      alt="Ziaur Rahman Foundation Logo"
-                      width={56}
-                      height={60}
-                      className="w-12 h-auto"
-                    />
-                  </span>
+                  <Image
+                    src={logo}
+                    alt="Ziaur Rahman Foundation Logo"
+                    width={56}
+                    height={60}
+                    className="w-12 h-auto"
+                  />
                   <span className="text-left">
                     <span className="block font-bold text-white text-lg leading-tight">
                       {language === "ENG"
