@@ -48,7 +48,6 @@ import {
   Step,
   StepLabel,
   Stepper,
-  TextField,
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
@@ -56,7 +55,7 @@ import React, { useState } from "react";
 import { FormData, TeamMember } from "@/interface";
 import { divisions, genders, scientificFields } from "@/lib/constant";
 import { useLanguage } from "@/provider/LanguageProvider";
-import { selectStyle, StyledTextField } from "@/utils/inputStyle";
+import { selectStyle, selectMenuProps, StyledTextField, panelSx, chipSx } from "@/utils/inputStyle";
 import axios from "axios";
 import { getPublicApiUrl } from "@/config/env";
 import registrationImg from "../../src/assets/images/registration/popup.jpeg";
@@ -64,6 +63,7 @@ import RegistrationDetailsModal from "./RegistrationDetailsModal";
 import { uploadFile, uploadMultipleFiles } from "./Upload";
 
 import RegistrationBanner from "./RegistrationBanner";
+import RegistrationStatsCards from "./RegistrationStatsCards";
 const getSteps = (language: string) => [
   {
     label: language === "BNG" ? "অংশগ্রহণকারীর তথ্য" : "Participant Info",
@@ -224,6 +224,7 @@ export default function RegistrationForm() {
     "error" | "warning" | "info" | "success"
   >("error");
   const [openImageDialog, setOpenImageDialog] = useState(false);
+  const [statsRefreshKey, setStatsRefreshKey] = useState(0);
   const { language } = useLanguage();
 
   const steps = getSteps(language);
@@ -816,6 +817,7 @@ export default function RegistrationForm() {
           "success",
         );
         setShowSuccess(true);
+        setStatsRefreshKey((prev) => prev + 1);
 
         setTimeout(() => {
           setFormData(initialFormData);
@@ -886,38 +888,68 @@ export default function RegistrationForm() {
   };
 
   const cardSx = {
-    background: "rgba(19, 38, 32, 0.9)",
-    backdropFilter: "blur(10px)",
-    border: "1px solid rgba(46, 139, 87, 0.3)",
-    borderRadius: 3,
+    background:
+      "linear-gradient(165deg, rgba(19,38,32,0.97) 0%, rgba(13,42,42,0.98) 100%)",
+    backdropFilter: "blur(12px)",
+    border: "1px solid rgba(46, 139, 87, 0.28)",
+    borderRadius: { xs: 2, md: 3 },
+    boxShadow: "0 12px 40px rgba(0,0,0,0.28)",
   };
+
+  const progressValue = ((activeStep + 1) / steps.length) * 100;
 
   const renderSteps = () =>
     steps.map((step, index) => {
-      const Icon = step.icon;
+      const isCompleted = index < activeStep;
+      const isActive = index === activeStep;
       return (
-        <Step key={step.label} sx={{ minWidth: { xs: 70, sm: 100 } }}>
+        <Step key={step.label} sx={{ minWidth: { xs: 56, sm: 80, md: 96 } }}>
           <StepLabel
             StepIconComponent={() => (
-              <Icon
+              <Box
                 sx={{
-                  fontSize: { xs: 28, md: 32 },
-
-                  color:
-                    index <= activeStep
-                      ? "#ffffff"
-                      : "rgba(255, 255, 255, 0.4)",
+                  width: { xs: 28, sm: 32, md: 36 },
+                  height: { xs: 28, sm: 32, md: 36 },
+                  borderRadius: "50%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: { xs: "0.7rem", md: "0.85rem" },
+                  fontWeight: 700,
+                  border: "1.5px solid",
+                  borderColor: isActive || isCompleted
+                    ? "#2E8B57"
+                    : "rgba(200,224,208,0.3)",
+                  backgroundColor: isActive
+                    ? "#2E8B57"
+                    : isCompleted
+                      ? "rgba(46,139,87,0.35)"
+                      : "rgba(255,255,255,0.04)",
+                  color: isActive || isCompleted ? "#fff" : "rgba(200,224,208,0.5)",
+                  transition: "all 0.2s ease",
                 }}
-              />
+              >
+                {isCompleted ? "✓" : index + 1}
+              </Box>
             )}
           >
             <Typography
               variant="caption"
-              display="block"
+              display={{ xs: "none", sm: "block" }}
               sx={{
                 mt: 1,
-                fontSize: { xs: "0.65rem", md: "0.75rem" },
-                fontWeight: 500,
+                fontSize: { sm: "0.62rem", md: "0.72rem" },
+                fontWeight: isActive ? 700 : 500,
+                color: isActive
+                  ? "#F4FAF6"
+                  : isCompleted
+                    ? "#C8E0D0"
+                    : "rgba(200,224,208,0.45)",
+                whiteSpace: "nowrap",
+                maxWidth: { sm: 72, md: 100 },
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                mx: "auto",
               }}
             >
               {step.label}
@@ -933,63 +965,92 @@ export default function RegistrationForm() {
       <Box
         sx={{
           minHeight: "100vh",
-          background:
-            "linear-gradient(135deg, #0a1a1a 0%, #0d2a2a 50%, #0a1a1a 100%)",
-          py: 4,
+          background: `
+            radial-gradient(ellipse at top, rgba(46,139,87,0.12) 0%, transparent 55%),
+            linear-gradient(180deg, #0c1f1c 0%, #0a1816 40%, #081412 100%)
+          `,
+          py: { xs: 2, sm: 3, md: 5 },
+          overflowX: "hidden",
         }}
       >
-        <Container maxWidth="lg" sx={{ py: 4 }}>
+        <Container
+          maxWidth="lg"
+          sx={{
+            py: { xs: 1.5, md: 3 },
+            px: { xs: 1.5, sm: 2, md: 3 },
+          }}
+        >
           {/* Header */}
-          <Fade in timeout={800}>
-            <Box sx={{ mb: 4, textAlign: "center" }}>
+          <Fade in timeout={700}>
+            <Box sx={{ mb: { xs: 2.5, md: 4 }, textAlign: "center", px: { xs: 0.5, sm: 0 } }}>
               <Typography
-                variant="h2"
+                variant="overline"
+                sx={{
+                  display: "block",
+                  letterSpacing: { xs: 1.2, md: 2 },
+                  color: "#FEC909",
+                  fontWeight: 700,
+                  mb: 1,
+                  fontSize: { xs: "0.65rem", sm: "0.75rem" },
+                }}
+              >
+                ZRF Science Fair 2026
+              </Typography>
+              <Typography
+                variant="h4"
+                component="h1"
                 sx={{
                   fontWeight: 800,
-                  background:
-                    "linear-gradient(135deg, #2E8B57 0%, #FEC909 100%)",
-                  backgroundClip: "text",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  mb: 2,
-                  fontSize: { xs: "1rem", md: "3rem" },
+                  color: "#F4FAF6",
+                  mb: 1,
+                  fontSize: { xs: "1.3rem", sm: "1.75rem", md: "2.15rem" },
+                  letterSpacing: "-0.02em",
+                  px: { xs: 0.5, sm: 0 },
                 }}
               >
                 {language === "BNG"
-                  ? "বিজ্ঞান মেলা রেজিস্ট্রেশন - ২০২৬"
-                  : "Science Fair Registration - 2026"}
+                  ? "বিজ্ঞান মেলা রেজিস্ট্রেশন"
+                  : "Science Fair Registration"}
               </Typography>
-            </Box>
-          </Fade>
-
-          {/* Info Button and Simple Banner */}
-          <Fade in timeout={900}>
-            <Box sx={{ mb: 4 }}>
-              <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
-                <Button
-                  variant="contained"
-                  onClick={() => setOpenImageDialog(true)}
-                  sx={{
-                    background:
-                      "linear-gradient(135deg, #FEC909 0%, #FFD633 100%)",
-                    color: "#1A1A1A",
-                    fontWeight: 700,
-                    px: { md: 4, sm: 2 },
-                    py: { md: 1.5, sm: 0.5 },
-                    fontSize: { sm: ".5rem", md: "1rem" },
-                    borderRadius: 3,
-                    "&:hover": {
-                      background:
-                        "linear-gradient(135deg, #FFD633 0%, #FEC909 100%)",
-                      transform: "translateY(-2px)",
-                    },
-                  }}
-                >
-                  {language === "BNG"
-                    ? " বিস্তারিত তথ্য দেখুন "
-                    : " View Details"}
-                </Button>
-              </Box>
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "rgba(200,224,208,0.72)",
+                  maxWidth: 520,
+                  mx: "auto",
+                  fontSize: { xs: "0.85rem", md: "1rem" },
+                  lineHeight: 1.6,
+                  px: { xs: 0.5, sm: 0 },
+                }}
+              >
+                {language === "BNG"
+                  ? "আপনার প্রকল্প জমা দিতে ধাপগুলো সম্পন্ন করুন। প্রয়োজনীয় তথ্য সঠিকভাবে পূরণ করুন।"
+                  : "Complete each step to submit your project. Please provide accurate information throughout."}
+              </Typography>
+              <Button
+                variant="outlined"
+                onClick={() => setOpenImageDialog(true)}
+                sx={{
+                  mt: { xs: 2, md: 2.5 },
+                  color: "#C8E0D0",
+                  borderColor: "rgba(200,224,208,0.4)",
+                  px: { xs: 2, md: 2.5 },
+                  py: 0.85,
+                  fontWeight: 600,
+                  fontSize: { xs: "0.8rem", md: "0.875rem" },
+                  borderRadius: 2,
+                  textTransform: "none",
+                  width: { xs: "100%", sm: "auto" },
+                  maxWidth: { xs: 280, sm: "none" },
+                  "&:hover": {
+                    borderColor: "#FEC909",
+                    color: "#FEC909",
+                    backgroundColor: "rgba(254,201,9,0.06)",
+                  },
+                }}
+              >
+                {language === "BNG" ? "বিস্তারিত তথ্য দেখুন" : "View Details"}
+              </Button>
             </Box>
           </Fade>
 
@@ -1016,9 +1077,17 @@ export default function RegistrationForm() {
           {/* Upload Progress */}
           {isUploading && (
             <Fade in>
-              <Box sx={{ mb: 3 }}>
+              <Box
+                sx={{
+                  mb: 3,
+                  p: 2,
+                  borderRadius: 2,
+                  border: "1px solid rgba(46,139,87,0.3)",
+                  backgroundColor: "rgba(19,38,32,0.8)",
+                }}
+              >
                 <Typography variant="body2" sx={{ color: "#C8E0D0", mb: 1 }}>
-                  {uploadStatus} - {uploadProgress}%
+                  {uploadStatus} — {uploadProgress}%
                 </Typography>
                 <LinearProgress
                   variant="determinate"
@@ -1035,18 +1104,17 @@ export default function RegistrationForm() {
           )}
 
           {/* Stepper */}
-          <Card id="registration-step-container" sx={{ mb: 4, ...cardSx }}>
-            <CardContent sx={{ px: { xs: 0, sm: 2 }, py: 2 }}>
-              {/* Scrollable Container for Stepper */}
+          <Card id="registration-step-container" sx={{ mb: 3, ...cardSx }}>
+            <CardContent sx={{ px: { xs: 1, sm: 2.5 }, py: { xs: 2, md: 2.5 } }}>
               <Box
                 sx={{
                   display: "flex",
-                  overflowX: "auto", // Scroll functionality
+                  overflowX: "auto",
                   width: "100%",
                   alignItems: "center",
                   scrollbarWidth: "thin",
                   scrollbarColor: "#2E8B57 rgba(46,139,87,0.1)",
-                  "&::-webkit-scrollbar": { height: "6px" },
+                  "&::-webkit-scrollbar": { height: "5px" },
                   "&::-webkit-scrollbar-track": {
                     background: "rgba(46,139,87,0.1)",
                   },
@@ -1054,7 +1122,6 @@ export default function RegistrationForm() {
                     background: "#2E8B57",
                     borderRadius: "10px",
                   },
-                  "&::-webkit-scrollbar-thumb:hover": { background: "#216740" },
                 }}
               >
                 <Stepper
@@ -1063,17 +1130,86 @@ export default function RegistrationForm() {
                   sx={{
                     width: { xs: "auto", md: "100%" },
                     minWidth: { xs: "max-content", md: "100%" },
-                    px: 2,
+                    px: 1,
+                    "& .MuiStepConnector-line": {
+                      borderColor: "rgba(46,139,87,0.35)",
+                    },
+                    "& .MuiStepConnector-root.Mui-active .MuiStepConnector-line, & .MuiStepConnector-root.Mui-completed .MuiStepConnector-line":
+                      {
+                        borderColor: "#2E8B57",
+                      },
                   }}
                 >
                   {renderSteps()}
                 </Stepper>
               </Box>
+
+              <Box sx={{ mt: { xs: 2, md: 2.5 }, px: { xs: 0.5, sm: 1.5 } }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: { xs: "column", sm: "row" },
+                    justifyContent: "space-between",
+                    alignItems: { xs: "flex-start", sm: "baseline" },
+                    mb: 1,
+                    gap: { xs: 0.75, sm: 1 },
+                  }}
+                >
+                  <Box sx={{ minWidth: 0, pr: { sm: 2 } }}>
+                    <Typography
+                      variant="subtitle2"
+                      sx={{
+                        color: "#F4FAF6",
+                        fontWeight: 700,
+                        fontSize: { xs: "0.9rem", md: "0.95rem" },
+                      }}
+                    >
+                      {steps[activeStep].label}
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        color: "rgba(200,224,208,0.65)",
+                        display: "block",
+                        lineHeight: 1.4,
+                      }}
+                    >
+                      {steps[activeStep].description}
+                    </Typography>
+                  </Box>
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      color: "#FEC909",
+                      fontWeight: 700,
+                      whiteSpace: "nowrap",
+                      flexShrink: 0,
+                    }}
+                  >
+                    {language === "BNG"
+                      ? `ধাপ ${activeStep + 1} / ${steps.length}`
+                      : `Step ${activeStep + 1} of ${steps.length}`}
+                  </Typography>
+                </Box>
+                <LinearProgress
+                  variant="determinate"
+                  value={progressValue}
+                  sx={{
+                    height: 4,
+                    borderRadius: 2,
+                    backgroundColor: "rgba(46,139,87,0.18)",
+                    "& .MuiLinearProgress-bar": {
+                      backgroundColor: "#2E8B57",
+                      borderRadius: 2,
+                    },
+                  }}
+                />
+              </Box>
             </CardContent>
           </Card>
           {/* Form Card */}
           <Grow in timeout={500}>
-            <Card sx={{ ...cardSx, overflow: "hidden", mb: 4 }}>
+            <Card sx={{ ...cardSx, overflow: "hidden", mb: 0 }}>
               <CardHeader
                 avatar={
                   <Box
@@ -1081,26 +1217,79 @@ export default function RegistrationForm() {
                       background:
                         "linear-gradient(135deg, #2E8B57 0%, #216740 100%)",
                       borderRadius: 2,
-                      p: 1,
-                      display: "inline-flex",
+                      p: { xs: 0.9, md: 1.1 },
+                      display: { xs: "none", sm: "inline-flex" },
                     }}
                   >
                     {React.createElement(steps[activeStep].icon, {
-                      sx: { color: "#fff" },
+                      sx: { color: "#fff", fontSize: 22 },
                     })}
                   </Box>
                 }
-                title={steps[activeStep].label}
-                subheader={steps[activeStep].description}
+                title={
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      gap: 1,
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        color: "#F4FAF6",
+                        fontWeight: 700,
+                        fontSize: { xs: "0.98rem", sm: "1.05rem", md: "1.2rem" },
+                        minWidth: 0,
+                        flex: "1 1 auto",
+                      }}
+                    >
+                      {steps[activeStep].label}
+                    </Typography>
+                    <Chip
+                      size="small"
+                      label={
+                        language === "BNG"
+                          ? `ধাপ ${activeStep + 1}/${steps.length}`
+                          : `Step ${activeStep + 1}/${steps.length}`
+                      }
+                      sx={{
+                        height: 24,
+                        fontWeight: 700,
+                        fontSize: "0.7rem",
+                        backgroundColor: "rgba(254,201,9,0.12)",
+                        color: "#FEC909",
+                        border: "1px solid rgba(254,201,9,0.35)",
+                        flexShrink: 0,
+                      }}
+                    />
+                  </Box>
+                }
+                subheader={
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: "rgba(200,224,208,0.65)",
+                      mt: 0.35,
+                      fontSize: { xs: "0.8rem", md: "0.875rem" },
+                    }}
+                  >
+                    {steps[activeStep].description}
+                  </Typography>
+                }
                 sx={{
-                  borderBottom: "1px solid rgba(46,139,87,0.2)",
+                  borderBottom: "1px solid rgba(46,139,87,0.22)",
                   pb: 2,
-                  background: alpha("#2E8B57", 0.05),
+                  px: { xs: 1.75, sm: 2, md: 3 },
+                  background: "rgba(46,139,87,0.06)",
+                  "& .MuiCardHeader-content": { overflow: "hidden" },
                 }}
               />
-              <CardContent sx={{ p: 4 }}>
+              <CardContent sx={{ p: { xs: 1.75, sm: 3, md: 4 } }}>
                 {activeStep === 0 && (
-                  <Grid container spacing={3}>
+                  <Grid container spacing={{ xs: 2, md: 3 }}>
                     <Grid item xs={12} md={6}>
                       <StyledTextField
                         fullWidth
@@ -1228,11 +1417,12 @@ export default function RegistrationForm() {
 
                     <Grid item xs={12} md={6}>
                       <FormControl fullWidth error={getFieldError("gender")}>
-                        <InputLabel>
+                        <InputLabel sx={{ color: "rgba(200,224,208,0.75)" }}>
                           {language === "BNG" ? "লিঙ্গ *" : "Gender *"}
                         </InputLabel>
                         <Select
                           sx={selectStyle}
+                          MenuProps={selectMenuProps}
                           name="gender"
                           value={formData.gender}
                           onChange={handleChange}
@@ -1342,7 +1532,7 @@ export default function RegistrationForm() {
                 )}
 
                 {activeStep === 1 && (
-                  <Grid container spacing={3}>
+                  <Grid container spacing={{ xs: 2, md: 3 }}>
                     <Grid item xs={12}>
                       <StyledTextField
                         fullWidth
@@ -1437,10 +1627,12 @@ export default function RegistrationForm() {
 
                     <Grid item xs={12} md={6}>
                       <FormControl fullWidth error={getFieldError("division")}>
-                        <InputLabel>
+                        <InputLabel sx={{ color: "rgba(200,224,208,0.75)" }}>
                           {language === "BNG" ? "বিভাগ *" : " Division *"}
                         </InputLabel>
                         <Select
+                          sx={selectStyle}
+                          MenuProps={selectMenuProps}
                           name="division"
                           value={formData.division}
                           onChange={handleChange}
@@ -1502,7 +1694,7 @@ export default function RegistrationForm() {
                 )}
 
                 {activeStep === 2 && (
-                  <Grid container spacing={3}>
+                  <Grid container spacing={{ xs: 2, md: 3 }}>
                     <Grid item xs={12}>
                       <StyledTextField
                         fullWidth
@@ -1539,13 +1731,14 @@ export default function RegistrationForm() {
                         fullWidth
                         error={getFieldError("scientific_field")}
                       >
-                        <InputLabel>
+                        <InputLabel sx={{ color: "rgba(200,224,208,0.75)" }}>
                           {language === "BNG"
                             ? "বৈজ্ঞানিক ক্ষেত্র *"
                             : "Scientific Field *"}
                         </InputLabel>
                         <Select
                           sx={selectStyle}
+                          MenuProps={selectMenuProps}
                           name="scientific_field"
                           value={formData.scientific_field}
                           onChange={handleChange}
@@ -1704,18 +1897,12 @@ export default function RegistrationForm() {
                 )}
 
                 {activeStep === 3 && (
-                  <Grid container spacing={3}>
+                  <Grid container spacing={{ xs: 2, md: 3 }}>
                     <Grid item xs={12}>
-                      <Paper
-                        sx={{
-                          p: 3,
-                          background: alpha("#2E8B57", 0.05),
-                          borderRadius: 2,
-                        }}
-                      >
+                      <Paper sx={panelSx}>
                         <Typography
                           variant="subtitle1"
-                          sx={{ color: "#2E8B57", mb: 2, fontWeight: 600 }}
+                          sx={{ color: "#7BC99A", mb: 2, fontWeight: 600 }}
                         >
                           {language === "BNG"
                             ? "প্রকল্পের ধরন"
@@ -1724,7 +1911,10 @@ export default function RegistrationForm() {
                         <RadioGroup
                           value={formData.project_type}
                           onChange={handleProjectTypeChange}
-                          sx={{ flexDirection: "row", gap: 3 }}
+                          sx={{
+                            flexDirection: { xs: "column", sm: "row" },
+                            gap: { xs: 1, sm: 3 },
+                          }}
                         >
                           <FormControlLabel
                             value="individual"
@@ -1742,6 +1932,7 @@ export default function RegistrationForm() {
                                   display: "flex",
                                   alignItems: "center",
                                   gap: 1,
+                                  color: "#C8E0D0",
                                 }}
                               >
                                 <PersonIcon />
@@ -1769,6 +1960,7 @@ export default function RegistrationForm() {
                                   display: "flex",
                                   alignItems: "center",
                                   gap: 1,
+                                  color: "#C8E0D0",
                                 }}
                               >
                                 <GroupIcon />
@@ -1789,15 +1981,13 @@ export default function RegistrationForm() {
                           <Grid item xs={12} key={idx}>
                             <Paper
                               sx={{
-                                p: 3,
+                                ...panelSx,
                                 position: "relative",
-                                background: alpha("#2E8B57", 0.08),
-                                borderRadius: 2,
                               }}
                             >
                               <Typography
                                 variant="subtitle1"
-                                sx={{ color: "#2E8B57", mb: 2 }}
+                                sx={{ color: "#7BC99A", mb: 2, fontWeight: 600 }}
                               >
                                 {language === "BNG"
                                   ? `দলের সদস্য ${idx + 1}`
@@ -1805,7 +1995,7 @@ export default function RegistrationForm() {
                               </Typography>
                               <Grid container spacing={2}>
                                 <Grid item xs={12} md={6}>
-                                  <TextField
+                                  <StyledTextField
                                     fullWidth
                                     label={
                                       language === "BNG" ? "নাম *" : "Name *"
@@ -1822,7 +2012,7 @@ export default function RegistrationForm() {
                                   />
                                 </Grid>
                                 <Grid item xs={12} md={6}>
-                                  <TextField
+                                  <StyledTextField
                                     fullWidth
                                     label={
                                       language === "BNG"
@@ -1852,7 +2042,7 @@ export default function RegistrationForm() {
                                   position: "absolute",
                                   top: 8,
                                   right: 8,
-                                  color: "#f44336",
+                                  color: "#ef5350",
                                 }}
                               >
                                 <DeleteIcon />
@@ -1865,7 +2055,16 @@ export default function RegistrationForm() {
                             variant="outlined"
                             onClick={addTeamMember}
                             startIcon={<AddIcon />}
-                            sx={{ color: "#FEC909", borderColor: "#FEC909" }}
+                            sx={{
+                              color: "#FEC909",
+                              borderColor: "rgba(254,201,9,0.5)",
+                              textTransform: "none",
+                              fontWeight: 600,
+                              "&:hover": {
+                                borderColor: "#FEC909",
+                                backgroundColor: "rgba(254,201,9,0.08)",
+                              },
+                            }}
                           >
                             {language === "BNG"
                               ? "দলের সদস্য যোগ করুন"
@@ -1887,7 +2086,7 @@ export default function RegistrationForm() {
                 )}
 
                 {activeStep === 4 && (
-                  <Grid container spacing={3}>
+                  <Grid container spacing={{ xs: 2, md: 3 }}>
                     <Grid item xs={12}>
                       <Alert severity="info" sx={{ mb: 2 }}>
                         <strong>
@@ -1920,10 +2119,10 @@ export default function RegistrationForm() {
                       </Grid>
                     )}
                     <Grid item xs={12}>
-                      <Paper sx={{ p: 3, borderRadius: 2 }}>
+                      <Paper sx={panelSx}>
                         <Typography
                           variant="subtitle1"
-                          sx={{ color: "#2E8B57", mb: 2 }}
+                          sx={{ color: "#7BC99A", mb: 1, fontWeight: 600 }}
                         >
                           {language === "BNG"
                             ? "প্রকল্পের সারাংশ PDF"
@@ -1932,7 +2131,30 @@ export default function RegistrationForm() {
                             *
                           </Typography>
                         </Typography>
-                        <Button variant="contained" component="label">
+                        <Typography
+                          variant="caption"
+                          sx={{
+                            display: "block",
+                            color: "rgba(200,224,208,0.55)",
+                            mb: 2,
+                          }}
+                        >
+                          {language === "BNG"
+                            ? "সর্বোচ্চ 10 MB · PDF ফরম্যাট"
+                            : "Max 10 MB · PDF format"}
+                        </Typography>
+                        <Button
+                          variant="contained"
+                          component="label"
+                          fullWidth
+                          sx={{
+                            backgroundColor: "#2E8B57",
+                            textTransform: "none",
+                            fontWeight: 600,
+                            width: { xs: "100%", sm: "auto" },
+                            "&:hover": { backgroundColor: "#216740" },
+                          }}
+                        >
                           {language === "BNG"
                             ? "PDF নির্বাচন করুন"
                             : "Choose PDF"}
@@ -1947,20 +2169,54 @@ export default function RegistrationForm() {
                           <Chip
                             label={`${formData.pdfFile.name} (${formatFileSize(formData.pdfFile.size)})`}
                             onDelete={() => clearFile("pdf")}
-                            sx={{ ml: 2 }}
+                            sx={{
+                              ...chipSx,
+                              ml: { xs: 0, sm: 2 },
+                              mt: { xs: 1.5, sm: 0 },
+                              display: { xs: "flex", sm: "inline-flex" },
+                            }}
                           />
                         )}
                       </Paper>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                      <Paper sx={{ p: 3, borderRadius: 2 }}>
-                        <Typography variant="subtitle1" sx={{ mb: 2 }}>
+                      <Paper sx={panelSx}>
+                        <Typography
+                          variant="subtitle1"
+                          sx={{ color: "#C8E0D0", mb: 1, fontWeight: 600 }}
+                        >
                           {language === "BNG"
                             ? "প্রকল্পের প্রস্তাবনা"
                             : "Project Proposal"}{" "}
                           <OptionalChip language={language} />
                         </Typography>
-                        <Button variant="outlined" component="label">
+                        <Typography
+                          variant="caption"
+                          sx={{
+                            display: "block",
+                            color: "rgba(200,224,208,0.55)",
+                            mb: 2,
+                          }}
+                        >
+                          {language === "BNG"
+                            ? "সর্বোচ্চ 10 MB · PDF/DOC"
+                            : "Max 10 MB · PDF/DOC"}
+                        </Typography>
+                        <Button
+                          variant="outlined"
+                          component="label"
+                          fullWidth
+                          sx={{
+                            color: "#C8E0D0",
+                            borderColor: "rgba(200,224,208,0.4)",
+                            textTransform: "none",
+                            width: { xs: "100%", sm: "auto" },
+                            "&:hover": {
+                              borderColor: "#2E8B57",
+                              backgroundColor: "rgba(46,139,87,0.08)",
+                            },
+                          }}
+                        >
                           {language === "BNG"
                             ? "ফাইল নির্বাচন করুন"
                             : "Choose File"}
@@ -1975,20 +2231,54 @@ export default function RegistrationForm() {
                           <Chip
                             label={`${formData.proposalFile.name} (${formatFileSize(formData.proposalFile.size)})`}
                             onDelete={() => clearFile("proposal")}
-                            sx={{ ml: 2 }}
+                            sx={{
+                              ...chipSx,
+                              ml: { xs: 0, sm: 2 },
+                              mt: { xs: 1.5, sm: 0 },
+                              display: { xs: "flex", sm: "inline-flex" },
+                            }}
                           />
                         )}
                       </Paper>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                      <Paper sx={{ p: 3, borderRadius: 2 }}>
-                        <Typography variant="subtitle1" sx={{ mb: 2 }}>
+                      <Paper sx={panelSx}>
+                        <Typography
+                          variant="subtitle1"
+                          sx={{ color: "#C8E0D0", mb: 1, fontWeight: 600 }}
+                        >
                           {language === "BNG"
                             ? "ছবি/ডায়াগ্রাম"
                             : "Photos/Diagrams"}{" "}
                           <OptionalChip language={language} />
                         </Typography>
-                        <Button variant="outlined" component="label">
+                        <Typography
+                          variant="caption"
+                          sx={{
+                            display: "block",
+                            color: "rgba(200,224,208,0.55)",
+                            mb: 2,
+                          }}
+                        >
+                          {language === "BNG"
+                            ? "প্রতিটি ছবি সর্বোচ্চ 5 MB"
+                            : "Each image max 5 MB"}
+                        </Typography>
+                        <Button
+                          variant="outlined"
+                          component="label"
+                          fullWidth
+                          sx={{
+                            color: "#C8E0D0",
+                            borderColor: "rgba(200,224,208,0.4)",
+                            textTransform: "none",
+                            width: { xs: "100%", sm: "auto" },
+                            "&:hover": {
+                              borderColor: "#2E8B57",
+                              backgroundColor: "rgba(46,139,87,0.08)",
+                            },
+                          }}
+                        >
                           {language === "BNG"
                             ? "ছবি নির্বাচন করুন"
                             : "Choose Images"}
@@ -2001,17 +2291,18 @@ export default function RegistrationForm() {
                           />
                         </Button>
                         {formData.photoFiles.length > 0 && (
-                          <Box sx={{ mt: 1 }}>
+                          <Box sx={{ mt: 1.5 }}>
                             {formData.photoFiles.map((file, idx) => (
                               <Chip
                                 key={idx}
                                 label={`${file.name} (${formatFileSize(file.size)})`}
-                                sx={{ m: 0.5 }}
+                                sx={chipSx}
                               />
                             ))}
                             <IconButton
                               size="small"
                               onClick={() => clearFile("photos")}
+                              sx={{ color: "#ef5350" }}
                             >
                               <DeleteIcon fontSize="small" />
                             </IconButton>
@@ -2020,7 +2311,7 @@ export default function RegistrationForm() {
                       </Paper>
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField
+                      <StyledTextField
                         fullWidth
                         label={
                           <OptionalLabel
@@ -2040,59 +2331,133 @@ export default function RegistrationForm() {
                 )}
 
                 {activeStep === 5 && (
-                  <Grid container spacing={3}>
+                  <Grid container spacing={{ xs: 2, md: 3 }}>
                     <Grid item xs={12}>
-                      <Paper sx={{ p: 4, borderRadius: 2 }}>
+                      <Paper sx={{ ...panelSx, p: { xs: 2.5, md: 3.5 } }}>
                         <Typography
                           variant="h6"
-                          sx={{ color: "#2E8B57", mb: 3 }}
+                          sx={{ color: "#7BC99A", mb: 1, fontWeight: 700 }}
                         >
                           {language === "BNG" ? "ঘোষণাপত্র" : "Declaration"}
                         </Typography>
-                        <Stack spacing={2}>
+                        <Typography
+                          variant="body2"
+                          sx={{ color: "rgba(200,224,208,0.65)", mb: 3 }}
+                        >
+                          {language === "BNG"
+                            ? "জমা দেওয়ার আগে নিচের সব ঘোষণাপত্রে সম্মতি দিন।"
+                            : "Please confirm all declarations before submitting."}
+                        </Typography>
+                        <Stack spacing={1.5}>
                           <FormControlLabel
+                            sx={{
+                              alignItems: "flex-start",
+                              m: 0,
+                              p: { xs: 1.25, sm: 1.5 },
+                              borderRadius: 2,
+                              border: "1px solid rgba(46,139,87,0.2)",
+                              backgroundColor: "rgba(255,255,255,0.02)",
+                              width: "100%",
+                              mr: 0,
+                            }}
                             control={
                               <Checkbox
                                 name="info_correct"
                                 checked={formData.info_correct}
                                 onChange={handleCheckbox}
-                                sx={{ color: "#2E8B57" }}
+                                sx={{
+                                  color: "#2E8B57",
+                                  pt: 0,
+                                  "&.Mui-checked": { color: "#2E8B57" },
+                                }}
                               />
                             }
                             label={
-                              language === "BNG"
-                                ? "আমি ঘোষণা করছি যে প্রদত্ত সমস্ত তথ্য সঠিক এবং নির্ভুল।"
-                                : "I declare that all information provided is correct and accurate."
+                              <Typography
+                                sx={{
+                                  color: "#C8E0D0",
+                                  fontSize: { xs: "0.82rem", sm: "0.925rem" },
+                                  lineHeight: 1.5,
+                                }}
+                              >
+                                {language === "BNG"
+                                  ? "আমি ঘোষণা করছি যে প্রদত্ত সমস্ত তথ্য সঠিক এবং নির্ভুল।"
+                                  : "I declare that all information provided is correct and accurate."}
+                              </Typography>
                             }
                           />
                           <FormControlLabel
+                            sx={{
+                              alignItems: "flex-start",
+                              m: 0,
+                              p: { xs: 1.25, sm: 1.5 },
+                              borderRadius: 2,
+                              border: "1px solid rgba(46,139,87,0.2)",
+                              backgroundColor: "rgba(255,255,255,0.02)",
+                              width: "100%",
+                              mr: 0,
+                            }}
                             control={
                               <Checkbox
                                 name="project_original"
                                 checked={formData.project_original}
                                 onChange={handleCheckbox}
-                                sx={{ color: "#2E8B57" }}
+                                sx={{
+                                  color: "#2E8B57",
+                                  pt: 0,
+                                  "&.Mui-checked": { color: "#2E8B57" },
+                                }}
                               />
                             }
                             label={
-                              language === "BNG"
-                                ? "আমি নিশ্চিত করছি যে এই প্রকল্পটি আমার/আমাদের মূল কাজ।"
-                                : "I confirm that this project is my/our original work."
+                              <Typography
+                                sx={{
+                                  color: "#C8E0D0",
+                                  fontSize: { xs: "0.82rem", sm: "0.925rem" },
+                                  lineHeight: 1.5,
+                                }}
+                              >
+                                {language === "BNG"
+                                  ? "আমি নিশ্চিত করছি যে এই প্রকল্পটি আমার/আমাদের মূল কাজ।"
+                                  : "I confirm that this project is my/our original work."}
+                              </Typography>
                             }
                           />
                           <FormControlLabel
+                            sx={{
+                              alignItems: "flex-start",
+                              m: 0,
+                              p: { xs: 1.25, sm: 1.5 },
+                              borderRadius: 2,
+                              border: "1px solid rgba(46,139,87,0.2)",
+                              backgroundColor: "rgba(255,255,255,0.02)",
+                              width: "100%",
+                              mr: 0,
+                            }}
                             control={
                               <Checkbox
                                 name="agree_rules"
                                 checked={formData.agree_rules}
                                 onChange={handleCheckbox}
-                                sx={{ color: "#2E8B57" }}
+                                sx={{
+                                  color: "#2E8B57",
+                                  pt: 0,
+                                  "&.Mui-checked": { color: "#2E8B57" },
+                                }}
                               />
                             }
                             label={
-                              language === "BNG"
-                                ? "আমি ZRF বিজ্ঞান মেলার নিয়ম ও শর্তাবলী মেনে চলতে সম্মত আছি।"
-                                : "I agree to abide by the ZRF Science Fair rules and regulations."
+                              <Typography
+                                sx={{
+                                  color: "#C8E0D0",
+                                  fontSize: { xs: "0.82rem", sm: "0.925rem" },
+                                  lineHeight: 1.5,
+                                }}
+                              >
+                                {language === "BNG"
+                                  ? "আমি ZRF বিজ্ঞান মেলার নিয়ম ও শর্তাবলী মেনে চলতে সম্মত আছি।"
+                                  : "I agree to abide by the ZRF Science Fair rules and regulations."}
+                              </Typography>
                             }
                           />
                         </Stack>
@@ -2101,76 +2466,115 @@ export default function RegistrationForm() {
                   </Grid>
                 )}
               </CardContent>
+
+              {/* Navigation action bar */}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: { xs: "column-reverse", sm: "row" },
+                  justifyContent: "space-between",
+                  alignItems: { xs: "stretch", sm: "center" },
+                  gap: { xs: 1.25, sm: 2 },
+                  px: { xs: 1.75, sm: 2.5, md: 3.5 },
+                  py: { xs: 2, md: 2.25 },
+                  borderTop: "1px solid rgba(46,139,87,0.22)",
+                  background: "rgba(8,20,18,0.55)",
+                }}
+              >
+                <Button
+                  disabled={activeStep === 0 || isLoading}
+                  onClick={handleBack}
+                  startIcon={<NavigateBeforeIcon />}
+                  variant="outlined"
+                  fullWidth
+                  sx={{
+                    color: "#C8E0D0",
+                    borderColor: "rgba(200,224,208,0.35)",
+                    textTransform: "none",
+                    fontWeight: 600,
+                    px: 2.5,
+                    width: { xs: "100%", sm: "auto" },
+                    "&:hover": {
+                      borderColor: "#2E8B57",
+                      backgroundColor: alpha("#2E8B57", 0.1),
+                    },
+                    "&.Mui-disabled": {
+                      borderColor: "rgba(200,224,208,0.12)",
+                      color: "rgba(200,224,208,0.3)",
+                    },
+                  }}
+                >
+                  {language === "BNG" ? "পিছনে" : "Back"}
+                </Button>
+                {activeStep < steps.length - 1 ? (
+                  <Button
+                    onClick={handleNext}
+                    endIcon={<NavigateNextIcon />}
+                    variant="contained"
+                    fullWidth
+                    sx={{
+                      background:
+                        "linear-gradient(135deg, #2E8B57 0%, #216740 100%)",
+                      minWidth: { sm: 128 },
+                      width: { xs: "100%", sm: "auto" },
+                      textTransform: "none",
+                      fontWeight: 700,
+                      px: 3,
+                      boxShadow: "none",
+                      "&:hover": {
+                        background:
+                          "linear-gradient(135deg, #216740 0%, #1a5232 100%)",
+                        boxShadow: "0 6px 16px rgba(46,139,87,0.35)",
+                      },
+                    }}
+                  >
+                    {language === "BNG" ? "পরবর্তী" : "Next"}
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={handleSubmit}
+                    disabled={
+                      isLoading ||
+                      !formData.info_correct ||
+                      !formData.project_original ||
+                      !formData.agree_rules ||
+                      Object.keys(fileErrors).length > 0
+                    }
+                    variant="contained"
+                    fullWidth
+                    sx={{
+                      background:
+                        "linear-gradient(135deg, #FEC909 0%, #FFD633 100%)",
+                      color: "#1A1A1A",
+                      minWidth: { sm: 168 },
+                      width: { xs: "100%", sm: "auto" },
+                      fontWeight: 700,
+                      textTransform: "none",
+                      boxShadow: "none",
+                      fontSize: { xs: "0.875rem", sm: "0.95rem" },
+                      "&:hover": {
+                        background:
+                          "linear-gradient(135deg, #FFD633 0%, #FEC909 100%)",
+                        boxShadow: "0 6px 16px rgba(254,201,9,0.3)",
+                      },
+                      "&.Mui-disabled": {
+                        background: "rgba(254,201,9,0.25)",
+                        color: "rgba(26,26,26,0.45)",
+                      },
+                    }}
+                  >
+                    {isLoading ? (
+                      <CircularProgress size={22} sx={{ color: "#1A1A1A" }} />
+                    ) : language === "BNG" ? (
+                      "রেজিস্ট্রেশন জমা দিন"
+                    ) : (
+                      "Submit Registration"
+                    )}
+                  </Button>
+                )}
+              </Box>
             </Card>
           </Grow>
-
-          {/* Navigation Buttons */}
-          <Box
-            sx={{ display: "flex", justifyContent: "space-between", gap: 2 }}
-          >
-            <Button
-              disabled={activeStep === 0 || isLoading}
-              onClick={handleBack}
-              startIcon={<NavigateBeforeIcon />}
-              variant="outlined"
-              sx={{
-                color: "#C8E0D0",
-                borderColor: "#C8E0D0",
-                "&:hover": {
-                  borderColor: "#2E8B57",
-                  backgroundColor: alpha("#2E8B57", 0.1),
-                },
-              }}
-            >
-              {language === "BNG" ? "পিছনে" : "Back"}
-            </Button>
-            {activeStep < steps.length - 1 ? (
-              <Button
-                onClick={handleNext}
-                endIcon={<NavigateNextIcon />}
-                variant="contained"
-                sx={{
-                  background:
-                    "linear-gradient(135deg, #2E8B57 0%, #216740 100%)",
-                  minWidth: 120,
-                  "&:hover": {
-                    background:
-                      "linear-gradient(135deg, #216740 0%, #1a5232 100%)",
-                    transform: "translateY(-2px)",
-                  },
-                }}
-              >
-                {language === "BNG" ? "পরবর্তী" : "Next"}
-              </Button>
-            ) : (
-              <Button
-                onClick={handleSubmit}
-                disabled={
-                  isLoading ||
-                  !formData.info_correct ||
-                  !formData.project_original ||
-                  !formData.agree_rules ||
-                  Object.keys(fileErrors).length > 0
-                }
-                variant="contained"
-                sx={{
-                  background:
-                    "linear-gradient(135deg, #FEC909 0%, #FFD633 100%)",
-                  color: "#1A1A1A",
-                  minWidth: 160,
-                  fontWeight: 700,
-                }}
-              >
-                {isLoading ? (
-                  <CircularProgress size={22} sx={{ color: "#1A1A1A" }} />
-                ) : language === "BNG" ? (
-                  "রেজিস্ট্রেশন জমা দিন"
-                ) : (
-                  "Submit Registration"
-                )}
-              </Button>
-            )}
-          </Box>
 
           {/* Success Dialog */}
           <Dialog
@@ -2232,6 +2636,8 @@ export default function RegistrationForm() {
               {snackbarMessage}
             </Alert>
           </Snackbar>
+
+          <RegistrationStatsCards refreshKey={statsRefreshKey} />
         </Container>
       </Box>
     </>
