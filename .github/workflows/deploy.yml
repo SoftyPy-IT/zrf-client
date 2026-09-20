@@ -46,24 +46,37 @@ jobs:
             exit 1
           fi
 
+          # Normalize AWS CLI text output. With --max-items, --output text can
+          # append a pagination NextToken line ("None"), which breaks GetJob.
+          normalize_job_id() {
+            printf '%s' "$1" | tr -d '\r' | awk 'NF { print; exit }' | tr -d '[:space:]'
+          }
+
+          is_valid_job_id() {
+            [[ "${1}" =~ ^[0-9]+$ ]]
+          }
+
           find_active_job() {
-            aws amplify list-jobs \
+            local raw
+            raw=$(aws amplify list-jobs \
               --app-id "$AMPLIFY_APP_ID" \
               --branch-name "$AMPLIFY_BRANCH" \
-              --max-items 10 \
+              --max-results 10 \
+              --no-paginate \
               --query 'jobSummaries[?status==`PENDING` || status==`PROVISIONING` || status==`RUNNING` || status==`CANCELLING`].jobId | [0]' \
-              --output text
+              --output text 2>/dev/null || true)
+            normalize_job_id "$raw"
           }
 
           JOB_ID=$(find_active_job)
-          if [ -n "${JOB_ID}" ] && [ "${JOB_ID}" != "None" ]; then
+          if is_valid_job_id "${JOB_ID}"; then
             echo "Amplify already has job ${JOB_ID} in progress on ${AMPLIFY_BRANCH}."
             echo "Waiting for that job instead of starting another (LimitExceededException)."
           else
             echo "Starting Amplify RELEASE job for app ${AMPLIFY_APP_ID} branch ${AMPLIFY_BRANCH}"
             set +e
             START_ERR=$(mktemp)
-            JOB_ID=$(aws amplify start-job \
+            RAW_JOB_ID=$(aws amplify start-job \
               --app-id "$AMPLIFY_APP_ID" \
               --branch-name "$AMPLIFY_BRANCH" \
               --job-type RELEASE \
@@ -71,6 +84,7 @@ jobs:
               --output text 2>"$START_ERR")
             START_RC=$?
             set -e
+            JOB_ID=$(normalize_job_id "${RAW_JOB_ID:-}")
             if [ "$START_RC" -ne 0 ]; then
               if grep -q LimitExceededException "$START_ERR"; then
                 echo "StartJob raced with an in-progress job. Attaching to it."
@@ -84,8 +98,9 @@ jobs:
             fi
           fi
 
-          if [ -z "${JOB_ID}" ] || [ "${JOB_ID}" = "None" ]; then
-            echo "Could not start or find an Amplify job."
+          if ! is_valid_job_id "${JOB_ID}"; then
+            echo "Could not start or find a valid Amplify job id (got: '${JOB_ID:-empty}')."
+            echo "Check Amplify Console → Hosting → Deployments, and that auto-build is OFF."
             exit 1
           fi
 
@@ -99,7 +114,7 @@ jobs:
               --branch-name "$AMPLIFY_BRANCH" \
               --job-id "$JOB_ID" \
               --query 'job.summary.status' \
-              --output text)
+              --output text | tr -d '[:space:]')
 
             echo "Amplify job status: ${STATUS}"
 
