@@ -314,15 +314,6 @@ const Header = () => {
               </button>
             </div>
 
-            {/* Science Fair Registration CTA Button */}
-            <Link
-              href="/registration"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs xl:text-sm font-extrabold whitespace-nowrap bg-gradient-to-r from-[#FEC909] to-[#FFD633] text-[#1A1A1A] shadow-sm hover:shadow-md hover:from-[#FFD633] hover:to-[#FEC909] hover:scale-105 active:scale-95 transition-all"
-            >
-              <ScienceIcon sx={{ fontSize: 16, color: "#1A1A1A" }} />
-              <span>{isBn ? "বিজ্ঞান মেলা ২০২৬" : "Science Fair 2026"}</span>
-            </Link>
-
             {/* Mobile Menu Hamburger Button */}
             <button
               onClick={() => setMobileMenuOpen(true)}
@@ -372,16 +363,6 @@ const Header = () => {
 
         {/* Drawer Scrollable Content */}
         <div className="flex-1 overflow-y-auto p-4 mobile-drawer-scroll flex flex-col gap-2">
-          {/* Mobile Registration Banner */}
-          <Link
-            href="/registration"
-            onClick={closeMobileMenu}
-            className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#FEC909] to-[#FFD633] text-[#1A1A1A] font-extrabold text-sm shadow-sm mb-2"
-          >
-            <ScienceIcon sx={{ fontSize: 18 }} />
-            <span>{isBn ? "বিজ্ঞান মেলা ২০২৬ এ নিবন্ধন" : "Science Fair 2026 Registration"}</span>
-          </Link>
-
           {/* Navigation Accordion */}
           <ul className="flex flex-col gap-1 text-[15px] font-semibold text-slate-800">
             {navItems.map((item) => {

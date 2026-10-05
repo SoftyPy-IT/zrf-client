@@ -50,16 +50,6 @@ const FooterData = () => {
         href: "/committee",
       },
     ],
-    registration: [
-      {
-        name:
-          language === "ENG"
-            ? "Science Fair Registration"
-            : "বিজ্ঞান মেলা নিবন্ধন",
-        href: "/registration",
-        isRegistration: true,
-      },
-    ],
   };
 
   const socialLinks = [
@@ -185,7 +175,7 @@ const FooterData = () => {
         <Container>
           <div className="relative">
             {/* Main Footer Content */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.6fr_0.9fr_1fr_1.2fr] gap-x-8 gap-y-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.8fr_1fr_1fr] gap-x-8 gap-y-10">
               {/* Brand Section */}
               <div>
                 <Link href="/" className="inline-flex items-center gap-4">
@@ -264,43 +254,6 @@ const FooterData = () => {
                     />
                   ))}
                 </ul>
-              </div>
-
-              {/* Registration Section */}
-              <div className="text-center sm:text-left">
-                <ColumnHeading
-                  title={language === "ENG" ? "Registration" : "নিবন্ধন"}
-                />
-                {footerLinks.registration.map((link, index) => (
-                  <Link
-                    key={index}
-                    href={link.href}
-                    className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#FEC909] hover:bg-[#FFD633] text-[#1A1A1A] font-semibold text-xs px-4 py-2.5 shadow-lg shadow-yellow-400/20 transition-all duration-300 hover:scale-[1.03] hover:shadow-xl w-fit"
-                  >
-                    <span className="leading-tight whitespace-nowrap">
-                      {link.name}
-                    </span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-3.5 h-3.5 flex-shrink-0"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </Link>
-                ))}
-                <p className="text-[#B8D9C4]/80 text-xs mt-4 leading-relaxed">
-                  {language === "ENG"
-                    ? "Register now for the upcoming science fair event."
-                    : "আসন্ন বিজ্ঞান মেলা ইভেন্টে এখনই নিবন্ধন করুন।"}
-                </p>
               </div>
             </div>
 

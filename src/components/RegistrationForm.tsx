@@ -12,7 +12,14 @@ import {
   School as SchoolIcon,
   Science as ScienceIcon,
   Warning as WarningIcon,
+  LockOutlined as LockIcon,
+  Home as HomeIcon,
+  ContactSupport as ContactSupportIcon,
+  AssignmentTurnedIn as AssignmentTurnedInIcon,
+  EmojiEvents as TrophyIcon,
+  Info as InfoIcon,
 } from "@mui/icons-material";
+import Link from "next/link";
 import {
   Alert,
   alpha,
@@ -208,6 +215,7 @@ const getMaxDate = () => {
 };
 
 export default function RegistrationForm() {
+  const isRegistrationClosed = true;
   const [activeStep, setActiveStep] = useState(0);
   const [showSuccess, setShowSuccess] = useState(false);
   const [error, setError] = useState("");
@@ -958,6 +966,324 @@ export default function RegistrationForm() {
         </Step>
       );
     });
+
+  if (isRegistrationClosed) {
+    return (
+      <>
+        <RegistrationBanner />
+        <Box
+          sx={{
+            minHeight: "100vh",
+            background: `
+              radial-gradient(ellipse at top, rgba(46,139,87,0.14) 0%, transparent 60%),
+              linear-gradient(180deg, #0c1f1c 0%, #0a1816 40%, #081412 100%)
+            `,
+            py: { xs: 3, sm: 4, md: 6 },
+            overflowX: "hidden",
+          }}
+        >
+          <Container
+            maxWidth="lg"
+            sx={{
+              py: { xs: 1.5, md: 3 },
+              px: { xs: 1.5, sm: 2, md: 3 },
+            }}
+          >
+            {/* Closed Announcement Header */}
+            <Fade in timeout={700}>
+              <Box sx={{ mb: { xs: 3, md: 4.5 }, textAlign: "center" }}>
+                <Box
+                  sx={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 1,
+                    px: 2,
+                    py: 0.65,
+                    borderRadius: 99,
+                    bgcolor: "rgba(254,201,9,0.12)",
+                    border: "1px solid rgba(254,201,9,0.4)",
+                    color: "#FEC909",
+                    fontWeight: 800,
+                    fontSize: { xs: "0.75rem", sm: "0.82rem" },
+                    letterSpacing: 1.2,
+                    textTransform: "uppercase",
+                    mb: 2,
+                  }}
+                >
+                  <LockIcon sx={{ fontSize: 16 }} />
+                  <span>
+                    {language === "BNG"
+                      ? "নিবন্ধন কার্যক্রম সমাপ্ত"
+                      : "Registration Closed"}
+                  </span>
+                </Box>
+
+                <Typography
+                  variant="h3"
+                  component="h1"
+                  sx={{
+                    fontWeight: 800,
+                    color: "#F4FAF6",
+                    mb: 1.5,
+                    fontSize: { xs: "1.5rem", sm: "2rem", md: "2.5rem" },
+                    letterSpacing: "-0.02em",
+                  }}
+                >
+                  {language === "BNG"
+                    ? "বিজ্ঞান মেলা ২০২৬-এর নিবন্ধন সম্পন্ন হয়েছে"
+                    : "ZRF Science Fair 2026 Registration is Now Closed"}
+                </Typography>
+
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: "rgba(200,224,208,0.85)",
+                    maxWidth: 680,
+                    mx: "auto",
+                    fontSize: { xs: "0.9rem", sm: "1.025rem" },
+                    lineHeight: 1.7,
+                  }}
+                >
+                  {language === "BNG"
+                    ? "দেশব্যাপী সকল তরুণ বিজ্ঞানী ও শিক্ষার্থীদের অভূতপূর্ব সাড়া ও অংশগ্রহণের জন্য আন্তরিক ধন্যবাদ। জিয়াউর রহমান ফাউন্ডেশন বিজ্ঞান মেলা ২০২৬-এর অনলাইন নিবন্ধনের নির্ধারিত সময় সমাপ্ত হয়েছে। জমাকৃত সকল প্রকল্প বর্তমানে বিশেষজ্ঞ বিচারকমণ্ডলী দ্বারা মূল্যায়নাধীন রয়েছে।"
+                    : "Thank you for the tremendous enthusiasm and inspiring submissions from students and young innovators across Bangladesh! The online registration portal for the ZRF Science Fair 2026 has concluded. All submitted projects are now under expert evaluation for the upcoming Divisional Rounds."}
+                </Typography>
+              </Box>
+            </Fade>
+
+            {/* Next Steps / Info Grid */}
+            <Grid container spacing={2.5} sx={{ mb: 4 }}>
+              <Grid item xs={12} md={4}>
+                <Card
+                  sx={{
+                    height: "100%",
+                    borderRadius: 3,
+                    border: "1px solid rgba(46,139,87,0.32)",
+                    background:
+                      "linear-gradient(165deg, rgba(19,38,32,0.92) 0%, rgba(13,42,42,0.95) 100%)",
+                    boxShadow: "0 10px 28px rgba(0,0,0,0.25)",
+                    p: { xs: 2.5, sm: 3 },
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: 44,
+                      height: 44,
+                      borderRadius: 2,
+                      bgcolor: "rgba(254,201,9,0.12)",
+                      color: "#FEC909",
+                      display: "grid",
+                      placeItems: "center",
+                      mb: 2,
+                    }}
+                  >
+                    <AssignmentTurnedInIcon sx={{ fontSize: 24 }} />
+                  </Box>
+                  <Typography
+                    variant="h6"
+                    sx={{ color: "#F4FAF6", fontWeight: 700, mb: 1, fontSize: "1.05rem" }}
+                  >
+                    {language === "BNG"
+                      ? "প্রকল্প যাচাই ও মূল্যায়ন"
+                      : "Project Evaluation"}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{ color: "rgba(200,224,208,0.7)", lineHeight: 1.6 }}
+                  >
+                    {language === "BNG"
+                      ? "আমাদের একাডেমিক ও বিশেষজ্ঞ প্যানেল জমাকৃত সকল প্রকল্পের অভিনবত্ব ও সম্ভাব্যতা যাচাই করছেন।"
+                      : "Our academic committee and expert judges are reviewing all submitted project abstracts, originality, and feasibility."}
+                  </Typography>
+                </Card>
+              </Grid>
+
+              <Grid item xs={12} md={4}>
+                <Card
+                  sx={{
+                    height: "100%",
+                    borderRadius: 3,
+                    border: "1px solid rgba(46,139,87,0.32)",
+                    background:
+                      "linear-gradient(165deg, rgba(19,38,32,0.92) 0%, rgba(13,42,42,0.95) 100%)",
+                    boxShadow: "0 10px 28px rgba(0,0,0,0.25)",
+                    p: { xs: 2.5, sm: 3 },
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: 44,
+                      height: 44,
+                      borderRadius: 2,
+                      bgcolor: "rgba(46,139,87,0.18)",
+                      color: "#34D399",
+                      display: "grid",
+                      placeItems: "center",
+                      mb: 2,
+                    }}
+                  >
+                    <TrophyIcon sx={{ fontSize: 24 }} />
+                  </Box>
+                  <Typography
+                    variant="h6"
+                    sx={{ color: "#F4FAF6", fontWeight: 700, mb: 1, fontSize: "1.05rem" }}
+                  >
+                    {language === "BNG"
+                      ? "বিভাগীয় পর্বের প্রস্তুতি"
+                      : "Divisional Rounds"}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{ color: "rgba(200,224,208,0.7)", lineHeight: 1.6 }}
+                  >
+                    {language === "BNG"
+                      ? "বাছাইকৃত শিক্ষার্থীদের সাথে ইমেইল ও মুঠোফোনে বিভাগীয় পর্বের তারিখ ও ভেন্যুর আমন্ত্রণ জানানো হবে।"
+                      : "Shortlisted candidates will receive official invitations and schedules for their respective divisional competitions via email."}
+                  </Typography>
+                </Card>
+              </Grid>
+
+              <Grid item xs={12} md={4}>
+                <Card
+                  sx={{
+                    height: "100%",
+                    borderRadius: 3,
+                    border: "1px solid rgba(46,139,87,0.32)",
+                    background:
+                      "linear-gradient(165deg, rgba(19,38,32,0.92) 0%, rgba(13,42,42,0.95) 100%)",
+                    boxShadow: "0 10px 28px rgba(0,0,0,0.25)",
+                    p: { xs: 2.5, sm: 3 },
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: 44,
+                      height: 44,
+                      borderRadius: 2,
+                      bgcolor: "rgba(56,189,248,0.15)",
+                      color: "#38BDF8",
+                      display: "grid",
+                      placeItems: "center",
+                      mb: 2,
+                    }}
+                  >
+                    <ContactSupportIcon sx={{ fontSize: 24 }} />
+                  </Box>
+                  <Typography
+                    variant="h6"
+                    sx={{ color: "#F4FAF6", fontWeight: 700, mb: 1, fontSize: "1.05rem" }}
+                  >
+                    {language === "BNG"
+                      ? "সহায়তা ও যোগাযোগ"
+                      : "Help & Support"}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{ color: "rgba(200,224,208,0.7)", lineHeight: 1.6 }}
+                  >
+                    {language === "BNG"
+                      ? "আপনার জমাকৃত আবেদন সম্পর্কিত যেকোনো প্রশ্ন বা তথ্যের জন্য আমাদের সাথে সরাসরি যোগাযোগ করতে পারেন।"
+                      : "Have questions about your submitted application or need assistance? Reach out to our team at any time."}
+                  </Typography>
+                </Card>
+              </Grid>
+            </Grid>
+
+            {/* Action Buttons */}
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 2,
+                justifyContent: "center",
+                alignItems: "center",
+                mb: 4,
+              }}
+            >
+              <Button
+                component={Link}
+                href="/"
+                variant="contained"
+                startIcon={<HomeIcon />}
+                sx={{
+                  bgcolor: "#2E8B57",
+                  color: "#ffffff",
+                  px: 3,
+                  py: 1.1,
+                  fontWeight: 700,
+                  borderRadius: 2.5,
+                  textTransform: "none",
+                  boxShadow: "0 4px 14px rgba(46,139,87,0.4)",
+                  "&:hover": {
+                    bgcolor: "#246B43",
+                    transform: "translateY(-1px)",
+                  },
+                  transition: "all 0.2s",
+                }}
+              >
+                {language === "BNG" ? "প্রধান পাতা" : "Back to Home"}
+              </Button>
+
+              <Button
+                component={Link}
+                href="/contact"
+                variant="outlined"
+                startIcon={<ContactSupportIcon />}
+                sx={{
+                  color: "#C8E0D0",
+                  borderColor: "rgba(200,224,208,0.4)",
+                  px: 3,
+                  py: 1.1,
+                  fontWeight: 600,
+                  borderRadius: 2.5,
+                  textTransform: "none",
+                  "&:hover": {
+                    borderColor: "#FEC909",
+                    color: "#FEC909",
+                    backgroundColor: "rgba(254,201,9,0.06)",
+                  },
+                }}
+              >
+                {language === "BNG" ? "যোগাযোগ করুন" : "Contact Us"}
+              </Button>
+
+              <Button
+                variant="outlined"
+                onClick={() => setOpenImageDialog(true)}
+                startIcon={<InfoIcon />}
+                sx={{
+                  color: "#FEC909",
+                  borderColor: "rgba(254,201,9,0.4)",
+                  px: 3,
+                  py: 1.1,
+                  fontWeight: 600,
+                  borderRadius: 2.5,
+                  textTransform: "none",
+                  "&:hover": {
+                    borderColor: "#FEC909",
+                    backgroundColor: "rgba(254,201,9,0.1)",
+                  },
+                }}
+              >
+                {language === "BNG" ? "প্রতিযোগিতার নিয়মাবলী" : "View Competition Guidelines"}
+              </Button>
+            </Box>
+
+            {/* Full Image Dialog - Modal */}
+            <RegistrationDetailsModal
+              open={openImageDialog}
+              onClose={() => setOpenImageDialog(false)}
+              language={language}
+              imageSrc={registrationImg}
+            />
+
+            {/* Live Registration Statistics Cards */}
+            <RegistrationStatsCards refreshKey={statsRefreshKey} />
+          </Container>
+        </Box>
+      </>
+    );
+  }
 
   return (
     <>
