@@ -27,6 +27,7 @@ export const registrationStatuses = ['pending', 'approved', 'rejected'] as const
 export const divisions = [
     'Barisal',
     'Chattogram',
+    'Cumilla',
     'Dhaka',
     'Khulna',
     'Mymensingh',

@@ -27,6 +27,7 @@ type RegistrationStats = {
 const DIVISION_LABELS_BN: Record<string, string> = {
   Barisal: "বরিশাল",
   Chattogram: "চট্টগ্রাম",
+  Cumilla: "কুমিল্লা",
   Dhaka: "ঢাকা",
   Khulna: "খুলনা",
   Mymensingh: "ময়মনসিংহ",
