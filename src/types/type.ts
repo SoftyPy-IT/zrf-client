@@ -231,6 +231,7 @@ export interface overviewProps {
   handleModalOpen: () => void;
   modalOpen: boolean;
   handleModalClose: () => void;
+  loading?: boolean;
 }
 export interface VideoSlideProps {
   video: TVideo;

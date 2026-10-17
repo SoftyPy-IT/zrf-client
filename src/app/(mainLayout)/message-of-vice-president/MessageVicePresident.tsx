@@ -1,162 +1,160 @@
-/* eslint-disable @next/next/no-img-element */
-import Image from "next/image";
+"use client";
+
 import React from "react";
-import Container from "@/components/share/Container";
-
+import Image from "next/image";
+import { Quote } from "lucide-react";
+import PageBody from "@/components/share/PageBody";
+import RenderContent from "@/components/Common/RenderContent";
+import {
+  LoadingStatus,
+  Skeleton,
+  SkeletonText,
+} from "@/components/share/Skeleton";
 import { TMessage } from "@/types/type";
-import ReactHtmlParser from "react-html-parser";
 
-const renderContent = (content: string) => {
-  const parsedContent = ReactHtmlParser(content);
-
-  return parsedContent.map((element, index) => {
-    if (element.type === "h1") {
-      return (
-        <h1 key={index} className="text-2xl font-bold mb-2">
-          {element.props.children}
-        </h1>
-      );
-    } else if (element.type === "h2") {
-      return (
-        <h2 key={index} className="text-xl font-bold mb-2">
-          {element.props.children}
-        </h2>
-      );
-    } else if (element.type === "h3") {
-      return (
-        <h3 key={index} className="text-lg font-bold mb-2">
-          {element.props.children}
-        </h3>
-      );
-    } else if (element.type === "img") {
-      return (
-        <div key={index} className="w-[700px] h-[400px]">
-          <img
-            src={element.props.src}
-            alt="this is image"
-            className="mb-2"
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
-        </div>
-      );
-    } else if (element.type === "p") {
-      return (
-        <p key={index} className="mb-2">
-          {element.props.children}
-        </p>
-      );
-    } else if (element.type === "video") {
-      return (
-        <video
-          key={index}
-          className="w-full h-auto mb-4"
-          controls
-          src={element.props.src}
-        >
-          Your browser does not support the video tag.
-        </video>
-      );
-    } else if (element.type === "iframe") {
-      return (
-        <iframe
-          key={index}
-          className="w-full h-[500px] mb-4"
-          src={element.props.src}
-          title={`iframe-${index}`}
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
-      );
-    } else if (
-      element.type === "div" &&
-      element.props.className === "ql-align-center"
-    ) {
-      return (
-        <div key={index} className="text-center mb-2">
-          {element.props.children}
-        </div>
-      );
-    } else if (
-      element.type === "div" &&
-      element.props.className === "ql-align-right"
-    ) {
-      return (
-        <div key={index} className="text-right mb-2">
-          {element.props.children}
-        </div>
-      );
-    } else if (
-      element.type === "div" &&
-      element.props.className === "ql-align-left"
-    ) {
-      return (
-        <div key={index} className="text-left mb-2">
-          {element.props.children}
-        </div>
-      );
-    } else {
-      return null;
-    }
-  });
-};
 type MessageProps = {
   messageData: TMessage[];
   language: string;
+  /** Shows placeholders while the message feed is in flight. */
+  loading?: boolean;
 };
 
-const MessageVicePresident = ({ language, messageData }: MessageProps) => {
-  const filterPresidentData = messageData.filter(
-    (item: any) => item.category == "vice president"
+/**
+ * Message from the Vice President.
+ *
+ * An editorial portrait-and-prose spread: the portrait card sits in the left
+ * column (sticky on large screens), the CMS message runs down a gold-ruled
+ * column, and a signature block closes the piece.
+ */
+const MessageVicePresident = ({
+  language,
+  messageData,
+  loading = false,
+}: MessageProps) => {
+  const isBn = language === "BNG";
+
+  const messages = (messageData || []).filter(
+    (item) => item.category === "vice president",
   );
 
+  if (loading && messages.length === 0) {
+    return (
+      <PageBody>
+        <div
+          className="grid gap-10 lg:grid-cols-12 lg:gap-14"
+          aria-busy="true"
+        >
+          <LoadingStatus
+            label={isBn ? "বাণী লোড হচ্ছে" : "Loading the message"}
+          />
+          <div className="lg:col-span-4">
+            <Skeleton className="aspect-[4/5] rounded-panel" />
+            <Skeleton className="mt-5 h-5 w-40" />
+            <Skeleton className="mt-3 h-3 w-28" />
+          </div>
+          <div className="lg:col-span-8">
+            <SkeletonText lines={5} />
+            <SkeletonText lines={5} className="mt-5" />
+          </div>
+        </div>
+      </PageBody>
+    );
+  }
+
+  if (messages.length === 0) return null;
+
   return (
-    <div>
-      <Container>
-        {filterPresidentData?.map((message: TMessage) => (
-          <section key={message._id} className="my-16">
-            <div className="sticky lg:top-[85px] md:top-[88px] top-[60px] bg-gradient-to-r from-yellow-600 to-green-600">
-              <div className="flex flex-col md:flex-row items-center justify-center mb-8 py-3">
-                <div className="relative w-40 h-40 mb-6 md:mb-0">
-                  {message.bng_Images?.slice(0, 1).map((img) => (
-                    <Image
-                      key={img}
-                      src={img}
-                      alt="President"
-                      layout="fill"
-                      objectFit="cover"
-                      className="rounded-full border-2 border-green-600 p-1"
-                    />
-                  ))}
-                </div>
-                <div className="md:ml-8 text-center md:text-left">
-                  <h2 className="text-3xl font-bold text-white">
-                    {language === "ENG"
-                      ? message.name_english
-                      : message.name_bangla}
-                  </h2>
-                  <p className="text-lg font-light text-white">
-                    {language === "ENG"
-                      ? message.designation_english
-                      : message.designation_bangla}
+    <PageBody>
+      <div className="space-y-16 lg:space-y-20">
+        {messages.map((message) => {
+          const name = isBn
+            ? message.name_bangla || message.name_english
+            : message.name_english || message.name_bangla;
+
+          const designation = isBn
+            ? message.designation_bangla || message.designation_english
+            : message.designation_english || message.designation_bangla;
+
+          const description = isBn
+            ? message.bangla_description
+            : message.english_description;
+
+          const image = message.bng_Images?.[0];
+
+          return (
+            <article
+              key={message._id}
+              className="grid gap-10 lg:grid-cols-12 lg:gap-14"
+            >
+              {/* Portrait ------------------------------------------------- */}
+              <div className="lg:col-span-4">
+                <div className="lg:sticky lg:top-24">
+                  <div className="relative aspect-[4/5] overflow-hidden rounded-panel bg-slate-100 ring-1 ring-slate-200">
+                    {image ? (
+                      <Image
+                        src={image}
+                        alt={name || (isBn ? "ভাইস প্রেসিডেন্ট" : "Vice President")}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 380px"
+                        className="object-cover object-top"
+                      />
+                    ) : (
+                      <span className="flex h-full items-center justify-center bg-brand-50 text-3xl font-bold text-brand-600/70">
+                        {name?.charAt(0) || "Z"}
+                      </span>
+                    )}
+                  </div>
+
+                  <p className="mt-5 text-[11px] font-bold uppercase tracking-[0.14em] text-brand-700">
+                    {isBn ? "বার্তা" : "Message"}
                   </p>
+                  {name && (
+                    <h2 className="mt-2 text-[20px] font-bold leading-snug text-slate-900">
+                      {name}
+                    </h2>
+                  )}
+                  {designation && (
+                    <p className="mt-1 text-[12.5px] font-semibold uppercase tracking-wide text-brand-700">
+                      {designation}
+                    </p>
+                  )}
                 </div>
               </div>
-            </div>
 
-            {/* President's Message */}
-            <div className="text-gray-700 text-lg leading-relaxed">
-              <p>
-                {" "}
-                {language === "ENG"
-                  ? renderContent(message.english_description)
-                  : renderContent(message.bangla_description)}
-              </p>
-            </div>
-          </section>
-        ))}
-      </Container>
-    </div>
+              {/* Message -------------------------------------------------- */}
+              <div className="lg:col-span-8">
+                <div className="border-l-2 border-gold-500 pl-5 sm:pl-7">
+                  <Quote
+                    className="h-6 w-6 text-gold-500"
+                    aria-hidden="true"
+                  />
+                  <div className="mt-4">
+                    <RenderContent content={description} />
+                  </div>
+                </div>
+
+                <div className="mt-10 border-t border-slate-200 pt-6">
+                  {name && (
+                    <p className="text-[15px] font-bold text-slate-900">
+                      {name}
+                    </p>
+                  )}
+                  {designation && (
+                    <p className="mt-1 text-[12.5px] font-semibold uppercase tracking-wide text-brand-700">
+                      {designation}
+                    </p>
+                  )}
+                  <span
+                    className="mt-4 block h-[2px] w-10 rounded-full bg-gold-500"
+                    aria-hidden="true"
+                  />
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </PageBody>
   );
 };
 

@@ -41,6 +41,19 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [language, ready]);
 
+  /**
+   * Keep the document in sync with the active language. The `lang-bn` class is what
+   * swaps the body font stack over to Shurjo, and the `lang` attribute keeps screen
+   * readers, `:lang()` selectors and search engines accurate.
+   */
+  useEffect(() => {
+    const root = document.documentElement;
+    const isBn = language === "BNG";
+
+    root.lang = isBn ? "bn" : "en";
+    root.classList.toggle("lang-bn", isBn);
+  }, [language]);
+
   return (
     <LanguageContext.Provider value={{ language, setLanguage }}>
       {children}

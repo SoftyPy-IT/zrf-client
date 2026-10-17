@@ -1,12 +1,15 @@
-import React from 'react';
-import HealthServiceHome from './_components/HealthServiceHome';
+import React from "react";
+import { Metadata } from "next";
+import HealthServiceHome from "./_components/HealthServiceHome";
 
-const page = () => {
-  return (
-    <div>
-      <HealthServiceHome/>
-    </div>
-  );
+export const metadata: Metadata = {
+  title: "Health Services | Ziaur Rahman Foundation",
+  description:
+    "Free medical camps, treatment support and health awareness programmes delivered by the Ziaur Rahman Foundation across Bangladesh.",
 };
 
-export default page;
+const HealthServicesPage = () => {
+  return <HealthServiceHome />;
+};
+
+export default HealthServicesPage;

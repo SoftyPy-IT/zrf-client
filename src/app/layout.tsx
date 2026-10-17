@@ -2,23 +2,48 @@ import "./globals.css";
 import Providers from "@/lib/Providers";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { Toaster } from "sonner";
-import { Inter, Noto_Sans_Bengali } from "next/font/google";
+import { fontVariables } from "@/lib/fonts";
+import { getPublicSiteUrl } from "@/config/env";
 import WelcomePopup from "@/components/WelcomePopup";
-// Load Inter for English
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
-  display: "swap",
-  variable: "--font-inter",
-});
 
-// Load Noto Sans Bengali for Bangla
-const notoSansBengali = Noto_Sans_Bengali({
-  subsets: ["bengali"],
-  weight: ["400", "500", "600", "700", "800"],
-  display: "swap",
-  variable: "--font-noto-sans-bengali",
-});
+export const metadata = {
+  /* Resolves every relative canonical / OG image against the deployed origin. */
+  metadataBase: new URL(getPublicSiteUrl()),
+  /* Pages set their own full titles, so no template is applied here. */
+  title: "Ziaur Rahman Foundation",
+  description:
+    "Ziaur Rahman Foundation is a humanitarian and welfare organisation working in education, health services and community empowerment across Bangladesh.",
+  keywords:
+    "Ziaur Rahman Foundation, ZRF, non-profit organisation, community service, charity, education, health programmes",
+  authors: [{ name: "Ziaur Rahman Foundation" }],
+  robots: { index: true, follow: true },
+  openGraph: {
+    title: "Ziaur Rahman Foundation",
+    description:
+      "Empowering communities across Bangladesh through education, health services and humanitarian initiatives.",
+    images: ["/logo.png"],
+    url: "/",
+    siteName: "Ziaur Rahman Foundation",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ziaur Rahman Foundation",
+    description:
+      "Empowering communities across Bangladesh through education, health services and humanitarian initiatives.",
+    images: ["/logo.png"],
+  },
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
+};
+
+/**
+ * Applies the persisted language preference before first paint so Bangla copy is
+ * never briefly rendered in Inter (and vice-versa). Must stay inline and blocking.
+ */
+const languageBootstrap = `(function(){try{var l=localStorage.getItem("language");if(l==="BNG"){document.documentElement.lang="bn";document.documentElement.classList.add("lang-bn");}}catch(e){}})();`;
 
 export default function RootLayout({
   children,
@@ -26,50 +51,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      dir="ltr"
-      className={`${inter.variable} ${notoSansBengali.variable}`}
-    >
+    <html lang="en" dir="ltr" className={fontVariables}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta
-          name="description"
-          content="Empowering communities through social services and non-profit initiatives."
+        <script
+          dangerouslySetInnerHTML={{ __html: languageBootstrap }}
+          suppressHydrationWarning
         />
-        <meta
-          name="keywords"
-          content="ziaurrahman foundation, non-profit, charity, social services"
-        />
-        <meta name="author" content="Ziaur Rahman Foundation" />
-        <meta name="robots" content="index, follow" />
-
-        {/* Open Graph */}
-        <meta property="og:title" content="Ziaur Rahman Foundation" />
-        <meta
-          property="og:description"
-          content="Empowering communities through social services and non-profit initiatives."
-        />
-        <meta property="og:image" content="/og-image.png" />
-        <meta
-          property="og:url"
-          content="https://www.ziaurrahmanfoundation.com"
-        />
-        <meta property="og:type" content="website" />
-
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Ziaur Rahman Foundation" />
-        <meta
-          name="twitter:description"
-          content="Empowering communities through social services and non-profit initiatives."
-        />
-        <meta name="twitter:image" content="/twitter-image.png" />
-
-        <link rel="icon" href="/logo.png" />
-        <link rel="apple-touch-icon" href="/logo.png" />
-        <link rel="manifest" href="/site.webmanifest" />
-        <link rel="canonical" href="https://www.ziaurrahmanfoundation.com" />
       </head>
 
       <body>

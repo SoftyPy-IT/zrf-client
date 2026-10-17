@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import RecentEducation from './RecentEducation';
-import { useLanguage } from '@/provider/LanguageProvider';
-import axios from 'axios';
-import { TWhatWeDo } from '@/types/type';
-import { whatwedoFields } from '@/fields';
-import Loader from '@/app/loading';
+"use client";
+
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useLanguage } from "@/provider/LanguageProvider";
+import { whatwedoFields } from "@/fields";
+import { TWhatWeDo } from "@/types/type";
+import RecentEducation from "./RecentEducation";
 
 const Sidebar = () => {
   const { language } = useLanguage();
@@ -15,36 +16,33 @@ const Sidebar = () => {
   const category = `ZRF Education Programm`;
 
   useEffect(() => {
-    const fetchCovidData = async () => {
+    const fetchEducationData = async () => {
       setIsLoading(true);
       setError(null);
       try {
         const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo?category=${category}&fields=${whatwedoFields}`
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo?category=${category}&fields=${whatwedoFields}`,
         );
         setEducationData(res.data?.data?.whatwedoes || []);
       } catch (err) {
-        console.error("Error fetching climate change data:", err);
-        setError("Failed to load climate change data. Please try again later.");
+        console.error("Error fetching education data:", err);
+        setError("Failed to load education data. Please try again later.");
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchCovidData();
+    fetchEducationData();
   }, [category]);
 
-  // if (isLoading) {
-  //   return <Loader/>;
-  // }
+  if (error) return null;
 
-  if (error) {
-    return <h2>Oops! data not found.</h2>
-  }
   return (
-    <>
-      <RecentEducation educationData={educationData} language={language} />
-    </>
+    <RecentEducation
+      educationData={educationData}
+      language={language}
+      loading={isLoading}
+    />
   );
 };
 

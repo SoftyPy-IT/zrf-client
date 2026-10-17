@@ -1,113 +1,129 @@
 "use client";
-import React from "react";
-import Container from "@/components/share/Container";
 
-import ShareLink from "@/components/share/ShareLink/ShareLink";
-import { TWhatWeDo } from "@/types/type";
+import React from "react";
 import Image from "next/image";
-import CovidSidebar from "./CovidSidebar";
+import { CalendarDays } from "lucide-react";
 import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
-import { useLanguage } from "@/provider/LanguageProvider";
+import PageBody from "@/components/share/PageBody";
+import SectionHeading from "@/components/share/SectionHeading";
+import ShareLink from "@/components/share/ShareLink/ShareLink";
 import RenderContent from "@/components/Common/RenderContent";
+import { useLanguage } from "@/provider/LanguageProvider";
+import { TWhatWeDo } from "@/types/type";
+import { formatDate } from "@/utils/formateDate";
 import { stripHtml } from "@/utils/stripHtml";
+import CovidSidebar from "./CovidSidebar";
 
 type SingleWhatWeDoProps = {
   whatWedoData: TWhatWeDo;
 };
 
+/**
+ * Single COVID-19 article — banner headline, framed hero image, body copy from
+ * the CMS and a recent-posts index in the rail, closing with a card deck of
+ * further items from the same category.
+ */
 const SingleCovid = ({ whatWedoData }: SingleWhatWeDoProps) => {
   const { language } = useLanguage();
+  const isBn = language === "BNG";
+
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
-  const description =
-    language === "ENG"
-      ? stripHtml(whatWedoData?.english_description ?? "")
-      : stripHtml(whatWedoData?.bangla_description ?? "");
+
+  const title =
+    (isBn ? whatWedoData.bangla_title : whatWedoData.english_title) ||
+    whatWedoData.bangla_title ||
+    whatWedoData.english_title;
+
+  const description = isBn
+    ? stripHtml(whatWedoData?.bangla_description ?? "")
+    : stripHtml(whatWedoData?.english_description ?? "");
+
+  const image = isBn
+    ? whatWedoData.bng_Images?.[0] || whatWedoData.eng_images?.[0]
+    : whatWedoData.eng_images?.[0] || whatWedoData.bng_Images?.[0];
 
   return (
     <>
       <CommonBanner
-        title={language === "ENG" ? "Covid Programs" : "কোভিড কার্যক্রম"}
+        title={title}
+        subtitle={
+          isBn
+            ? whatWedoData.bangla_short_description
+            : whatWedoData.english_short_description
+        }
       />
-      <Container>
-        <div className="grid md:grid-cols-12 gap-7 my-10">
-          <div className="md:col-span-8 lg:col-span-8">
-            {/* Top Image */}
-            <div className="relative mb-6">
-              {language === "BNG"
-                ? whatWedoData.bng_Images
-                    ?.slice(0, 1)
-                    .map((img) => (
-                      <Image
-                        width={500}
-                        height={500}
-                        key={img}
-                        src={img}
-                        alt="Top Image"
-                        className="rounded-lg w-full h-full "
-                      />
-                    ))
-                : whatWedoData.eng_images
-                    ?.slice(0, 1)
-                    .map((img) => (
-                      <Image
-                        width={500}
-                        height={500}
-                        key={img}
-                        src={img}
-                        alt="Top Image"
-                        className="rounded-lg w-full h-full "
-                      />
-                    ))}
-            </div>
 
-            <h1 className="text-xl md:text-3xl font-bold mb-4">
-              {language === "ENG"
-                ? whatWedoData.english_title
-                : whatWedoData.bangla_title}
-            </h1>
-
-            <p className="text-lg text-gray-800 text-justify">
-              <RenderContent
-                content={
-                  language === "ENG"
-                    ? whatWedoData.english_description
-                    : whatWedoData.bangla_description
-                }
-              />
-            </p>
-
-            <hr className="my-6" />
-            <div className=" md:flex lg:flex justify-between items-center mb-8 space-y-3">
-              <div className="flex items-center gap-4">
-                <ShareLink
-                  shareUrl={shareUrl}
-                  title={
-                    language === "ENG"
-                      ? whatWedoData?.english_title
-                      : whatWedoData?.bangla_title
-                  }
-                  hashtag={`#${whatWedoData?.bangla_title}`}
-                  description={description}
+      <PageBody>
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
+          <article className="lg:col-span-8">
+            {image && (
+              <div className="relative aspect-[16/9] w-full overflow-hidden rounded-panel bg-slate-100 ring-1 ring-slate-200">
+                <Image
+                  src={image}
+                  alt={title}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 820px"
+                  className="object-cover"
                 />
               </div>
-            </div>
-            {/* <div className="flex justify-between items-center mt-5">
-              <a href="#" className="text-green-600">
-                ←{language === "ENG" ? "Prev Post" : "পূর্ববর্তী পোস্ট"}
-              </a>
-              <a href="#" className="text-green-600">
-                {language === "ENG" ? "Next Post" : "পরবর্তী পোস্ট"} →
-              </a>
-            </div> */}
-          </div>
+            )}
 
-          <div className="md:col-span-4 lg:col-span-4">
-            <div className="sticky top-24">
+            <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-[12px] text-slate-500">
+              {whatWedoData.date && (
+                <span className="inline-flex items-center gap-1.5">
+                  <CalendarDays
+                    className="h-3.5 w-3.5 text-brand-500"
+                    aria-hidden="true"
+                  />
+                  {formatDate(whatWedoData.date)}
+                </span>
+              )}
+
+              {whatWedoData.category && (
+                <span className="inline-flex items-center rounded-md bg-brand-50 px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-wide text-brand-700 ring-1 ring-brand-100">
+                  {whatWedoData.category}
+                </span>
+              )}
+            </div>
+
+            <div className="mt-6">
+              <RenderContent
+                content={
+                  isBn
+                    ? whatWedoData.bangla_description
+                    : whatWedoData.english_description
+                }
+              />
+            </div>
+
+            <ShareLink
+              shareUrl={shareUrl}
+              title={title}
+              hashtag={`#${whatWedoData?.bangla_title}`}
+              description={description}
+            />
+          </article>
+
+          <aside className="lg:col-span-4">
+            <div className="lg:sticky lg:top-24">
               <CovidSidebar />
             </div>
-          </div>
+          </aside>
         </div>
-      </Container>
+
+        <section
+          className="mt-16 border-t border-slate-200 pt-12"
+          aria-label={isBn ? "এই বিভাগ থেকে আরও" : "More from this section"}
+        >
+          <SectionHeading
+            align="left"
+            eyebrow={isBn ? "কোভিড-১৯ কার্যক্রম" : "COVID-19 response"}
+            title={isBn ? "এই বিভাগ থেকে আরও" : "More from this section"}
+          />
+          <CovidSidebar variant="grid" />
+        </section>
+      </PageBody>
     </>
   );
 };

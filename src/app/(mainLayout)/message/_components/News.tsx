@@ -1,12 +1,18 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { useLanguage } from "@/provider/LanguageProvider";
-import NewsData from "./NewsData";
-import dynamic from "next/dynamic";
-import { TActivity } from "@/types/type";
-import axios from "axios";
- 
 
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useLanguage } from "@/provider/LanguageProvider";
+import { TActivity } from "@/types/type";
+import NewsData from "./NewsData";
+
+/**
+ * Data layer for the messages index.
+ *
+ * Fetches the public activity feed for the message category and hands it to
+ * `NewsData`, which owns the layout and empty state. A failed request falls
+ * back to the calm empty state rather than an error screen.
+ */
 const News = () => {
   const { language } = useLanguage();
   const [newsData, setNewsData] = useState<TActivity[]>([]);
@@ -16,37 +22,31 @@ const News = () => {
   const category = `Message`;
 
   useEffect(() => {
-    const fetchCovidData = async () => {
+    const fetchMessageData = async () => {
       setIsLoading(true);
       setError(null);
       try {
         const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/activity?category=${category}`
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/activity?category=${category}`,
         );
         setNewsData(res.data?.data?.activities || []);
       } catch (err) {
-        setError("Failed to load news data. Please try again later.");
+        console.error("Error fetching messages:", err);
+        setError("Failed to load messages. Please try again later.");
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchCovidData();
+    fetchMessageData();
   }, [category]);
 
-   
-
-  if (error) {
-    return <h2>Oops! data not found.</h2>;
-  }
   return (
-    <div>
-      {newsData ? (
-        <NewsData newsData={newsData} language={language} />
-      ) : (
-        <h2>No data uploaded !</h2>
-      )}
-    </div>
+    <NewsData
+      newsData={error ? [] : newsData}
+      language={language}
+      loading={isLoading}
+    />
   );
 };
 

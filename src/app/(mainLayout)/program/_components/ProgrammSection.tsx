@@ -1,5 +1,8 @@
 "use client";
 
+import React, { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   FaHospitalAlt,
   FaChalkboardTeacher,
@@ -14,141 +17,192 @@ import {
   FaSeedling,
   FaStethoscope,
 } from "react-icons/fa";
-
-import { useProgrammData } from "@/hooks/useProgrammData";
-import { useLanguage } from "@/provider/LanguageProvider";
-import { TProgramm } from "@/types/type";
-import { useState } from "react";
-import Loader from "@/app/loading";
-import { usePathname } from "next/navigation";
-import Container from "@/components/share/Container";
-import Link from "next/link";
-import { Button } from "@mui/material";
 import { FaHandHoldingMedical, FaHandshakeSimple } from "react-icons/fa6";
 import { GiAppleSeeds } from "react-icons/gi";
 import { MdVolunteerActivism } from "react-icons/md";
+import { ArrowRight } from "lucide-react";
 
+import PageBody from "@/components/share/PageBody";
+import SectionHeading from "@/components/share/SectionHeading";
+import { Skeleton, SkeletonText, LoadingStatus } from "@/components/share/Skeleton";
+import { useProgrammData } from "@/hooks/useProgrammData";
+import { useLanguage } from "@/provider/LanguageProvider";
+import { TProgramm } from "@/types/type";
+
+/** Pagination step is unchanged from the previous implementation. */
+const PAGE_SIZE = 8;
+
+/** Illustrated mark for each programme, cycled so the grid stays varied. */
+const getIcon = (index: number) => {
+  const iconClass =
+    "h-8 w-8 text-brand-600 transition-colors group-hover:text-white";
+
+  switch (index) {
+    case 1:
+      return <FaHospitalAlt className={iconClass} />;
+    case 2:
+      return <FaRecycle className={iconClass} />;
+    case 3:
+      return <MdVolunteerActivism className={iconClass} />;
+    case 4:
+      return <FaChalkboardTeacher className={iconClass} />;
+    case 5:
+      return <FaTree className={iconClass} />;
+    case 6:
+      return <FaStethoscope className={iconClass} />;
+    case 7:
+      return <FaCarrot className={iconClass} />;
+    case 8:
+      return <FaBook className={iconClass} />;
+    case 9:
+      return <FaGavel className={iconClass} />;
+    case 10:
+      return <FaGraduationCap className={iconClass} />;
+    case 11:
+      return <GiAppleSeeds className={iconClass} />;
+    case 12:
+      return <FaSeedling className={iconClass} />;
+    case 13:
+      return <FaHandHoldingMedical className={iconClass} />;
+    case 14:
+      return <FaSyringe className={iconClass} />;
+    case 15:
+      return <FaWater className={iconClass} />;
+    case 16:
+      return <FaHandshakeSimple className={iconClass} />;
+    default:
+      return <FaHospitalAlt className={iconClass} />;
+  }
+};
+
+/**
+ * Our Programmes listing.
+ *
+ * Same hook, ordering and load-more behaviour as before, presented as a
+ * three-up grid of surface-card panels with the same icon-tile treatment the
+ * home page uses for programmes.
+ */
 const ProgrammSection = () => {
   const { programmData, loading, error } = useProgrammData();
   const { language } = useLanguage();
-  const patname = usePathname();
+  const pathname = usePathname();
+  const isBn = language === "BNG";
 
-  const sortedProgrammData = programmData?.sort(
-    (a: TProgramm, b: TProgramm) => {
-      const dateA = new Date(a.date).getTime();
-      const dateB = new Date(b.date).getTime();
-      return dateA - dateB;
-    }
+  const sortedProgrammData = [...(programmData || [])].sort(
+    (a: TProgramm, b: TProgramm) =>
+      new Date(a.date).getTime() - new Date(b.date).getTime(),
   );
 
-  const [visibleCount, setVisibleCount] = useState(8);
-  const loadMore = () => {
-    setVisibleCount((prevCount) => prevCount + 8);
-  };
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
-   
+  const visibleProgrammes = sortedProgrammData.slice(0, visibleCount);
+  const showSkeleton = loading && sortedProgrammData.length === 0;
 
-  if (error) {
-    return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
-  }
-
-  const getIcon = (index: number) => {
-    switch (index) {
-      case 1:
-        return <FaHospitalAlt size={40} />;
-      case 2:
-        return <FaRecycle size={40} />;
-      case 3:
-        return <MdVolunteerActivism size={40} />;
-      case 4:
-        return <FaChalkboardTeacher size={40} />;
-      case 5:
-        return <FaTree size={40} />;
-      case 6:
-        return <FaStethoscope size={40} />;
-      case 7:
-        return <FaCarrot size={40} />;
-      case 8:
-        return <FaBook size={40} />;
-      case 9:
-        return <FaGavel size={40} />;
-      case 10:
-        return <FaGraduationCap size={40} />;
-      case 11:
-        return <GiAppleSeeds size={40} />;
-      case 12:
-        return <FaSeedling size={40} />;
-      case 13:
-        return <FaHandHoldingMedical size={40} />;
-      case 14:
-        return <FaSyringe size={40} />;
-      case 15:
-        return <FaWater size={40} />;
-      case 16:
-        return <FaHandshakeSimple size={40} />;
-      default:
-        return <FaHospitalAlt size={40} />;
-    }
-  };
+  if (error) return null;
 
   return (
-    <div>
-      <Container className="sectionMargin">
-        <h2 className="text-center text-3xl font-bold">
-          {language === "ENG" ? "Remarkable Works" : "উল্লেখযোগ্য কাজ"}
-        </h2>
-        <div className="w-44 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-7 mx-auto"></div>
+    <PageBody>
+      <SectionHeading
+        eyebrow={isBn ? "আমাদের কাজ" : "What we do"}
+        title={isBn ? "উল্লেখযোগ্য কাজ" : "Remarkable works"}
+        subtitle={
+          isBn
+            ? "ফাউন্ডেশনের বার্ষিক কল্যাণ কর্মসূচি — স্বাস্থ্য ক্যাম্প, শিক্ষা সহায়তা, খাদ্য নিরাপত্তা ও সামাজিক অন্তর্ভুক্তি।"
+            : "The foundation's annual welfare calendar — health camps, education support, food security and social inclusion."
+        }
+      />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 text-center">
-          {sortedProgrammData
-            ?.slice(0, visibleCount)
-            ?.map((program: TProgramm, index: number) => (
+      <div
+        className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+        aria-busy={showSkeleton}
+      >
+        {showSkeleton && (
+          <>
+            <LoadingStatus
+              label={isBn ? "কর্মসূচি লোড হচ্ছে" : "Loading programmes"}
+            />
+            {[0, 1, 2, 3, 4, 5].map((index) => (
               <div
-                key={program._id}
-                className="bg-white p-5 rounded shadow-lg flex flex-col items-center transform transition-transform duration-300 hover:scale-105"
+                key={index}
+                aria-hidden="true"
+                className="rounded-card border border-slate-200 bg-white p-6"
               >
-                <div className="mb-4">
-                  <div className="w-12 h-12 md:h-[68px] md:w-[68px] rounded-full p-2 flex items-center justify-center shadow-lg transform transition-transform duration-300 hover:scale-110 text-white bg-gradient-to-r from-yellow-600 to-green-600">
-                    {getIcon(index + 1)}
-                  </div>
-                </div>
-
-                <h3 className="text-xl font-semibold mb-2">
-                  {language === "ENG"
-                    ? program.english_title
-                    : program.bangla_title}
-                </h3>
-                <p className="text-gray-600">
-                  {language === "ENG"
-                    ? program.english_short_description
-                    : program.bangla_short_description}
-                </p>
+                <Skeleton className="h-14 w-14 rounded-lg" />
+                <Skeleton className="mt-4 h-4 w-3/4" />
+                <SkeletonText lines={3} className="mt-3" lineClassName="h-3" />
+                <Skeleton className="mt-5 h-3 w-24" />
               </div>
             ))}
-        </div>
-
-        {visibleCount < sortedProgrammData?.length && (
-          <div className="flex items-center justify-center">
-            <div className="flex items-center justify-center mt-8">
-              {patname === "/about" ? (
-                <Link href="/program">
-                  <Button className="bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm md:px-3 md:py-1 rounded text-white">
-                    {language === "ENG" ? "See More" : "আরো দেখুন"}
-                  </Button>
-                </Link>
-              ) : (
-                <Button
-                  onClick={loadMore}
-                  className="bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm md:px-3 md:py-1 rounded text-white"
-                >
-                  {language === "ENG" ? "Load More" : "আরো লোড"}
-                </Button>
-              )}
-            </div>
-          </div>
+          </>
         )}
-      </Container>
-    </div>
+
+        {!showSkeleton &&
+          visibleProgrammes.map((program, index) => {
+            const title = isBn ? program.bangla_title : program.english_title;
+            const description = isBn
+              ? program.bangla_short_description
+              : program.english_short_description;
+
+            return (
+              <article
+                key={program._id}
+                className="group surface-card surface-card-hover flex flex-col p-6"
+              >
+                <span className="flex h-14 w-14 items-center justify-center rounded-lg bg-brand-50 ring-1 ring-brand-100 transition-colors group-hover:bg-brand-600 group-hover:ring-brand-600">
+                  {getIcon(index + 1)}
+                </span>
+
+                <h3 className="mt-4 text-[16px] font-bold leading-snug text-slate-900 transition-colors group-hover:text-brand-700">
+                  {title}
+                </h3>
+
+                <p className="clamp-3 mt-2 text-[13.5px] leading-relaxed text-slate-600">
+                  {description}
+                </p>
+
+                <Link
+                  href="/program"
+                  aria-label={title}
+                  className="mt-auto inline-flex items-center gap-1.5 pt-5 text-[13px] font-bold text-brand-700 transition-colors hover:text-brand-800"
+                >
+                  {isBn ? "বিস্তারিত" : "Learn more"}
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </article>
+            );
+          })}
+      </div>
+
+      {!showSkeleton && visibleProgrammes.length === 0 && (
+        <p className="py-4 text-center text-[14px] text-slate-500">
+          {isBn
+            ? "এই মুহূর্তে কোনো কর্মসূচি নেই।"
+            : "No programmes to show yet."}
+        </p>
+      )}
+
+      {!showSkeleton && visibleCount < sortedProgrammData.length && (
+        <div className="mt-10 flex justify-center">
+          {pathname === "/about" ? (
+            <Link
+              href="/program"
+              className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-6 py-3 text-[13.5px] font-semibold text-slate-700 transition-colors hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700"
+            >
+              {isBn ? "আরো দেখুন" : "See more"}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setVisibleCount((prev) => prev + PAGE_SIZE)}
+              className="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-6 py-3 text-[13.5px] font-semibold text-white shadow-sm transition-colors hover:bg-brand-700"
+            >
+              {isBn ? "আরো লোড" : "Load more"}
+            </button>
+          )}
+        </div>
+      )}
+    </PageBody>
   );
 };
 

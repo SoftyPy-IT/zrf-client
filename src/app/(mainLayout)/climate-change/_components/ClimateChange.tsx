@@ -1,166 +1,114 @@
-import Image from "next/image";
-import Container from "@/components/share/Container";
+"use client";
 
-import { Button } from "@mui/material";
+import React, { useState } from "react";
+import { ChevronDown } from "lucide-react";
+import ArticleCard from "@/components/share/ArticleCard";
+import PageBody from "@/components/share/PageBody";
+import {
+  Skeleton,
+  SkeletonText,
+  LoadingStatus,
+} from "@/components/share/Skeleton";
 import { TWhatWeDo } from "@/types/type";
-import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
-import { useState } from "react";
-import { buttonStyle } from "@/utils/btnStyle";
-import { formatDate } from "@/utils/formateDate";
-import Link from "next/link";
-import EastIcon from "@mui/icons-material/East";
+import truncateText from "@/utils/truncate";
 
-interface CovidProps {
+interface ClimateChangeProps {
   climateChangeData: TWhatWeDo[] | null;
   language: string;
+  loading?: boolean;
 }
-const ClimateChange: React.FC<CovidProps> = ({
+
+/**
+ * Climate change programme listing.
+ *
+ * Three-up card grid with progressive disclosure — the first six programmes are
+ * rendered and the rest arrive six at a time so the page stays light. The page
+ * banner is rendered by the parent while this data resolves.
+ */
+const ClimateChange: React.FC<ClimateChangeProps> = ({
   climateChangeData,
   language,
+  loading,
 }) => {
-  const title =
-    language === "ENG"
-      ? "Climate Change Programs"
-      : "জলবায়ু পরিবর্তন কার্যক্রম";
+  const isBn = language === "BNG";
 
   const [visibleCount, setVisibleCount] = useState(6);
-  const loadMore = () => {
-    setVisibleCount((prevCount) => prevCount + 6);
-  };
+  const loadMore = () => setVisibleCount((prevCount) => prevCount + 6);
 
-  const sortedClimateChangeData = climateChangeData?.sort(
-    (a: TWhatWeDo, b: TWhatWeDo) => {
-      const dateA = new Date(a.date).getTime();
-      const dateB = new Date(b.date).getTime();
-      return dateB - dateA;
-    }
+  const programmes = [...(climateChangeData || [])].sort(
+    (a: TWhatWeDo, b: TWhatWeDo) =>
+      new Date(b.date).getTime() - new Date(a.date).getTime(),
   );
 
-   const formatDate = (dateStr: string) => {
-    const date = new Date(dateStr);
-    if (language === "ENG") {
-      return date.toLocaleDateString("en-US", {
-        day: "2-digit",
-        month: "long",
-        year: "numeric",
-      });
-    } else {
-      // Convert to Bangla numerals
-      const banglaFormatted = date
-        .toLocaleDateString("bn-BD", {
-          day: "2-digit",
-          month: "long",
-          year: "numeric",
-        })
-        .replace(/[০-৯]/g, (d) =>
-          "০১২৩৪৫৬৭৮৯"["০১২৩৪৫৬৭৮৯".indexOf(d)] ?? d
-        );
-      return banglaFormatted;
-    }
-  };
+  const visibleProgrammes = programmes.slice(0, visibleCount);
+  const hasMore = visibleCount < programmes.length;
+  const showSkeleton = Boolean(loading) && programmes.length === 0;
 
   return (
-    <>
-      <CommonBanner title={title} />
-      <Container className="my-20">
-        <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
-          {sortedClimateChangeData
-            ?.slice(0, visibleCount)
-            ?.map((data, index) => (
+    <PageBody tone="slate" tight>
+      <div
+        className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+        aria-busy={showSkeleton}
+      >
+        {showSkeleton && (
+          <>
+            <LoadingStatus
+              label={isBn ? "কার্যক্রম লোড হচ্ছে" : "Loading programmes"}
+            />
+            {[0, 1, 2, 3, 4, 5].map((index) => (
               <div
-                className="relative shadow-md overflow-hidden group border"
                 key={index}
+                aria-hidden="true"
+                className="overflow-hidden rounded-card border border-slate-200 bg-white"
               >
-                {language === "ENG"
-                  ? data.eng_images
-                      ?.slice(0, 1)
-                      .map((img) => (
-                        <Image
-                          width={500}
-                          height={500}
-                          key={img}
-                          src={img}
-                          alt=""
-                          className="w-full h-[300px] lg:h-[400px] object-cover"
-                        />
-                      ))
-                  : data.bng_Images
-                      ?.slice(0, 1)
-                      .map((img) => (
-                        <Image
-                          width={500}
-                          height={500}
-                          key={img}
-                          src={img}
-                          alt=""
-                          className="w-full h-[300px] lg:h-[400px] object-cover"
-                        />
-                      ))}
-
-                <div className="absolute bottom-0 left-0 right-0 p-2 md:p-4 lg:p-4 bg-blue-950 border-t border-gray-300 md:rounded-t-3xl h-[150px] md:h-[200px] lg:h-[200px] mt-28 md:mt-0 lg:mt-0">
-                  <h4 className="text-xl text-white ">
-                    {language == "ENG"
-                      ? data.english_title?.slice(0, 50)
-                      : data.bangla_title?.slice(0, 50)}
-                    ...
-                  </h4>
-                  <p className="mt-2 text-white">
-                    {language == "ENG"
-                      ? data.english_short_description?.slice(0, 180)
-                      : data.bangla_short_description?.slice(0, 180)}{" "}
-                    ...
-                  </p>
-                </div>
-
-                <div className="absolute inset-x-0 bottom-0 bg-green-700 text-[#fff] transition-transform transform translate-y-full group-hover:translate-y-0 duration-500 ease-in-out h-[250px] md:h-[230px] md:rounded-t-3xl">
-                  <div className="w-full p-2 md:p-4 lg:p-4 lg:h-full">
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-3">
-                        <h4 className="text-xl ">
-                          {language == "ENG"
-                            ? data.english_title?.slice(0, 50)
-                            : data.bangla_title?.slice(0, 50)}
-                          ...
-                        </h4>
-                      </div>
-                      <p className="text-justify  text-sm ">
-                        {" "}
-                        {language == "ENG"
-                          ? data.english_short_description?.slice(0, 200)
-                          : data.bangla_short_description?.slice(0, 200)}
-                        ...{" "}
-                      </p>
-
-                      <div className="flex justify-between mt-3 w-full items-center ">
-                        <b>{formatDate(data.date)}</b>
-                        <Link href={`/climate-change/${data._id}`}>
-                          <Button sx={buttonStyle}>
-                            {language === "ENG" ? "Read More" : "আরও পড়ুন"}{" "}
-                            <EastIcon
-                              sx={{ fontSize: { md: "20px", xs: "20px" } }}
-                            />
-                          </Button>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
+                <Skeleton className="aspect-[16/10] rounded-none" />
+                <div className="p-5">
+                  <Skeleton className="h-3 w-20" />
+                  <Skeleton className="mt-4 h-4 w-11/12" />
+                  <SkeletonText lines={3} className="mt-4" />
                 </div>
               </div>
             ))}
-        </div>
-
-        {visibleCount < (sortedClimateChangeData?.length || 0) && (
-          <div className="flex items-center justify-center mt-5 ">
-            <Button
-              onClick={loadMore}
-              className="bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white"
-            >
-              {language === "ENG" ? "Load More" : "আরো লোড"}
-            </Button>
-          </div>
+          </>
         )}
-      </Container>
-    </>
+
+        {!showSkeleton &&
+          visibleProgrammes.map((data) => {
+            const image =
+              (isBn ? data.bng_Images : data.eng_images)?.[0] ||
+              (isBn ? data.eng_images : data.bng_Images)?.[0];
+            const title = isBn ? data.bangla_title : data.english_title;
+            const excerpt = isBn
+              ? data.bangla_short_description
+              : data.english_short_description;
+
+            return (
+              <ArticleCard
+                key={data._id}
+                href={`/climate-change/${data._id}`}
+                title={title}
+                excerpt={truncateText(excerpt, 150)}
+                image={image}
+                date={data.date}
+                actionLabel={isBn ? "আরও পড়ুন" : "Read more"}
+              />
+            );
+          })}
+      </div>
+
+      {hasMore && (
+        <div className="mt-10 flex justify-center">
+          <button
+            type="button"
+            onClick={loadMore}
+            className="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition-all duration-200 ease-editorial hover:-translate-y-0.5 hover:bg-brand-700 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+          >
+            {isBn ? "আরো লোড" : "Load more"}
+            <ChevronDown className="h-4 w-4" />
+          </button>
+        </div>
+      )}
+    </PageBody>
   );
 };
 

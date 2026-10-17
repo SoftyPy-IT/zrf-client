@@ -9,7 +9,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { metadata } = await fetchWithSEO(
     "whatwedo",
     params.id,
-    "Project Details"
+    "Project Details",
   );
   return metadata;
 }

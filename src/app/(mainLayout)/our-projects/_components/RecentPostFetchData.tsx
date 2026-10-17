@@ -1,104 +1,98 @@
 import React from "react";
-import Image from "next/image";
+import SectionHeading from "@/components/share/SectionHeading";
+import ArticleCard from "@/components/share/ArticleCard";
+import { Skeleton, SkeletonText, LoadingStatus } from "@/components/share/Skeleton";
 import { TProject } from "@/types/type";
-import Link from "next/link";
 import truncateText from "@/utils/truncate";
 
 interface projectProps {
   projectData: TProject[];
   language: string;
+  loading?: boolean;
 }
 
+/**
+ * "Recent projects" band shown under a single project — the list the old
+ * sidebar carried, now in the shared three-up ArticleCard grid. The first item
+ * of the date-sorted list is skipped, matching the previous behaviour.
+ */
 const RecentPostFetchData: React.FC<projectProps> = ({
   projectData,
   language,
+  loading,
 }) => {
+  const isBn = language === "BNG";
 
-   const title = language === "ENG" ? "Recent Post" : "সাম্প্রতিক পোস্ট"
+  const sortedProjectData = [...(projectData || [])].sort(
+    (a: TProject, b: TProject) =>
+      new Date(b.date).getTime() - new Date(a.date).getTime(),
+  );
 
-  const sortedNewsData = projectData?.sort((a: TProject, b: TProject) => {
-    const dateA = new Date(a.date).getTime();
-    const dateB = new Date(b.date).getTime();
-    return dateB - dateA;
-  });
+  const relatedProjects = sortedProjectData.slice(1, 4);
+  const showSkeleton = Boolean(loading) && sortedProjectData.length === 0;
 
- 
-
-
-  const formatDate = (dateStr: string) => {
-    const date = new Date(dateStr);
-    if (language === "ENG") {
-      return date.toLocaleDateString("en-US", {
-        day: "2-digit",
-        month: "long",
-        year: "numeric",
-      });
-    } else {
-      // Convert to Bangla numerals
-      const banglaFormatted = date
-        .toLocaleDateString("bn-BD", {
-          day: "2-digit",
-          month: "long",
-          year: "numeric",
-        })
-        .replace(/[০-৯]/g, (d) =>
-          "০১২৩৪৫৬৭৮৯"["০১২৩৪৫৬৭৮৯".indexOf(d)] ?? d
-        );
-      return banglaFormatted;
-    }
-  };
-
+  if (!showSkeleton && relatedProjects.length === 0) return null;
 
   return (
-    <div className="shadow-md rounded-md p-3">
-      <h3 className="text-xl font-semibold">
-        {title}
-      </h3>
-      <hr className="w-16 h-1 bg-gradient-to-r from-yellow-600 to-green-600 border-0 rounded-full mb-5" />
+    <>
+      <SectionHeading
+        align="left"
+        eyebrow={isBn ? "আরও প্রকল্প" : "More projects"}
+        title={isBn ? "সাম্প্রতিক প্রকল্প" : "Recent projects"}
+      />
 
-      <div className="flex flex-col gap-y-3 mt-5">
-        {sortedNewsData?.slice(1, 5).map((data) => (
-          <Link key={data._id} href={`/our-projects/${data._id}`}>
-            <div className="flex items-center border rounded-md hover:shadow transition w-full md:w-[380px]">
-              <div className="relative w-[100px] h-[80px] flex-shrink-0 overflow-hidden rounded-l-md">
-                {language === "ENG"
-                  ? data.eng_images
-                      ?.slice(0, 1)
-                      .map((img) => (
-                        <Image
-                          key={img}
-                          src={img}
-                          alt=""
-                          fill
-                          className=""
-                        />
-                      ))
-                  : data.bng_Images
-                      ?.slice(0, 1)
-                      .map((img) => (
-                        <Image
-                          key={img}
-                          src={img}
-                          alt=""
-                          fill
-                          className=""
-                        />
-                      ))}
+      <div
+        className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+        aria-busy={showSkeleton}
+      >
+        {showSkeleton && (
+          <>
+            <LoadingStatus
+              label={isBn ? "প্রকল্প লোড হচ্ছে" : "Loading projects"}
+            />
+            {[0, 1, 2].map((index) => (
+              <div
+                key={index}
+                aria-hidden="true"
+                className="overflow-hidden rounded-card border border-slate-200 bg-white"
+              >
+                <Skeleton className="aspect-[16/10] rounded-none" />
+                <div className="p-5">
+                  <Skeleton className="h-3 w-24" />
+                  <Skeleton className="mt-4 h-4 w-11/12" />
+                  <SkeletonText lines={2} className="mt-4" />
+                </div>
               </div>
+            ))}
+          </>
+        )}
 
-              <div className="flex-1 p-2">
-                <b className="text-xs block mb-1">{formatDate(data.date)}</b>
-                <p className="text-xs md:text-sm leading-tight">
-                  {language === "ENG"
-                    ? truncateText(data.english_short_description, 60)
-                    : truncateText(data.bangla_short_description, 60)}
-                </p>
-              </div>
-            </div>
-          </Link>
-        ))}
+        {!showSkeleton &&
+          relatedProjects.map((project) => {
+            const image =
+              project.bng_Images?.[0] ||
+              project.english_Images?.[0] ||
+              project.eng_images?.[0];
+            const title = isBn ? project.bangla_title : project.english_title;
+            const description = isBn
+              ? project.bangla_short_description
+              : project.english_short_description;
+
+            return (
+              <ArticleCard
+                key={project._id}
+                href={`/our-projects/${project._id}`}
+                title={title}
+                excerpt={truncateText(description, 120)}
+                image={image}
+                date={project.date}
+                badge={project.category || null}
+                actionLabel={isBn ? "বিস্তারিত দেখুন" : "Read the project"}
+              />
+            );
+          })}
       </div>
-    </div>
+    </>
   );
 };
 

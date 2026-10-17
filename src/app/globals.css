@@ -1,28 +1,236 @@
 @import "~font-awesome/css/font-awesome.min.css";
-@import url("https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@400..800&family=Noto+Sans+Bengali:wght@100..900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* ------------------------------------------------------------------ */
+/*  Design tokens                                                      */
+/* ------------------------------------------------------------------ */
+@layer base {
+  :root {
+    --zrf-green: #0f5c3a;
+    --zrf-green-deep: #0a3d28;
+    --zrf-gold: #c8a02e;
+    --zrf-rule: rgba(4, 23, 15, 0.08);
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    /* `clip` keeps position: sticky working, unlike `hidden` */
+    overflow-x: clip;
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 7rem;
+  }
+
+  @supports not (overflow-x: clip) {
+    html {
+      overflow-x: hidden;
+    }
+  }
+
+  html,
+  body {
+    font-family: var(--font-inter), "Inter", system-ui, -apple-system,
+      "Segoe UI", Roboto, sans-serif;
+    font-size: 16px;
+    font-optical-sizing: auto;
+    width: 100%;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-white text-slate-700 antialiased;
+    overflow-x: clip;
+  }
+
+  @supports not (overflow-x: clip) {
+    body {
+      overflow-x: hidden;
+    }
+  }
+
+  /* ---------------------------------------------------------------- */
+  /*  Bilingual typography                                            */
+  /* ---------------------------------------------------------------- */
+
+  /*
+   * Bangla mode.
+   *
+   * Shurjo is a Bengali-only, single Bold cut. Two consequences drive this block:
+   *  1. It is listed first so Bengali text, punctuation and shared glyphs all use
+   *     Shurjo; Latin letters and digits fall through to Inter automatically.
+   *  2. `font-synthesis-weight: none` is critical — without it the browser would
+   *     apply faux-bold on top of an already-Bold font for headings and the
+   *     strokes would smear together.
+   *
+   * Bengali glyphs also sit on much taller metrics than Latin, so leading is
+   * loosened and heading tracking is relaxed to keep the script readable.
+   */
+  html.lang-bn body {
+    font-family: var(--font-shurjo), var(--font-inter), sans-serif;
+    font-synthesis-weight: none;
+    line-height: 1.75;
+  }
+
+  html.lang-bn h1,
+  html.lang-bn h2,
+  html.lang-bn h3,
+  html.lang-bn h4,
+  html.lang-bn h5,
+  html.lang-bn h6 {
+    letter-spacing: 0;
+    line-height: 1.45;
+  }
+
+  html.lang-bn p,
+  html.lang-bn li {
+    line-height: 1.85;
+  }
+
+  /* ---------------------------------------------------------------- */
+  /*  Headings & body defaults                                        */
+  /* ---------------------------------------------------------------- */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-semibold text-slate-900;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Consistent, visible keyboard affordance across the whole site */
+  :focus-visible {
+    outline: 2px solid var(--zrf-green);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: rgba(200, 160, 46, 0.28);
+    color: #04170f;
+  }
+
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Corporate scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f5f4;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(15, 92, 58, 0.32);
+    border-radius: 999px;
+    border: 2px solid #f1f5f4;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(15, 92, 58, 0.55);
+  }
+
+  /* Respect reduced-motion preferences site-wide */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }
 
-html,
-body {
-  font-family: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  overflow-x: hidden !important;
-  font-size: 16px;
-  font-optical-sizing: auto;
-  width: 100%;
-  position: relative;
+/* ------------------------------------------------------------------ */
+/*  Reusable component primitives                                      */
+/* ------------------------------------------------------------------ */
+@layer components {
+  /* Page section rhythm */
+  .section-y {
+    @apply py-14 md:py-20 lg:py-24;
+  }
+
+  .section-y-tight {
+    @apply py-10 md:py-14;
+  }
+
+  /* Small uppercase label that sits above a section heading */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-[11px] font-bold uppercase
+      tracking-[0.14em] text-brand-700;
+  }
+
+  /* Gold hairline used under section headings */
+  .rule-gold {
+    @apply block h-[3px] w-16 rounded-full;
+    background: linear-gradient(90deg, #c8a02e 0%, #e5c86c 60%, rgba(200, 160, 46, 0) 100%);
+  }
+
+  /* Standard elevated surface */
+  .surface-card {
+    @apply rounded-card border border-slate-200/80 bg-white shadow-card
+      transition-all duration-300 ease-editorial;
+  }
+
+  .surface-card-hover {
+    @apply hover:-translate-y-1 hover:border-brand-200 hover:shadow-card-hover;
+  }
+
+  /* First 3 lines only, used on card decks */
+  .clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Legacy helper kept for existing markup */
+  .sectionMargin {
+    @apply mt-14 md:mt-20;
+  }
 }
 
-html.lang-bn body {
-  font-family: var(--font-noto-sans-bengali), var(--font-inter), "Inter", sans-serif;
-}
-.sectionMargin {
-  margin-top: 80px;
+/* ------------------------------------------------------------------ */
+/*  Utilities                                                          */
+/* ------------------------------------------------------------------ */
+@layer utilities {
+  /* Bengali needs looser leading — these opt-in helpers keep it controllable */
+  .leading-bangla {
+    line-height: 1.85;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }

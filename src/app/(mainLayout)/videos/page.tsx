@@ -1,76 +1,43 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import Container from "@/components/share/Container";
-import ReactPlayer from "react-player";
-import { useVideoData } from "@/hooks/useVideoData";
-import { useLanguage } from "@/provider/LanguageProvider";
-import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
-import { Button } from "@mui/material";
-import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
-import dynamic from "next/dynamic";
- 
+import type { Metadata } from "next";
+import Videos from "./_components/Videos";
 
-const VideoGallery = () => {
-  const { videoData, loading, error } = useVideoData();
-  const { language } = useLanguage();
-
-  const [mounted, setMounted] = useState(false);
-  const [visibleCount, setVisibleCount] = useState(6);
-
-  const loadMore = () => {
-    setVisibleCount((prevCount) => prevCount + 5);
-  };
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-   
-  if (error) {
-    return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
-  }
-
-  return (
-    <div>
-      <CommonBanner
-        title={language === "ENG" ? "Video Gallery" : "ভিডিও গ্যালারি"}
-      />
-      <Container>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-16">
-          {videoData.slice(0, visibleCount).map((video) => (
-            <div key={video._id} className="relative rounded-md overflow-hidden  shadow-md  ">
-              <div className="border-2">
-                {mounted && (
-                  <ReactPlayer
-                    url={video.video_url}
-                    controls
-                    width="100%"
-                    height="300px"
-                  />
-                )}
-              </div>
-              <h1 className="mt-3 p-3 ">
-                {language === "ENG"
-                  ? video.video_title_english
-                  : video.video_title_bangla}
-              </h1>
-            </div>
-          ))}
-        </div>
-        {visibleCount < videoData.length && (
-          <div className="flex items-center justify-center mt-5 ">
-            <Button
-              onClick={loadMore}
-              className="bg-gradient-to-r from-[#216740] to-[#FEC909]"
-            >
-              {language === "ENG" ? "Load More" : "আরো লোড"}
-              <ArrowRightAltIcon />
-            </Button>
-          </div>
-        )}
-      </Container>
-    </div>
-  );
+export const metadata: Metadata = {
+  title: "Video Gallery | Ziaur Rahman Foundation",
+  description:
+    "Watch programme films, documentaries and field coverage from the Ziaur Rahman Foundation.",
+  keywords: [
+    "ZRF video gallery",
+    "Ziaur Rahman Foundation videos",
+    "documentaries",
+    "field coverage",
+  ],
+  authors: [{ name: "Ziaur Rahman Foundation" }],
+  robots: { index: true, follow: true },
+  alternates: {
+    canonical: "https://zrf.info/videos",
+  },
+  openGraph: {
+    title: "Video Gallery | Ziaur Rahman Foundation",
+    description:
+      "Programme films, documentaries and field coverage from the Ziaur Rahman Foundation.",
+    url: "https://zrf.info/videos",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Video Gallery | Ziaur Rahman Foundation",
+    description:
+      "Programme films, documentaries and field coverage from the Ziaur Rahman Foundation.",
+  },
 };
 
-export default VideoGallery;
+/**
+ * Video gallery index.
+ *
+ * The media centre (featured player + scrollable playlist, ENG / BNG switch)
+ * lives in the client component so the language switch can drive it; this
+ * server wrapper contributes the SEO metadata.
+ */
+const VideosPage = () => <Videos />;
+
+export default VideosPage;

@@ -1,54 +1,48 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import type React from "react";
-import { useCallback, useEffect, useState } from "react";
-import "./History.css";
+"use client";
+
+import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
-import type { TAbout } from "@/types/type";
-import { Button, MenuItem, FormControl, InputLabel } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import Select from "@mui/material/Select";
-import type { SelectChangeEvent } from "@mui/material/Select";
-import { renderContent } from "@/utils/renderContent";
-import Loader from "@/app/loading";
+import { CalendarDays, ChevronDown, Search } from "lucide-react";
+import PageBody from "@/components/share/PageBody";
+import SectionHeading from "@/components/share/SectionHeading";
+import RenderContent from "@/components/Common/RenderContent";
+import {
+  LoadingStatus,
+  Skeleton,
+  SkeletonText,
+} from "@/components/share/Skeleton";
+import { TAbout } from "@/types/type";
 import { formatDate } from "@/utils/formateDate";
 
-const ScrollableSelect = styled(Select)<{ value: unknown }>({
-  height: "30px",
-  background: "#fff",
-  "& .MuiSelect-select": {
-    height: "30px !important",
-    minHeight: "30px !important",
-    padding: "0 14px",
-    lineHeight: "30px",
-    display: "flex",
-    alignItems: "center",
-  },
-  "& .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#dee2e6",
-  },
-  "&:hover .MuiOutlinedInput-notchedOutline": {
-    borderColor: "#adb5bd",
-  },
-  "& .MuiInputBase-input": {
-    padding: "0 14px",
-    height: "30px !important",
-  },
-});
-
 interface AboutProps {
+  /** Kept for API compatibility with the `History` wrapper. */
   aboutData: TAbout[];
   language: string;
 }
 
-const HistoryFetchData: React.FC<AboutProps> = ({ aboutData, language }) => {
+/** The foundation's timeline starts in 2000. */
+const START_YEAR = 2000;
+const PAGE_SIZE = 4;
+
+/**
+ * "Our Journey" — the foundation's history as a vertical timeline.
+ *
+ * The year-range filter, the `category=History` request and the incremental
+ * "see more" behaviour are unchanged; the MUI selects became native selects and
+ * the floating-card timeline became a single gold rail with quiet entry cards.
+ */
+const HistoryFetchData: React.FC<AboutProps> = ({ language }) => {
+  const isBn = language === "BNG";
+
   const [historyData, setHistoryData] = useState<TAbout[]>([]);
   const [filteredData, setFilteredData] = useState<TAbout[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [visibleCount, setVisibleCount] = useState(4);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+
   const currentYear = new Date().getFullYear().toString();
-  const [startYear, setStartYear] = useState<string>("2000");
-  const [endYear, setEndYear] = useState<string>("2000");
+  const [startYear, setStartYear] = useState<string>(String(START_YEAR));
+  const [endYear, setEndYear] = useState<string>(currentYear);
 
   const category = `History`;
 
@@ -77,12 +71,8 @@ const HistoryFetchData: React.FC<AboutProps> = ({ aboutData, language }) => {
     fetchHistoryData();
   }, [fetchHistoryData]);
 
-  useEffect(() => {
-    fetchHistoryData();
-  }, [fetchHistoryData]);
-
   const loadMore = () => {
-    setVisibleCount((prevCount) => prevCount + 4);
+    setVisibleCount((prevCount) => prevCount + PAGE_SIZE);
   };
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
@@ -96,261 +86,229 @@ const HistoryFetchData: React.FC<AboutProps> = ({ aboutData, language }) => {
     });
 
     setFilteredData(filtered);
-    setVisibleCount(4); // Reset visible count when new search is performed
+    setVisibleCount(PAGE_SIZE);
   };
 
   const generateYearOptions = () => {
-    const currentYear = new Date().getFullYear();
     const years = [];
-    for (let year = 2000; year <= currentYear; year++) {
+    for (let year = START_YEAR; year <= Number(currentYear); year++) {
       years.push(year);
     }
     return years;
   };
 
-   
+  if (error) return null;
 
-  if (error) {
-    return <div className="text-center text-red-500">{error}</div>;
-  }
+  const showSkeleton = loading && filteredData.length === 0;
+  const visibleEntries = filteredData.slice(0, visibleCount);
+
+  const selectClassName =
+    "h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-[13.5px] text-slate-700 transition-colors focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100";
 
   return (
-    <div className="mt-20">
-      <div className="mb-10 mt-5">
-        <h2 className="text-center text-3xl font-bold">
-          {language === "ENG" ? "Our Journey" : "আমাদের যাত্রা"}
-        </h2>
-        <div className="w-44 h-1 bg-gradient-to-r from-yellow-600 to-green-600 rounded-full mt-2 mb-7 mx-auto"></div>
-      </div>
-      <form onSubmit={handleSearch} className="ml-0 md:ml-24 lg:ml-24">
-        <div className="flex items-center gap-2 md:w-[600px] mx-auto mb-8">
-          <FormControl className="w-1/3" sx={{ height: "30px" }}>
-            <InputLabel
-              id="start-year-label"
-              sx={{
-                lineHeight: "30px",
-                transform: "translate(14px, -10px) scale(0.75)",
-                "&.Mui-focused, &.MuiFormLabel-filled": {
-                  transform: "translate(14px, -10px) scale(0.75)",
-                },
-              }}
-            >
-              {language === "ENG" ? "Start Year" : "শুরুর বছর"}
-            </InputLabel>
-            <ScrollableSelect
-              labelId="start-year-label"
-              value={startYear as unknown}
-              onChange={(
-                e: SelectChangeEvent<unknown>,
-                child: React.ReactNode
-              ) => setStartYear(e.target.value as string)}
-              label={language === "ENG" ? "Start Year" : "শুরুর বছর"}
-              defaultValue="2000"
-              MenuProps={{
-                PaperProps: {
-                  style: {
-                    maxHeight: 200,
-                    overflowY: "auto",
-                  },
-                },
-                anchorOrigin: {
-                  vertical: "bottom",
-                  horizontal: "left",
-                },
-                transformOrigin: {
-                  vertical: "top",
-                  horizontal: "left",
-                },
-                disableScrollLock: true,
-              }}
-              onOpen={() => {
-                document.body.style.overflow = "hidden";
-              }}
-              onClose={() => {
-                document.body.style.overflow = "unset";
-              }}
-            >
-              {generateYearOptions().map((year) => (
-                <MenuItem
-                  key={year}
-                  value={year.toString()}
-                  onWheel={(e) => e.stopPropagation()}
-                >
-                  {year}
-                </MenuItem>
-              ))}
-            </ScrollableSelect>
-          </FormControl>
-          <FormControl className="w-1/3" sx={{ height: "30px" }}>
-            <InputLabel
-              id="end-year-label"
-              sx={{
-                lineHeight: "30px",
-                transform: "translate(14px, -10px) scale(0.75)",
-                "&.Mui-focused, &.MuiFormLabel-filled": {
-                  transform: "translate(14px, -10px) scale(0.75)",
-                },
-              }}
-            >
-              {language === "ENG" ? "End Year" : "শেষ বছর"}
-            </InputLabel>
-            <ScrollableSelect
-              labelId="end-year-label"
-              value={endYear as unknown}
-              onChange={(
-                e: SelectChangeEvent<unknown>,
-                child: React.ReactNode
-              ) => setEndYear(e.target.value as string)}
-              label={language === "ENG" ? "End Year" : "শেষ বছর"}
-              defaultValue={currentYear}
-              MenuProps={{
-                PaperProps: {
-                  style: {
-                    maxHeight: 200,
-                    overflowY: "auto",
-                  },
-                },
-                anchorOrigin: {
-                  vertical: "bottom",
-                  horizontal: "left",
-                },
-                transformOrigin: {
-                  vertical: "top",
-                  horizontal: "left",
-                },
-                disableScrollLock: true,
-              }}
-              onOpen={() => {
-                document.body.style.overflow = "hidden";
-              }}
-              onClose={() => {
-                document.body.style.overflow = "unset";
-              }}
-            >
-              {generateYearOptions().map((year) => (
-                <MenuItem
-                  key={year}
-                  value={year.toString()}
-                  onWheel={(e) => e.stopPropagation()}
-                >
-                  {year}
-                </MenuItem>
-              ))}
-            </ScrollableSelect>
-          </FormControl>
-          <Button
-            type="submit"
-            variant="contained"
-            sx={{
-              width: {
-                xs: "20px",
-              },
-              height: "30px",
-              minHeight: "30px",
-              backgroundColor: "#2b7a4b",
-              "&:hover": {
-                backgroundColor: "#236c40",
-              },
-            }}
+    <PageBody tone="slate">
+      <SectionHeading
+        eyebrow={isBn ? "আমাদের পথচলা" : "Our journey"}
+        title={isBn ? "আমাদের যাত্রা" : "Our Journey"}
+        subtitle={
+          isBn
+            ? "২০০০ সাল থেকে আজ পর্যন্ত জিয়াউর রহমান ফাউন্ডেশনের উল্লেখযোগ্য মাইলফলক।"
+            : "Key milestones in the Ziaur Rahman Foundation's journey since 2000."
+        }
+      />
+
+      {/* Year range filter ------------------------------------------------ */}
+      <form
+        onSubmit={handleSearch}
+        className="mx-auto mt-8 flex max-w-2xl flex-col gap-3 sm:flex-row sm:items-end"
+        aria-label={isBn ? "ইতিহাসের বছর অনুসন্ধান" : "Search the timeline by year"}
+      >
+        <div className="flex-1">
+          <label
+            htmlFor="history-start-year"
+            className="mb-1.5 block text-[12px] font-semibold uppercase tracking-wide text-slate-500"
           >
-            {language === "ENG" ? "Search" : "অনুসন্ধান"}
-          </Button>
+            {isBn ? "শুরুর বছর" : "Start Year"}
+          </label>
+          <select
+            id="history-start-year"
+            value={startYear}
+            onChange={(e) => setStartYear(e.target.value)}
+            className={selectClassName}
+          >
+            {generateYearOptions().map((year) => (
+              <option key={year} value={year.toString()}>
+                {year}
+              </option>
+            ))}
+          </select>
         </div>
+
+        <div className="flex-1">
+          <label
+            htmlFor="history-end-year"
+            className="mb-1.5 block text-[12px] font-semibold uppercase tracking-wide text-slate-500"
+          >
+            {isBn ? "শেষ বছর" : "End Year"}
+          </label>
+          <select
+            id="history-end-year"
+            value={endYear}
+            onChange={(e) => setEndYear(e.target.value)}
+            className={selectClassName}
+          >
+            {generateYearOptions().map((year) => (
+              <option key={year} value={year.toString()}>
+                {year}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <button
+          type="submit"
+          className="inline-flex h-10 shrink-0 items-center justify-center gap-2 rounded-lg bg-brand-600 px-5 text-[13.5px] font-semibold text-white transition-colors hover:bg-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+        >
+          <Search className="h-4 w-4" aria-hidden="true" />
+          {isBn ? "অনুসন্ধান" : "Search"}
+        </button>
       </form>
-      <section id="conference-timeline">
-        <div className="timeline-start">
-          {language === "ENG" ? "Start" : "শুরু"}
-        </div>
-        <div className="conference-center-line"></div>
-        <div className="conference-timeline-content">
-          {filteredData?.slice(0, visibleCount).map((data, index: number) => (
-            <div className="timeline-article" key={index}>
-              {index % 2 === 0 ? (
-                <>
-                  <div className="content-left-container">
-                    <div className="content-left">
-                      <h3 className="text-xl font-bold">
-                        {language === "ENG"
-                          ? data.title_english
-                          : data.title_bangla}
-                      </h3>
-                      <p className="mt-3 block">
-                        {language === "ENG"
-                          ? renderContent(data.description_enlgish)
-                          : renderContent(data.description_banlga)}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="content-right-container">
-                    <div className="content-right">
-                      <div className="contentRightImgWrap">
-                        {data.images?.slice(0, 1).map((img, idx) => (
-                          <Image
-                            key={idx}
-                            src={img || "/placeholder.svg"}
-                            alt="history"
-                            width={500}
-                            height={300}
+
+      {/* Timeline --------------------------------------------------------- */}
+      <div className="mt-12" aria-busy={showSkeleton}>
+        <span className="inline-flex items-center gap-2 rounded-full border border-gold-500/50 bg-gold-50 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-gold-700">
+          <span
+            className="h-1.5 w-1.5 rounded-full bg-gold-500"
+            aria-hidden="true"
+          />
+          {isBn ? "শুরু" : "Start"}
+        </span>
+
+        {showSkeleton ? (
+          <ol className="relative ml-2 mt-6 border-l-2 border-gold-500/40 pl-7 sm:pl-9">
+            <LoadingStatus
+              label={isBn ? "ইতিহাস লোড হচ্ছে" : "Loading history"}
+            />
+            {[0, 1, 2, 3].map((index) => (
+              <li
+                key={index}
+                aria-hidden="true"
+                className="relative pb-8 last:pb-0"
+              >
+                <span className="absolute -left-[calc(1.75rem+8px)] top-6 h-3.5 w-3.5 rounded-full border-2 border-gold-500/40 bg-white sm:-left-[calc(2.25rem+8px)]" />
+                <div className="rounded-card border border-slate-200 bg-white p-5">
+                  <Skeleton className="h-3 w-24" />
+                  <Skeleton className="mt-3 h-4 w-2/3" />
+                  <SkeletonText
+                    lines={2}
+                    className="mt-3"
+                    lineClassName="h-3"
+                  />
+                </div>
+              </li>
+            ))}
+          </ol>
+        ) : filteredData.length === 0 ? (
+          <p className="mt-6 rounded-card border border-slate-200 bg-white p-6 text-center text-[13.5px] text-slate-500">
+            {isBn
+              ? "এই সময়ের ব্যবধানে কোনো ঘটনা পাওয়া যায়নি। অনুগ্রহ করে অন্য বছর নির্বাচন করুন।"
+              : "No entries in this range. Please try a different year range."}
+          </p>
+        ) : (
+          <ol className="relative ml-2 mt-6 border-l-2 border-gold-500/60 pl-7 sm:pl-9">
+            {visibleEntries.map((data) => {
+              const image = data.images?.[0];
+              const title = isBn
+                ? data.title_bangla || data.title_english
+                : data.title_english || data.title_bangla;
+              const description = isBn
+                ? data.description_banlga
+                : data.description_enlgish;
+              const year = data.date
+                ? new Date(data.date).getFullYear()
+                : null;
+
+              return (
+                <li key={data._id} className="relative pb-8 last:pb-0">
+                  <span
+                    className="absolute -left-[calc(1.75rem+8px)] top-6 h-3.5 w-3.5 rounded-full border-2 border-gold-500 bg-white sm:-left-[calc(2.25rem+8px)]"
+                    aria-hidden="true"
+                  />
+
+                  <article className="rounded-card border border-slate-200 bg-white p-5 shadow-card transition-colors duration-300 hover:border-brand-200">
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+                      {year && (
+                        <span className="text-[13px] font-bold tabular-nums text-brand-700">
+                          {year}
+                        </span>
+                      )}
+                      {data.date && (
+                        <span className="inline-flex items-center gap-1.5 text-[12px] text-slate-500">
+                          <span
+                            className="h-1 w-1 rounded-full bg-slate-300"
+                            aria-hidden="true"
                           />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="meta-date">
-                    <span className="date">{formatDate(data.date)}</span>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="content-right-container">
-                    <div className="content-left">
-                      <div className="contentRightImgWrap">
-                        {data.images?.slice(0, 1).map((img, idx) => (
-                          <Image
-                            key={idx}
-                            src={img || "/placeholder.svg"}
-                            alt="history"
-                            width={500}
-                            height={300}
+                          <CalendarDays
+                            className="h-3.5 w-3.5 text-brand-500"
+                            aria-hidden="true"
                           />
-                        ))}
+                          {formatDate(data.date)}
+                        </span>
+                      )}
+                    </div>
+
+                    <div
+                      className={
+                        image
+                          ? "mt-3 grid gap-5 sm:grid-cols-[minmax(0,1fr)_200px] sm:items-start"
+                          : "mt-3"
+                      }
+                    >
+                      <div>
+                        {title && (
+                          <h3 className="text-[16px] font-bold leading-snug text-slate-900">
+                            {title}
+                          </h3>
+                        )}
+
+                        <div className="mt-2 [&_p]:text-[13.5px] [&_p]:leading-relaxed [&_h3]:text-[15px] [&_h4]:text-[14px]">
+                          <RenderContent content={description} />
+                        </div>
                       </div>
+
+                      {image && (
+                        <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-slate-100 ring-1 ring-slate-100">
+                          <Image
+                            src={image}
+                            alt={title || formatDate(data.date)}
+                            fill
+                            sizes="(max-width: 640px) 100vw, 200px"
+                            className="object-cover"
+                          />
+                        </div>
+                      )}
                     </div>
-                  </div>
-                  <div className="content-left-container">
-                    <div className="content-right">
-                      <h3 className="text-xl font-bold">
-                        {language === "ENG"
-                          ? data.title_english
-                          : data.title_bangla}
-                      </h3>
-                      <p className="mt-3 block">
-                        {language === "ENG"
-                          ? renderContent(data.description_enlgish)
-                          : renderContent(data.description_banlga)}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="meta-date">
-                    <span className="date">{formatDate(data.date)}</span>
-                  </div>
-                </>
-              )}
-            </div>
-          ))}
-        </div>
-        {filteredData.length > visibleCount && (
-          <div className="flex items-center justify-center">
-            <Button
+                  </article>
+                </li>
+              );
+            })}
+          </ol>
+        )}
+
+        {!showSkeleton && filteredData.length > visibleCount && (
+          <div className="mt-2 flex justify-center">
+            <button
+              type="button"
               onClick={loadMore}
-              className="bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm md:px-3 md:py-1 rounded text-white"
+              className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-6 py-3 text-[13.5px] font-semibold text-slate-700 transition-colors hover:border-brand-300 hover:text-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
             >
-              {language === "ENG" ? "See More" : "আরো দেখুন"}
-            </Button>
+              {isBn ? "আরো দেখুন" : "See more"}
+              <ChevronDown className="h-4 w-4" aria-hidden="true" />
+            </button>
           </div>
         )}
-      </section>
-    </div>
+      </div>
+    </PageBody>
   );
 };
 

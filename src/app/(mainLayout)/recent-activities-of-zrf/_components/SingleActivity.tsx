@@ -1,34 +1,46 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
+
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { CalendarDays, Tag } from "lucide-react";
 import Container from "@/components/share/Container";
+import PageBody from "@/components/share/PageBody";
 import ShareLink from "@/components/share/ShareLink/ShareLink";
-import { TActivity } from "@/types/type";
 import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
+import RenderContent from "@/components/Common/RenderContent";
 import ActivitySidebar from "./ActivitySidebar";
 import { useLanguage } from "@/provider/LanguageProvider";
-import RenderContent from "@/components/Common/RenderContent";
+import { formatDate } from "@/utils/formateDate";
 import { stripHtml } from "@/utils/stripHtml";
+import { TActivity } from "@/types/type";
 
 type SingleActivityProps = {
   singleActivityData: TActivity;
   initialLanguage?: string;
 };
 
+/**
+ * Single activity report.
+ *
+ * Editorial reading order: banner with the report title, a large hero image,
+ * a quiet meta row, the rich-text body and the share row — followed by the
+ * "more reports" band. The server language cookie still syncs into the
+ * provider before first paint to avoid a hydration mismatch.
+ */
 const SingleActivity = ({
   singleActivityData,
   initialLanguage = "ENG",
-}: any) => {
-  const shareUrl = typeof window !== "undefined" ? window.location.href : "";
+}: SingleActivityProps) => {
   const { language, setLanguage } = useLanguage();
   const [mounted, setMounted] = useState(false);
+  const [shareUrl, setShareUrl] = useState("");
 
-  // Sync client language with server language
+  // Sync client language with the server language and capture the share URL.
   useEffect(() => {
-    if (initialLanguage && setLanguage) {
-      setLanguage(initialLanguage);
+    if (initialLanguage) {
+      setLanguage(initialLanguage === "BNG" ? "BNG" : "ENG");
     }
+    setShareUrl(window.location.href);
     setMounted(true);
   }, [initialLanguage, setLanguage]);
 
@@ -39,12 +51,10 @@ const SingleActivity = ({
 
   const isEnglish = language === "ENG";
 
-  // Use language-specific content
   const title = isEnglish
     ? singleActivityData.english_title
     : singleActivityData.bangla_title;
 
-  // FIXED: Use correct short description based on language
   const description = isEnglish
     ? stripHtml(singleActivityData.english_short_description ?? "")
     : stripHtml(singleActivityData.bangla_short_description ?? "");
@@ -53,96 +63,74 @@ const SingleActivity = ({
     ? `#${singleActivityData.english_title?.replace(/\s+/g, "")}`
     : `#${singleActivityData.bangla_title?.replace(/\s+/g, "")}`;
 
-  // Use language-specific images
-  const shareImage = isEnglish
-    ? singleActivityData.eng_images?.[0]
-    : singleActivityData.bng_Images?.[0];
+  // Use language-specific images, falling back to the other set when empty
+  const image = isEnglish
+    ? singleActivityData.eng_images?.[0] || singleActivityData.bng_Images?.[0]
+    : singleActivityData.bng_Images?.[0] || singleActivityData.eng_images?.[0];
 
   // Use img_tagline for image alt text
-  const imageAlt = isEnglish
-    ? singleActivityData.img_tagline_english || title
-    : singleActivityData.img_tagline_bangla || title;
-
-  // Debug log to verify data
-  console.log("Current language:", language);
-  console.log("Is English:", isEnglish);
-  console.log("Title:", title);
-  console.log("Description:", description);
-  console.log("Share Image:", shareImage);
-  console.log("Image Alt:", imageAlt);
+  const imageAlt =
+    (isEnglish
+      ? singleActivityData.img_tagline_english
+      : singleActivityData.img_tagline_bangla) || title;
 
   return (
-    <div>
-      <CommonBanner
-        title={
-          language === "ENG"
-            ? "Recent Activities of ZRF"
-            : "জেডআরএফ এর সাম্প্রতিক কার্যক্রম"
-        }
-      />
-      <Container>
-        <div className="lg:flex md:flex gap-10 my-16">
-          <div className="w-full grid grid-cols-1">
-            <div className="h-full w-full">
-              <div className="relative overflow-hidden">
-                {isEnglish
-                  ? singleActivityData.eng_images
-                      ?.slice(0, 1)
-                      .map((img: string, idx: number) => (
-                        <Image
-                          width={500}
-                          height={500}
-                          key={idx}
-                          src={img}
-                          alt={imageAlt}
-                          className="rounded-lg w-full h-full object-cover"
-                        />
-                      ))
-                  : singleActivityData.bng_Images
-                      ?.slice(0, 1)
-                      .map((img: string, idx: number) => (
-                        <Image
-                          width={500}
-                          height={500}
-                          key={idx}
-                          src={img}
-                          alt={imageAlt}
-                          className="rounded-lg w-full h-full object-cover"
-                        />
-                      ))}
-              </div>
-              <div className="mt-5">
-                <h3 className="text-2xl font-semibold">{title}</h3>
-                <p className="text-justify mt-5">
-                  <RenderContent
-                    content={
-                      isEnglish
-                        ? singleActivityData.english_description
-                        : singleActivityData.bangla_description
-                    }
-                  />
-                </p>
-              </div>
+    <>
+      <CommonBanner title={title} hideBreadcrumb />
+
+      <PageBody tight bleed>
+        <Container narrow>
+          {image && (
+            <div className="relative aspect-[16/9] overflow-hidden rounded-panel bg-slate-100 ring-1 ring-slate-200">
+              <Image
+                src={image}
+                alt={imageAlt}
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 920px"
+                className="object-cover"
+              />
             </div>
+          )}
+
+          <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-[12.5px] text-slate-500">
+            {singleActivityData.date && (
+              <span className="inline-flex items-center gap-1.5">
+                <CalendarDays className="h-3.5 w-3.5 text-brand-500" />
+                {formatDate(singleActivityData.date)}
+              </span>
+            )}
+            {singleActivityData.category && (
+              <span className="inline-flex items-center gap-1.5 rounded-md bg-brand-50 px-2.5 py-1 text-[11.5px] font-semibold text-brand-700 ring-1 ring-brand-100">
+                <Tag className="h-3.5 w-3.5" />
+                {singleActivityData.category}
+              </span>
+            )}
           </div>
 
-          <div>
-            <div className="sticky top-32 w-full lg:w-[450px]">
-              <ActivitySidebar />
-            </div>
+          <div className="mt-8">
+            <RenderContent
+              content={
+                isEnglish
+                  ? singleActivityData.english_description
+                  : singleActivityData.bangla_description
+              }
+            />
           </div>
-        </div>
 
-        <ShareLink
-          shareUrl={shareUrl}
-          title={title || ""}
-          hashtag={hashtag}
-          description={description}
-          imageUrl={shareImage}
-          imageAlt={imageAlt}
-        />
-      </Container>
-    </div>
+          <ShareLink
+            shareUrl={shareUrl}
+            title={title || ""}
+            hashtag={hashtag}
+            description={description}
+            imageUrl={image}
+            imageAlt={imageAlt}
+          />
+        </Container>
+      </PageBody>
+
+      <ActivitySidebar />
+    </>
   );
 };
 

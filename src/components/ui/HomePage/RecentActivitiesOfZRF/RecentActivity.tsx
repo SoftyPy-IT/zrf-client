@@ -1,168 +1,154 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import Container from "@/components/share/Container";
-import Image from "next/image";
+import React from "react";
 import Link from "next/link";
-import EastIcon from "@mui/icons-material/East";
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import Image from "next/image";
+import Container from "@/components/share/Container";
+import SectionHeading from "@/components/share/SectionHeading";
+import { Skeleton, SkeletonText, LoadingStatus } from "@/components/share/Skeleton";
 import { TActivity } from "@/types/type";
 import truncateText from "@/utils/truncate";
 import { formatDate } from "@/utils/formateDate";
+import { ArrowRight, CalendarDays } from "lucide-react";
 import RecentActivityRightSide from "./RecentActivityRightSide";
-import { motion } from "framer-motion";
-import BNPButton from "@/components/Button";
 
 interface ActivityProps {
   activityData: TActivity[];
   language: string;
+  loading?: boolean;
 }
 
+/**
+ * Recent field activity. Two lead cards alongside a compact list of further
+ * reports — an editorial hierarchy rather than a flat grid of equal cards.
+ */
 const RecentActivity: React.FC<ActivityProps> = ({
   activityData,
   language,
+  loading,
 }) => {
-  const [isVisible, setIsVisible] = useState(false);
+  const isBn = language === "BNG";
 
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
+  const sortedActivityData = (activityData || [])
+    .filter((item) => item.category === "Activity")
+    .sort(
+      (a: TActivity, b: TActivity) =>
+        new Date(b.date).getTime() - new Date(a.date).getTime(),
+    );
 
-  const activityFilterData = activityData?.filter(
-    (welcome: any) => welcome.category === "Activity",
-  );
+  const showSkeleton = loading && sortedActivityData.length === 0;
 
-  const sortedActivityData = activityFilterData?.sort(
-    (a: TActivity, b: TActivity) => {
-      const dateA = new Date(a.date).getTime();
-      const dateB = new Date(b.date).getTime();
-      return dateB - dateA;
-    },
-  );
+  if (!showSkeleton && sortedActivityData.length === 0) return null;
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 50, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-      },
-    },
-  };
+  const leadCards = sortedActivityData.slice(0, 2);
 
   return (
-    <section className="relative pt-6 pb-10 md:pt-10 lg:pt-12 overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-100">
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-r from-yellow-400/20 to-green-400/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-r from-green-400/20 to-yellow-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-yellow-300/10 to-green-300/10 rounded-full blur-3xl"></div>
-      </div>
+    <section className="section-y bg-slate-50" aria-busy={showSkeleton}>
+      <Container>
+        <SectionHeading
+          eyebrow={isBn ? "মাঠপর্যায়ের প্রতিবেদন" : "From the field"}
+          title={isBn ? "সাম্প্রতিক কার্যক্রম" : "Recent Activities"}
+          subtitle={
+            isBn
+              ? "দেশজুড়ে পরিচালিত জেডআরএফের সাম্প্রতিক কার্যক্রম ও মানবিক সহায়তার প্রতিবেদন।"
+              : "Reports from ZRF relief, awareness and community programmes across the country."
+          }
+        />
 
-      <Container className="relative z-10 px-3 sm:px-4 lg:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: -30 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-6 md:mb-10"
-        >
-          <h1 className="text-2xl sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold bg-gradient-to-r from-yellow-600 via-green-600 to-yellow-600 bg-clip-text text-transparent px-2">
-            {language === "ENG"
-              ? "Recent Activities of ZRF"
-              : "জেডআরএফ এর সাম্প্রতিক কার্যক্রম"}
-          </h1>
-          <div className="flex justify-center mt-2 md:mt-3">
-            <div className="w-16 md:w-20 h-0.5 bg-gradient-to-r from-yellow-500 to-green-500 rounded-full"></div>
-          </div>
-        </motion.div>
-
-        <div className="flex flex-col lg:flex-row gap-4 md:gap-6 lg:gap-8">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate={isVisible ? "visible" : {}}
-            className="w-full lg:w-2/3"
-          >
-            {/* Grid shows 2 cards on mobile and tablet */}
-            <div className="grid grid-cols-2 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-5 lg:gap-6">
-              {sortedActivityData?.slice(0, 2).map((data, index) => (
-                <motion.div
-                  key={data._id}
-                  variants={itemVariants}
-                  whileHover={{ y: -3 }}
-                  className="group relative bg-white rounded-lg sm:rounded-xl md:rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500"
-                >
-                  <div className="relative h-44 xs:h-48 sm:h-52 md:h-56 lg:h-64 overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent z-10"></div>
-                    {(language === "ENG" ? data.bng_Images : data.eng_images)
-                      ?.slice(0, 1)
-                      .map((img) => (
-                        <Image
-                          key={img}
-                          width={400}
-                          height={250}
-                          src={img}
-                          alt="activity"
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
-                      ))}
-
-
-
-                  </div>
-
-                  <div className="p-2.5 sm:p-3 md:p-3">
-                    <h3 className="text-xs xs:text-sm sm:text-base md:text-lg font-bold text-gray-800 mb-1 sm:mb-2 line-clamp-2 group-hover:text-green-700 transition-colors min-h-[2.5rem] sm:min-h-[3rem]">
-                      {language === "ENG"
-                        ? truncateText(data.english_title, 80)
-                        : truncateText(data.bangla_title, 80)}
-                    </h3>
-                    <p className="text-gray-600 text-[10px] xs:text-xs sm:text-sm mb-2 sm:mb-3 line-clamp-2 sm:line-clamp-3">
-                      {language === "ENG"
-                        ? truncateText(data.english_short_description, 105)
-                        : truncateText(data.bangla_short_description, 105)}
-                    </p>
-
-
-                    <div className="scale-90 sm:scale-100 origin-left">
-                      <BNPButton
-                        href={`/recent-activities-of-zrf/${data._id}`}
-                        language={language}
-                        variant="primary"
-                        size="sm"
-                        showIcon={true}
-                        iconPosition="right"
-                        styles={{
-                          padding: "py-1 px-2.5 sm:py-1.5 sm:px-3",
-                          fontSize: "text-[10px] xs:text-xs sm:text-xs",
-                          iconSize: "text-[8px] xs:text-[10px] sm:text-xs",
-                          borderRadius: "9999px",
-                        }}
-                      >
-                        {language === "ENG" ? "Learn More" : "আরও জানুন"}
-                      </BNPButton>
+        <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-3">
+          {/* Lead cards ------------------------------------------------ */}
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:col-span-2">
+            {showSkeleton && (
+              <>
+                <LoadingStatus
+                  label={isBn ? "কার্যক্রম লোড হচ্ছে" : "Loading activities"}
+                />
+                {[0, 1].map((index) => (
+                  <div
+                    key={index}
+                    aria-hidden="true"
+                    className="overflow-hidden rounded-card border border-slate-200 bg-white"
+                  >
+                    <Skeleton className="aspect-[4/3] rounded-none" />
+                    <div className="p-5">
+                      <Skeleton className="h-4 w-11/12" />
+                      <SkeletonText lines={3} className="mt-3" lineClassName="h-3" />
+                      <Skeleton className="mt-5 h-3 w-28" />
                     </div>
                   </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
+                ))}
+              </>
+            )}
 
-          <div className="hidden md:block w-full lg:w-1/3 mt-4 lg:mt-0">
+            {leadCards.map((data) => {
+              const images =
+                (isBn ? data.bng_Images : data.eng_images) || data.bng_Images || [];
+              const title = isBn ? data.bangla_title : data.english_title;
+              const description = isBn
+                ? data.bangla_short_description
+                : data.english_short_description;
+
+              return (
+                <article
+                  key={data._id}
+                  className="group surface-card surface-card-hover flex flex-col overflow-hidden"
+                >
+                  <Link
+                    href={`/recent-activities-of-zrf/${data._id}`}
+                    className="relative block aspect-[4/3] overflow-hidden bg-slate-100"
+                  >
+                    {images[0] ? (
+                      <Image
+                        src={images[0]}
+                        alt={title}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 340px"
+                        className="object-cover transition-transform duration-500 ease-editorial group-hover:scale-[1.04]"
+                      />
+                    ) : (
+                      <div className="flex h-full items-center justify-center text-sm text-slate-400">
+                        {isBn ? "ছবি নেই" : "No image"}
+                      </div>
+                    )}
+
+                    {data.date && (
+                      <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-md bg-white/95 px-2.5 py-1 text-[11px] font-bold text-slate-700 shadow-sm backdrop-blur-sm">
+                        <CalendarDays className="h-3 w-3 text-brand-600" />
+                        {formatDate(data.date)}
+                      </span>
+                    )}
+                  </Link>
+
+                  <div className="flex flex-1 flex-col p-5">
+                    <h3 className="text-[15.5px] font-bold leading-snug text-slate-900 transition-colors group-hover:text-brand-700">
+                      <Link href={`/recent-activities-of-zrf/${data._id}`}>
+                        {truncateText(title, 70)}
+                      </Link>
+                    </h3>
+
+                    <p className="clamp-3 mt-2 text-[13.5px] leading-relaxed text-slate-600">
+                      {truncateText(description, 120)}
+                    </p>
+
+                    <Link
+                      href={`/recent-activities-of-zrf/${data._id}`}
+                      className="mt-auto inline-flex items-center gap-1.5 pt-5 text-[13px] font-bold text-brand-700 transition-colors hover:text-brand-800"
+                    >
+                      {isBn ? "আরও জানুন" : "Read the report"}
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+
+          {/* Compact list ---------------------------------------------- */}
+          <div className="lg:col-span-1">
             <RecentActivityRightSide
               activityFilterData={sortedActivityData}
               language={language}
+              loading={showSkeleton}
             />
           </div>
         </div>

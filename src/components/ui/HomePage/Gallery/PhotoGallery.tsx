@@ -1,324 +1,225 @@
 "use client";
 
-import BNPButton from "@/components/Button";
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import Container from "@/components/share/Container";
-import { useResponsiveButtonSize } from "@/hooks/useResponsiveButtonSize";
+import SectionHeading from "@/components/share/SectionHeading";
+import { Skeleton } from "@/components/share/Skeleton";
 import { useLanguage } from "@/provider/LanguageProvider";
 import { TImgGallery } from "@/types/type";
 import { formatDate } from "@/utils/formateDate";
-import {
-  Close,
-  KeyboardDoubleArrowRight,
-  Pause,
-  PlayArrow,
-} from "@mui/icons-material";
-import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { X, Expand, ArrowRight } from "lucide-react";
 
 const PhotoGallery = () => {
   const { language } = useLanguage();
+  const isBn = language === "BNG";
+
   const [galleryData, setGalleryData] = useState<TImgGallery[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [selectedImage, setSelectedImage] = useState<{
+  const [active, setActive] = useState<{
     src: string;
     title: string;
     date: string;
   } | null>(null);
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-  const buttonSize = useResponsiveButtonSize();
-  const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    const fetchGalleryData = async () => {
+    const controller = new AbortController();
+
+    const fetchGallery = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/image-gallery?limit=4`,
-          { cache: "no-store" },
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/image-gallery?limit=5`,
+          { signal: controller.signal },
         );
         const data = await response.json();
         setGalleryData(data.data?.galleries || []);
       } catch (err) {
-        setError("Failed to fetch gallery data.");
+        if ((err as Error).name === "AbortError") return;
       } finally {
         setLoading(false);
       }
     };
-    fetchGalleryData();
+
+    fetchGallery();
+    return () => controller.abort();
   }, []);
 
-  // Extract all images for slideshow
-  const allImages = galleryData.flatMap((gallery) =>
-    (gallery.thumnailImages || []).map((img) => ({
-      src: img,
-      title:
-        language === "ENG" ? gallery.title_of_english : gallery.title_of_bangla,
-      date: gallery.date || gallery.createdAt,
-    })),
-  );
-
-  // Auto-play logic
-  const startAutoPlay = useCallback(() => {
-    if (autoPlayRef.current) clearInterval(autoPlayRef.current);
-    if (allImages.length > 0) {
-      autoPlayRef.current = setInterval(() => {
-        setCurrentSlide((prev) => (prev + 1) % allImages.length);
-      }, 4000);
-    }
-  }, [allImages.length]);
-
-  const stopAutoPlay = useCallback(() => {
-    if (autoPlayRef.current) {
-      clearInterval(autoPlayRef.current);
-      autoPlayRef.current = null;
-    }
-  }, []);
-
+  /* Escape closes the lightbox */
   useEffect(() => {
-    if (isAutoPlaying && allImages.length > 0) {
-      startAutoPlay();
-    }
-    return () => stopAutoPlay();
-  }, [isAutoPlaying, allImages.length, startAutoPlay, stopAutoPlay]);
+    if (!active) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setActive(null);
+    };
+    window.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [active]);
 
   if (loading) {
     return (
-      <div className="bg-gradient-to-br from-gray-50 to-gray-100 sectionMargin">
+      <section className="section-y bg-slate-50" aria-busy="true">
         <Container>
-          <div className="h-96 w-full bg-gradient-to-r from-gray-200 to-gray-300 animate-pulse rounded-2xl"></div>
+          <SectionHeading
+            eyebrow={isBn ? "ছবিতে জেডআরএফ" : "In pictures"}
+            title={isBn ? "ফটো গ্যালারি" : "Photo Gallery"}
+            subtitle={
+              isBn
+                ? "মাঠপর্যায়ের কার্যক্রম, ক্যাম্প ও আয়োজনের ছবি।"
+                : "Moments from our camps, programmes and community events."
+            }
+          />
+          <div
+            aria-hidden="true"
+            className="mt-10 grid auto-rows-[190px] grid-cols-2 gap-4 lg:auto-rows-[215px] lg:grid-cols-4"
+          >
+            <Skeleton className="col-span-2 row-span-2 rounded-card" />
+            <Skeleton className="col-span-2 rounded-card" />
+            <Skeleton className="rounded-card" />
+            <Skeleton className="rounded-card" />
+            <Skeleton className="col-span-2 rounded-card" />
+          </div>
         </Container>
-      </div>
+      </section>
     );
   }
 
-  const mobileData = galleryData.slice(0, 2);
+  if (galleryData.length === 0) return null;
+
+  const cards = galleryData.slice(0, 5);
 
   return (
-    <div className="bg-gradient-to-br from-gray-50 via-white to-gray-50 py-10">
+    <section className="section-y bg-slate-50">
       <Container>
-        <div className="text-center mb-5 md:mb-8">
-          <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-3">
-            <span className="bg-gradient-to-r from-amber-600 via-orange-500 to-emerald-600 bg-clip-text text-transparent">
-              {language === "ENG" ? "Photo Gallery" : "ফটো গ্যালারি"}
-            </span>
-          </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-amber-500 to-emerald-500 mx-auto rounded-full"></div>
+        <SectionHeading
+          eyebrow={isBn ? "ছবিতে জেডআরএফ" : "In pictures"}
+          title={isBn ? "ফটো গ্যালারি" : "Photo Gallery"}
+          subtitle={
+            isBn
+              ? "মাঠপর্যায়ের কার্যক্রম, ক্যাম্প ও আয়োজনের ছবি।"
+              : "Moments from our camps, programmes and community events."
+          }
+        />
 
-        </div>
+        {/* Bento grid: first tile is a large feature, the rest are companions */}
+        <div className="mt-10 grid auto-rows-[190px] grid-cols-2 gap-4 lg:grid-cols-4 lg:auto-rows-[215px]">
+          {cards.map((item, index) => {
+            const thumbnail = item.thumnailImages?.[0];
+            const title = isBn ? item.title_of_bangla : item.title_of_english;
+            const date = item.date || item.createdAt;
 
-        <div className="hidden md:block">
-          <div className="grid grid-cols-4 gap-4 auto-rows-[260px]">
-            {galleryData.map((data, index) => {
-              const isLarge = index === 0;
-              const isMedium = index === 1;
-              const thumbnail = data.thumnailImages?.[0];
-              const title =
-                language === "ENG"
-                  ? data.title_of_english
-                  : data.title_of_bangla;
+            const spanClasses =
+              index === 0
+                ? "col-span-2 row-span-2"
+                : index === 1
+                  ? "col-span-2 lg:col-span-2"
+                  : "col-span-1";
 
-              return (
-                <div
-                  key={data._id}
-                  onMouseEnter={() => setHoveredCard(index)}
-                  onMouseLeave={() => setHoveredCard(null)}
-                  onClick={() => {
-                    if (thumbnail) {
-                      setSelectedImage({
-                        src: thumbnail,
-                        title: title || "",
-                        date: data.date || data.createdAt,
-                      });
-                    }
-                  }}
-                  className={`
-                    relative group overflow-hidden rounded-xl cursor-pointer
-                    transition-all duration-500 hover:shadow-2xl hover:-translate-y-1
-                    ${isLarge ? "col-span-2 row-span-2" : ""}
-                    ${isMedium ? "col-span-2" : "col-span-1"}
-                  `}
-                >
-                  {thumbnail ? (
-                    <>
-                      <Image
-                        src={thumbnail}
-                        alt={title || "Gallery"}
-                        fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-110"
-                        sizes="(max-width: 1200px) 33vw, 25vw"
-                      />
+            return (
+              <button
+                key={item._id}
+                type="button"
+                onClick={() =>
+                  thumbnail &&
+                  setActive({ src: thumbnail, title: title || "", date })
+                }
+                className={`group relative overflow-hidden rounded-card bg-slate-200 text-left ring-1 ring-slate-200/80 transition-all duration-300 ease-editorial hover:ring-brand-300 ${spanClasses}`}
+              >
+                {thumbnail && (
+                  <Image
+                    src={thumbnail}
+                    alt={title || ""}
+                    fill
+                    sizes="(max-width: 1024px) 50vw, 330px"
+                    className="object-cover transition-transform duration-500 ease-editorial group-hover:scale-[1.05]"
+                  />
+                )}
 
-                      {/* Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+                <span className="absolute inset-0 bg-gradient-to-t from-brand-950/90 via-brand-950/25 to-transparent" />
 
-                      {/* Content */}
-                      <div className="absolute inset-0 flex flex-col justify-end p-4 text-white">
-                        <p className="text-xs text-white/60 mb-1">
-                          {formatDate(data.date || data.createdAt)}
-                        </p>
-                        <h4
-                          className={`font-semibold text-white line-clamp-2 ${isLarge ? "text-lg" : "text-sm"}`}
-                        >
-                          {title}
-                        </h4>
-
-                        {/* Hover Reveal */}
-                        <div
-                          className={`overflow-hidden transition-all duration-500 ${hoveredCard === index ? "max-h-10 mt-2" : "max-h-0"}`}
-                        >
-                          <span className="text-xs text-amber-400 flex items-center gap-1">
-                            {language === "ENG"
-                              ? "View Details"
-                              : "বিস্তারিত দেখুন"}
-                            <KeyboardDoubleArrowRight sx={{ fontSize: 12 }} />
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Border Effect */}
-                      <div className="absolute inset-0 border-2 border-transparent group-hover:border-amber-500/50 rounded-xl pointer-events-none transition-all duration-300" />
-                    </>
-                  ) : null}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* ========== MOBILE VIEW (2x2 Grid + Carousel) ========== */}
-        <div className="md:hidden">
-          {/* Mobile Carousel */}
-          {allImages.length > 0 && (
-            <div className="relative mb-6 rounded-xl overflow-hidden">
-              <div className="relative w-full pt-[75%] bg-gray-800">
-                <Image
-                  src={allImages[currentSlide].src}
-                  alt="Gallery"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
-                <p className="text-white text-xs line-clamp-1">
-                  {allImages[currentSlide].title}
-                </p>
-              </div>
-              <div className="absolute bottom-2 right-2 flex gap-1">
-                <button
-                  onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-                  className="w-6 h-6 bg-black/50 rounded-full flex items-center justify-center"
-                >
-                  {isAutoPlaying ? (
-                    <Pause className="text-white text-xs" />
-                  ) : (
-                    <PlayArrow className="text-white text-xs" />
+                <span className="absolute inset-x-0 bottom-0 p-4">
+                  {date && (
+                    <span className="block text-[11px] font-medium text-white/70">
+                      {formatDate(date)}
+                    </span>
                   )}
-                </button>
-              </div>
-            </div>
-          )}
+                  <span
+                    className={`mt-1 block font-semibold leading-snug text-white ${
+                      index === 0 ? "text-[16px]" : "text-[13.5px]"
+                    }`}
+                  >
+                    <span className="clamp-2">{title}</span>
+                  </span>
+                </span>
 
-          {/* Mobile Grid - 2x2 */}
-          <div className="grid grid-cols-2 gap-3">
-            {mobileData.map((data, index) => {
-              const thumbnail = data.thumnailImages?.[0];
-              return (
-                <div
-                  key={data._id}
-                  onClick={() => {
-                    if (thumbnail) {
-                      setSelectedImage({
-                        src: thumbnail,
-                        title:
-                          language === "ENG"
-                            ? data.title_of_english
-                            : data.title_of_bangla,
-                        date: data.date || data.createdAt,
-                      });
-                    }
-                  }}
-                  className="relative group overflow-hidden rounded-lg aspect-square cursor-pointer"
-                >
-                  {thumbnail && (
-                    <>
-                      <Image
-                        src={thumbnail}
-                        alt="Gallery"
-                        fill
-                        className="object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                      <div className="absolute bottom-2 left-2 right-2">
-                        <p className="text-white text-[10px] line-clamp-1">
-                          {language === "ENG"
-                            ? data.title_of_english
-                            : data.title_of_bangla}
-                        </p>
-                      </div>
-                    </>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+                <span className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-md bg-white/15 text-white opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
+                  <Expand className="h-4 w-4" />
+                </span>
+              </button>
+            );
+          })}
         </div>
 
-        {/* Footer CTA */}
-        <div className="flex justify-end mt-8 md:mt-12">
-          <BNPButton
+        <div className="mt-10 flex justify-center">
+          <Link
             href="/gallery"
-            language={language}
-            variant="primary"
-            size={buttonSize}
-            showIcon={true}
-            iconPosition="right"
-            customIcon={<KeyboardDoubleArrowRight sx={{ fontSize: "10px" }} />}
+            className="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-700 hover:shadow-md"
           >
-            {language === "ENG" ? "See All Gallery" : "সব গ্যালারি দেখুন"}
-          </BNPButton>
+            {isBn ? "সব গ্যালারি দেখুন" : "View full gallery"}
+            <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </Container>
 
-
-      {/* Lightbox Modal */}
-      {selectedImage && (
+      {/* Lightbox --------------------------------------------------- */}
+      {active && (
         <div
-          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex items-center justify-center p-4"
-          onClick={() => setSelectedImage(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={active.title}
+          className="fixed inset-0 z-[100000] flex items-center justify-center bg-brand-950/95 p-4 backdrop-blur-sm"
+          onClick={() => setActive(null)}
         >
           <button
-            onClick={() => setSelectedImage(null)}
-            className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-all"
+            type="button"
+            onClick={() => setActive(null)}
+            aria-label={isBn ? "বন্ধ করুন" : "Close"}
+            className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-lg border border-white/20 bg-white/10 text-white transition-colors hover:bg-white/20"
           >
-            <Close className="text-white text-2xl" />
+            <X className="h-5 w-5" />
           </button>
 
-          <div
-            className="relative max-w-5xl max-h-[85vh] w-full"
-            onClick={(e) => e.stopPropagation()}
+          <figure
+            className="relative max-h-[86vh] w-full max-w-5xl"
+            onClick={(event) => event.stopPropagation()}
           >
-            <div className="relative w-full pt-[75%]">
+            <div className="relative mx-auto aspect-[4/3] w-full overflow-hidden rounded-panel">
               <Image
-                src={selectedImage.src}
-                alt={selectedImage.title}
+                src={active.src}
+                alt={active.title}
                 fill
+                sizes="90vw"
                 className="object-contain"
               />
             </div>
-            <div className="mt-4 text-center">
-              <h3 className="text-white font-semibold">
-                {selectedImage.title}
-              </h3>
-              <p className="text-white/60 text-sm mt-1">
-                {formatDate(selectedImage.date)}
+
+            <figcaption className="mt-5 text-center">
+              <p className="text-[15px] font-semibold text-white">
+                {active.title}
               </p>
-            </div>
-          </div>
+              {active.date && (
+                <p className="mt-1 text-[13px] text-brand-200">
+                  {formatDate(active.date)}
+                </p>
+              )}
+            </figcaption>
+          </figure>
         </div>
       )}
-    </div>
+    </section>
   );
 };
 

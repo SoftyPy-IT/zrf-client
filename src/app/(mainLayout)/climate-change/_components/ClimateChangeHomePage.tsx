@@ -1,53 +1,61 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
-import { useLanguage } from "@/provider/LanguageProvider";
-
-import dynamic from "next/dynamic";
-import { whatwedoFields } from "@/fields";
 import axios from "axios";
+import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
+import { useLanguage } from "@/provider/LanguageProvider";
+import { whatwedoFields } from "@/fields";
+import { TWhatWeDo } from "@/types/type";
 import ClimateChange from "./ClimateChange";
-
- 
 
 const ClimateChangeHomePage = () => {
   const { language } = useLanguage();
-  const [climateChangeData, setClimateChange] = useState(null);
+  const [climateChangeData, setClimateChangeData] = useState<TWhatWeDo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const category = `Climate Change`;
 
   useEffect(() => {
-    const fetchCovidData = async () => {
+    const fetchClimateChangeData = async () => {
       setIsLoading(true);
-      setError(null); 
+      setError(null);
       try {
         const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo?category=${category}&fields=${whatwedoFields}`
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo?category=${category}&fields=${whatwedoFields}`,
         );
-        setClimateChange(res.data?.data?.whatwedoes || []);
+        setClimateChangeData(res.data?.data?.whatwedoes || []);
       } catch (err) {
         console.error("Error fetching climate change data:", err);
         setError("Failed to load climate change data. Please try again later.");
       } finally {
-        setIsLoading(false); 
+        setIsLoading(false);
       }
     };
-    
 
-    fetchCovidData();
+    fetchClimateChangeData();
   }, [category]);
 
-   
+  if (error) return null;
 
-  if (error) {
-    return <h2>Oops! data not found.</h2>
-  }
+  const isBn = language === "BNG";
 
   return (
-    <div>
-      <ClimateChange climateChangeData={climateChangeData} language={language} />
-    </div>
+    <>
+      <CommonBanner
+        title={isBn ? "জলবায়ু পরিবর্তন কার্যক্রম" : "Climate Change Programmes"}
+        subtitle={
+          isBn
+            ? "বৃক্ষরোপণ, সচেতনতা ও টেকসই কমিউনিটি উদ্যোগের মাধ্যমে জলবায়ু সহনশীলতা গড়ে তোলা হচ্ছে।"
+            : "Building climate resilience through tree plantation, awareness and sustainable community programmes."
+        }
+      />
+      <ClimateChange
+        climateChangeData={climateChangeData}
+        language={language}
+        loading={isLoading}
+      />
+    </>
   );
 };
 

@@ -1,128 +1,76 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Calendar, ArrowRight } from "lucide-react";
+"use client";
+
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowRight, CalendarDays } from "lucide-react";
 import { formatDate } from "@/utils/formateDate";
 import truncateText from "@/utils/truncate";
+import { TActivity } from "@/types/type";
 
-const RegularNewsCard = ({ news, idx, language, activeTab }: any) => {
+interface Props {
+  news: TActivity;
+  idx: number;
+  language: string;
+  activeTab: "upcoming" | "message";
+}
+
+/**
+ * Horizontal summary card used for the remainder of the news feed — image on the
+ * left, headline and standfirst on the right.
+ */
+const RegularNewsCard = ({ news, language, activeTab }: Props) => {
+  const isBn = language === "BNG";
+
   const images =
-    (language === "BNG" ? news?.bng_Images : news?.eng_images) ||
-    news?.eng_images ||
-    news?.bng_Images ||
-    [];
-  const [isExpanded, setIsExpanded] = useState(false);
+    (isBn ? news?.bng_Images : news?.eng_images) || news?.bng_Images || [];
 
-  const categoryLabel =
+  const title = isBn ? news?.bangla_title : news?.english_title;
+  const description = isBn
+    ? news?.bangla_short_description
+    : news?.english_short_description;
+
+  const href =
     activeTab === "upcoming"
-      ? language === "ENG"
-        ? "Program"
-        : "প্রোগ্রাম"
-      : language === "ENG"
-        ? "Message"
-        : "বার্তা";
+      ? `/upcoming-programs/${news._id}`
+      : `/message/${news._id}`;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: idx * 0.1 }}
-      whileHover={{ y: -5 }}
-      className="group relative h-full"
-    >
-      <div className="absolute inset-0 bg-gradient-to-r from-[#216740] to-[#FEC909] rounded-xl sm:rounded-2xl blur-xl opacity-0 group-hover:opacity-20 transition-opacity duration-500" />
-
-      <div className="relative bg-white rounded-xl sm:rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 border border-gray-100 h-full">
-        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#216740] via-[#FEC909] to-[#216740] z-10" />
-
-        <div className="flex flex-col sm:flex-row h-full">
-          {/* Image Section */}
-          <div className="sm:w-2/5 relative h-52 sm:h-auto overflow-hidden">
+    <article className="group surface-card surface-card-hover overflow-hidden">
+      <Link href={href} className="flex h-full flex-col sm:flex-row">
+        <span className="relative block h-44 shrink-0 overflow-hidden bg-slate-100 sm:h-auto sm:w-[38%]">
+          {images[0] ? (
             <Image
-              src={images?.[0] || "/placeholder.jpg"}
-              alt={news.english_title}
-              width={300}
-              height={250}
-              quality={85}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              src={images[0]}
+              alt=""
+              fill
+              sizes="(max-width: 640px) 100vw, 260px"
+              className="object-cover transition-transform duration-500 ease-editorial group-hover:scale-[1.05]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+          ) : null}
+        </span>
 
-            {/* Category Badge */}
-            <div className="absolute top-2.5 left-2.5">
-              <span className="inline-flex items-center gap-1.5 bg-black/50 backdrop-blur-md border border-white/20 px-2 py-0.5 rounded-full">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#FEC909]" />
-                <span className="text-white text-[10px] font-semibold uppercase tracking-wider">
-                  {categoryLabel}
-                </span>
-              </span>
-            </div>
+        <span className="flex flex-1 flex-col p-5">
+          <span className="inline-flex items-center gap-1.5 text-[11.5px] font-medium text-slate-500">
+            <CalendarDays className="h-3.5 w-3.5 text-brand-500" />
+            {formatDate(news.date)}
+          </span>
 
-            {/* Date Badge */}
-            <div className="absolute bottom-2.5 left-2.5 bg-white/95 backdrop-blur-sm shadow-lg px-2.5 py-1.5 rounded-lg flex items-center gap-2">
-              <Calendar className="w-3 h-3 text-[#FEC909]" />
-              <span className="text-gray-700 text-[11px] sm:text-xs font-semibold">
-                {formatDate(news.date)}
-              </span>
-            </div>
-          </div>
+          <span className="mt-1.5 text-[15px] font-bold leading-snug text-slate-900 transition-colors group-hover:text-brand-700">
+            {truncateText(title, 74)}
+          </span>
 
-          {/* Content Section */}
-          <div className="sm:w-3/5 p-5 md:p-6 flex flex-col">
-            <h3
-              className="font-bold text-base sm:text-lg md:text-xl mb-2 line-clamp-2 transition-colors group-hover:text-[#216740] cursor-pointer"
-              onClick={() => setIsExpanded(!isExpanded)}
-            >
-              {language === "ENG"
-                ? truncateText(news.english_title, 50)
-                : truncateText(news.bangla_title, 50)}
-            </h3>
+          <span className="clamp-2 mt-2 text-[13px] leading-relaxed text-slate-600">
+            {truncateText(description, 105)}
+          </span>
 
-            <AnimatePresence>
-              {isExpanded && (
-                <motion.p
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="text-gray-600 text-xs sm:text-sm mb-3 leading-relaxed"
-                >
-                  {language === "ENG"
-                    ? news.english_short_description
-                    : news.bangla_short_description}
-                </motion.p>
-              )}
-            </AnimatePresence>
-
-            {!isExpanded && (
-              <p className="text-gray-600 text-xs sm:text-sm mb-4 leading-relaxed line-clamp-2">
-                {language === "ENG"
-                  ? truncateText(news.english_short_description, 70)
-                  : truncateText(news.bangla_short_description, 70)}
-              </p>
-            )}
-
-            <div className="mt-auto pt-3">
-              <Link
-                href={
-                  activeTab === "upcoming"
-                    ? `/upcoming-programs/${news._id}`
-                    : `/message/${news._id}`
-                }
-                className="inline-flex items-center gap-2 text-[#216740] font-semibold text-xs sm:text-sm group/btn"
-              >
-                <span className="relative transition-all duration-300">
-                  {language === "ENG" ? "Read More" : "আরো পড়ুন"}
-                </span>
-                <span className="flex items-center justify-center w-7 h-7 rounded-full bg-gradient-to-r from-[#216740] to-[#FEC909] text-white transition-transform duration-300 group-hover/btn:translate-x-1">
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </span>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    </motion.div>
+          <span className="mt-auto inline-flex items-center gap-1.5 pt-4 text-[12.5px] font-bold text-brand-700">
+            {isBn ? "আরও পড়ুন" : "Read more"}
+            <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+          </span>
+        </span>
+      </Link>
+    </article>
   );
 };
 

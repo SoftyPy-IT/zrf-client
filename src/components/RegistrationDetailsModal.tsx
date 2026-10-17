@@ -115,7 +115,7 @@ export default function RegistrationDetailsModal({
         <Box
           sx={{
             whiteSpace: 'pre-line',
-            fontFamily: 'var(--font-noto-sans-bengali), sans-serif',
+            fontFamily: 'var(--font-shurjo), var(--font-inter), sans-serif',
             fontSize: { xs: '0.95rem', sm: '1.05rem' },
             lineHeight: 1.8,
             wordBreak: 'break-word',

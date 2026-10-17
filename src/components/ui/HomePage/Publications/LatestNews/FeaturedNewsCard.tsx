@@ -1,108 +1,101 @@
-import { motion } from "framer-motion";
-import { Calendar, ChevronRight } from "lucide-react";
+"use client";
+
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowRight, CalendarDays } from "lucide-react";
 import { formatDate } from "@/utils/formateDate";
 import truncateText from "@/utils/truncate";
+import { TActivity } from "@/types/type";
 
-const FeaturedNewsCard = ({ news, idx, language, activeTab, onHover }: any) => {
-  const img =
-    (language === "BNG" ? news?.bng_Images?.[0] : news?.eng_images?.[0]) ||
+interface Props {
+  news: TActivity;
+  idx: number;
+  language: string;
+  activeTab: "upcoming" | "message";
+}
+
+/**
+ * Image-led feature card used for the two leading items in the news feed.
+ */
+const FeaturedNewsCard = ({ news, idx, language, activeTab }: Props) => {
+  const isBn = language === "BNG";
+
+  const image =
+    (isBn ? news?.bng_Images?.[0] : news?.eng_images?.[0]) ||
     news?.eng_images?.[0] ||
-    news?.bng_Images?.[0] ||
-    "/placeholder.jpg";
+    news?.bng_Images?.[0];
 
-  const categoryLabel =
+  const title = isBn ? news?.bangla_title : news?.english_title;
+  const description = isBn
+    ? news?.bangla_short_description
+    : news?.english_short_description;
+
+  const href =
     activeTab === "upcoming"
-      ? language === "ENG"
-        ? "Upcoming Program"
-        : "আসন্ন প্রোগ্রাম"
-      : language === "ENG"
-        ? "Message"
-        : "বার্তা";
+      ? `/upcoming-programs/${news._id}`
+      : `/message/${news._id}`;
+
+  const badge =
+    activeTab === "upcoming"
+      ? isBn
+        ? "আসন্ন কার্যক্রম"
+        : "Upcoming Programme"
+      : isBn
+        ? "বার্তা"
+        : "Message";
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: idx === 0 ? -30 : 30 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.6, delay: idx * 0.2 }}
-      onMouseEnter={() => onHover(idx)}
-      onMouseLeave={() => onHover(null)}
-      className="group relative w-full"
-    >
-      <div className="relative w-full h-[250px] sm:h-[300px] md:h-[340px] lg:h-[420px] rounded-xl sm:rounded-2xl overflow-hidden shadow-lg sm:shadow-2xl cursor-pointer">
-        {/* Top accent bar */}
-        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#216740] via-[#FEC909] to-[#216740] z-20" />
-
-        {/* Image */}
-        <Image
-          src={img || "/placeholder.jpg"}
-          alt={language === "ENG" ? news?.english_title : news?.bangla_title}
-          fill
-          quality={85}
-          sizes="(max-width: 640px) 100vw, 50vw"
-          className="object-cover transition-transform duration-1000 group-hover:scale-110"
-          priority={idx === 0}
-        />
-
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-transparent" />
-
-        {/* Category Badge - Top Left */}
-        <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10">
-          <span className="inline-flex items-center gap-1.5 bg-white/15 backdrop-blur-md border border-white/25 px-2.5 sm:px-3 py-1 rounded-full">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#FEC909]" />
-            <span className="text-white text-[10px] sm:text-xs font-semibold uppercase tracking-wider whitespace-nowrap">
-              {categoryLabel}
-            </span>
-          </span>
-        </div>
-
-        {/* Date Badge - Top Right */}
-        <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10">
-          <div className="bg-black/60 backdrop-blur-md rounded-lg px-2 py-1 sm:px-2.5 sm:py-1.5 border border-white/10 flex items-center gap-1.5 sm:gap-2">
-            <Calendar className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#FEC909]" />
-            <span className="text-white text-[10px] sm:text-xs font-medium whitespace-nowrap">
-              {formatDate(news.date)}
-            </span>
+    <article className="group surface-card surface-card-hover overflow-hidden">
+      <Link
+        href={href}
+        className="relative block aspect-[16/10] overflow-hidden bg-slate-100"
+      >
+        {image ? (
+          <Image
+            src={image}
+            alt={title}
+            fill
+            priority={idx === 0}
+            sizes="(max-width: 640px) 100vw, 50vw"
+            className="object-cover transition-transform duration-500 ease-editorial group-hover:scale-[1.04]"
+          />
+        ) : (
+          <div className="flex h-full items-center justify-center text-sm text-slate-400">
+            {isBn ? "ছবি নেই" : "No image"}
           </div>
-        </div>
+        )}
 
-        {/* Content Section */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5 md:p-6 lg:p-7 z-10">
-          <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white leading-snug mb-1.5 sm:mb-2 line-clamp-2 transition-colors duration-300 group-hover:text-[#FEC909]">
-            {language === "ENG"
-              ? truncateText(news.english_title, 55)
-              : truncateText(news.bangla_title, 50)}
-          </h3>
+        <span className="absolute left-3 top-3 rounded-md bg-brand-700/95 px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-wide text-white backdrop-blur-sm">
+          {badge}
+        </span>
+      </Link>
 
-          <p className="text-gray-200 text-xs sm:text-sm md:text-[15px] mb-2.5 sm:mb-3.5 line-clamp-2 hidden sm:block">
-            {language === "ENG"
-              ? truncateText(news.english_short_description, 60)
-              : truncateText(news.bangla_short_description, 55)}
-          </p>
+      <div className="p-5">
+        {news.date && (
+          <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-slate-500">
+            <CalendarDays className="h-3.5 w-3.5 text-brand-500" />
+            {formatDate(news.date)}
+          </span>
+        )}
 
-          <Link
-            href={
-              activeTab === "upcoming"
-                ? `/upcoming-programs/${news._id}`
-                : `/message/${news._id}`
-            }
-            className="inline-flex"
-          >
-            <motion.button
-              whileHover={{ x: 5 }}
-              whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center gap-1.5 sm:gap-2 text-[#FEC909] font-semibold text-xs sm:text-sm md:text-base group/btn !p-0 bg-transparent"
-            >
-              <span>{language === "ENG" ? "See more" : "আরো দেখুন"}</span>
-              <ChevronRight className="w-4 h-4 sm:w-4.5 sm:h-4.5 md:w-5 md:h-5 group-hover/btn:translate-x-1 transition-transform" />
-            </motion.button>
-          </Link>
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-[#216740]/25 to-[#FEC909]/25 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+        <h3 className="mt-2 text-[17px] font-bold leading-snug text-slate-900 transition-colors group-hover:text-brand-700">
+          <Link href={href}>{truncateText(title, 78)}</Link>
+        </h3>
+
+        <p className="clamp-2 mt-2 text-[13.5px] leading-relaxed text-slate-600">
+          {truncateText(description, 120)}
+        </p>
+
+        <Link
+          href={href}
+          className="mt-4 inline-flex items-center gap-1.5 text-[13px] font-bold text-brand-700 transition-colors hover:text-brand-800"
+        >
+          {isBn ? "বিস্তারিত" : "Read more"}
+          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+        </Link>
       </div>
-    </motion.div>
+    </article>
   );
 };
 

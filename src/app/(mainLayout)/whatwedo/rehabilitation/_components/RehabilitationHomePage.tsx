@@ -2,21 +2,24 @@
 
 import React, { useEffect, useState } from "react";
 import { useLanguage } from "@/provider/LanguageProvider";
-import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 import { TWhatWeDo } from "@/types/type";
 import { whatwedoFields } from "@/fields";
-import Loader from "@/app/loading";
 import Rehabilitation from "./Rehabilitation";
 
+/**
+ * Rehabilitation listing page.
+ *
+ * Fetches the `ZRF Rehabilitation Team` category once and hands the result to
+ * the presentational `Rehabilitation` component along with the loading flag, so
+ * the banner and skeleton grid render on first paint. A failed request renders
+ * nothing rather than a stray error message inside the page layout.
+ */
 const RehabilitationHomePage = () => {
   const { language } = useLanguage();
-  const title =
-    language === "ENG"
-      ? " ZRF Rehabilitation Programs"
-      : "জেডআরএফ পুনর্বাসন কার্যক্রম";
   const [whatWedoData, setWhatWedoData] = useState<TWhatWeDo[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
     const fetchWhatwedoData = async () => {
       try {
@@ -24,7 +27,7 @@ const RehabilitationHomePage = () => {
           `${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo?limit=1000&fields=${whatwedoFields}&category=ZRF Rehabilitation Team`,
           {
             cache: "no-store",
-          }
+          },
         );
         const data = await response.json();
         setWhatWedoData(data.data?.whatwedoes || []);
@@ -38,15 +41,17 @@ const RehabilitationHomePage = () => {
     fetchWhatwedoData();
   }, []);
 
-   
   if (error) {
-    return <p>Oops data not found!</p>;
+    return null;
   }
+
   return (
-    <div>
-      <CommonBanner title={title} />
-      <Rehabilitation whatWedoData={whatWedoData} language={language} />
-    </div>
+    <Rehabilitation
+      whatWedoData={whatWedoData}
+      language={language}
+      loading={loading}
+    />
   );
 };
+
 export default RehabilitationHomePage;

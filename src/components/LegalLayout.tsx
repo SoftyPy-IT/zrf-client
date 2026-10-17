@@ -1,167 +1,110 @@
 "use client";
-import { Container, Box, Typography, Paper, Breadcrumbs, Button } from "@mui/material";
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import Link from "next/link";
 
-const fadeInUp = {
-  hidden: { opacity: 0, y: 60 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+import React from "react";
+import CommonBanner from "./share/CommonBanner/CommonBanner";
+import PageBody from "./share/PageBody";
+import { useLanguage } from "@/provider/LanguageProvider";
+import { contact } from "@/lib/site";
+import { FileText } from "lucide-react";
+
+type TProps = {
+  title: string;
+  subtitle?: string;
+  /** Human-readable revision date, e.g. "April 15, 2026". */
+  lastUpdated?: string;
+  children: React.ReactNode;
 };
 
+/**
+ * Numbered clause of a legal document. Keeps every policy page on the same
+ * heading scale and spacing without the pages hand-rolling their own.
+ */
+export function LegalSection({
+  title,
+  children,
+  tone = "default",
+}: {
+  title: string;
+  children: React.ReactNode;
+  /** "note" for an aside/callout, "default" for an ordinary clause. */
+  tone?: "default" | "note";
+}) {
+  if (tone === "note") {
+    return (
+      <section className="rounded-card border border-slate-200 bg-slate-50 p-5 sm:p-6">
+        <h2 className="text-[16px] font-bold text-slate-900">{title}</h2>
+        <span className="rule-gold mt-3" aria-hidden="true" />
+        <div className="mt-4 space-y-3 text-[14px] leading-[1.8] text-slate-600">
+          {children}
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section>
+      <h2 className="text-[19px] font-bold leading-snug text-slate-900 sm:text-xl">
+        {title}
+      </h2>
+      <span className="rule-gold mt-3" aria-hidden="true" />
+      <div className="mt-4 space-y-4 text-[14.5px] leading-[1.85] text-slate-600">
+        {children}
+      </div>
+    </section>
+  );
+}
+
+/**
+ * Shell for the legal documents (privacy, refund, terms).
+ *
+ * Institutional rather than decorative: the shared page banner carries the title,
+ * and the document itself sits on a single white sheet — the way a printed policy
+ * would be presented on a government site.
+ */
 export default function LegalLayout({
   title,
   subtitle,
   lastUpdated,
   children,
-}: any) {
-  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
+}: TProps) {
+  const { language } = useLanguage();
+  const isBn = language === "BNG";
 
   return (
-    <Box
-      sx={{
-        minHeight: "100vh",
-        background:
-          "linear-gradient(135deg, #051008 0%, #0A1A12 50%, #051008 100%)",
-        pt: { xs: 10, md: 14 },
-        pb: 8,
-        position: "relative",
-        overflow: "hidden",
-        "&::before": {
-          content: '""',
-          position: "absolute",
-          top: "-30%",
-          right: "-20%",
-          width: "60%",
-          height: "60%",
-          background:
-            "radial-gradient(circle, rgba(33,103,64,0.12) 0%, rgba(33,103,64,0) 70%)",
-          borderRadius: "50%",
-          pointerEvents: "none",
-        },
-        "&::after": {
-          content: '""',
-          position: "absolute",
-          bottom: "-20%",
-          left: "-15%",
-          width: "50%",
-          height: "50%",
-          background:
-            "radial-gradient(circle, rgba(254,201,9,0.06) 0%, rgba(254,201,9,0) 70%)",
-          borderRadius: "50%",
-          pointerEvents: "none",
-        },
-      }}
-    >
-      <Container maxWidth="lg" sx={{ position: "relative", zIndex: 2 }}>
-        {/* Breadcrumbs */}
-        <motion.div initial="hidden" animate="visible" variants={fadeInUp}>
-          <Breadcrumbs
-            separator={
-              <NavigateNextIcon fontSize="small" sx={{ color: "#6A9A7A" }} />
-            }
-            sx={{ mb: 4 }}
-          >
-            <Button
-              component={Link}
-              href="/"
-              sx={{
-                color: "#B8D9C4",
-                textDecoration: "none",
-                "&:hover": { color: "#FEC909" },
-              }}
-            >
-              Home
-            </Button>
-            <Typography sx={{ color: "#FEC909" }}>{title}</Typography>
-          </Breadcrumbs>
-        </motion.div>
+    <>
+      <CommonBanner title={title} subtitle={subtitle} />
 
-        {/* Hero Section */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={fadeInUp}
-          style={{ textAlign: "center", marginBottom: "3rem" }}
-        >
-          <Typography
-            variant="overline"
-            sx={{
-              color: "#FEC909",
-              letterSpacing: "4px",
-              fontWeight: 700,
-              fontSize: "0.8rem",
-              background: "linear-gradient(135deg, #FEC909, #FFE082)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
-            Ziaur Rahman Foundation
-          </Typography>
-          <Typography
-            variant="h2"
-            sx={{
-              fontWeight: 800,
-              background: "linear-gradient(135deg, #FFFFFF, #216740)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              mb: 2,
-              fontSize: { xs: "2.2rem", md: "3.5rem" },
-              letterSpacing: "-0.02em",
-            }}
-          >
-            {title}
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              color: "#B8D9C4",
-              maxWidth: "700px",
-              mx: "auto",
-              fontSize: "1rem",
-              lineHeight: 1.7,
-            }}
-          >
-            {subtitle}
-          </Typography>
-          {lastUpdated && (
-            <Typography
-              variant="caption"
-              sx={{ color: "#6A9A7A", mt: 2, display: "block" }}
-            >
-              Last Updated: {lastUpdated}
-            </Typography>
-          )}
-        </motion.div>
+      <PageBody>
+        <div className="mx-auto max-w-4xl">
+          {/* Document meta bar */}
+          <div className="mb-8 flex flex-wrap items-center justify-between gap-4 rounded-card border border-slate-200 bg-slate-50 px-5 py-4">
+            <span className="inline-flex items-center gap-2.5 text-[13px] font-semibold text-slate-700">
+              <FileText className="h-4 w-4 text-brand-600" />
+              {isBn ? "অফিসিয়াল নথি" : "Official document"}
+            </span>
 
-        {/* Content Card */}
-        <motion.div
-          ref={ref}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          variants={fadeInUp}
-        >
-          <Paper
-            elevation={0}
-            sx={{
-              p: { xs: 3, md: 5 },
-              borderRadius: "32px",
-              background: "rgba(10, 26, 18, 0.75)",
-              backdropFilter: "blur(16px)",
-              border: "1px solid rgba(33, 103, 64, 0.3)",
-              boxShadow: "0 20px 40px -12px rgba(0,0,0,0.4)",
-              transition: "all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)",
-              "&:hover": {
-                border: "1px solid rgba(254, 201, 9, 0.25)",
-                boxShadow: "0 25px 45px -12px rgba(0,0,0,0.5)",
-              },
-            }}
-          >
-            {children}
-          </Paper>
-        </motion.div>
-      </Container>
-    </Box>
+            {lastUpdated && (
+              <span className="text-[12.5px] text-slate-500">
+                {isBn ? "সর্বশেষ হালনাগাদ" : "Last updated"}:{" "}
+                <span className="font-semibold text-slate-700">
+                  {lastUpdated}
+                </span>
+              </span>
+            )}
+          </div>
+
+          <article className="space-y-8">{children}</article>
+
+          {/* Document footer */}
+          <div className="mt-12 border-t border-slate-200 pt-6">
+            <p className="text-[12.5px] leading-relaxed text-slate-500">
+              {isBn
+                ? `এই নথিটি জিয়াউর রহমান ফাউন্ডেশন কর্তৃক প্রকাশিত। যেকোনো প্রশ্নের জন্য যোগাযোগ করুন: ${contact.email}`
+                : `Published by Ziaur Rahman Foundation. For any question about this document, contact ${contact.email}.`}
+            </p>
+          </div>
+        </div>
+      </PageBody>
+    </>
   );
 }

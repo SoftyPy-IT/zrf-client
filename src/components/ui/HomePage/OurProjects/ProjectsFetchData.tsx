@@ -1,238 +1,177 @@
 "use client";
-import BNPButton from "@/components/Button";
+
+import React from "react";
+import Link from "next/link";
+import Image from "next/image";
 import Container from "@/components/share/Container";
+import SectionHeading from "@/components/share/SectionHeading";
+import { Skeleton, SkeletonText, LoadingStatus } from "@/components/share/Skeleton";
 import { TProject } from "@/types/type";
 import truncateText from "@/utils/truncate";
-import {
-  CalendarToday,
-  LocationOn,
-  People
-} from "@mui/icons-material";
-import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick-theme.css";
-import "slick-carousel/slick/slick.css";
-import CTASection from "./CTASection";
-import StatisticsSection from "./StatisticsSection";
+import { CalendarDays, MapPin, ArrowRight } from "lucide-react";
 
 interface projectProps {
   projectData: TProject[];
   language: string;
+  loading?: boolean;
 }
 
+/**
+ * Featured projects.
+ *
+ * A calm three-up card grid replaces the previous auto-playing carousel — easier to
+ * scan, keyboard friendly, and far cheaper on the main thread.
+ *
+ * The section heading renders during loading so the page has a complete structure
+ * on first paint (and in the server-rendered HTML).
+ */
 const ProjectsFetchData: React.FC<projectProps> = ({
   projectData,
   language,
+  loading,
 }) => {
-  const [slidesToShow, setSlidesToShow] = useState(3);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [isClient, setIsClient] = useState(false);
-  const sliderRef = useRef<Slider>(null);
+  const isBn = language === "BNG";
 
-  useEffect(() => {
-    setIsClient(true);
-    const updateSlidesToShow = () => {
-      if (window.innerWidth < 640) {
-        setSlidesToShow(1);
-      } else if (window.innerWidth < 1024) {
-        setSlidesToShow(2);
-      } else {
-        setSlidesToShow(3);
-      }
-    };
+  const sortedProjectData = [...(projectData || [])]
+    .sort(
+      (a: TProject, b: TProject) =>
+        new Date(b.date).getTime() - new Date(a.date).getTime(),
+    )
+    .slice(0, 3);
 
-    updateSlidesToShow();
-    window.addEventListener("resize", updateSlidesToShow);
-    return () => window.removeEventListener("resize", updateSlidesToShow);
-  }, []);
+  if (!loading && sortedProjectData.length === 0) return null;
 
-  const settings = {
-    infinite: true,
-    speed: 800,
-    slidesToShow: slidesToShow,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 5000,
-    arrows: false,
-    dots: true,
-    pauseOnHover: true,
-  };
-
-  const sortedProjectData = projectData?.sort((a: TProject, b: TProject) => {
-    const dateA = new Date(a.date).getTime();
-    const dateB = new Date(b.date).getTime();
-    return dateB - dateA;
-  });
+  const showSkeleton = loading && sortedProjectData.length === 0;
 
   return (
-    <div className="relative w-full overflow-hidden bg-gradient-to-br from-slate-50 via-white to-slate-100">
-      <div id="projects-slider" className="relative mt-10 md:mt-12">
-        <Container>
-          <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 mb-4">
-              {language === "ENG" ? "Our Project" : "আমাদের প্রকল্প"}
-            </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-emerald-500 to-yellow-500 mx-auto rounded-full" />
-            <p className="text-slate-500 mt-4 max-w-2xl mx-auto">
-              {language === "ENG"
-                ? "Ziaur Rahman Foundation is committed to empowering communities through impactful initiatives, sustainable solutions, and strategic support. We focus on fostering growth, improving lives, and creating lasting change across various sectors."
-                : "জিয়াউর রহমান ফাউন্ডেশন (জেডআরএফ) বাংলাদেশের পিছিয়ে পড়া জনগণের জীবনযাত্রার মান উন্নয়নে একাধিক দারিদ্র্য নির্মূল প্রকল্প শুরু করেছে। টেকসই উন্নয়ন, শিক্ষা, এবং আর্থিক ক্ষমতায়নের উপর গুরুত্ব দিয়ে, জেডআরএফ দেশের সবচেয়ে অবহেলিত জনগণের জন্য কাজ করে চলেছে।"}
-            </p>
-          </div>
+    <section className="section-y bg-slate-50" aria-busy={showSkeleton}>
+      <Container>
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <SectionHeading
+            align="left"
+            eyebrow={isBn ? "আমাদের কাজ" : "What we do"}
+            title={isBn ? "আমাদের প্রকল্প" : "Our Projects"}
+            subtitle={
+              isBn
+                ? "দারিদ্র্য বিমোচন, শিক্ষা, স্বাস্থ্য ও আর্থিক ক্ষমতায়নের মাধ্যমে বাংলাদেশের অবহেলিত জনগোষ্ঠীর জীবনমান উন্নয়নে আমরা কাজ করছি।"
+                : "Working across Bangladesh to lift neglected communities through poverty alleviation, education, healthcare and financial empowerment."
+            }
+          />
 
-          <div className="relative px-2 md:px-0">
-            {isClient && sortedProjectData && sortedProjectData.length > 0 && (
-              <Slider ref={sliderRef} {...settings}>
-                {sortedProjectData?.map((project: TProject, index: number) => (
-                  <div key={project._id || index} className="px-3 py-4">
-                    <div
-                      className="group relative h-[350px] md:h-[500px] rounded-2xl overflow-hidden cursor-pointer transition-all duration-500 hover:-translate-y-2"
-                      onMouseEnter={() => setHoveredIndex(index)}
-                      onMouseLeave={() => setHoveredIndex(null)}
-                    >
-                      {/* Background Image */}
-                      <div className="absolute inset-0">
-                        <Image
-                          src={
-                            project.bng_Images?.[0] ||
-                            project.english_Images?.[0] ||
-                            project.eng_images?.[0] ||
-                            "/placeholder.jpg"
-                          }
-                          alt={
-                            language === "ENG"
-                              ? project.english_title
-                              : project.bangla_title
-                          }
-                          fill
-                          className="object-cover transition-transform duration-1000 group-hover:scale-110"
-                        />
-                        {/* Gradient Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20" />
-                        <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/20 to-yellow-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      </div>
+          <Link
+            href="/our-projects"
+            className="group inline-flex shrink-0 items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-[13.5px] font-semibold text-slate-700 transition-colors hover:border-brand-300 hover:text-brand-700"
+          >
+            {isBn ? "সব প্রকল্প দেখুন" : "View all projects"}
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+          </Link>
+        </div>
 
-                      {/* Category Badge */}
-                      <div className="absolute top-5 left-5 z-10">
-                        <div className="flex items-center gap-2 bg-black/50 backdrop-blur-md rounded-full px-3 py-1.5 border border-white/10">
-                          <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full animate-pulse" />
-                          <span className="text-white text-xs font-medium uppercase">
-                            {project.category ||
-                              (language === "ENG"
-                                ? "Active Project"
-                                : "সক্রিয় প্রকল্প")}
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Progress Indicator */}
-                      <div className="absolute top-24 left-5 right-5 z-10">
-                        <div className="h-1 bg-white/20 rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-gradient-to-r from-yellow-400 to-emerald-500 rounded-full transition-all duration-1000"
-                            style={{
-                              width: `${Math.min(100, (index + 1) * 16.6)}%`,
-                            }}
-                          />
-                        </div>
-                      </div>
-
-                      {/* Content */}
-                      <div className="absolute bottom-0 left-0 right-0 p-6 z-10">
-                        <div className="transform transition-all duration-500">
-                          {/* Title */}
-                          <h3 className="text-white text-xl md:text-2xl font-bold mb-2 line-clamp-2 group-hover:text-yellow-400 transition-colors">
-                            {language === "ENG"
-                              ? truncateText(project.english_title, 55)
-                              : truncateText(project.bangla_title, 55)}
-                          </h3>
-
-                          {/* Description */}
-                          <p className="text-white/70 text-sm mb-4 line-clamp-2">
-                            {language === "ENG"
-                              ? truncateText(
-                                project.english_short_description,
-                                90,
-                              )
-                              : truncateText(
-                                project.bangla_short_description,
-                                90,
-                              )}
-                          </p>
-
-                          {/* Metadata - Appears on Hover */}
-                          <div
-                            className={`flex flex-wrap gap-2 mb-4 transition-all duration-500 overflow-hidden ${hoveredIndex === index
-                              ? "max-h-32 opacity-100"
-                              : "max-h-0 opacity-0"
-                              }`}
-                          >
-                            {project.location && (
-                              <div className="flex items-center gap-1 text-white/70 text-xs bg-white/10 rounded-full px-2 py-1">
-                                <LocationOn className="text-yellow-400 text-xs" />
-                                <span>
-                                  {truncateText(project.location, 15)}
-                                </span>
-                              </div>
-                            )}
-                            {project.date && (
-                              <div className="flex items-center gap-1 text-white/70 text-xs bg-white/10 rounded-full px-2 py-1">
-                                <CalendarToday className="text-yellow-400 text-xs" />
-                                <span>
-                                  {new Date(project.date).getFullYear()}
-                                </span>
-                              </div>
-                            )}
-                            {project.beneficiaries && (
-                              <div className="flex items-center gap-1 text-white/70 text-xs bg-white/10 rounded-full px-2 py-1">
-                                <People className="text-yellow-400 text-xs" />
-                                <span>{project.beneficiaries}+</span>
-                              </div>
-                            )}
-                          </div>
-
-                          {/* BNPButton - Fixed */}
-                          <BNPButton
-                            href={`/our-projects/${project._id}`}
-                            language={language}
-                            variant="primary"
-                            size="sm"
-                            showIcon={true}
-                            iconPosition="right"
-
-                          >
-                            {language === "ENG" ? "See More" : "আরও পড়ুন"}
-                          </BNPButton>
-                        </div>
-                      </div>
-
-                      {/* Glass Reflection */}
-                      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+        <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {showSkeleton && (
+            <>
+              <LoadingStatus label={isBn ? "প্রকল্প লোড হচ্ছে" : "Loading projects"} />
+              {[0, 1, 2].map((index) => (
+                <div
+                  key={index}
+                  aria-hidden="true"
+                  className="overflow-hidden rounded-card border border-slate-200 bg-white"
+                >
+                  <Skeleton className="aspect-[16/10] rounded-none" />
+                  <div className="p-5">
+                    <div className="flex gap-4">
+                      <Skeleton className="h-3 w-14" />
+                      <Skeleton className="h-3 w-20" />
                     </div>
+                    <Skeleton className="mt-4 h-4 w-11/12" />
+                    <SkeletonText lines={3} className="mt-4" />
                   </div>
-                ))}
-              </Slider>
-            )}
-          </div>
+                </div>
+              ))}
+            </>
+          )}
 
-          <div className="flex justify-end mt-10">
-            <BNPButton
-              href="/our-projects"
-              language={language}
-              variant="primary"
-              size="md"
-              showIcon={true}
-              iconPosition="right"
-            >
-              {language === "ENG" ? "See All" : "সব দেখুন"}
-            </BNPButton>
-          </div>
-        </Container>
-      </div>
-      <StatisticsSection language={language} />
-      {/* <CTASection language={language} /> */}
-    </div>
+          {sortedProjectData.map((project) => {
+            const image =
+              project.bng_Images?.[0] ||
+              project.english_Images?.[0] ||
+              project.eng_images?.[0];
+
+            const title = isBn ? project.bangla_title : project.english_title;
+            const description = isBn
+              ? project.bangla_short_description
+              : project.english_short_description;
+
+            return (
+              <article
+                key={project._id}
+                className="group surface-card surface-card-hover flex flex-col overflow-hidden"
+              >
+                <Link
+                  href={`/our-projects/${project._id}`}
+                  className="relative block aspect-[16/10] overflow-hidden bg-slate-100"
+                >
+                  {image ? (
+                    <Image
+                      src={image}
+                      alt={title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
+                      className="object-cover transition-transform duration-500 ease-editorial group-hover:scale-[1.04]"
+                    />
+                  ) : (
+                    <div className="flex h-full items-center justify-center text-sm text-slate-400">
+                      {isBn ? "ছবি নেই" : "No image"}
+                    </div>
+                  )}
+
+                  {project.category && (
+                    <span className="absolute left-3 top-3 rounded-md bg-brand-700/95 px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-wide text-white backdrop-blur-sm">
+                      {project.category}
+                    </span>
+                  )}
+                </Link>
+
+                <div className="flex flex-1 flex-col p-5">
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[12px] text-slate-500">
+                    {project.date && (
+                      <span className="inline-flex items-center gap-1.5">
+                        <CalendarDays className="h-3.5 w-3.5 text-brand-500" />
+                        {new Date(project.date).getFullYear()}
+                      </span>
+                    )}
+                    {project.location && (
+                      <span className="inline-flex items-center gap-1.5">
+                        <MapPin className="h-3.5 w-3.5 text-brand-500" />
+                        {truncateText(project.location, 22)}
+                      </span>
+                    )}
+                  </div>
+
+                  <h3 className="mt-2.5 text-[16.5px] font-bold leading-snug text-slate-900 transition-colors group-hover:text-brand-700">
+                    <Link href={`/our-projects/${project._id}`}>
+                      {truncateText(title, 72)}
+                    </Link>
+                  </h3>
+
+                  <p className="clamp-3 mt-2 text-[13.5px] leading-relaxed text-slate-600">
+                    {truncateText(description, 130)}
+                  </p>
+
+                  <Link
+                    href={`/our-projects/${project._id}`}
+                    className="mt-auto inline-flex items-center gap-1.5 pt-5 text-[13px] font-bold text-brand-700 transition-colors hover:text-brand-800"
+                  >
+                    {isBn ? "বিস্তারিত দেখুন" : "Read the project"}
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </Container>
+    </section>
   );
 };
 

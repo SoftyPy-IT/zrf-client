@@ -1,10 +1,18 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { useLanguage } from "@/provider/LanguageProvider";
-import NewsData from "./NewsData";
-import { TActivity } from "@/types/type";
-import axios from "axios";
 
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useLanguage } from "@/provider/LanguageProvider";
+import { TActivity } from "@/types/type";
+import NewsData from "./NewsData";
+
+/**
+ * Data layer for the upcoming programmes index.
+ *
+ * Fetches the public activity feed for the programme categories and hands it
+ * to `NewsData`, which owns the layout and empty state. A failed request falls
+ * back to the calm empty state rather than an error screen.
+ */
 const News = () => {
   const { language } = useLanguage();
   const [newsData, setNewsData] = useState<TActivity[]>([]);
@@ -19,12 +27,14 @@ const News = () => {
       setError(null);
       try {
         const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/activity?category=${category}&limit=1000`
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/activity?category=${category}&limit=1000`,
         );
         setNewsData(res.data?.data?.activities || []);
       } catch (err) {
         console.error("Error fetching upcoming programs:", err);
-        setError("Failed to load upcoming programs data. Please try again later.");
+        setError(
+          "Failed to load upcoming programs data. Please try again later.",
+        );
       } finally {
         setIsLoading(false);
       }
@@ -33,26 +43,12 @@ const News = () => {
     fetchUpcomingPrograms();
   }, [category]);
 
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-600"></div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex justify-center items-center min-h-[400px]">
-        <h2 className="text-xl text-red-500 font-semibold">{error}</h2>
-      </div>
-    );
-  }
-
   return (
-    <div>
-      <NewsData newsData={newsData} language={language} />
-    </div>
+    <NewsData
+      newsData={error ? [] : newsData}
+      language={language}
+      loading={isLoading}
+    />
   );
 };
 

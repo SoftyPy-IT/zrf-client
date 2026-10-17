@@ -1,276 +1,217 @@
 "use client";
 
+import React, { useEffect, useMemo, useState } from "react";
 import Container from "@/components/share/Container";
+import SectionHeading from "@/components/share/SectionHeading";
 import { useActivityData } from "@/hooks/useActivityData";
 import { useLanguage } from "@/provider/LanguageProvider";
-import { AnimatePresence, motion } from "framer-motion";
-import {
-  ArrowRight,
-  Calendar,
-  MessageCircle
-} from "lucide-react";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import RegularNewsCard from "./RegularNewsCard";
-import FeaturedNewsCard from "./FeaturedNewsCard";
 import { TActivity } from "@/types/type";
-import BNPButton from "@/components/Button";
+import { CalendarDays, MessageSquareQuote, ArrowRight } from "lucide-react";
+import Link from "next/link";
+import FeaturedNewsCard from "./FeaturedNewsCard";
+import RegularNewsCard from "./RegularNewsCard";
+import Skeleton from "@/components/share/Skeleton";
 
+type Tab = "upcoming" | "message";
 
+const isUpcoming = (category?: string) => {
+  if (!category) return false;
+  const value = category.trim().toLowerCase();
+  return [
+    "upcoming programs",
+    "upcoming program",
+    "upcoming",
+    "program",
+    "programs",
+    "event",
+    "events",
+  ].includes(value);
+};
+
+const isMessage = (category?: string) => {
+  if (!category) return false;
+  const value = category.trim().toLowerCase();
+  return value === "message" || value === "messages" || value === "latest messages";
+};
+
+/**
+ * Latest updates with an Upcoming Programmes / Messages switch.
+ * The two lead items are shown as image-led feature cards, the remainder as
+ * horizontal summary cards.
+ */
 const LatestNews = () => {
   const { activityData, loading, error } = useActivityData();
   const { language } = useLanguage();
-  const [activeTab, setActiveTab] = useState<"upcoming" | "message">("message");
-  const [filteredData, setFilteredData] = useState<TActivity[]>([]);
+  const isBn = language === "BNG";
+
+  const [activeTab, setActiveTab] = useState<Tab>("message");
   const [visibleCount, setVisibleCount] = useState(4);
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
   useEffect(() => {
-    const handleResize = () => {
+    const handleResize = () =>
       setVisibleCount(window.innerWidth >= 1024 ? 4 : 2);
-    };
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  useEffect(() => {
-    if (activityData) {
-      const isUpcoming = (cat?: string) => {
-        if (!cat) return false;
-        const c = cat.trim().toLowerCase();
-        return (
-          c === "upcoming programs" ||
-          c === "upcoming program" ||
-          c === "upcoming" ||
-          c === "program" ||
-          c === "programs" ||
-          c === "event" ||
-          c === "events"
-        );
-      };
+  const filteredData = useMemo(() => {
+    const list = (activityData || []).filter((item: TActivity) =>
+      activeTab === "upcoming"
+        ? isUpcoming(item.category)
+        : isMessage(item.category),
+    );
 
-      const isMessage = (cat?: string) => {
-        if (!cat) return false;
-        const c = cat.trim().toLowerCase();
-        return c === "message" || c === "messages" || c === "latest messages";
-      };
-
-      const filtered = activityData.filter((news: TActivity) =>
-        activeTab === "upcoming"
-          ? isUpcoming(news.category)
-          : isMessage(news.category)
-      );
-      setFilteredData(
-        [...filtered].sort(
-          (a: TActivity, b: TActivity) =>
-            new Date(b.date || (b as any).createdAt || 0).getTime() -
-            new Date(a.date || (a as any).createdAt || 0).getTime(),
-        ),
-      );
-    }
+    return [...list].sort(
+      (a: TActivity, b: TActivity) =>
+        new Date(b.date || 0).getTime() - new Date(a.date || 0).getTime(),
+    );
   }, [activityData, activeTab]);
-
-  if (error) return <h2>Something went wrong!</h2>;
-  if (loading) return <NewsSkeleton />;
 
   const featuredNews = filteredData.slice(0, 2);
   const regularNews = filteredData.slice(2, visibleCount);
 
+  const tabs: { key: Tab; labelEn: string; labelBn: string; icon: typeof CalendarDays }[] = [
+    {
+      key: "upcoming",
+      labelEn: "Upcoming Programmes",
+      labelBn: "আসন্ন কার্যক্রম",
+      icon: CalendarDays,
+    },
+    {
+      key: "message",
+      labelEn: "Latest Messages",
+      labelBn: "সর্বশেষ বার্তা",
+      icon: MessageSquareQuote,
+    },
+  ];
+
   return (
-    <section className="relative py-14 md:py-20 overflow-hidden bg-gradient-to-br from-slate-50 via-white to-slate-50">
-
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-gradient-to-r from-[#216740]/10 to-[#FEC909]/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-gradient-to-r from-[#FEC909]/10 to-[#216740]/10 rounded-full blur-3xl animate-pulse delay-1000" />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-[#216740]/5 to-[#FEC909]/5 rounded-full blur-3xl" />
-
-        {/* Grid Pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23216740' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            backgroundRepeat: "repeat",
-          }}
+    <section className="section-y bg-white">
+      <Container>
+        <SectionHeading
+          eyebrow={isBn ? "সর্বশেষ আপডেট" : "Stay updated"}
+          title={isBn ? "সংবাদ ও বার্তা" : "News & Messages"}
+          subtitle={
+            isBn
+              ? "জেডআরএফের সর্বশেষ ঘোষণা, বার্তা ও আসন্ন কার্যক্রম সম্পর্কে অবগত থাকুন।"
+              : "Keep up with ZRF announcements, official messages and upcoming programmes."
+          }
         />
-      </div>
 
-      <Container className="relative z-10">
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-5"
-        >
-          <div className="flex items-center justify-center gap-2 mb-3">
-            <div className="w-10 h-[3px] bg-gradient-to-r from-[#216740] to-[#FEC909] rounded-full"></div>
-            <div className="w-2 h-2 rotate-45 bg-gradient-to-r from-[#FEC909] to-[#216740]"></div>
-            <span className="text-[11px] md:text-sm font-bold uppercase tracking-[0.2em]" style={{ color: "#216740" }}>
-              {language === "ENG" ? "Stay Updated" : "সর্বশেষ আপডেট"}
-            </span>
-            <div className="w-10 h-[3px] bg-gradient-to-r from-[#FEC909] to-[#216740] rounded-full"></div>
+        {/* Tab switch ------------------------------------------------- */}
+        <div className="mt-8 flex justify-center">
+          <div
+            role="tablist"
+            aria-label={isBn ? "বিষয় নির্বাচন" : "Content filter"}
+            className="inline-flex rounded-lg border border-slate-200 bg-slate-50 p-1"
+          >
+            {tabs.map((tab) => {
+              const Icon = tab.icon;
+              const selected = activeTab === tab.key;
+              return (
+                <button
+                  key={tab.key}
+                  role="tab"
+                  aria-selected={selected}
+                  onClick={() => setActiveTab(tab.key)}
+                  className={`inline-flex items-center gap-2 rounded-md px-4 py-2 text-[13px] font-semibold transition-all duration-200 sm:px-5 ${
+                    selected
+                      ? "bg-white text-brand-700 shadow-sm"
+                      : "text-slate-600 hover:text-brand-700"
+                  }`}
+                >
+                  <Icon className="h-4 w-4 shrink-0" />
+                  <span className="hidden sm:inline">
+                    {isBn ? tab.labelBn : tab.labelEn}
+                  </span>
+                  <span className="sm:hidden">
+                    {isBn
+                      ? tab.key === "upcoming"
+                        ? "কার্যক্রম"
+                        : "বার্তা"
+                      : tab.key === "upcoming"
+                        ? "Programmes"
+                        : "Messages"}
+                  </span>
+                </button>
+              );
+            })}
           </div>
+        </div>
 
-          <h2 className="text-3xl md:text-5xl font-extrabold text-gray-800 uppercase tracking-wide">
-            {language === "ENG" ? "Latest News" : "সর্বশেষ সংবাদ"}
-          </h2>
+        {/* Loading ---------------------------------------------------- */}
+        {loading && (
+          <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2">
+            {[0, 1].map((key) => (
+              <Skeleton key={key} className="h-[280px] rounded-panel" />
+            ))}
+          </div>
+        )}
 
-          <p className="text-gray-500 mt-3 max-w-2xl mx-auto text-sm md:text-base">
-            {language === "ENG"
-              ? "Stay informed with the latest updates, messages and upcoming programs from ZRF."
-              : "জেডআরএফের সর্বশেষ আপডেট, বার্তা এবং আসন্ন প্রোগ্রাম সম্পর্কে অবগত থাকুন।"}
+        {error && (
+          <p className="mt-10 text-center text-sm text-slate-500">
+            {isBn ? "তথ্য লোড করা যায়নি।" : "Unable to load updates right now."}
           </p>
+        )}
 
-          <div className="w-24 h-1 bg-gradient-to-r from-[#FEC909] to-[#216740] rounded-full mt-5 mx-auto" />
+        {/* Empty ------------------------------------------------------ */}
+        {!loading && !error && filteredData.length === 0 && (
+          <p className="mt-12 text-center text-sm text-slate-500">
+            {isBn
+              ? activeTab === "upcoming"
+                ? "এই মুহূর্তে কোনো আসন্ন কার্যক্রম নেই।"
+                : "এই মুহূর্তে কোনো বার্তা নেই।"
+              : activeTab === "upcoming"
+                ? "No upcoming programmes at the moment."
+                : "No messages at the moment."}
+          </p>
+        )}
 
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex justify-center mb-6 md:mb-12 px-3 sm:px-0 w-[200px] mx-auto md:w-auto"
-        >
-          <div className="relative p-0.5 sm:p-1 bg-white rounded-full shadow-2xl border border-gray-100 w-full sm:w-auto max-w-[95%] sm:max-w-none">
-            <div className="flex gap-0.5 sm:gap-1 md:gap-2">
-              <button
-                onClick={() => setActiveTab("upcoming")}
-                className={`relative px-2.5 sm:px-4 md:px-6 lg:px-8 py-1.5 sm:py-2 md:py-3 rounded-full font-semibold transition-all duration-500 overflow-hidden group text-xs sm:text-sm md:text-base ${activeTab === "upcoming"
-                  ? "text-white"
-                  : "text-gray-600 hover:text-[#216740]"
-                  }`}
-              >
-                {activeTab === "upcoming" && (
-                  <motion.div
-                    layoutId="activeTab"
-                    className="absolute inset-0 bg-gradient-to-r from-[#216740] to-[#FEC909] rounded-full"
-                    transition={{ type: "spring", duration: 0.6 }}
-                  />
-                )}
-                <span className="relative z-10 flex items-center gap-1 sm:gap-2">
-                  <Calendar className="w-3 h-3 sm:w-3.5 md:w-4 sm:h-3.5 md:h-4" />
-                  <span className="hidden sm:inline">
-                    {language === "ENG" ? "Upcoming Programs" : "আসন্ন প্রোগ্রাম"}
-                  </span>
-                  <span className="sm:hidden">
-                    {language === "ENG" ? "Programs" : "প্রোগ্রাম"}
-                  </span>
-                </span>
-              </button>
-              <button
-                onClick={() => setActiveTab("message")}
-                className={`relative px-2.5 sm:px-4 md:px-6 lg:px-8 py-1.5 sm:py-2 md:py-3 rounded-full font-semibold transition-all duration-500 overflow-hidden group text-xs sm:text-sm md:text-base ${activeTab === "message"
-                  ? "text-white"
-                  : "text-gray-600 hover:text-[#216740]"
-                  }`}
-              >
-                {activeTab === "message" && (
-                  <motion.div
-                    layoutId="activeTab"
-                    className="absolute inset-0 bg-gradient-to-r from-[#216740] to-[#FEC909] rounded-full"
-                    transition={{ type: "spring", duration: 0.6 }}
-                  />
-                )}
-                <span className="relative z-10 flex items-center gap-1 sm:gap-2">
-                  <MessageCircle className="w-3 h-3 sm:w-3.5 md:w-4 sm:h-3.5 md:h-4" />
-                  <span className="hidden sm:inline">
-                    {language === "ENG" ? "Latest Messages" : "সর্বশেষ বার্তা"}
-                  </span>
-                  <span className="sm:hidden">
-                    {language === "ENG" ? "Messages" : "বার্তা"}
-                  </span>
-                </span>
-              </button>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Featured News Cards (Hero Style) */}
+        {/* Feature cards ---------------------------------------------- */}
         {featuredNews.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mb-8">
-            {featuredNews.map((news, idx) => (
+          <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2">
+            {featuredNews.map((news, index) => (
               <FeaturedNewsCard
                 key={news._id}
                 news={news}
-                idx={idx}
+                idx={index}
                 language={language}
                 activeTab={activeTab}
-                onHover={setHoveredCard}
-                isHovered={hoveredCard === idx}
               />
             ))}
           </div>
         )}
 
-
-        {filteredData.length === 0 && (
-          <div className="text-center py-12 text-gray-500">
-            <p className="text-base sm:text-lg">
-              {language === "ENG"
-                ? activeTab === "upcoming"
-                  ? "No upcoming programs available at the moment."
-                  : "No messages available at the moment."
-                : activeTab === "upcoming"
-                  ? "এই মুহূর্তে কোনো আসন্ন প্রোগ্রাম নেই।"
-                  : "এই মুহূর্তে কোনো বার্তা নেই।"}
-            </p>
-          </div>
-        )}
-
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -30 }}
-            transition={{ duration: 0.6 }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6 "
-          >
-            {regularNews.map((news, idx) => (
+        {/* Summary cards ---------------------------------------------- */}
+        {regularNews.length > 0 && (
+          <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+            {regularNews.map((news, index) => (
               <RegularNewsCard
                 key={news._id}
                 news={news}
-                idx={idx}
+                idx={index}
                 language={language}
                 activeTab={activeTab}
               />
             ))}
-          </motion.div>
-        </AnimatePresence>
-
-        {filteredData.length > visibleCount && (
-          <div className="flex justify-end  mt-0 md:mt-5">
-            <BNPButton
-              href={activeTab === "upcoming" ? "/upcoming-programs" : "/message"}
-              language={language}
-              variant="primary"
-              size="md"
-              fullWidth={false}
-              showIcon={true}
-              iconPosition="right"
-
-            >
-              {language === "ENG" ? "View All" : "সব দেখুন"}
-            </BNPButton>
           </div>
         )}
 
+        {filteredData.length > 0 && (
+          <div className="mt-10 flex justify-center">
+            <Link
+              href={activeTab === "upcoming" ? "/upcoming-programs" : "/message"}
+              className="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-700 hover:shadow-md"
+            >
+              {isBn ? "সব দেখুন" : "View all"}
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        )}
       </Container>
-
     </section>
   );
 };
-
-const NewsSkeleton = () => (
-  <div className="min-h-[60vh] flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-slate-50">
-    <div className="text-center">
-      <div className="relative w-24 h-24 mx-auto mb-6">
-        <div className="absolute inset-0 border-4 border-[#216740]/20 rounded-full"></div>
-        <div className="absolute inset-0 border-4 border-t-[#FEC909] border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin"></div>
-      </div>
-      <p className="text-gray-600 animate-pulse">Loading latest updates...</p>
-    </div>
-  </div>
-);
 
 export default LatestNews;

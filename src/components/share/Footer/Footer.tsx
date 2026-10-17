@@ -4,297 +4,293 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "../../../assets/images/logo/transparent.png";
-import footer from "../../../assets/images/footer/pattern-2.png";
+import footerPattern from "../../../assets/images/footer/pattern-2.png";
 import Container from "../Container";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import XIcon from "@mui/icons-material/X";
-import MailOutline from "@mui/icons-material/MailOutline";
-import { YouTube } from "@mui/icons-material";
+import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import CallOutlinedIcon from "@mui/icons-material/CallOutlined";
+import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Subscribe from "./Subscribe";
-import { Box } from "@mui/material";
-import DonationModal from "@/components/Donation/DonationModal";
+import MembershipModal from "@/components/Donation/MembershipModal";
 import { useLanguage } from "@/provider/LanguageProvider";
+import { contact, site, socials } from "@/lib/site";
+import { socialIcons } from "../socialIcons";
 
 const FooterData = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const { language } = useLanguage();
+  const isBn = language === "BNG";
 
-  const handleModalOpen = () => setModalOpen(true);
-  const handleModalClose = () => setModalOpen(false);
-
-  const footerLinks = {
-    support: [
-      {
-        name: language === "ENG" ? "Contact Us" : "যোগাযোগ করুন",
-        href: "/contact",
-      },
-      {
-        name: language === "ENG" ? "Join Us" : "যোগ দিন",
-        href: "#",
-        onClick: handleModalOpen,
-      },
-    ],
-    about: [
-      {
-        name: language === "ENG" ? "About Us" : "আমাদের সম্পর্কে",
-        href: "/about",
-      },
-      {
-        name: language === "ENG" ? "Contact Us" : "যোগাযোগ করুন",
-        href: "/contact",
-      },
-      {
-        name: language === "ENG" ? "Our Committee" : "আমাদের কমিটি",
-        href: "/committee",
-      },
-    ],
-  };
-
-  const socialLinks = [
+  const linkColumns = [
     {
-      name: "Facebook",
-      icon: <FacebookIcon className="text-[18px]" />,
-      href: "https://www.facebook.com/zrf.org/",
+      heading: isBn ? "আমাদের সম্পর্কে" : "About",
+      links: [
+        { name: isBn ? "আমাদের সম্পর্কে" : "About Us", href: "/about" },
+        { name: isBn ? "কমিটি" : "Committee", href: "/committee" },
+        {
+          name: isBn ? "প্রেসিডেন্টের বাণী" : "President's Message",
+          href: "/message-of-president",
+        },
+        {
+          name: isBn ? "নির্বাহী পরিচালকের বাণী" : "Executive Director's Message",
+          href: "/message-of-director",
+        },
+        {
+          name: isBn ? "স্মারক ও প্রকাশনা" : "News & Publications",
+          href: "/news",
+        },
+      ],
     },
     {
-      name: "YouTube",
-      icon: <YouTube className="text-[18px]" />,
-      href: "https://www.youtube.com/@ZiaurRahmanFoundationZRF",
+      heading: isBn ? "আমাদের কার্যক্রম" : "Our Work",
+      links: [
+        {
+          name: isBn ? "আমাদের প্রকল্প" : "Our Projects",
+          href: "/our-projects",
+        },
+        {
+          name: isBn ? "শিক্ষা কার্যক্রম" : "Education Programmes",
+          href: "/education",
+        },
+        { name: isBn ? "স্বাস্থ্য সেবা" : "Health Services", href: "/health-services" },
+        {
+          name: isBn ? "জলবায়ু পরিবর্তন" : "Climate Change",
+          href: "/climate-change",
+        },
+        { name: isBn ? "ফটো গ্যালারি" : "Photo Gallery", href: "/gallery" },
+      ],
     },
     {
-      name: "X",
-      icon: <XIcon className="text-[18px]" />,
-      href: "https://x.com",
-    },
-    {
-      name: "Instagram",
-      icon: <InstagramIcon className="text-[18px]" />,
-      href: "https://instagram.com",
-    },
-    {
-      name: "LinkedIn",
-      icon: <LinkedInIcon className="text-[18px]" />,
-      href: "https://linkedin.com",
+      heading: isBn ? "সম্পৃক্ত হোন" : "Get Involved",
+      links: [
+        {
+          name: isBn ? "স্বেচ্ছাসেবক হোন" : "Become a Volunteer",
+          href: "/volunteer",
+        },
+        { name: isBn ? "অনুদান দিন" : "Donate", href: "/donations" },
+        { name: isBn ? "যোগাযোগ" : "Contact Us", href: "/contact" },
+        { name: isBn ? "ই-বুক" : "E-Books", href: "/ebooks" },
+        { name: isBn ? "ভিডিও গ্যালারি" : "Video Gallery", href: "/videos" },
+      ],
     },
   ];
 
-  const ColumnHeading = ({ title }: { title: string }) => (
-    <h4 className="font-bold text-white text-lg mb-5 relative inline-block">
-      {title}
-      <span className="absolute -bottom-2 left-0 w-10 h-[3px] bg-gradient-to-r from-[#FEC909] to-[#20bd86] rounded-full"></span>
-    </h4>
-  );
-
-  const FooterLink = ({
-    href,
-    onClick,
-    name,
-  }: {
-    href: string;
-    onClick?: () => void;
-    name: string;
-  }) => (
-    <li>
-      {onClick ? (
-        <button
-          onClick={onClick}
-          className="group inline-flex items-center gap-2.5 text-[#B8D9C4] hover:text-[#FEC909] transition-colors duration-300 text-sm cursor-pointer text-left"
-        >
-          <span className="w-1.5 h-1.5 rounded-full bg-[#FEC909]/40 transition-all duration-300 group-hover:bg-[#FEC909] group-hover:scale-125"></span>
-          {name}
-        </button>
-      ) : (
-        <Link
-          href={href}
-          className="group inline-flex items-center gap-2.5 text-[#B8D9C4] hover:text-[#FEC909] transition-colors duration-300 text-sm"
-        >
-          <span className="w-1.5 h-1.5 rounded-full bg-[#FEC909]/40 transition-all duration-300 group-hover:bg-[#FEC909] group-hover:scale-125"></span>
-          {name}
-        </Link>
-      )}
-    </li>
+  const ColumnHeading = ({ children }: { children: React.ReactNode }) => (
+    <h3 className="mb-5 font-bold text-white">
+      <span className="text-[15px] tracking-tight">{children}</span>
+      <span className="mt-2.5 block h-[2px] w-8 rounded-full bg-gold-500" />
+    </h3>
   );
 
   return (
     <>
-      {/* Newsletter Signup Bar */}
-      <div className="relative bg-gradient-to-r from-[#0F3D26] via-[#1A5C3D] to-[#20bd86] overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-24 -right-10 w-72 h-72 bg-white/5 rounded-full blur-2xl" />
-          <div className="absolute -bottom-24 -left-10 w-72 h-72 bg-yellow-400/10 rounded-full blur-2xl" />
-        </div>
+      {/* ============================================================== */}
+      {/* Newsletter band                                                */}
+      {/* ============================================================== */}
+      <section className="relative overflow-hidden border-t-4 border-gold-500 bg-brand-800">
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.07]"
+          style={{
+            backgroundImage: `url(${footerPattern.src})`,
+            backgroundSize: "420px auto",
+          }}
+          aria-hidden="true"
+        />
         <Container>
-          <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-6 py-9 md:py-11 z-10">
-            <div className="flex items-center gap-4">
-              <div className="hidden md:flex w-12 h-12 rounded-full bg-white/15 backdrop-blur border border-white/25 items-center justify-center shrink-0">
-                <MailOutline className="text-white w-6 h-6" />
-              </div>
+          <div className="relative z-10 flex flex-col items-start justify-between gap-6 py-10 md:flex-row md:items-center md:py-12">
+            <div className="flex items-start gap-4">
+              <span className="hidden h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-white/10 ring-1 ring-white/20 md:flex">
+                <MailOutlineIcon className="text-white" sx={{ fontSize: 22 }} />
+              </span>
               <div>
-                <p className="text-xl lg:text-3xl text-white font-bold uppercase">
-                  {language === "ENG"
-                    ? "Join Our Newsletter"
-                    : "আমাদের নিউজলেটার যোগদান"}
-                </p>
-                <p className="text-white/80 text-sm mt-1">
-                  {language === "ENG"
-                    ? "Get the latest updates, messages and program alerts delivered to your inbox."
-                    : "সর্বশেষ আপডেট, বার্তা এবং প্রোগ্রামের তথ্য সরাসরি আপনার ইনবক্সে পেতে সাবস্ক্রাইব করুন।"}
+                <h2 className="text-lg font-bold text-white md:text-xl lg:text-2xl">
+                  {isBn ? "আমাদের সংবাদপত্রে সাবস্ক্রাইব করুন" : "Subscribe to our newsletter"}
+                </h2>
+                <p className="mt-1 max-w-xl text-sm leading-relaxed text-brand-100">
+                  {isBn
+                    ? "সর্বশেষ সংবাদ, কার্যক্রমের তথ্য ও ঘোষণা সরাসরি আপনার ইমেইলে পেতে সাবস্ক্রাইব করুন।"
+                    : "Get the latest news, programme updates and official announcements delivered straight to your inbox."}
                 </p>
               </div>
             </div>
             <Subscribe />
           </div>
         </Container>
-      </div>
+      </section>
 
-      {/* Main Footer Body */}
-      <Box
-        component="footer"
-        sx={{
-          background:
-            "linear-gradient(180deg, #06120B 0%, #0A1A12 45%, #050F08 100%)",
-          color: "#C8E0D0",
-          position: "relative",
-          pt: 10,
-          pb: 4,
-          overflow: "hidden",
-        }}
-      >
-        {/* Pattern Overlay */}
+      {/* ============================================================== */}
+      {/* Main footer                                                    */}
+      {/* ============================================================== */}
+      <footer className="relative overflow-hidden bg-brand-950 text-brand-100">
         <div
-          className="absolute inset-0 opacity-[0.05] pointer-events-none"
+          className="pointer-events-none absolute inset-0 opacity-[0.04]"
           style={{
-            backgroundImage: `url(${footer.src})`,
+            backgroundImage: `url(${footerPattern.src})`,
             backgroundSize: "500px auto",
-            backgroundRepeat: "repeat",
           }}
+          aria-hidden="true"
         />
 
         <Container>
-          <div className="relative">
-            {/* Main Footer Content */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.8fr_1fr_1fr] gap-x-8 gap-y-10">
-              {/* Brand Section */}
-              <div>
-                <Link href="/" className="inline-flex items-center gap-4">
-                  <Image
-                    src={logo}
-                    alt="Ziaur Rahman Foundation Logo"
-                    width={56}
-                    height={60}
-                    className="w-12 h-auto"
-                  />
-                  <span className="text-left">
-                    <span className="block font-bold text-white text-lg leading-tight">
-                      {language === "ENG"
-                        ? "Ziaur Rahman Foundation"
-                        : "জিয়াউর রহমান ফাউন্ডেশন"}
-                    </span>
-                    <span className="block text-[#FEC909] text-xs mt-1 font-medium">
-                      {language === "ENG"
-                        ? "Working for a better nation"
-                        : "রাষ্ট্র গঠনে নিবেদিত"}
-                    </span>
+          <div className="relative z-10 grid grid-cols-1 gap-x-8 gap-y-10 py-14 sm:grid-cols-2 lg:grid-cols-12 lg:py-16">
+            {/* Brand + contact ------------------------------------------ */}
+            <div className="lg:col-span-6 xl:col-span-3">
+              <Link href="/" className="inline-flex items-center gap-3.5">
+                <Image
+                  src={logo}
+                  alt=""
+                  width={56}
+                  height={60}
+                  className="h-12 w-auto"
+                />
+                <span>
+                  <span className="block text-[17px] font-bold leading-tight text-white">
+                    {isBn ? site.nameBn : site.nameEn}
                   </span>
-                </Link>
+                  <span className="mt-1 block text-[11px] font-semibold uppercase tracking-[0.12em] text-gold-400">
+                    {isBn ? site.taglineBn : site.taglineEn}
+                  </span>
+                </span>
+              </Link>
 
-<p className="text-[#B8D9C4] text-sm leading-relaxed mt-5 max-w-sm">
-  {language === "ENG"
-    ? "Ziaur Rahman Foundation is a humanitarian and welfare organization established in memory of the proclaimer of Bangladesh's Independence and the great freedom fighter, Shaheed President Ziaur Rahman Bir Uttam."
-    : "জিয়াউর রহমান ফাউন্ডেশন বাংলাদেশের স্বাধীনতার ঘোষক এবং মহান মুক্তিযোদ্ধা শহীদ রাষ্ট্রপতি জিয়াউর রহমান বীর উত্তমের স্মরণে প্রতিষ্ঠিত একটি মানবিক ও কল্যাণমূলক সংগঠন।"}
-</p>
+              <p className="mt-5 max-w-sm text-sm leading-relaxed text-brand-200">
+                {isBn
+                  ? "বাংলাদেশের স্বাধীনতার ঘোষক ও মহান মুক্তিযোদ্ধা শহীদ রাষ্ট্রপতি জিয়াউর রহমান বীর উত্তমের স্মরণে প্রতিষ্ঠিত একটি মানবিক ও কল্যাণমূলক সংগঠন।"
+                  : "A humanitarian and welfare organisation established in memory of Shaheed President Ziaur Rahman Bir Uttam, the proclaimer of Bangladesh's Independence."}
+              </p>
 
-                {/* Social Icons */}
-                <div className="flex items-center gap-2.5 mt-6">
-                  {socialLinks.map((social, index) => (
-                    <a
-                      key={index}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={social.name}
-                      className="flex items-center justify-center w-10 h-10 rounded-full bg-white/10 backdrop-blur border border-white/10 text-[#C8E0D0] hover:bg-[#FEC909] hover:text-[#0A1A12] hover:border-[#FEC909] hover:-translate-y-1 transition-all duration-300"
-                    >
-                      {social.icon}
-                    </a>
-                  ))}
-                </div>
-              </div>
-
-              {/* Support Links */}
-              <div className="text-center sm:text-left">
-                <ColumnHeading
-                  title={language === "ENG" ? "Support" : "সহায়তা"}
-                />
-                <ul className="space-y-3.5">
-                  {footerLinks.support.map((link, index) => (
-                    <FooterLink
-                      key={index}
-                      href={link.href}
-                      onClick={link.onClick}
-                      name={link.name}
-                    />
-                  ))}
-                </ul>
-              </div>
-
-              {/* About Links */}
-              <div className="text-center sm:text-left">
-                <ColumnHeading
-                  title={language === "ENG" ? "About" : "আমাদের সম্পর্কে"}
-                />
-                <ul className="space-y-3.5">
-                  {footerLinks.about.map((link, index) => (
-                    <FooterLink
-                      key={index}
-                      href={link.href}
-                      name={link.name}
-                    />
-                  ))}
-                </ul>
+              {/* Social */}
+              <div className="mt-6 flex items-center gap-2">
+                {socials.map((social) => (
+                  <a
+                    key={social.name}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.name}
+                    className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-brand-100 transition-all duration-200 hover:-translate-y-0.5 hover:border-gold-500 hover:bg-gold-500 hover:text-brand-950"
+                  >
+                    {socialIcons[social.name]}
+                  </a>
+                ))}
               </div>
             </div>
 
-            {/* Gradient Divider */}
-            <div className="h-px bg-gradient-to-r from-transparent via-[#FEC909] to-transparent my-8" />
+            {/* Link columns -------------------------------------------- */}
+            {linkColumns.map((column) => (
+              <div key={column.heading} className="lg:col-span-2">
+                <ColumnHeading>{column.heading}</ColumnHeading>
+                <ul className="space-y-2.5">
+                  {column.links.map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        className="group inline-flex items-start gap-2 text-[13.5px] leading-snug text-brand-200 transition-colors hover:text-white"
+                      >
+                        <span className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-gold-500/50 transition-colors group-hover:bg-gold-500" />
+                        {link.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
 
-            {/* Copyright Section */}
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-              <div className="text-gray-400 text-sm">
-                &copy; {new Date().getFullYear()}{" "}
-                {language === "ENG"
-                  ? "Ziaur Rahman Foundation. All Rights Reserved."
-                  : "জিয়াউর রহমান ফাউন্ডেশন। সর্বস্বত্ব সংরক্ষিত।"}
-              </div>
-              <div className="flex items-center flex-wrap justify-center gap-x-6 gap-y-2">
-                <Link
-                  href="/privacy-policy"
-                  className="text-gray-400 hover:text-[#FEC909] transition-colors duration-300 text-sm"
-                >
-                  {language === "ENG" ? "Privacy Policy" : "প্রাইভেসি পলিসি"}
-                </Link>
-                <Link
-                  href="/terms-&-conditions"
-                  className="text-gray-400 hover:text-[#FEC909] transition-colors duration-300 text-sm"
-                >
-                  {language === "ENG" ? "Terms & Conditions" : "শর্তাবলি"}
-                </Link>
-                <Link
-                  href="/refund-policy"
-                  className="text-gray-400 hover:text-[#FEC909] transition-colors duration-300 text-sm"
-                >
-                  {language === "ENG" ? "Refund Policy" : "রিফান্ড পলিসি"}
-                </Link>
-              </div>
+            {/* Reach us ------------------------------------------------ */}
+            <div className="sm:col-span-2 lg:col-span-12 xl:col-span-3">
+              <ColumnHeading>{isBn ? "যোগাযোগ" : "Reach Us"}</ColumnHeading>
+
+              <ul className="space-y-3.5 text-[13.5px] leading-relaxed lg:grid lg:grid-cols-3 lg:gap-8 lg:space-y-0 xl:block xl:space-y-3.5">
+                <li className="flex items-start gap-2.5">
+                  <LocationOnOutlinedIcon
+                    sx={{ fontSize: 17 }}
+                    className="mt-0.5 shrink-0 text-gold-400"
+                  />
+                  <span className="min-w-0 text-brand-200">
+                    {isBn ? contact.addressBn : contact.addressEn}
+                  </span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <CallOutlinedIcon
+                    sx={{ fontSize: 16 }}
+                    className="mt-0.5 shrink-0 text-gold-400"
+                  />
+                  <span className="flex min-w-0 flex-col gap-0.5">
+                    {(isBn ? contact.phonesBn : contact.phones).map((phone, index) => (
+                      <a
+                        key={phone}
+                        href={`tel:${contact.phones[index]}`}
+                        className="text-brand-200 transition-colors hover:text-white"
+                      >
+                        {phone}
+                      </a>
+                    ))}
+                  </span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <MailOutlineIcon
+                    sx={{ fontSize: 17 }}
+                    className="mt-0.5 shrink-0 text-gold-400"
+                  />
+                  <a
+                    href={`mailto:${contact.email}`}
+                    className="min-w-0 break-words text-brand-200 transition-colors hover:text-white"
+                  >
+                    {/* Zero-width space after the "@" so long addresses wrap readably */}
+                    {contact.email.replace("@", "@\u200B")}
+                  </a>
+                </li>
+              </ul>
+
+              <button
+                type="button"
+                onClick={() => setModalOpen(true)}
+                className="mt-5 inline-flex items-center gap-2 rounded-lg border border-white/15 bg-white/5 px-3.5 py-2 text-[13px] font-semibold text-white transition-colors hover:border-gold-500 hover:bg-gold-500 hover:text-brand-950"
+              >
+                {isBn ? "সদস্য হোন" : "Become a member"}
+                <ArrowForwardIcon sx={{ fontSize: 15 }} />
+              </button>
             </div>
           </div>
-        </Container>
-      </Box>
 
-      {/* Donation Modal */}
-      {modalOpen && <DonationModal onClose={handleModalClose} open={modalOpen} />}
+          {/* Bottom bar ------------------------------------------------- */}
+          <div className="relative z-10 flex flex-col items-center justify-between gap-4 border-t border-white/10 py-6 md:flex-row">
+            <p className="text-center text-[12.5px] text-brand-300 md:text-left">
+              &copy; {new Date().getFullYear()}{" "}
+              {isBn
+                ? "জিয়াউর রহমান ফাউন্ডেশন। সর্বস্বত্ব সংরক্ষিত।"
+                : "Ziaur Rahman Foundation. All rights reserved."}
+            </p>
+
+            <nav
+              className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2"
+              aria-label={isBn ? "নীতিমালা" : "Policies"}
+            >
+              {[
+                { name: isBn ? "প্রাইভেসি পলিসি" : "Privacy Policy", href: "/privacy-policy" },
+                { name: isBn ? "শর্তাবলি" : "Terms & Conditions", href: "/terms-&-conditions" },
+                { name: isBn ? "রিফান্ড পলিসি" : "Refund Policy", href: "/refund-policy" },
+                { name: isBn ? "নিবন্ধন" : "Registration", href: "/registration" },
+              ].map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="text-[12.5px] text-brand-300 transition-colors hover:text-gold-400"
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
+          </div>
+        </Container>
+      </footer>
+
+      {modalOpen && (
+        <MembershipModal
+          onClose={() => setModalOpen(false)}
+          open={modalOpen}
+        />
+      )}
     </>
   );
 };

@@ -1,219 +1,292 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
-import Container from "@/components/share/Container";
-import { overviewProps } from "@/types/type";
-import {
-  ArrowForward,
-  PlayArrow,
-  VolunteerActivism
-} from "@mui/icons-material";
+
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import Container from "@/components/share/Container";
+import SectionHeading from "@/components/share/SectionHeading";
+import { Skeleton, SkeletonText, LoadingStatus } from "@/components/share/Skeleton";
+import { overviewProps } from "@/types/type";
 import ReactHtmlParser from "react-html-parser";
-import "./Impact.css";
+import {
+  CalendarRange,
+  Users,
+  CheckCircle2,
+  HandCoins,
+  ArrowRight,
+  Quote,
+} from "lucide-react";
 
-
-
+/** Renders the CMS rich text with the site's editorial type scale. */
 const renderContent = (content: string) => {
-  const parsedContent = ReactHtmlParser(content);
+  if (!content) return null;
 
-  return parsedContent.map((element, index) => {
-    if (element.type === "h1") {
-      return (
-        <h1
-          key={index}
-          className="text-3xl md:text-4xl font-bold mb-4 text-white"
-        >
-          {element.props.children}
-        </h1>
-      );
-    } else if (element.type === "h2") {
-      return (
-        <h2
-          key={index}
-          className="lg:text-5xl md:text-4xl text-3xl font-bold mb-5 text-white"
-        >
-          {element.props.children}
-        </h2>
-      );
-    } else if (element.type === "p") {
-      return (
-        <p key={index} className="mb-4 text-white/80 leading-relaxed">
-          {element.props.children}
-        </p>
-      );
-    } else if (element.type === "ol") {
-      return (
-        <ol
-          key={index}
-          className="list-decimal list-inside mb-5 text-white/80 space-y-2"
-        >
-          {element.props.children}
-        </ol>
-      );
-    } else if (element.type === "ul") {
-      return (
-        <ul
-          key={index}
-          className="list-disc list-inside mb-5 text-white/80 space-y-2"
-        >
-          {element.props.children}
-        </ul>
-      );
-    } else if (element.type === "video") {
-      return (
-        <video
-          key={index}
-          className="w-full h-auto rounded-xl mb-4"
-          controls
-          src={element.props.src}
-        >
-          Your browser does not support the video tag.
-        </video>
-      );
-    } else if (element.type === "img") {
-      return (
-        <div key={index} className="w-full rounded-xl overflow-hidden mb-4">
-          <img
+  return ReactHtmlParser(content).map((element, index) => {
+    switch (element.type) {
+      case "h1":
+        return (
+          <h3 key={index} className="mb-3 mt-6 text-xl font-bold text-slate-900 first:mt-0">
+            {element.props.children}
+          </h3>
+        );
+      case "h2":
+        return (
+          <h3 key={index} className="mb-3 mt-6 text-xl font-bold text-slate-900 first:mt-0">
+            {element.props.children}
+          </h3>
+        );
+      case "p":
+        return (
+          <p key={index} className="mb-4 text-[14.5px] leading-[1.85] text-slate-600">
+            {element.props.children}
+          </p>
+        );
+      case "ol":
+        return (
+          <ol
+            key={index}
+            className="mb-4 list-decimal space-y-2 pl-5 text-[14.5px] leading-relaxed text-slate-600"
+          >
+            {element.props.children}
+          </ol>
+        );
+      case "ul":
+        return (
+          <ul
+            key={index}
+            className="mb-4 list-disc space-y-2 pl-5 text-[14.5px] leading-relaxed text-slate-600"
+          >
+            {element.props.children}
+          </ul>
+        );
+      case "li":
+        return <li key={index}>{element.props.children}</li>;
+      case "video":
+        return (
+          <video
+            key={index}
+            className="mb-4 h-auto w-full rounded-card"
+            controls
             src={element.props.src}
-            alt="impact image"
-            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
           />
-        </div>
-      );
-    } else if (element.type === "iframe") {
-      return (
-        <div
-          key={index}
-          className="relative w-full pt-[56.25%] rounded-xl overflow-hidden mb-4"
-        >
-          <iframe
-            className="absolute top-0 left-0 w-full h-full"
-            src={element.props.src}
-            title={`iframe-${index}`}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
-        </div>
-      );
-    } else if (element.type === "li") {
-      return (
-        <li key={index} className="mb-2">
-          {element.props.children}
-        </li>
-      );
-    } else {
-      return null;
+        );
+      case "img":
+        return (
+          <div key={index} className="mb-4 overflow-hidden rounded-card">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={element.props.src}
+              alt=""
+              className="h-auto w-full object-cover"
+            />
+          </div>
+        );
+      case "iframe":
+        return (
+          <div
+            key={index}
+            className="relative mb-4 w-full overflow-hidden rounded-card pt-[56.25%]"
+          >
+            <iframe
+              className="absolute inset-0 h-full w-full"
+              src={element.props.src}
+              title={`embed-${index}`}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+        );
+      default:
+        return null;
     }
   });
 };
 
+/**
+ * "Our Impact" — a dark institutional statistics band followed by the editorial
+ * impact story. Statistics are the real figures returned by the overview endpoint,
+ * not hard-coded placeholders.
+ *
+ * While the figures are in flight the band keeps its full structure and shows
+ * placeholder marks, so the page never collapses into a spinner.
+ */
 const FetchImactData: React.FC<overviewProps> = ({
   overviewData,
   language,
-  handleModalOpen,
+  loading,
 }) => {
-  const [isVisible, setIsVisible] = useState(false);
+  const isBn = language === "BNG";
+  const data = overviewData?.[0];
+  const showSkeleton = !data;
 
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
+  if (showSkeleton && !loading) return null;
+
+  const stats = [
+    {
+      icon: CalendarRange,
+      value: isBn ? data?.year_count_bangla : data?.year_count_english,
+      label: isBn ? data?.year_text_bangla : data?.year_text_english,
+    },
+    {
+      icon: Users,
+      value: isBn ? data?.volunteer_count_bangla : data?.volunteer_count_english,
+      label: isBn ? data?.volunteer_text_bangla : data?.volunteer_text_english,
+    },
+    {
+      icon: CheckCircle2,
+      value: isBn
+        ? data?.complete_project_count_bangla
+        : data?.complete_project_count_english,
+      label: isBn
+        ? data?.complete_project_text_bangla
+        : data?.complete_project_text_english,
+    },
+    {
+      icon: HandCoins,
+      value: isBn ? data?.donation_count_bangla : data?.donation_count_english,
+      label: isBn ? data?.donation_text_banlga : data?.donation_text_english,
+    },
+  ];
 
   return (
-    <div className="relative w-full overflow-hidden bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-900 py-16 mt-10 md:mt-12 md:py-24">
-      {/* Background Pattern & Effects */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-yellow-500/10 to-emerald-500/10 rounded-full blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-yellow-500/10 to-emerald-500/10 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-yellow-500/5 to-emerald-500/5 rounded-full blur-3xl" />
+    <>
+      {/* ---------------------------------------------------------------- */}
+      {/* Statistics band                                                   */}
+      {/* ---------------------------------------------------------------- */}
+      <section
+        className="relative isolate overflow-hidden bg-brand-900"
+        aria-busy={showSkeleton}
+      >
+        <div className="h-1 w-full bg-gold-rule" />
 
-        <div
-          className="absolute inset-0 opacity-5"
-          style={{
-            backgroundImage:
-              'url("data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.1\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat',
-          }}
-        />
-      </div>
+        <Container>
+          <div className="py-12 lg:py-16">
+            <SectionHeading
+              align="left"
+              tone="dark"
+              eyebrow={isBn ? "আমাদের প্রভাব" : "Our impact"}
+              title={isBn ? "সংখ্যায় জিয়াউর রহমান ফাউন্ডেশন" : "ZRF in numbers"}
+            />
 
-      <Container>
-        {overviewData?.map((data, idx) => (
-          <div key={data._id} className="relative">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-
-              <div
-                className={`space-y-6 transform transition-all duration-1000 ${isVisible ? "translate-x-0 opacity-100" : "-translate-x-20 opacity-0"}`}
-              >
-                <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
-                  <div className="flex gap-1">
-                    <span className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse" />
-                    <span className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse delay-150" />
-                    <span className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse delay-300" />
+            <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-8 lg:grid-cols-4">
+              {showSkeleton && (
+                <LoadingStatus label={isBn ? "পরিসংখ্যান লোড হচ্ছে" : "Loading statistics"} />
+              )}
+              {stats.map((stat, index) => {
+                const Icon = stat.icon;
+                return (
+                  <div
+                    key={index}
+                    className="border-l-2 border-gold-500/40 pl-4 lg:pl-5"
+                  >
+                    <Icon
+                      className="mb-3 h-5 w-5 text-gold-400"
+                      strokeWidth={1.75}
+                    />
+                    {showSkeleton ? (
+                      <>
+                        <Skeleton tone="dark" className="h-9 w-20" />
+                        <Skeleton tone="dark" className="mt-3 h-3 w-24" />
+                      </>
+                    ) : (
+                      <>
+                        <dd className="text-[32px] font-bold leading-none text-white lg:text-[38px]">
+                          {stat.value}
+                        </dd>
+                        <dt className="mt-2 text-[12px] font-medium uppercase leading-snug tracking-[0.08em] text-brand-200">
+                          {stat.label}
+                        </dt>
+                      </>
+                    )}
                   </div>
-                  <span className="text-xs font-semibold text-yellow-400 uppercase tracking-wider">
-                    {language === "ENG"
-                      ? "Our Impact Story"
-                      : "আমাদের প্রভাবের গল্প"}
-                  </span>
-                </div>
-                <div className="text-white">
-                  {language === "ENG"
-                    ? renderContent(data.description_english)
-                    : renderContent(data.description_bangla)}
-                </div>
-                <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                  <Link href='/donations'>
-                    <button
-                      onClick={handleModalOpen}
-                      className="group relative overflow-hidden px-8 py-3 rounded-full bg-gradient-to-r from-yellow-500 to-yellow-600 text-slate-900 font-bold transition-all duration-300 hover:shadow-2xl hover:shadow-yellow-500/30 hover:scale-105"
-                    >
-                      <span className="relative z-10 flex items-center gap-2">
-                        <VolunteerActivism className="text-sm" />
-                        {language === "ENG" ? "Donate Now" : "সহযোগিতা করুন"}
-                        <ArrowForward className="text-sm group-hover:translate-x-1 transition-transform" />
-                      </span>
-                      <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-teal-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    </button>
-                  </Link>
+                );
+              })}
+            </dl>
+          </div>
+        </Container>
+      </section>
 
-
+      {/* ---------------------------------------------------------------- */}
+      {/* Impact story                                                      */}
+      {/* ---------------------------------------------------------------- */}
+      <section className="section-y bg-white" aria-busy={showSkeleton}>
+        <Container>
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
+            {/* Image ---------------------------------------------------- */}
+            <div className="relative">
+              {data?.images?.[0] ? (
+                <div className="relative aspect-[4/3] overflow-hidden rounded-panel shadow-panel ring-1 ring-slate-200/70">
+                  <Image
+                    src={data.images[0]}
+                    alt={
+                      isBn
+                        ? "জিয়াউর রহমান ফাউন্ডেশনের মানবিক কার্যক্রম"
+                        : "Ziaur Rahman Foundation humanitarian work"
+                    }
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 600px"
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-brand-950/40 to-transparent" />
                 </div>
+              ) : (
+                <Skeleton className="aspect-[4/3] rounded-panel" />
+              )}
+
+              {/* Pull quote card */}
+              <figure className="relative -mt-10 ml-4 mr-8 rounded-card border border-slate-200 bg-white p-5 shadow-panel sm:ml-8 lg:-mt-12">
+                <Quote className="mb-2 h-5 w-5 text-gold-500" />
+                <blockquote className="text-[13.5px] font-medium leading-relaxed text-slate-700">
+                  {isBn
+                    ? "“মানবতার সেবায় নিবেদিত একটি প্রতিষ্ঠান — শিক্ষা, স্বাস্থ্য ও মানবিক মর্যাদার মাধ্যমে মানুষের জীবনে পরিবর্তন আনা আমাদের লক্ষ্য।”"
+                    : "“An institution devoted to the service of humanity — changing lives through education, healthcare and dignity.”"}
+                </blockquote>
+                <figcaption className="mt-3 text-[11.5px] font-bold uppercase tracking-[0.12em] text-brand-700">
+                  {isBn ? "জিয়াউর রহমান ফাউন্ডেশন" : "Ziaur Rahman Foundation"}
+                </figcaption>
+              </figure>
+            </div>
+
+            {/* Copy ----------------------------------------------------- */}
+            <div>
+              <SectionHeading
+                align="left"
+                eyebrow={isBn ? "আমাদের গল্প" : "Our story"}
+                title={
+                  isBn ? "মানবতার সেবায় ২৭ বছর" : "Twenty-seven years of service"
+                }
+              />
+
+              <div className="mt-5">
+                {showSkeleton ? (
+                  <>
+                    <LoadingStatus
+                      label={isBn ? "প্রতিক্রিয়া লোড হচ্ছে" : "Loading impact story"}
+                    />
+                    <SkeletonText lines={3} />
+                    <SkeletonText lines={4} className="mt-5" />
+                  </>
+                ) : (
+                  renderContent(
+                    isBn ? data?.description_bangla : data?.description_english,
+                  )
+                )}
               </div>
 
-
-              <div
-                className={`relative transform transition-all duration-1000 delay-300 ${isVisible ? "translate-x-0 opacity-100" : "translate-x-20 opacity-0"}`}
-              >
-                {data.images?.slice(0, 1).map((img, imgIdx) => (
-                  <div key={imgIdx} className="relative group">
-                    <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-                      <div className="relative w-full h-[420px] md:h-[520px]">
-                        <Image
-                          src={img}
-                          alt="Impact"
-                          fill
-                          className="object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                        <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-yellow-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      </div>
-                    </div>
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500">
-                      <button className="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center transform hover:scale-110 transition-transform duration-300 shadow-2xl">
-                        <PlayArrow className="text-3xl text-slate-900 ml-1" />
-                      </button>
-                    </div>
-
-                  </div>
-                ))}
-              </div>
+              {!showSkeleton && (
+                <Link
+                  href="/donations"
+                  className="mt-2 inline-flex items-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-700 hover:shadow-md"
+                >
+                  {isBn ? "সহযোগিতা করুন" : "Support our work"}
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              )}
             </div>
           </div>
-        ))}
-      </Container>
-    </div>
+        </Container>
+      </section>
+    </>
   );
 };
 

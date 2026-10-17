@@ -5,16 +5,18 @@ import { useProgrammData } from "@/hooks/useProgrammData";
 import ProgrammData from "./ProgrammData";
 
 const Programm = () => {
-  const { programmData, error } = useProgrammData();
+  const { programmData, loading, error } = useProgrammData();
   const { language } = useLanguage();
 
-  if (error) {
-    return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
-  }
+  if (error) return null;
 
   return (
     <>
-      <ProgrammData language={language} programmData={programmData} />
+      <ProgrammData
+        language={language}
+        programmData={programmData}
+        loading={loading}
+      />
     </>
   );
 };

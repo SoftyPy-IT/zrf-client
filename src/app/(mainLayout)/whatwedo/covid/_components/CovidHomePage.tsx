@@ -1,19 +1,25 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import { useLanguage } from "@/provider/LanguageProvider";
 import { whatwedoFields } from "@/fields";
-import Loader from "@/app/loading";
 import { TWhatWeDo } from "@/types/type";
 import Covid from "./Covid";
+
+/**
+ * COVID-19 listing page.
+ *
+ * Fetches the `Covid` category once and hands the result to the presentational
+ * `Covid` component along with the loading flag, so the banner and skeleton
+ * grid render on first paint. A failed request renders nothing rather than a
+ * stray error message inside the page layout.
+ */
 const CovidHomePage = () => {
   const { language } = useLanguage();
-  const title =
-    language === "ENG"
-      ? " ZRF Rehabilitation Programs"
-      : "জেডআরএফ পুনর্বাসন কার্যক্রম";
   const [covidData, setCovidData] = useState<TWhatWeDo[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
     const fetchWhatwedoData = async () => {
       try {
@@ -21,7 +27,7 @@ const CovidHomePage = () => {
           `${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo?category=Covid&fields=${whatwedoFields}`,
           {
             cache: "no-store",
-          }
+          },
         );
         const data = await response.json();
         setCovidData(data.data?.whatwedoes || []);
@@ -35,20 +41,11 @@ const CovidHomePage = () => {
     fetchWhatwedoData();
   }, []);
 
-   
   if (error) {
-    return <p>Oops covid data not found!</p>;
+    return null;
   }
 
-  return (
-    <div>
-      {covidData ? (
-        <Covid covidData={covidData} language={language} />
-      ) : (
-        <p>Loading Covid data...</p>
-      )}
-    </div>
-  );
+  return <Covid covidData={covidData} language={language} loading={loading} />;
 };
 
 export default CovidHomePage;

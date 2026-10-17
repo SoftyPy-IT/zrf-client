@@ -3,29 +3,23 @@ import Header from "@/components/share/Header/Header";
 import { LanguageProvider } from "@/provider/LanguageProvider";
 import { ReactNode, Suspense } from "react";
 import dynamic from "next/dynamic";
-const CursorCustomize = dynamic(
-  () => import("@/components/CursorCustomize/CursorCustomize"),
-  { ssr: false },
-);
+import LandingPageProvider from "@/lib/Theme/LandingPageProvider";
 
+/**
+ * Client-only affordance. It adds no content, so keeping it out of the server
+ * bundle is purely a win.
+ */
 const Scroll = dynamic(() => import("@/components/share/Scroll/Scroll"), {
   ssr: false,
 });
-
-const LandingPageProvider = dynamic(
-  () => import("@/lib/Theme/LandingPageProvider"),
-  { ssr: false },
-);
 
 const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <LanguageProvider>
       <LandingPageProvider>
-        {/* <Suspense fallback={<div><Loader /></div>}> */}
-        <Suspense fallback={<div></div>}>
+        <Suspense fallback={<div className="min-h-screen bg-white" />}>
           <Header />
-          {children}
-          <CursorCustomize />
+          <main id="main-content">{children}</main>
           <Scroll />
           <Footer />
         </Suspense>

@@ -1,55 +1,58 @@
-'use client'
-import React, { useEffect, useState } from 'react';
+"use client";
 
-import { useLanguage } from '@/provider/LanguageProvider';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useLanguage } from "@/provider/LanguageProvider";
+import { TWhatWeDo } from "@/types/type";
+import { whatwedoFields } from "@/fields";
+import Initiatives from "./Initiatives";
 
-import { TWhatWeDo } from '@/types/type';
-import { whatwedoFields } from '@/fields';
-import axios from 'axios';
-import Loader from '@/app/loading';
-import Initiatives from './Initiatives';
-
-
+/**
+ * Initiatives listing page.
+ *
+ * Fetches the `Initiatives` category once and hands the result to the
+ * presentational `Initiatives` component along with the loading flag, so the
+ * banner and skeleton grid render on first paint. A failed request renders
+ * nothing rather than a stray error message inside the page layout.
+ */
 const InitiativesHomePage = () => {
-    const { language } = useLanguage();
-    const [initiativeData, setInitiativeData] = useState<TWhatWeDo[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+  const { language } = useLanguage();
+  const [initiativeData, setInitiativeData] = useState<TWhatWeDo[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-    const category = `Initiatives`;
+  const category = `Initiatives`;
 
-    useEffect(() => {
-        const fetchCovidData = async () => {
-            setIsLoading(true);
-            setError(null);
-            try {
-                const res = await axios.get(
-                    `${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo?category=${category}&fields=${whatwedoFields}`
-                );
-                setInitiativeData(res.data?.data?.whatwedoes || []);
-            } catch (err) {
-                console.error("Error fetching climate change data:", err);
-                setError("Failed to load climate change data. Please try again later.");
-            } finally {
-                setIsLoading(false);
-            }
-        };
+  useEffect(() => {
+    const fetchWhatwedoData = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo?category=${category}&fields=${whatwedoFields}`,
+        );
+        setInitiativeData(res.data?.data?.whatwedoes || []);
+      } catch (err) {
+        setError("Failed to fetch whatwedo data!");
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-        fetchCovidData();
-    }, [category]);
+    fetchWhatwedoData();
+  }, [category]);
 
-    // if (isLoading) {
-    //     return <Loader />;
-    // }
+  if (error) {
+    return null;
+  }
 
-    if (error) {
-        return <h2>Oops! data not found.</h2>
-    }
-    return (
-        <div>
-            <Initiatives initiativeData={initiativeData} language={language} />
-        </div>
-    );
+  return (
+    <Initiatives
+      initiativeData={initiativeData}
+      language={language}
+      loading={isLoading}
+    />
+  );
 };
 
 export default InitiativesHomePage;

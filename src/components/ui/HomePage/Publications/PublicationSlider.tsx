@@ -1,151 +1,126 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Swiper as SwiperClass } from "swiper/types";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, EffectCoverflow, Zoom } from "swiper/modules";
-import "./Publications.css";
-import "swiper/css";
-import "swiper/css/autoplay";
-import "swiper/css/effect-coverflow";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import EastIcon from "@mui/icons-material/East";
 import { useLanguage } from "@/provider/LanguageProvider";
 import { TEbook } from "@/types/type";
-import { useEbookData } from "@/hooks/useEbookData";
-import dynamic from "next/dynamic";
-import { Skeleton, Stack } from "@mui/material";
-import BNPButton from "@/components/Button";
+import { BookOpen, ArrowRight } from "lucide-react";
+import Skeleton from "@/components/share/Skeleton";
 
-const Loader = () => {
-  return (
-    <div className="fixed inset-0 h-screen flex items-center justify-center z-50">
-      <Stack spacing={1}>
-        <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
-        <Skeleton variant="rectangular" width={40} height={40} />
-        <Skeleton variant="rectangular" width={210} height={60} />
-        <Skeleton variant="rectangular" width={210} height={60} />
-      </Stack>
-    </div>
-  );
-};
-
-function PublicationSlider() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const swiperRef = useRef<SwiperClass | null>(null);
+/**
+ * E-book showcase.
+ *
+ * Rendered as a static shelf of covers rather than an auto-rotating coverflow:
+ * easier to browse, keyboard accessible, and it removes a heavy 3D carousel from the
+ * critical path.
+ */
+const PublicationSlider = () => {
   const { language } = useLanguage();
-  const [ebookData, setEbookData] = useState<TEbook[]>([]);
+  const isBn = language === "BNG";
+
+  const [ebooks, setEbooks] = useState<TEbook[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchEbookData = async () => {
+    const controller = new AbortController();
+
+    const fetchEbooks = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/ebook?limit=100&fields=images`,
-          {
-            cache: "no-store",
-          },
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/ebook?limit=6`,
+          { signal: controller.signal },
         );
         const data = await response.json();
-        setEbookData(data.data?.ebooks || []);
+        setEbooks(data.data?.ebooks || []);
       } catch (err) {
-        setError("Failed to fetch eBook data!");
+        if ((err as Error).name === "AbortError") return;
+        setError("Failed to fetch eBook data.");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchEbookData();
+    fetchEbooks();
+    return () => controller.abort();
   }, []);
 
-  const updateIndex = useCallback(() => {
-    if (swiperRef.current) {
-      setActiveIndex(swiperRef.current.realIndex);
-    }
-  }, []);
-
-  useEffect(() => {
-    const swiperInstance = swiperRef.current;
-    if (swiperInstance) {
-      swiperInstance.on("slideChange", updateIndex);
-    }
-    return () => {
-      if (swiperInstance) {
-        swiperInstance.off("slideChange", updateIndex);
-      }
-    };
-  }, [updateIndex]);
-
-  // Show loader while loading
   if (loading) {
-    return <Loader />;
+    return (
+      <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
+        {Array.from({ length: 6 }).map((_, index) => (
+          <Skeleton key={index} className="aspect-[3/4] rounded-card" />
+        ))}
+      </div>
+    );
   }
 
-  if (error) {
-    return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
-  }
-
-  // Show message if no data available
-  if (ebookData.length === 0) {
-    return <h2 className="text-center">No eBooks Available</h2>;
-  }
+  if (error || ebooks.length === 0) return null;
 
   return (
-    <div>
-      <Swiper
-        effect={"coverflow"}
-        centeredSlides={true}
-        loop={true}
-        slidesPerView={"auto"}
-        autoplay={{
-          delay: 1500,
-          disableOnInteraction: false,
-        }}
-        coverflowEffect={{
-          rotate: 10,
-          stretch: 20,
-          depth: 700,
-          modifier: 1.3,
-          slideShadows: true,
-        }}
-        zoom={true}
-        modules={[EffectCoverflow, Autoplay, Zoom]}
-        speed={900}
-        onSwiper={(swiper) => (swiperRef.current = swiper)}
-        // Add observer to handle dynamic slides
-        observer={true}
-        observeParents={true}
-      >
-        {ebookData.map((ebook: TEbook) => (
-          <SwiperSlide key={ebook._id} className="swiperSlide">
-            <div className="swiper-zoom-container">
-              <Image
-                className="swiperImg"
-                alt={ebook.title || "E-Book"}
-                src={ebook.images[0] || "/path/to/default/image.jpg"}
-                width={300}
-                height={400}
-                objectFit="cover"
-              />
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+    <>
+      <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
+        {ebooks.map((ebook) => {
+          const cover = ebook.images?.[0];
+          const title = ebook.title || ebook.name;
 
-      <div className="flex w-full justify-center items-center mt-10 md:mt-12">
-        <BNPButton
-          href="/ebooks"
-          language={language}
-          variant="primary"
-          size="md"
-          showIcon={true}
-          iconPosition="right"
-        >
-          {language === "ENG" ? "See All" : "সব দেখুন"}
-        </BNPButton>
+          return (
+            <Link
+              key={ebook._id}
+              href="/ebooks"
+              className="group flex flex-col"
+              aria-label={title}
+            >
+              {/* Book object: cover plus a spine sliver for depth */}
+              <div className="relative aspect-[3/4] overflow-hidden rounded-md bg-slate-100 shadow-card ring-1 ring-slate-200/70 transition-all duration-300 ease-editorial group-hover:-translate-y-1.5 group-hover:shadow-card-hover">
+                {cover ? (
+                  <Image
+                    src={cover}
+                    alt={title || "E-Book cover"}
+                    fill
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 200px"
+                    className="object-cover"
+                  />
+                ) : (
+                  <span className="flex h-full items-center justify-center text-slate-300">
+                    <BookOpen className="h-8 w-8" />
+                  </span>
+                )}
+
+                {/* Spine + sheen */}
+                <span className="pointer-events-none absolute inset-y-0 left-0 w-2.5 bg-gradient-to-r from-black/25 via-black/5 to-transparent" />
+                <span className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-transparent via-white/0 to-white/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+                <span className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-brand-950/70 opacity-0 backdrop-blur-[1px] transition-opacity duration-300 group-hover:opacity-100">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gold-500 text-brand-950">
+                    <BookOpen className="h-4 w-4" />
+                  </span>
+                  <span className="text-[11.5px] font-bold text-white">
+                    {isBn ? "পড়ুন" : "Read"}
+                  </span>
+                </span>
+              </div>
+
+              <span className="mt-3 line-clamp-2 text-[12.5px] font-semibold leading-snug text-slate-700 transition-colors group-hover:text-brand-700">
+                {title}
+              </span>
+            </Link>
+          );
+        })}
       </div>
-    </div>
+
+      <div className="mt-10 flex justify-center">
+        <Link
+          href="/ebooks"
+          className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-[13.5px] font-semibold text-slate-700 transition-colors hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700"
+        >
+          {isBn ? "সব ই-বুক দেখুন" : "Browse all e-books"}
+          <ArrowRight className="h-4 w-4" />
+        </Link>
+      </div>
+    </>
   );
-}
+};
 
 export default PublicationSlider;

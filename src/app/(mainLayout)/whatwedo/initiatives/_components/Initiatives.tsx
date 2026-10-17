@@ -1,121 +1,140 @@
-import Image from "next/image";
-import Container from "@/components/share/Container";
+"use client";
 
-import { Button } from "@mui/material";
-import { TWhatWeDo } from "@/types/type";
+import React, { useState } from "react";
+import { Plus } from "lucide-react";
+import ArticleCard from "@/components/share/ArticleCard";
 import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
-import { useState } from "react";
-import { buttonStyle } from "@/utils/btnStyle";
-import { formatDate } from "@/utils/formateDate";
-import Link from "next/link";
-import EastIcon from "@mui/icons-material/East";
+import PageBody from "@/components/share/PageBody";
+import {
+  LoadingStatus,
+  Skeleton,
+  SkeletonText,
+} from "@/components/share/Skeleton";
+import { TWhatWeDo } from "@/types/type";
 
-interface CovidProps {
-    initiativeData: TWhatWeDo[];
-    language: string,
+interface InitiativeProps {
+  initiativeData: TWhatWeDo[];
+  language: string;
+  loading?: boolean;
 }
 
-const Initiatives: React.FC<CovidProps> = ({ initiativeData, language }) => {
-    const [visibleCount, setVisibleCount] = useState(6);
-    const loadMore = () => {
-        setVisibleCount((prevCount) => prevCount + 6);
-    };
+/** Number of cards revealed per "load more" press. */
+const PAGE_SIZE = 6;
 
-    const sortedInitiativeData = initiativeData?.sort((a: TWhatWeDo, b: TWhatWeDo) => {
-        const dateA = new Date(a.date).getTime();
-        const dateB = new Date(b.date).getTime();
-        return dateB - dateA;
-    });
+/**
+ * Initiatives listing — institutional banner followed by a three-up card grid
+ * and a load-more control. The banner and skeleton deck stay mounted while the
+ * category resolves so the page structure is complete on first paint.
+ */
+const Initiatives: React.FC<InitiativeProps> = ({
+  initiativeData,
+  language,
+  loading,
+}) => {
+  const isBn = language === "BNG";
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
-    const formatDate = (dateStr: string) => {
-        const date = new Date(dateStr);
-        if (language === "ENG") {
-            return date.toLocaleDateString("en-US", {
-                day: "2-digit",
-                month: "long",
-                year: "numeric",
-            });
-        } else {
-            // Convert to Bangla numerals
-            const banglaFormatted = date
-                .toLocaleDateString("bn-BD", {
-                    day: "2-digit",
-                    month: "long",
-                    year: "numeric",
-                })
-                .replace(/[০-৯]/g, (d) =>
-                    "০১২৩৪৫৬৭৮৯"["০১২৩৪৫৬৭৮৯".indexOf(d)] ?? d
-                );
-            return banglaFormatted;
+  const sortedInitiativeData = [...(initiativeData || [])].sort(
+    (a: TWhatWeDo, b: TWhatWeDo) =>
+      new Date(b.date).getTime() - new Date(a.date).getTime(),
+  );
+
+  const showSkeleton = Boolean(loading) && sortedInitiativeData.length === 0;
+  const visibleData = sortedInitiativeData.slice(0, visibleCount);
+
+  return (
+    <>
+      <CommonBanner
+        title={isBn ? "আমাদের উদ্যোগ" : "Our Initiatives"}
+        subtitle={
+          isBn
+            ? "ফাউন্ডেশনের বিশেষ সামাজিক উদ্যোগ, যা সারা বাংলাদেশের জেলায় আমাদের কাজ পৌঁছে দেয়।"
+            : "Special social programmes and community initiatives that carry the foundation's work into districts across Bangladesh."
         }
-    };
+      />
 
-    return (
-        <>
-            <CommonBanner title={language == 'ENG' ? 'Our Initiatives' : 'আমাদের উদ্যোগ'} />
-            <Container className="my-20">
-                <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
-                    {sortedInitiativeData?.slice(0, visibleCount).map((data, index) => (
-                        <div
-                            className="relative shadow-md overflow-hidden group border"
-                            key={index}
-                        >
-
-                            {
-                                data.bng_Images?.slice(0, 1).map((img) => (
-                                    <Image
-                                        width={500}
-                                        height={500}
-                                        key={img}
-                                        src={img}
-                                        alt='education'
-                                        className="w-full h-[300px] lg:h-[400px] object-cover"
-                                    />
-                                ))
-                            }
-
-                            <div className="absolute bottom-0 left-0 right-0 p-2 md:p-4 lg:p-4 bg-blue-950 border-t border-gray-300 md:rounded-t-3xl h-[150px] md:h-[200px] lg:h-[200px] mt-28 md:mt-0 lg:mt-0">
-                                <h4 className="text-xl text-white ">{language == 'ENG' ? data.english_title?.slice(0, 50) : data.bangla_title?.slice(0, 50)}...</h4>
-                                <p className="mt-2 text-white">
-                                    {language == 'ENG' ? data.english_short_description?.slice(0, 180) : data.bangla_short_description?.slice(0, 180)} ...
-                                </p>
-                            </div>
-                            {/* Hover content */}
-                            <div className="absolute inset-x-0 bottom-0 bg-green-700 text-[#fff] transition-transform transform translate-y-full group-hover:translate-y-0 duration-500 ease-in-out h-[230px] md:h-[230px] md:rounded-t-3xl">
-                                <div className="w-full p-2 md:p-4 lg:p-4 lg:h-full">
-                                    <div className="space-y-2">
-                                        <div className="flex items-center gap-3">
-                                            <h4 className="text-xl ">{language == 'ENG' ? data.english_title?.slice(0, 50) : data.bangla_title?.slice(0, 50)}...</h4>
-                                        </div>
-                                        <p className="text-justify  text-sm "> {language == 'ENG' ? data.english_short_description?.slice(0, 200) : data.bangla_short_description?.slice(0, 200)}... </p>
-
-
-                                        <div className="flex justify-between mt-3 w-full items-center ">
-                                            <b>
-                                                {formatDate(data.date)}
-                                            </b>
-                                            <Link href={`/whatwedo/initiatives/${data._id}`}>
-                                                <Button sx={buttonStyle}>
-                                                    {language === "ENG" ? "Read More" : "আরও পড়ুন"}{" "}
-                                                    <EastIcon sx={{ fontSize: { md: '20px', xs: '20px' } }} />
-                                                </Button>
-                                            </Link>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
+      <PageBody>
+        {showSkeleton && (
+          <div
+            className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+            aria-busy="true"
+          >
+            <LoadingStatus
+              label={isBn ? "উদ্যোগ লোড হচ্ছে" : "Loading initiatives"}
+            />
+            {[0, 1, 2, 3, 4, 5].map((index) => (
+              <div
+                key={index}
+                aria-hidden="true"
+                className="overflow-hidden rounded-card border border-slate-200 bg-white"
+              >
+                <Skeleton className="aspect-[16/10] rounded-none" />
+                <div className="p-5">
+                  <Skeleton className="h-3 w-24" />
+                  <Skeleton className="mt-4 h-4 w-11/12" />
+                  <SkeletonText lines={3} className="mt-4" />
                 </div>
+              </div>
+            ))}
+          </div>
+        )}
 
-                {visibleCount < sortedInitiativeData?.length && (<div className="flex items-center justify-center mt-5 ">
-                    <Button onClick={loadMore} className="bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white">
-                        {language === "ENG" ? "Load More" : "আরো লোড"}
-                    </Button>
-                </div>)}
-            </Container>
-        </>
-    );
+        {!showSkeleton && sortedInitiativeData.length === 0 && (
+          <p className="py-8 text-center text-[14.5px] text-slate-500">
+            {isBn
+              ? "এই মুহূর্তে কোনো উদ্যোগ প্রকাশিত হয়নি।"
+              : "No initiatives are published at the moment."}
+          </p>
+        )}
+
+        {!showSkeleton && visibleData.length > 0 && (
+          <>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {visibleData.map((data) => {
+                const image = isBn
+                  ? data.bng_Images?.[0] || data.eng_images?.[0]
+                  : data.eng_images?.[0] || data.bng_Images?.[0];
+
+                const title =
+                  (isBn ? data.bangla_title : data.english_title) ||
+                  data.bangla_title ||
+                  data.english_title;
+
+                const excerpt = isBn
+                  ? data.bangla_short_description
+                  : data.english_short_description;
+
+                return (
+                  <ArticleCard
+                    key={data._id}
+                    href={`/whatwedo/initiatives/${data._id}`}
+                    title={title}
+                    excerpt={excerpt}
+                    image={image}
+                    date={data.date}
+                    actionLabel={isBn ? "আরও পড়ুন" : "Read more"}
+                  />
+                );
+              })}
+            </div>
+
+            {visibleCount < sortedInitiativeData.length && (
+              <div className="mt-12 flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
+                  className="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+                >
+                  <Plus className="h-4 w-4" aria-hidden="true" />
+                  {isBn ? "আরও লোড করুন" : "Load more"}
+                </button>
+              </div>
+            )}
+          </>
+        )}
+      </PageBody>
+    </>
+  );
 };
 
 export default Initiatives;

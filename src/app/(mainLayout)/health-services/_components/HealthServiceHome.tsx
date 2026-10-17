@@ -1,13 +1,12 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
-import { useLanguage } from "@/provider/LanguageProvider";
-import { useWhatwedoData } from "@/hooks/useWhatwedoData";
-import dynamic from "next/dynamic";
 import axios from "axios";
+import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
+import { useLanguage } from "@/provider/LanguageProvider";
 import { whatwedoFields } from "@/fields";
 import { TWhatWeDo } from "@/types/type";
 import HealthServices from "./HealthServices";
- 
 
 const HealthServiceHome = () => {
   const { language } = useLanguage();
@@ -19,34 +18,45 @@ const HealthServiceHome = () => {
   const category = `Health Services`;
 
   useEffect(() => {
-    const fetchCovidData = async () => {
+    const fetchHealthServicesData = async () => {
       setIsLoading(true);
       setError(null);
       try {
         const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo?category=${category}&fields=${whatwedoFields}`
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo?category=${category}&fields=${whatwedoFields}`,
         );
         setHealthServicesData(res.data?.data?.whatwedoes || []);
       } catch (err) {
-        console.error("Error fetching climate change data:", err);
-        setError("Failed to load climate change data. Please try again later.");
+        console.error("Error fetching health services data:", err);
+        setError("Failed to load health services data. Please try again later.");
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchCovidData();
+    fetchHealthServicesData();
   }, [category]);
 
-   
+  if (error) return null;
 
-  if (error) {
-    return <h2>Oops! data not found.</h2>
-  }
+  const isBn = language === "BNG";
+
   return (
-    <div>
-      <HealthServices healthServicesData={healthServicesData} language={language} />
-    </div>
+    <>
+      <CommonBanner
+        title={isBn ? "স্বাস্থ্য সেবা কার্যক্রম" : "Health Services Programmes"}
+        subtitle={
+          isBn
+            ? "অসহায় ও অবহেলিত জনগোষ্ঠীর জন্য বিনামূল্যে চিকিৎসা ক্যাম্প, চিকিৎসা সহায়তা ও স্বাস্থ্য সচেতনতা কার্যক্রম।"
+            : "Free medical camps, treatment support and health awareness programmes for underserved communities across Bangladesh."
+        }
+      />
+      <HealthServices
+        healthServicesData={healthServicesData}
+        language={language}
+        loading={isLoading}
+      />
+    </>
   );
 };
 

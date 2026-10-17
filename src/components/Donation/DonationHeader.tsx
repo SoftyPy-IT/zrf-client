@@ -1,42 +1,32 @@
 "use client";
 
-import { Box, Container, Typography } from "@mui/material";
+import React from "react";
+import SectionHeading from "@/components/share/SectionHeading";
 
 interface DonationHeaderProps {
-    language: string;
+  language: string;
 }
 
+/**
+ * Compact introduction that sits between the page banner and the donation form.
+ *
+ * Copy only — band, spacing and panel treatment belong to the page so the
+ * section rhythm stays consistent with every other inner page.
+ */
 const DonationHeader: React.FC<DonationHeaderProps> = ({ language }) => {
-    return (
-        <Box sx={{ textAlign: "center", mb: 6 }}>
-            <Typography
-                variant="h2"
-                sx={{
-                    fontSize: { xs: "2rem", md: "3rem" },
-                    fontWeight: "bold",
-                    background: "linear-gradient(135deg, #216740 0%, #FEC909 100%)",
-                    backgroundClip: "text",
-                    WebkitBackgroundClip: "text",
-                    color: "transparent",
-                    mb: 2,
-                }}
-            >
-                Make a Difference Today
-            </Typography>
-            <Typography
-                variant="h6"
-                sx={{
-                    textAlign: "center",
-                    color: "text.secondary",
-                    maxWidth: "800px",
-                    mx: "auto",
-                }}
-            >
-                Your generous donation helps us transform lives and build a better
-                future for those in need.
-            </Typography>
-        </Box>
-    );
+  const isBn = language === "BNG";
+
+  return (
+    <SectionHeading
+      eyebrow={isBn ? "আমাদের কাজে সহযোগিতা" : "Support our work"}
+      title={isBn ? "আজই পরিবর্তনের অংশীদার হোন" : "Make a Difference Today"}
+      subtitle={
+        isBn
+          ? "আপনার উদার অনুদান আমাদের জীবন বদলে দিতে এবং অসহায় মানুষের জন্য একটি উন্নত ভবিষ্যৎ গড়ে তুলতে সহায়তা করে।"
+          : "Your generous donation helps us transform lives and build a better future for those in need."
+      }
+    />
+  );
 };
 
 export default DonationHeader;

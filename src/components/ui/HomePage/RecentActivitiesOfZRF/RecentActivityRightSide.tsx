@@ -1,140 +1,109 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
 import Link from "next/link";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { motion } from "framer-motion";
+import Image from "next/image";
+import { Skeleton } from "@/components/share/Skeleton";
 import { TActivity } from "@/types/type";
 import truncateText from "@/utils/truncate";
-import BNPButton from "@/components/Button";
+import { formatDate } from "@/utils/formateDate";
+import { ArrowRight } from "lucide-react";
 
 interface welcomeProps {
   activityFilterData: TActivity[];
   language: string;
+  loading?: boolean;
 }
 
+/**
+ * Compact "more from the field" list that sits beside the lead activity cards.
+ * Deliberately text-first so it reads as a genuine index, not a second card grid.
+ */
 const RecentActivityRightSide = ({
   activityFilterData,
   language,
+  loading,
 }: welcomeProps) => {
-  const [isLargeScreen, setIsLargeScreen] = useState(false);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsLargeScreen(window.innerWidth >= 1024);
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const displayedData = isLargeScreen
-    ? activityFilterData?.slice(1, 6)
-    : activityFilterData?.slice(1, 3);
-
-  const containerVariants = {
-    hidden: { opacity: 0, x: 30 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        staggerChildren: 0.1,
-        duration: 0.6,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, x: 30 },
-    visible: { opacity: 1, x: 0 },
-  };
+  const isBn = language === "BNG";
+  const items = activityFilterData.slice(2, 7);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 30 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.8, delay: 0.3 }}
-      className="lg:w-[480px] w-full mt-8 lg:mt-0 hidden md:block"
-    >
+    <div className="flex h-full flex-col rounded-panel border border-slate-200 bg-white p-5 shadow-card sm:p-6">
+      <h3 className="flex items-center gap-2 text-[13px] font-bold uppercase tracking-[0.1em] text-slate-500">
+        {isBn ? "আরও প্রতিবেদন" : "More reports"}
+      </h3>
+      <span className="mt-3 block h-[2px] w-10 rounded-full bg-gold-500" />
 
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="space-y-2"
-      >
-        {displayedData?.slice(0, 3)?.map((data, idx) => (
-          <motion.div
-            key={data._id}
-            variants={itemVariants}
-            onHoverStart={() => setHoveredIndex(idx)}
-            onHoverEnd={() => setHoveredIndex(null)}
-            className="group relative bg-white rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500"
-          >
-            <Link href={`/recent-activities-of-zrf/${data._id}`}>
-              <div className="flex gap-3 p-4 cursor-pointer">
-                <div className="relative flex-shrink-0 w-20 h-20 md:w-[105px] md:h-[105px] rounded-lg overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/20 to-green-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
-                  {(language === "ENG" ? data.bng_Images : data.eng_images)
-                    ?.slice(0, 1)
-                    .map((img) => (
-                      <Image
-                        key={img}
-                        src={img}
-                        alt="activity"
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                        width={120}
-                        height={120}
-                      />
-                    ))}
-
-                </div>
-
-                {/* Content Section */}
-                <div className="flex-1">
-                  <h3 className="text-sm  font-bold text-gray-800   group-hover:text-green-700 transition-colors">
-                    {language === "ENG"
-                      ? data.english_title
-                      : data.bangla_title}
-                  </h3>
-
-
-                  <motion.div
-                    animate={{ x: hoveredIndex === idx ? 5 : 0 }}
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-green-600"
-                  >
-                    {language === "ENG" ? "Read More" : "বিস্তারিত"}
-                    <ChevronRightIcon className="w-3 h-3" />
-                  </motion.div>
-                </div>
+      {loading ? (
+        <ul aria-hidden="true" className="mt-4 flex flex-1 flex-col divide-y divide-slate-100">
+          {[0, 1, 2, 3, 4].map((index) => (
+            <li key={index} className="flex items-start gap-3.5 py-4 first:pt-2">
+              <Skeleton className="h-[62px] w-[62px] shrink-0 rounded-lg" />
+              <div className="min-w-0 flex-1 space-y-2">
+                <Skeleton className="h-3.5 w-full" />
+                <Skeleton className="h-3.5 w-3/4" />
+                <Skeleton className="h-3 w-20" />
               </div>
-              <div className="absolute inset-0 rounded-xl border-2 border-transparent group-hover:border-green-500/30 transition-all duration-500 pointer-events-none"></div>
-            </Link>
-          </motion.div>
-        ))}
-      </motion.div>
+            </li>
+          ))}
+        </ul>
+      ) : items.length === 0 ? (
+        <p className="mt-6 text-[13.5px] text-slate-500">
+          {isBn
+            ? "এই মুহূর্তে আর কোনো প্রতিবেদন নেই।"
+            : "No further reports at the moment."}
+        </p>
+      ) : (
+        <ul className="mt-4 flex flex-1 flex-col divide-y divide-slate-100">
+          {items.map((data) => {
+            const images =
+              (isBn ? data.bng_Images : data.eng_images) || data.bng_Images || [];
+            const title = isBn ? data.bangla_title : data.english_title;
 
+            return (
+              <li key={data._id}>
+                <Link
+                  href={`/recent-activities-of-zrf/${data._id}`}
+                  className="group flex items-start gap-3.5 py-4 first:pt-2"
+                >
+                  <span className="relative h-[62px] w-[62px] shrink-0 overflow-hidden rounded-lg bg-slate-100">
+                    {images[0] ? (
+                      <Image
+                        src={images[0]}
+                        alt=""
+                        fill
+                        sizes="62px"
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                    ) : null}
+                  </span>
 
-      <div
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[13.5px] font-semibold leading-snug text-slate-800 transition-colors group-hover:text-brand-700">
+                      {truncateText(title, 62)}
+                    </span>
+                    {data.date && (
+                      <span className="mt-1 block text-[11.5px] font-medium text-slate-400">
+                        {formatDate(data.date)}
+                      </span>
+                    )}
+                  </span>
 
-        className="mt-3 md:mt-5 flex justify-end "
+                  <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-slate-300 transition-all group-hover:translate-x-0.5 group-hover:text-brand-600" />
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+
+      <Link
+        href="/recent-activities-of-zrf"
+        className="mt-5 inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-4 py-2.5 text-[13px] font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-700 hover:shadow-md"
       >
-        <BNPButton
-          href="/recent-activities-of-zrf"
-          language={language}
-          variant="primary"
-          size="md"
-          fullWidth={false}
-          showIcon={true}
-          iconPosition="right"
-        >
-          {language === "ENG" ? "View All Activities" : "সব কার্যক্রম দেখুন"}
-        </BNPButton>
-      </div>
-    </motion.div>
+        {isBn ? "সব কার্যক্রম দেখুন" : "View all activities"}
+        <ArrowRight className="h-4 w-4" />
+      </Link>
+    </div>
   );
 };
 

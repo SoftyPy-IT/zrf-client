@@ -1,164 +1,49 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
-import Image from "next/image";
-import Container from "@/components/share/Container";
-import React, { useState } from "react";
 
+import React, { useState } from "react";
+import Image from "next/image";
+import {
+  AlertCircle,
+  CalendarDays,
+  CalendarX,
+  Landmark,
+  ShieldCheck,
+} from "lucide-react";
+import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
+import Container from "@/components/share/Container";
+import PageBody from "@/components/share/PageBody";
+import SectionHeading from "@/components/share/SectionHeading";
+import RenderContent from "@/components/Common/RenderContent";
+import { Skeleton } from "@/components/share/Skeleton";
 import { useLanguage } from "@/provider/LanguageProvider";
 import { TIntroduction } from "@/types/type";
-import ReactHtmlParser from "react-html-parser";
 import Biography from "./Biography";
 import Modal from "./Modal";
-import { Box, Paper, Typography } from "@mui/material";
-import dynamic from "next/dynamic";
-import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
- 
 
-const renderContent = (content: string) => {
-  const parsedContent = ReactHtmlParser(content);
-
-  return parsedContent.map((element, index) => {
-    if (element.type === "h1") {
-      return (
-        <h1 key={index} className="text-2xl font-bold mb-2">
-          {element.props.children}
-        </h1>
-      );
-    } else if (element.type === "h2") {
-      return (
-        <h2 key={index} className="text-xl font-bold mb-2">
-          {element.props.children}
-        </h2>
-      );
-    } else if (element.type === "h4") {
-      return (
-        <h2 key={index} className=" font-bold mb-2">
-          {element.props.children}
-        </h2>
-      );
-    } else if (element.type === "h3") {
-      return (
-        <h3 key={index} className="text-lg font-bold mb-2">
-          {element.props.children}
-        </h3>
-      );
-    } else if (element.type === "b") {
-      return (
-        <b key={index} className="font-bold">
-          {element.props.children}
-        </b>
-      );
-    } else if (element.type === "b") {
-      return (
-        <small key={index} className="text-sm">
-          {element.props.children}
-        </small>
-      );
-    } else if (element.type === "b") {
-      return (
-        <span key={index} className="inline-block">
-          {element.props.children}
-        </span>
-      );
-    } else if (element.type === "img") {
-      return (
-        <div key={index} className="w-[700px] h-[400px]">
-          <img
-            src={element.props.src}
-            alt="this is image"
-            className="mb-2"
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
-        </div>
-      );
-    } else if (element.type === "ol") {
-      return (
-        <ol key={index} className="list-decimal list-inside mb-5">
-          {element.props.children}
-        </ol>
-      );
-    } else if (element.type === "ul") {
-      return (
-        <ul key={index} className="list-disc list-inside mb-5">
-          {element.props.children}
-        </ul>
-      );
-    } else if (element.type === "p") {
-      return (
-        <p key={index} className="mb-2">
-          {element.props.children}
-        </p>
-      );
-    } else if (element.type === "video") {
-      return (
-        <video
-          key={index}
-          className="w-full h-auto mb-4"
-          controls
-          src={element.props.src}
-        >
-          Your browser does not support the video tag.
-        </video>
-      );
-    } else if (element.type === "iframe") {
-      return (
-        <iframe
-          key={index}
-          className="w-full h-[500px] mb-4"
-          src={element.props.src}
-          title={`iframe-${index}`}
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
-      );
-    } else if (
-      element.type === "div" &&
-      element.props.className === "ql-align-center"
-    ) {
-      return (
-        <div key={index} className="text-center mb-2">
-          {element.props.children}
-        </div>
-      );
-    } else if (
-      element.type === "div" &&
-      element.props.className === "ql-align-right"
-    ) {
-      return (
-        <div key={index} className="text-right mb-2">
-          {element.props.children}
-        </div>
-      );
-    } else if (
-      element.type === "div" &&
-      element.props.className === "ql-align-left"
-    ) {
-      return (
-        <div key={index} className="text-left mb-2">
-          {element.props.children}
-        </div>
-      );
-    } else {
-      return null;
-    }
-  });
-};
+/**
+ * Biography of Shaheed President Ziaur Rahman.
+ *
+ * A light editorial opening carries the portrait and a short introduction,
+ * the biography itself is an editorial column of chapters separated by gold
+ * rules, and the page closes on a dark record band with the essential dates.
+ */
 const FetchZiaurRahmanData = () => {
-  const [introductionData, stIntroductionData] = React.useState<
+  const [introductionData, setIntroductionData] = React.useState<
     TIntroduction[]
   >([]);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
   const { language } = useLanguage();
+  const isBn = language === "BNG";
+
   React.useEffect(() => {
-    const fetchPrisonData = async () => {
+    const fetchIntroductionData = async () => {
       try {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_BASE_API_URL}/introduction?limit=1000`,
           {
             cache: "no-store",
-          }
+          },
         );
         const data = await response.json();
         const sortedData = data.data?.introductions?.sort(
@@ -166,10 +51,10 @@ const FetchZiaurRahmanData = () => {
             return (
               new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
             );
-          }
+          },
         );
 
-        stIntroductionData(sortedData || []);
+        setIntroductionData(sortedData || []);
       } catch (err) {
         setError("Failed to fetch introduction data.");
       } finally {
@@ -177,7 +62,7 @@ const FetchZiaurRahmanData = () => {
       }
     };
 
-    fetchPrisonData();
+    fetchIntroductionData();
   }, []);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -185,11 +70,12 @@ const FetchZiaurRahmanData = () => {
     title: string;
     content: string;
   } | null>(null);
+
   const handleOpen = (
     englishTitle: string,
     banglaDescription: string,
     banglaTitle: string,
-    englishDescription: string
+    englishDescription: string,
   ) => {
     setModalContent({
       title: language === "ENG" ? englishTitle : banglaTitle,
@@ -202,83 +88,205 @@ const FetchZiaurRahmanData = () => {
     setIsOpen(false);
     setModalContent(null);
   };
-   
+
+  const portrait =
+    introductionData[0]?.bng_images?.[0] ||
+    introductionData[0]?.eng_images?.[0];
+
+  const summary = isBn
+    ? "লেফটেন্যান্ট জেনারেল জিয়াউর রহমান বীর উত্তম (১৯৩৬–১৯৮১) ছিলেন স্বাধীনতার ঘোষক এবং এক বীর মুক্তিযোদ্ধা। তিনি সেনাবাহিনী প্রধান হিসেবে দায়িত্ব পালন করেন এবং পরবর্তীতে বাংলাদেশের নির্বাচিত রাষ্ট্রপতি হন। তিনিই বাংলাদেশে বহুদলীয় গণতন্ত্রের সূচনা করেন এবং বাংলাদেশী জাতীয়তাবাদকে সংজ্ঞায়িত করেন; তিনি বাংলাদেশ জাতীয়তাবাদী দলের প্রতিষ্ঠাতা।"
+    : "Lieutenant General Ziaur Rahman, Bir Uttam (1936–1981), was the declarer of Bangladesh's independence and a valiant freedom fighter. He served as the Chief of the Army Staff and later became the elected President of Bangladesh. He opened up multi-party democracy in the country and gave shape to Bangladeshi nationalism, and he was the founder of the Bangladesh Nationalist Party.";
+
+  const facts = [
+    {
+      icon: CalendarDays,
+      label: isBn ? "জন্ম" : "Born",
+      value: isBn ? "১৯ জানুয়ারি ১৯৩৬" : "19 January 1936",
+      detail: isBn ? "বাগবাড়ি, গাবতলী, বগুড়া" : "Bagbari, Gabtali, Bogura",
+    },
+    {
+      icon: CalendarX,
+      label: isBn ? "মৃত্যু" : "Died",
+      value: isBn ? "৩০ মে ১৯৮১" : "30 May 1981",
+      detail: isBn ? "চট্টগ্রাম, বাংলাদেশ" : "Chattogram, Bangladesh",
+    },
+    {
+      icon: Landmark,
+      label: isBn ? "সমাধিস্থল" : "Resting place",
+      value: isBn ? "শেরেবাংলা নগর, ঢাকা" : "Sher-e-Bangla Nagar, Dhaka",
+      detail: isBn
+        ? "জাতীয় সংসদ ভবনের পাশে"
+        : "Beside the Jatiya Sangsad Bhaban",
+    },
+    {
+      icon: ShieldCheck,
+      label: isBn ? "দায়িত্ব" : "Role",
+      value: isBn ? "রাষ্ট্রপতি ও সেনাবাহিনী প্রধান" : "President & Chief of Army Staff",
+      detail: isBn
+        ? "বাংলাদেশ জাতীয়তাবাদী দলের প্রতিষ্ঠাতা"
+        : "Founder of the Bangladesh Nationalist Party",
+    },
+  ];
 
   return (
     <>
-      <CommonBanner title="Biography" />
-      <Container>
-        <div className="my-5 md:my-16">
-          <div className="shadow-md rounded md:p-10 p-5">
-            <h1 className="md:text-4xl text-2xl font-bold text-center text-green-800 mb-5">
-              {language === "ENG"
-                ? "Biography of Shaheed President Ziaur Rahman"
-                : "  শহীদ প্রেসিডেন্ট জিয়াউর রহমান  এর জীবনী"}
-            </h1>
-            <p className="lg:text-center text-justify">
-              {language === "ENG"
-                ? "Lieutenant General Ziaur Rahman Bir Uttam (1936-1981) was the founder of Bangladesh Nationalist Party. He was the declarer of independence and a valiant freedom fighter. He was also Chief of Army Staff and later became the elected President of Bangladesh. He opened up multi-party democracy in Bangladesh and defined Bangladeshi Nationalism."
-                : "লেফটেন্যান্ট জেনারেল জিয়াউর রহমান বীর উত্তম (১৯৩৬-১৯৮১) ছিলেন স্বাধীনতার ঘোষক এবং বাংলাদেশের নির্বাচিত রাষ্ট্রপতি। তিনি একজন বীর মুক্তিযোদ্ধা, সেনাপ্রধান এবং বাংলাদেশে বহুদলীয় গণতন্ত্রের প্রতিষ্ঠাতা, সেই সাথে বাংলাদেশী জাতীয়তাবাদ এবং বাংলাদেশ জাতীয়তাবাদী দল-বিএনপি'র প্রতিষ্ঠাতা ছিলেন."}
-            </p>
-          </div>
+      <CommonBanner
+        title={isBn ? "জিয়াউর রহমান" : "Ziaur Rahman"}
+        subtitle={
+          isBn
+            ? "শহীদ রাষ্ট্রপতি জিয়াউর রহমান বীর উত্তম-এর জীবনী"
+            : "The life of Shaheed President Ziaur Rahman, Bir Uttam"
+        }
+      />
 
-          {introductionData?.slice(0, 1).map((data) => (
-            <div key={data._id} className="mt-20 ">
-              <div className="flex flex-row items-center justify-center content-center">
-                <h2 className="bg-gradient-to-r from-red-600 to-green-600 bg-clip-text text-transparent text-base mb-4 border rounded-full text-center w-[105px] bg-white">
-                  {language === "ENG" ? "Biography" : "জীবনী"}
-                </h2>
-              </div>
+      {/* ---------------------------------------------------------------- */}
+      {/* Portrait and introduction                                         */}
+      {/* ---------------------------------------------------------------- */}
+      <section className="border-b border-slate-200 bg-slate-50">
+        <div className="h-1 w-full bg-gold-rule" />
 
-
-              <div className="grid grid-cols-1 md:grid-cols-12 my-10">
-                <div className="md:col-span-4 lg:h-[500px]">
-                  {data.bng_images?.slice(0, 1).map((img) => (
+        <Container>
+          <div className="grid grid-cols-1 items-center gap-10 py-14 lg:grid-cols-12 lg:gap-16 lg:py-20">
+            <div className="lg:col-span-5">
+              <figure className="mx-auto w-full max-w-sm">
+                <div className="relative aspect-[4/5] overflow-hidden rounded-panel bg-slate-200 shadow-panel ring-1 ring-slate-200">
+                  {portrait ? (
                     <Image
-                      width={400}
-                      height={500}
-                      key={img}
-                      src={img}
-                      alt="তারেক রহমান"
-                      className="w-full h-full md:rounded-l"
+                      src={portrait}
+                      alt={
+                        isBn
+                          ? "শহীদ রাষ্ট্রপতি জিয়াউর রহমানের প্রতিকৃতি"
+                          : "Portrait of Shaheed President Ziaur Rahman"
+                      }
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 420px"
+                      className="object-cover object-top"
                     />
-                  ))}
+                  ) : (
+                    <Skeleton className="aspect-[4/5] w-full rounded-none" />
+                  )}
                 </div>
-
-                <div className="md:col-span-8 bg-gradient-to-r from-yellow-600 to-green-600 text-white p-5 md:rounded-r">
-                  <div className="w-full space-y-4 mb-2">
-                    <h1 className="text-xl lg:text-xl xl:text-3xl text-[#FEC909] font-bold ">
-                      {" "}
-                      {language === "ENG"
-                        ? data.english_title
-                        : data.bangla_title}{" "}
-                    </h1>
-                  </div>
-                  <p className="lg:text-xl text-justify lg:leading-loose">
-                    {language === "ENG"
-                      ? renderContent(data.english_description)
-                      : renderContent(data.bangla_description)}
-                  </p>
-                </div>
-              </div>
+                <figcaption className="mt-4 text-center text-[12.5px] leading-relaxed text-slate-500">
+                  {isBn
+                    ? "শহীদ রাষ্ট্রপতি জিয়াউর রহমান, বীর উত্তম"
+                    : "Shaheed President Ziaur Rahman, Bir Uttam"}
+                </figcaption>
+              </figure>
             </div>
-          ))}
+
+            <div className="lg:col-span-7">
+              <SectionHeading
+                align="left"
+                eyebrow={isBn ? "জীবনী" : "Biography"}
+                title={isBn ? "জিয়াউর রহমান" : "Ziaur Rahman"}
+              />
+
+              <p className="mt-5 inline-flex items-center gap-2 rounded-full border border-brand-200 bg-brand-50 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-brand-700">
+                {isBn ? "১৯৩৬ – ১৯৮১" : "1936 – 1981"}
+              </p>
+
+              <p className="mt-6 max-w-2xl text-[14.5px] leading-[1.85] text-slate-600">
+                {summary}
+              </p>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* ---------------------------------------------------------------- */}
+      {/* Biography — one editorial section per era                         */}
+      {/* ---------------------------------------------------------------- */}
+      <PageBody>
+        <SectionHeading
+          align="left"
+          eyebrow={isBn ? "জীবনী" : "Biography"}
+          title={isBn ? "জীবনের অধ্যায়সমূহ" : "Chapters of a life"}
+          subtitle={
+            isBn
+              ? "প্রাথমিক জীবন থেকে স্বাধীনতাযুদ্ধ ও রাষ্ট্রনায়কত্ব — জিয়াউর রহমানের জীবন ও কর্মের গুরুত্বপূর্ণ অধ্যায়সমূহ। প্রতিটি অধ্যায় সম্পূর্ণ পড়া যাবে।"
+              : "From early life to the Liberation War and statesmanship — the defining chapters of Ziaur Rahman's life and work. Each chapter can be read in full."
+          }
+        />
+
+        <div className="mt-12">
           <Biography
             introductionData={introductionData}
             language={language}
             handleOpen={handleOpen}
+            loading={loading}
           />
-          {modalContent && (
-            <Modal
-              isOpen={isOpen}
-              onClose={handleClose}
-              title={modalContent.title}
-            >
-              <p className="text-justify">{renderContent(modalContent.content)}</p>
-            </Modal>
-          )}
         </div>
-      </Container>
+
+        {error && (
+          <p
+            role="status"
+            className="mt-10 inline-flex items-center gap-2 rounded-card border border-slate-200 bg-slate-50 px-4 py-3 text-[13.5px] text-slate-600"
+          >
+            <AlertCircle className="h-4 w-4 text-brand-600" aria-hidden="true" />
+            {isBn
+              ? "জীবনীর তথ্য লোড করা যায়নি। অনুগ্রহ করে পুনরায় চেষ্টা করুন।"
+              : error}
+          </p>
+        )}
+      </PageBody>
+
+      {/* ---------------------------------------------------------------- */}
+      {/* Biographical record                                               */}
+      {/* ---------------------------------------------------------------- */}
+      <section
+        className="relative isolate overflow-hidden bg-brand-950"
+        aria-label={isBn ? "জীবনপঞ্জি" : "Biographical record"}
+      >
+        <div className="h-1 w-full bg-gradient-to-r from-gold-600 via-gold-400 to-transparent" />
+
+        <Container>
+          <div className="py-12 lg:py-16">
+            <SectionHeading
+              align="left"
+              tone="dark"
+              eyebrow={isBn ? "সংক্ষেপে" : "At a glance"}
+              title={isBn ? "জীবনপঞ্জির তথ্য" : "Biographical record"}
+            />
+
+            <dl className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+              {facts.map((fact) => {
+                const Icon = fact.icon;
+                return (
+                  <div
+                    key={fact.label}
+                    className="border-l-2 border-gold-500/40 pl-4 lg:pl-5"
+                  >
+                    <dt className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.14em] text-gold-300">
+                      <Icon
+                        className="h-4 w-4 shrink-0 text-gold-400"
+                        strokeWidth={1.75}
+                        aria-hidden="true"
+                      />
+                      {fact.label}
+                    </dt>
+                    <dd className="mt-3 text-[18px] font-bold leading-snug text-white lg:text-[20px]">
+                      {fact.value}
+                    </dd>
+                    <dd className="mt-1.5 text-[12.5px] leading-relaxed text-brand-300">
+                      {fact.detail}
+                    </dd>
+                  </div>
+                );
+              })}
+            </dl>
+          </div>
+        </Container>
+      </section>
+
+      {modalContent && (
+        <Modal
+          isOpen={isOpen}
+          onClose={handleClose}
+          title={modalContent.title}
+        >
+          <RenderContent content={modalContent.content} />
+        </Modal>
+      )}
     </>
   );
 };

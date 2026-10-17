@@ -1,79 +1,72 @@
 "use client";
 
 import Link from "next/link";
-import { Container, Fade, Typography } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
+import PageBody from "@/components/share/PageBody";
 import { useLanguage } from "@/provider/LanguageProvider";
+import { ArrowLeft, Lock, Send } from "lucide-react";
 
+/**
+ * Registration closed-notice.
+ *
+ * The ZRF Science Fair 2026 registration period is closed by design — no form
+ * is offered. This page only states the notice bilingually and points visitors
+ * to the contact page or home.
+ */
 export default function RegistrationPage() {
   const { language } = useLanguage();
   const isBn = language === "BNG";
 
   return (
-    <main className="min-h-[85vh] flex items-center justify-center bg-[#0c1f1c] relative overflow-hidden py-16 px-4">
-      {/* Background ambient lighting */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-[#2E8B57]/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-[#FEC909]/5 rounded-full blur-[90px] pointer-events-none" />
+    <>
+      <CommonBanner
+        title={isBn ? "নিবন্ধন" : "Registration"}
+        subtitle={
+          isBn
+            ? "জেডআরএফ বিজ্ঞান মেলা ২০২৬ — নিবন্ধন সংক্রান্ত তথ্য ও ঘোষণা।"
+            : "ZRF Science Fair 2026 — registration information and notices."
+        }
+      />
 
-      <Container maxWidth="sm" className="relative z-10 text-center">
-        <Fade in timeout={700}>
-          <div className="bg-[#132620]/90 backdrop-blur-md border border-[#2E8B57]/30 rounded-2xl sm:rounded-3xl p-8 sm:p-12 shadow-2xl shadow-black/40">
-            {/* Lock Icon */}
-            <div className="mx-auto w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-[#FEC909]/10 border border-[#FEC909]/30 flex items-center justify-center text-[#FEC909] mb-6 shadow-inner">
-              <LockOutlinedIcon sx={{ fontSize: { xs: 32, sm: 40 } }} />
-            </div>
+      <PageBody tone="slate">
+        <div className="mx-auto w-full max-w-xl rounded-panel border border-slate-200 bg-white p-6 text-center shadow-card sm:p-10">
+          <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-slate-100">
+            <Lock className="h-7 w-7 text-slate-600" aria-hidden="true" />
+          </span>
 
-            {/* Overline Badge */}
-            <div className="inline-block px-3.5 py-1 rounded-full bg-[#FEC909]/10 border border-[#FEC909]/30 text-[#FEC909] text-xs font-bold uppercase tracking-wider mb-4">
-              ZRF Science Fair 2026
-            </div>
+          <p className="mt-5 inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-600">
+            ZRF Science Fair 2026
+          </p>
 
-            {/* Heading */}
-            <Typography
-              variant="h4"
-              component="h1"
-              sx={{
-                fontWeight: 800,
-                color: "#F4FAF6",
-                fontSize: { xs: "1.65rem", sm: "2.15rem" },
-                lineHeight: 1.25,
-                mb: 2,
-              }}
+          <h2 className="mt-3 text-[24px] font-bold leading-tight text-slate-900 sm:text-[28px]">
+            {isBn ? "নিবন্ধন কার্যক্রম সমাপ্ত" : "Registration is Closed"}
+          </h2>
+
+          <p className="mt-4 text-[14.5px] leading-[1.85] text-slate-600">
+            {isBn
+              ? "জিয়াউর রহমান ফাউন্ডেশন বিজ্ঞান মেলা ২০২৬-এর অনলাইন নিবন্ধন কার্যক্রম সমাপ্ত হয়েছে। আগ্রহের জন্য আন্তরিক ধন্যবাদ।"
+              : "Online registration for the ZRF Science Fair 2026 is officially closed. Thank you for your interest and support."}
+          </p>
+
+          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+            <Link
+              href="/"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-6 py-3 text-[14px] font-semibold text-white transition-colors hover:bg-brand-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40"
             >
-              {isBn ? "নিবন্ধন কার্যক্রম সমাপ্ত" : "Registration is Closed"}
-            </Typography>
+              <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+              {isBn ? "প্রধান পাতায় ফিরুন" : "Back to Home"}
+            </Link>
 
-            {/* Description */}
-            <Typography
-              variant="body1"
-              sx={{
-                color: "#C8E0D0",
-                fontSize: { xs: "0.95rem", sm: "1.05rem" },
-                lineHeight: 1.65,
-                maxWidth: 440,
-                mx: "auto",
-                mb: 4,
-              }}
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-6 py-3 text-[14px] font-semibold text-slate-700 transition-colors hover:border-brand-300 hover:text-brand-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/40"
             >
-              {isBn
-                ? "জিয়াউর রহমান ফাউন্ডেশন বিজ্ঞান মেলা ২০২৬-এর অনলাইন নিবন্ধন কার্যক্রম সমাপ্ত হয়েছে। আগ্রহের জন্য আন্তরিক ধন্যবাদ।"
-                : "Online registration for the ZRF Science Fair 2026 is officially closed. Thank you for your interest and support."}
-            </Typography>
-
-            {/* Back to Home Button */}
-            <div>
-              <Link
-                href="/"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#216740] to-[#2E8B57] hover:from-[#1b5534] hover:to-[#257347] text-white font-semibold text-sm shadow-lg shadow-emerald-900/30 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all"
-              >
-                <ArrowBackIcon sx={{ fontSize: 18 }} />
-                <span>{isBn ? "প্রধান পাতায় ফিরুন" : "Back to Home"}</span>
-              </Link>
-            </div>
+              <Send className="h-4 w-4" aria-hidden="true" />
+              {isBn ? "যোগাযোগ করুন" : "Contact Us"}
+            </Link>
           </div>
-        </Fade>
-      </Container>
-    </main>
+        </div>
+      </PageBody>
+    </>
   );
 }

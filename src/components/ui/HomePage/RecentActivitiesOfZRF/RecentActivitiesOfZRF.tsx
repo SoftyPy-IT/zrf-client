@@ -7,13 +7,15 @@ const RecentActivitiesOfZRF = () => {
   const { language } = useLanguage();
   const { activityData, loading, error } = useActivityData();
 
-  if (error) {
-    return <p>Oops data not found!</p>;
-  }
+  if (error) return null;
 
   return (
     <>
-      <RecentActivity language={language} activityData={activityData} />
+      <RecentActivity
+        language={language}
+        activityData={activityData}
+        loading={loading}
+      />
     </>
   );
 };

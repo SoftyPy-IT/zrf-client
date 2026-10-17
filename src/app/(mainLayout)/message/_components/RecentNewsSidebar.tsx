@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useLanguage } from "@/provider/LanguageProvider";
-import { useActivityData } from "@/hooks/useActivityData";
-import RecentNewsPost from "./RecentNewsPost";
-import dynamic from "next/dynamic";
-import axios from "axios";
-import { TActivity } from "@/types/type";
- 
+"use client";
 
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useLanguage } from "@/provider/LanguageProvider";
+import { TActivity } from "@/types/type";
+import RecentNewsPost from "./RecentNewsPost";
+
+/**
+ * Fetches the sidebar feed for the single-message view and renders the
+ * text-first "recent messages" panel. A failed request renders nothing rather
+ * than an error message — the panel is supplementary to the article.
+ */
 const RecentNewsSidebar = () => {
   const { language } = useLanguage();
   const [newsData, setNewsData] = useState<TActivity[]>([]);
@@ -14,36 +18,35 @@ const RecentNewsSidebar = () => {
   const [error, setError] = useState<string | null>(null);
 
   const category = `Message`;
-  // console.log(category)
 
   useEffect(() => {
-    const fetchCovidData = async () => {
+    const fetchSidebarData = async () => {
       setIsLoading(true);
       setError(null);
       try {
         const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/activity?category=${category}`
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/activity?category=${category}`,
         );
         setNewsData(res.data?.data?.activities || []);
       } catch (err) {
-        setError("Failed to load news data. Please try again later.");
+        console.error("Error fetching recent messages:", err);
+        setError("Failed to load recent messages.");
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchCovidData();
+    fetchSidebarData();
   }, [category]);
 
-   
+  if (error && !isLoading) return null;
 
-  if (error) {
-    return <h2>Oops! data not found.</h2>
-  }
   return (
-    <>
-      <RecentNewsPost newsData={newsData} language={language} />
-    </>
+    <RecentNewsPost
+      newsData={newsData}
+      language={language}
+      loading={isLoading}
+    />
   );
 };
 

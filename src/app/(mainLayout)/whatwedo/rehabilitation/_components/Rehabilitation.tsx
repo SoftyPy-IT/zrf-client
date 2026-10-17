@@ -1,139 +1,145 @@
-import Image from "next/image";
+"use client";
+
 import React, { useState } from "react";
-import Container from "@/components/share/Container";
-import { Button } from "@mui/material";
+import { Plus } from "lucide-react";
+import ArticleCard from "@/components/share/ArticleCard";
+import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
+import PageBody from "@/components/share/PageBody";
+import {
+  LoadingStatus,
+  Skeleton,
+  SkeletonText,
+} from "@/components/share/Skeleton";
 import { TWhatWeDo } from "@/types/type";
-import Link from "next/link";
-import EastIcon from "@mui/icons-material/East";
-import { formatDate } from "@/utils/formateDate";
-import { buttonStyle } from "@/utils/btnStyle";
-interface EducationProps {
+
+interface RehabilitationProps {
   whatWedoData: TWhatWeDo[];
   language: string;
+  loading?: boolean;
 }
 
-const Rehabilitation: React.FC<EducationProps> = ({
+/** Number of cards revealed per "load more" press. */
+const PAGE_SIZE = 6;
+
+/**
+ * Rehabilitation listing — institutional banner followed by a three-up card
+ * grid and a load-more control. The banner and skeleton deck stay mounted while
+ * the category resolves so the page structure is complete on first paint.
+ */
+const Rehabilitation: React.FC<RehabilitationProps> = ({
   whatWedoData,
   language,
+  loading,
 }) => {
-  const [visibleCount, setVisibleCount] = useState(6);
-  const loadMore = () => {
-    setVisibleCount((prevCount) => prevCount + 6);
-  };
+  const isBn = language === "BNG";
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
-  const sortedRehabilitationData = whatWedoData?.sort(
-    (a: TWhatWeDo, b: TWhatWeDo) => {
-      const dateA = new Date(a.date).getTime();
-      const dateB = new Date(b.date).getTime();
-      return dateB - dateA;
-    }
+  const sortedRehabilitationData = [...(whatWedoData || [])].sort(
+    (a: TWhatWeDo, b: TWhatWeDo) =>
+      new Date(b.date).getTime() - new Date(a.date).getTime(),
   );
 
-
-
-
-  const formatDate = (dateStr: string) => {
-    const date = new Date(dateStr);
-    if (language === "ENG") {
-      return date.toLocaleDateString("en-US", {
-        day: "2-digit",
-        month: "long",
-        year: "numeric",
-      });
-    } else {
-      // Convert to Bangla numerals
-      const banglaFormatted = date
-        .toLocaleDateString("bn-BD", {
-          day: "2-digit",
-          month: "long",
-          year: "numeric",
-        })
-        .replace(/[০-৯]/g, (d) =>
-          "০১২৩৪৫৬৭৮৯"["০১২৩৪৫৬৭৮৯".indexOf(d)] ?? d
-        );
-      return banglaFormatted;
-    }
-  };
+  const showSkeleton =
+    Boolean(loading) && sortedRehabilitationData.length === 0;
+  const visibleData = sortedRehabilitationData.slice(0, visibleCount);
 
   return (
     <>
-      <Container className="my-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5">
-          {sortedRehabilitationData
-            ?.slice(0, visibleCount)
-            .map((data, index: number) => (
+      <CommonBanner
+        title={
+          isBn ? "জেডআরএফ পুনর্বাসন কার্যক্রম" : "ZRF Rehabilitation Programmes"
+        }
+        subtitle={
+          isBn
+            ? "দুর্ঘটনা ও অস্থিরতায় আহত মানুষের জন্য চিকিৎসকদের সহযোগিতায় চিকিৎসা ও সামাজিক পুনর্বাসন সহায়তা।"
+            : "Medical treatment and social rehabilitation support for people injured in accidents and unrest, delivered with our partner physicians."
+        }
+      />
+
+      <PageBody>
+        {showSkeleton && (
+          <div
+            className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+            aria-busy="true"
+          >
+            <LoadingStatus
+              label={
+                isBn
+                  ? "পুনর্বাসন কার্যক্রম লোড হচ্ছে"
+                  : "Loading rehabilitation programmes"
+              }
+            />
+            {[0, 1, 2, 3, 4, 5].map((index) => (
               <div
                 key={index}
-                className="relative group w-auto md:h-[450px] bg-white overflow-hidden transition-transform transform hover:scale-105 border"
+                aria-hidden="true"
+                className="overflow-hidden rounded-card border border-slate-200 bg-white"
               >
-                {language === "BNG"
-                  ? data.bng_Images
-                      ?.slice(0, 1)
-                      .map((img) => (
-                        <Image
-                          width={500}
-                          height={500}
-                          key={img}
-                          src={img}
-                          alt="Top Image"
-                          className="rounded-lg w-full h-full object-cover"
-                        />
-                      ))
-                  : data.eng_images
-                      ?.slice(0, 1)
-                      .map((img) => (
-                        <Image
-                          width={500}
-                          height={500}
-                          key={img}
-                          src={img}
-                          alt="Top Image"
-                          className="rounded-lg w-full h-full object-cover"
-                        />
-                      ))}
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-green-600 via-yellow-600 to-transparent transition-transform transform translate-y-full group-hover:translate-y-0 duration-1000 ease-in-out h-[300px] md:h-[300px] lg:h-[300px]">
-                  <div className="absolute inset-0 mt-20 flex flex-col text-center  justify-center items-center transition-opacity duration-300 group-hover:opacity-100 text-white p-4">
-                    <h2 className="md:text-xl font-bold mb-1">
-                      {language == "ENG"
-                        ? data.english_title
-                        : data.bangla_title}
-                    </h2>
-                    <p className="text-[12px] md:text-sm mb-1  md:mb-2 text-center">
-                      {language == "ENG"
-                        ? data?.english_short_description?.slice(0, 120)
-                        : data?.bangla_short_description?.slice(0, 120)}
-                      ...
-                    </p>
-
-                    <div className="flex justify-between mt-3 w-full items-center ">
-                      <b>{formatDate(data.date)}</b>
-                      <Link href={`/whatwedo/rehabilitation/${data._id}`}>
-                        <Button sx={buttonStyle}>
-                          {language === "ENG" ? "Read More" : "আরও পড়ুন"}
-                          <EastIcon
-                            sx={{ fontSize: { md: "20px", xs: "20px" } }}
-                          />
-                        </Button>
-                      </Link>
-                    </div>
-                  </div>
+                <Skeleton className="aspect-[16/10] rounded-none" />
+                <div className="p-5">
+                  <Skeleton className="h-3 w-24" />
+                  <Skeleton className="mt-4 h-4 w-11/12" />
+                  <SkeletonText lines={3} className="mt-4" />
                 </div>
-
-                <div className="absolute top-0 left-0 w-full h-full pointer-events-none" />
               </div>
             ))}
-        </div>
-        {visibleCount < sortedRehabilitationData?.length && (
-          <div className="flex items-center justify-center">
-            <Button
-              onClick={loadMore}
-              className="bg-gradient-to-r from-yellow-600 to-green-600 p-1 text-[9px] md:text-sm  md:px-3  md:py-1 rounded text-white"
-            >
-              {language === "ENG" ? "Load More" : "আরো লোড"}
-            </Button>
           </div>
         )}
-      </Container>
+
+        {!showSkeleton && sortedRehabilitationData.length === 0 && (
+          <p className="py-8 text-center text-[14.5px] text-slate-500">
+            {isBn
+              ? "এই মুহূর্তে কোনো পুনর্বাসন কার্যক্রম প্রকাশিত হয়নি।"
+              : "No rehabilitation programmes are published at the moment."}
+          </p>
+        )}
+
+        {!showSkeleton && visibleData.length > 0 && (
+          <>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {visibleData.map((data) => {
+                const image = isBn
+                  ? data.bng_Images?.[0] || data.eng_images?.[0]
+                  : data.eng_images?.[0] || data.bng_Images?.[0];
+
+                const title =
+                  (isBn ? data.bangla_title : data.english_title) ||
+                  data.bangla_title ||
+                  data.english_title;
+
+                const excerpt = isBn
+                  ? data.bangla_short_description
+                  : data.english_short_description;
+
+                return (
+                  <ArticleCard
+                    key={data._id}
+                    href={`/whatwedo/rehabilitation/${data._id}`}
+                    title={title}
+                    excerpt={excerpt}
+                    image={image}
+                    date={data.date}
+                    actionLabel={isBn ? "আরও পড়ুন" : "Read more"}
+                  />
+                );
+              })}
+            </div>
+
+            {visibleCount < sortedRehabilitationData.length && (
+              <div className="mt-12 flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
+                  className="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
+                >
+                  <Plus className="h-4 w-4" aria-hidden="true" />
+                  {isBn ? "আরও লোড করুন" : "Load more"}
+                </button>
+              </div>
+            )}
+          </>
+        )}
+      </PageBody>
     </>
   );
 };

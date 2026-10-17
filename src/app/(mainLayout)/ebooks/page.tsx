@@ -1,96 +1,84 @@
-/* eslint-disable react/no-unescaped-entities */
+import type { Metadata } from "next";
+import EbookFetchData from "./_components/EbookFetchData";
 
-import React from 'react';
-import Head from 'next/head';
-import EbookFetchData from './_components/EbookFetchData';
+export const metadata: Metadata = {
+  title: "E-Books | Ziaur Rahman Foundation",
+  description:
+    "Browse the Ziaur Rahman Foundation's e-books, reports and commemorative publications, and read them online.",
+  keywords: [
+    "ZRF e-books",
+    "Ziaur Rahman Foundation publications",
+    "online library",
+    "digital books",
+  ],
+  authors: [{ name: "Ziaur Rahman Foundation" }],
+  robots: { index: true, follow: true },
+  alternates: {
+    canonical: "https://zrf.info/ebooks",
+  },
+  openGraph: {
+    title: "E-Books | Ziaur Rahman Foundation",
+    description:
+      "A curated shelf of the foundation's e-books and publications, available to read online.",
+    url: "https://zrf.info/ebooks",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "E-Books | Ziaur Rahman Foundation",
+    description:
+      "A curated shelf of the foundation's e-books and publications, available to read online.",
+  },
+};
 
+/**
+ * E-books index.
+ *
+ * The shelf, PDF reader modal and language switch live in the client component;
+ * this server wrapper contributes the SEO metadata and structured data.
+ */
 const EbookPage = () => {
   return (
     <>
-      <Head>
-        {/*  */}
-        <title>Ebooks Collection | Explore Our Library</title>
-        <meta
-          name="description"
-          content="Discover a diverse collection of ebooks across various genres. Dive into a world of knowledge and entertainment with our curated library."
-        />
-        <meta
-          name="keywords"
-          content="ebooks, free ebooks, online library, digital books, ebook collection, read ebooks online"
-        />
-        <meta name="author" content="Ziaur Rahman Foundation" />
-        <meta name="robots" content="index, follow" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-        {/* Open Graph / Facebook Meta Tags */}
-        <meta property="og:title" content="Ebooks Collection | Explore Our Library" />
-        <meta
-          property="og:description"
-          content="Browse through a curated library of ebooks available for download and online reading."
-        />
-        <meta property="og:image" content="/ebook-library-og-image.png" />
-        <meta property="og:url" content="https://www.ziaurrahmanfoundation.com/ebooks" />
-        <meta property="og:type" content="website" />
-
-        {/* Twitter Meta Tags */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Ebooks Collection | Explore Our Library" />
-        <meta
-          name="twitter:description"
-          content="Browse through a curated library of ebooks available for download and online reading."
-        />
-        <meta name="twitter:image" content="/ebook-library-twitter-image.png" />
-
-        {/* Canonical URL */}
-        <link rel="canonical" href="https://www.ziaurrahmanfoundation.com/ebooks" />
-
-        {/* JSON-LD Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebPage",
-              name: "Ebooks Collection",
-              description:
-                "Discover a diverse collection of ebooks across various genres. Dive into a world of knowledge and entertainment with our curated library.",
-              url: "https://www.ziaurrahmanfoundation.com/ebooks",
-              breadcrumb: {
-                "@type": "BreadcrumbList",
-                itemListElement: [
-                  {
-                    "@type": "ListItem",
-                    position: 1,
-                    name: "Home",
-                    item: "https://www.ziaurrahmanfoundation.com",
-                  },
-                  {
-                    "@type": "ListItem",
-                    position: 2,
-                    name: "Ebooks",
-                    item: "https://www.ziaurrahmanfoundation.com/ebooks",
-                  },
-                ],
-              },
-              author: {
-                "@type": "Organization",
-                name: "Ziaur Rahman Foundation",
-              },
-              publisher: {
-                "@type": "Organization",
-                name: "Ziaur Rahman Foundation",
-                logo: {
-                  "@type": "ImageObject",
-                  url: "/logo.png",
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: "E-Books",
+            description:
+              "Browse the Ziaur Rahman Foundation's e-books, reports and commemorative publications, and read them online.",
+            url: "https://zrf.info/ebooks",
+            breadcrumb: {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                {
+                  "@type": "ListItem",
+                  position: 1,
+                  name: "Home",
+                  item: "https://zrf.info",
                 },
-              },
-              image: "/ebook-library-og-image.png",
-            }),
-          }}
-        />
-      </Head>
+                {
+                  "@type": "ListItem",
+                  position: 2,
+                  name: "E-Books",
+                  item: "https://zrf.info/ebooks",
+                },
+              ],
+            },
+            author: {
+              "@type": "Organization",
+              name: "Ziaur Rahman Foundation",
+            },
+            publisher: {
+              "@type": "Organization",
+              name: "Ziaur Rahman Foundation",
+            },
+          }),
+        }}
+      />
 
-      {/* Page Content */}
       <EbookFetchData />
     </>
   );

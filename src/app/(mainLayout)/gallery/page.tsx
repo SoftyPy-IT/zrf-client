@@ -1,54 +1,42 @@
-"use client"
+import type { Metadata } from "next";
+import GalleryContent from "./_components/GalleryContent";
 
-import ImageGallery from "@/components/ImageGallery/ImageGallery";
-import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
-import Container from "@/components/share/Container";
-import { useLanguage } from "@/provider/LanguageProvider";
-import { TImgGallery } from "@/types/type";
-import { sortByDate } from "@/utils/sort";
-import { useEffect, useState } from "react";
-
-const FetchedGallery = () => {
-  const { language } = useLanguage();
-  const [galleryData, setGalleryData] = useState<TImgGallery[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
-  const title = language === "ENG" ? "Image Gallery" : "ফটো গ্যালারি";
-
-  useEffect(() => {
-    const fetchGalleryData = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/image-gallery?limit=100`,
-          { cache: "no-store" }
-        );
-        const data = await response.json();
-        setGalleryData(data.data?.galleries || []);
-      } catch {
-        setError("Failed to fetch gallery data.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchGalleryData();
-  }, []);
-
-  return (
-    <>
-      <CommonBanner title={title} />
-
-      <Container className="mt-10">
-        <ImageGallery
-          galleryData={galleryData}
-          loading={loading}
-          error={error}
-          language="ENG"
-        />
-      </Container>
-    </>
-  );
+export const metadata: Metadata = {
+  title: "Photo Gallery | Ziaur Rahman Foundation",
+  description:
+    "Browse photographs from the Ziaur Rahman Foundation's camps, programmes and community events across Bangladesh.",
+  keywords: [
+    "ZRF photo gallery",
+    "Ziaur Rahman Foundation gallery",
+    "field photographs",
+    "community programmes",
+  ],
+  authors: [{ name: "Ziaur Rahman Foundation" }],
+  robots: { index: true, follow: true },
+  alternates: {
+    canonical: "https://zrf.info/gallery",
+  },
+  openGraph: {
+    title: "Photo Gallery | Ziaur Rahman Foundation",
+    description:
+      "Moments from the Ziaur Rahman Foundation's camps, programmes and community events.",
+    url: "https://zrf.info/gallery",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Photo Gallery | Ziaur Rahman Foundation",
+    description:
+      "Moments from the Ziaur Rahman Foundation's camps, programmes and community events.",
+  },
 };
 
-export default FetchedGallery; 
+/**
+ * Photo gallery index.
+ *
+ * The gallery itself (year-grouped bento grid, lightbox, ENG / BNG switch) is a
+ * client component; this server wrapper contributes the SEO metadata.
+ */
+const GalleryPage = () => <GalleryContent />;
+
+export default GalleryPage;

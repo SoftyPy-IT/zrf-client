@@ -1,35 +1,49 @@
-import React, { useEffect, useState } from 'react';
-import { useLanguage } from '@/provider/LanguageProvider';
-import ClimateChangeRecentPost from './ClimateChangeRecentPost';
-import axios from 'axios';
-import { whatwedoFields } from '@/fields';
-import { TWhatWeDo } from '@/types/type';
+"use client";
+
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useLanguage } from "@/provider/LanguageProvider";
+import { whatwedoFields } from "@/fields";
+import { TWhatWeDo } from "@/types/type";
+import ClimateChangeRecentPost from "./ClimateChangeRecentPost";
+
 const ClimateChangeSidebar = () => {
-    const { language } = useLanguage();
-    const [climateChangeData, setClimateChange] = useState<TWhatWeDo[]>([]);
-    const category = `Climate Change`
-    useEffect(() => {
-        const fetchCovidData = async () => {
-            try {
-                const res = await axios.get(
-                    `${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo?category=${category}&fields=${whatwedoFields}`
-                );
-                setClimateChange(res.data?.data?.whatwedoes || []
-                );
+  const { language } = useLanguage();
+  const [climateChangeData, setClimateChangeData] = useState<TWhatWeDo[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-            } catch (err) {
-                console.log('Error fetching climate change data:', err);
-            }
-        };
+  const category = `Climate Change`;
 
-        fetchCovidData();
-    }, [category]);
+  useEffect(() => {
+    const fetchClimateChangeData = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo?category=${category}&fields=${whatwedoFields}`,
+        );
+        setClimateChangeData(res.data?.data?.whatwedoes || []);
+      } catch (err) {
+        console.error("Error fetching climate change data:", err);
+        setError("Failed to load climate change data. Please try again later.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-    return (
-        <>
-            <ClimateChangeRecentPost climateChangeData={climateChangeData} language={language} />
-        </>
-    );
+    fetchClimateChangeData();
+  }, [category]);
+
+  if (error) return null;
+
+  return (
+    <ClimateChangeRecentPost
+      climateChangeData={climateChangeData}
+      language={language}
+      loading={isLoading}
+    />
+  );
 };
 
 export default ClimateChangeSidebar;

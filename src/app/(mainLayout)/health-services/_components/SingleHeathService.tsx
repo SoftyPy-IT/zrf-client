@@ -1,117 +1,98 @@
 "use client";
+
 import React from "react";
-
-import Container from "@/components/share/Container";
-import ShareLink from "@/components/share/ShareLink/ShareLink";
-import { TWhatWeDo } from "@/types/type";
 import Image from "next/image";
-
+import { CalendarDays, Tag } from "lucide-react";
 import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
-import HealthServiceSidebar from "./HealthServiceSidebar";
-import ReactHtmlParser from "react-html-parser";
-import { useLanguage } from "@/provider/LanguageProvider";
+import PageBody from "@/components/share/PageBody";
+import ShareLink from "@/components/share/ShareLink/ShareLink";
 import RenderContent from "@/components/Common/RenderContent";
+import { useLanguage } from "@/provider/LanguageProvider";
+import { TWhatWeDo } from "@/types/type";
+import { formatDate } from "@/utils/formateDate";
 import { stripHtml } from "@/utils/stripHtml";
+import truncateText from "@/utils/truncate";
+import HealthServiceSidebar from "./HealthServiceSidebar";
 
 type SingleWhatWeDoProps = {
   whatWedoData: TWhatWeDo;
 };
 
 const SingleHeathService = ({ whatWedoData }: SingleWhatWeDoProps) => {
-  const shareUrl = typeof window !== "undefined" ? window.location.href : "";
   const { language } = useLanguage();
-  const description =
-    language === "ENG"
-      ? stripHtml(whatWedoData?.english_description ?? "")
-      : stripHtml(whatWedoData?.bangla_description ?? "");
+  const isBn = language === "BNG";
+
+  const shareUrl = typeof window !== "undefined" ? window.location.href : "";
+
+  const title = isBn ? whatWedoData.bangla_title : whatWedoData.english_title;
+  const shortDescription = isBn
+    ? whatWedoData.bangla_short_description
+    : whatWedoData.english_short_description;
+  const content = isBn
+    ? whatWedoData.bangla_description
+    : whatWedoData.english_description;
+  const description = stripHtml(content ?? "");
+
+  const heroImage =
+    (isBn ? whatWedoData.bng_Images : whatWedoData.eng_images)?.[0] ||
+    (isBn ? whatWedoData.eng_images : whatWedoData.bng_Images)?.[0];
 
   return (
     <>
       <CommonBanner
-        title={
-          language == "ENG"
-            ? "Health Services Program "
-            : "স্বাস্থ্য সেবা কার্যক্রম"
-        }
+        title={title}
+        subtitle={truncateText(shortDescription, 180) || undefined}
       />
-      <Container>
-        <div className="grid md:grid-cols-12 gap-7 my-10">
-          <div className="md:col-span-7 lg:col-span-8">
-            <div className="relative mb-6">
-              {language === "BNG"
-                ? whatWedoData.bng_Images
-                    ?.slice(0, 1)
-                    .map((img) => (
-                      <Image
-                        width={500}
-                        height={500}
-                        key={img}
-                        src={img}
-                        alt="Top Image"
-                        className="rounded-lg w-full h-full "
-                      />
-                    ))
-                : whatWedoData.eng_images
-                    ?.slice(0, 1)
-                    .map((img) => (
-                      <Image
-                        width={500}
-                        height={500}
-                        key={img}
-                        src={img}
-                        alt="Top Image"
-                        className="rounded-lg w-full h-full"
-                      />
-                    ))}
-            </div>
 
-            <h1 className="text-2xl md:text-3xl font-bold mb-4">
-              {language === "ENG"
-                ? whatWedoData.english_title
-                : whatWedoData.bangla_title}
-            </h1>
-
-            <p className="text-lg text-gray-800 text-justify">
-              <RenderContent
-                content={
-                  language === "ENG"
-                    ? whatWedoData.english_description
-                    : whatWedoData.bangla_description
-                }
+      <PageBody tight>
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
+          <article className="min-w-0 lg:col-span-8">
+            {heroImage && (
+              <Image
+                src={heroImage}
+                alt={title}
+                width={1200}
+                height={760}
+                sizes="(max-width: 1024px) 100vw, 800px"
+                className="h-auto w-full rounded-panel object-cover ring-1 ring-slate-200"
               />
-            </p>
+            )}
 
-            <div className=" md:flex lg:flex justify-between items-center mb-8 space-y-3">
-              <div className="flex items-center gap-4">
-                <ShareLink
-                  shareUrl={shareUrl}
-                  title={
-                    language === "ENG"
-                      ? whatWedoData?.english_title
-                      : whatWedoData?.bangla_title
-                  }
-                  hashtag={`#${whatWedoData?.bangla_title}`}
-                  description={description}
-                />
-              </div>
+            <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-[12px] text-slate-500">
+              {whatWedoData.date && (
+                <span className="inline-flex items-center gap-1.5">
+                  <CalendarDays className="h-3.5 w-3.5 text-brand-500" />
+                  {formatDate(whatWedoData.date)}
+                </span>
+              )}
+              {whatWedoData.category && (
+                <span className="inline-flex items-center gap-1.5">
+                  <Tag className="h-3.5 w-3.5 text-brand-500" />
+                  {whatWedoData.category}
+                </span>
+              )}
             </div>
-            {/* <div className="flex justify-between items-center mt-5">
-              <a href="#" className="text-green-600">
-                ←{language === "ENG" ? "Prev Post" : "পূর্ববর্তী পোস্ট"}
-              </a>
-              <a href="#" className="text-green-600">
-                {language === "ENG" ? "Next Post" : "পরবর্তী পোস্ট"} →
-              </a>
-            </div> */}
-          </div>
 
-          <div className="md:col-span-5 lg:col-span-4">
-            <div className="sticky top-24">
+            <RenderContent content={content} className="mt-7" />
+
+            <ShareLink
+              shareUrl={shareUrl}
+              title={title}
+              hashtag={`#${whatWedoData?.bangla_title}`}
+              description={description}
+            />
+          </article>
+
+          <aside
+            className="min-w-0 lg:col-span-4"
+            aria-label={isBn ? "সম্পর্কিত স্বাস্থ্য সেবা" : "Related health services"}
+          >
+            <div className="lg:sticky lg:top-24">
               <HealthServiceSidebar />
             </div>
-          </div>
+          </aside>
         </div>
-      </Container>
+      </PageBody>
     </>
   );
 };

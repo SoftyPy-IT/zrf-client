@@ -1,131 +1,146 @@
-/* eslint-disable @next/next/no-img-element */
+"use client";
+
 import React, { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import Container from "@/components/share/Container";
-import EastIcon from "@mui/icons-material/East";
+import ArticleCard from "@/components/share/ArticleCard";
 import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
+import PageBody from "@/components/share/PageBody";
+import {
+  LoadingStatus,
+  Skeleton,
+  SkeletonText,
+} from "@/components/share/Skeleton";
 import { TActivity } from "@/types/type";
-import ReactHtmlParser from "react-html-parser";
+import { stripHtml } from "@/utils/stripHtml";
 import truncateText from "@/utils/truncate";
-import { Button } from "@mui/material";
-import RenderContent from "@/components/Common/RenderContent";
+import { ChevronDown } from "lucide-react";
 
 interface activityProps {
   newsData: TActivity[];
   language: string;
+  /** Shows the skeleton grid while the feed is being fetched. */
+  loading?: boolean;
 }
 
-const NewsData: React.FC<activityProps> = ({ newsData, language }) => {
-  const sortedNewsData = newsData?.sort((a: TActivity, b: TActivity) => {
-    const dateA = new Date(a.date).getTime();
-    const dateB = new Date(b.date).getTime();
-    return dateB - dateA;
-  });
-  const [visibleCount, setVisibleCount] = useState(6);
-  const loadMore = () => {
-    setVisibleCount((prevCount) => prevCount + 6);
-  };
+/** Number of programmes revealed on each "load more" press. */
+const PAGE_SIZE = 6;
 
-   const formatDate = (dateStr: string) => {
-    const date = new Date(dateStr);
-    if (language === "ENG") {
-      return date.toLocaleDateString("en-US", {
-        day: "2-digit",
-        month: "long",
-        year: "numeric",
-      });
-    } else {
-      // Convert to Bangla numerals
-      const banglaFormatted = date
-        .toLocaleDateString("bn-BD", {
-          day: "2-digit",
-          month: "long",
-          year: "numeric",
-        })
-        .replace(/[০-৯]/g, (d) =>
-          "০১২৩৪৫৬৭৮৯"["০১২৩৪৫৬৭৮৯".indexOf(d)] ?? d
-        );
-      return banglaFormatted;
-    }
-  };
+/**
+ * Upcoming programmes index body.
+ *
+ * A calm three-up grid of `ArticleCard`s replaces the old hand-rolled cards —
+ * identical geometry to every other listing on the site — with a plain
+ * outline "load more" control that reveals the next six items.
+ */
+const NewsData: React.FC<activityProps> = ({ newsData, language, loading }) => {
+  const isBn = language === "BNG";
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+
+  const sortedNewsData = [...(newsData || [])].sort(
+    (a: TActivity, b: TActivity) =>
+      new Date(b.date).getTime() - new Date(a.date).getTime(),
+  );
+
+  const visibleNews = sortedNewsData.slice(0, visibleCount);
+  const hasMore = visibleCount < sortedNewsData.length;
+  const showSkeleton = loading && sortedNewsData.length === 0;
 
   return (
-    <div>
+    <>
       <CommonBanner
-        title={language === "ENG" ? "Upcoming Program" : "আসন্ন প্রোগ্রাম"}
+        title={isBn ? "আসন্ন কার্যক্রম" : "Upcoming Programmes"}
+        subtitle={
+          isBn
+            ? "জিয়াউর রহমান ফাউন্ডেশনের আগামী কার্যক্রম, অনুষ্ঠান ও আয়োজনের সময়সূচি।"
+            : "Programmes, events and activities scheduled by the Ziaur Rahman Foundation."
+        }
       />
-      <Container>
-        {(!sortedNewsData || sortedNewsData.length === 0) ? (
-          <div className="text-center py-20 text-gray-500">
-            <p className="text-lg">
-              {language === "ENG"
-                ? "No upcoming programs found at the moment."
-                : "এই মুহূর্তে কোনো আসন্ন প্রোগ্রাম পাওয়া যায়নি।"}
-            </p>
+
+      <PageBody tone="slate">
+        {showSkeleton ? (
+          <div
+            className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+            aria-busy="true"
+          >
+            <LoadingStatus
+              label={isBn ? "কার্যক্রম লোড হচ্ছে" : "Loading programmes"}
+            />
+            {[0, 1, 2, 3, 4, 5].map((index) => (
+              <div
+                key={index}
+                aria-hidden="true"
+                className="overflow-hidden rounded-card border border-slate-200 bg-white"
+              >
+                <Skeleton className="aspect-[16/10] rounded-none" />
+                <div className="p-5">
+                  <Skeleton className="h-3 w-24" />
+                  <Skeleton className="mt-3 h-4 w-11/12" />
+                  <SkeletonText lines={3} className="mt-3" lineClassName="h-3" />
+                </div>
+              </div>
+            ))}
           </div>
+        ) : sortedNewsData.length === 0 ? (
+          <p className="py-16 text-center text-sm text-slate-500">
+            {isBn
+              ? "এই মুহূর্তে কোনো আসন্ন কার্যক্রম পাওয়া যায়নি।"
+              : "No upcoming programmes found at the moment."}
+          </p>
         ) : (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-16">
-              {sortedNewsData?.slice(0, visibleCount).map((data, index: number) => {
-                const img =
-                  (language === "ENG" ? data.eng_images?.[0] : data.bng_Images?.[0]) ||
+            <p className="text-[13px] font-medium text-slate-500">
+              {isBn
+                ? `মোট ${sortedNewsData.length}টি কার্যক্রম`
+                : `${sortedNewsData.length} upcoming programmes`}
+            </p>
+
+            <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {visibleNews.map((data) => {
+                const image =
+                  (isBn ? data.bng_Images?.[0] : data.eng_images?.[0]) ||
                   data.eng_images?.[0] ||
                   data.bng_Images?.[0] ||
-                  "/placeholder.jpg";
+                  null;
 
                 const title =
-                  (language === "ENG" ? data?.english_title : data?.bangla_title) ||
-                  data?.bangla_title ||
-                  data?.english_title ||
+                  (isBn ? data.bangla_title : data.english_title) ||
+                  data.bangla_title ||
+                  data.english_title ||
                   "";
 
+                const excerpt = isBn
+                  ? data.bangla_short_description || data.bangla_description
+                  : data.english_short_description || data.english_description;
+
                 return (
-                  <div key={data._id || index}>
-                    <div className="shadow-md flex flex-col justify-between rounded-md overflow-hidden bg-white">
-                      <div className="h-[240px] relative w-full overflow-hidden">
-                        <Image
-                          width={500}
-                          height={500}
-                          src={img}
-                          alt={title}
-                          className="h-[240px] w-full object-cover rounded-t-md"
-                        />
-                      </div>
-                      <div className="p-4 flex flex-col justify-between flex-1">
-                        <div>
-                          <h3 className="font-semibold text-gray-700 text-base mb-3">
-                            {truncateText(title, 80)}
-                          </h3>
-                        </div>
-                        <div className="flex justify-between items-center mt-2 pt-2 border-t border-gray-100">
-                          <b className="text-xs text-gray-500">{formatDate(data.date)}</b>
-                          <Link href={`/upcoming-programs/${data._id}`}>
-                            <button className="text-white bg-gradient-to-r from-yellow-600 to-green-600 px-4 py-1 hover:opacity-90 rounded-full uppercase text-xs font-semibold flex items-center gap-1">
-                              {language === "ENG" ? "Read More" : "আরও পড়ুন"} <EastIcon fontSize="small" />
-                            </button>
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <ArticleCard
+                    key={data._id}
+                    href={`/upcoming-programs/${data._id}`}
+                    title={truncateText(title, 80)}
+                    excerpt={truncateText(stripHtml(excerpt || ""), 130)}
+                    image={image}
+                    date={data.date}
+                    actionLabel={isBn ? "আরও পড়ুন" : "Read more"}
+                  />
                 );
               })}
             </div>
-            {visibleCount < (sortedNewsData?.length || 0) && (
-              <div className="flex items-center justify-center mb-16">
-                <Button
-                  onClick={loadMore}
-                  className="bg-gradient-to-r from-yellow-600 to-green-600 px-5 py-2 rounded-full text-white text-sm font-semibold"
+
+            {hasMore && (
+              <div className="mt-10 flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
+                  className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-6 py-3 text-[13.5px] font-semibold text-slate-700 transition-colors hover:border-brand-300 hover:text-brand-700"
                 >
-                  {language === "ENG" ? "Load More" : "আরো লোড"}
-                </Button>
+                  {isBn ? "আরও লোড করুন" : "Load more"}
+                  <ChevronDown className="h-4 w-4" aria-hidden="true" />
+                </button>
               </div>
             )}
           </>
         )}
-      </Container>
-    </div>
+      </PageBody>
+    </>
   );
 };
 

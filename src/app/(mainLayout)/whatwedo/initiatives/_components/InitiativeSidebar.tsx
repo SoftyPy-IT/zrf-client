@@ -1,13 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { useLanguage } from "@/provider/LanguageProvider";
-import { useWhatwedoData } from "@/hooks/useWhatwedoData";
-import InitiativeRecentPost from "./InitiativeRecentPost";
-import { TWhatWeDo } from "@/types/type";
 import axios from "axios";
+import { useLanguage } from "@/provider/LanguageProvider";
 import { whatwedoFields } from "@/fields";
-import Loader from "@/app/loading";
+import { TWhatWeDo } from "@/types/type";
+import InitiativeRecentPost from "./InitiativeRecentPost";
 
-const InitiativeSidebar = () => {
+type Props = {
+  /**
+   * "compact" renders the sidebar panel used beside a single article,
+   * "grid" the full-width card deck that closes the article page.
+   */
+  variant?: "compact" | "grid";
+};
+
+/**
+ * Fetches the `Initiatives` category and renders the recent-post listing. Kept
+ * as a self-contained data component so the single article page can drop it
+ * straight into its sidebar (or page footer) without owning any fetching logic.
+ */
+const InitiativeSidebar = ({ variant = "compact" }: Props) => {
   const { language } = useLanguage();
   const [initiativeData, setInitiativeData] = useState<TWhatWeDo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -16,37 +27,35 @@ const InitiativeSidebar = () => {
   const category = `Initiatives`;
 
   useEffect(() => {
-    const fetchCovidData = async () => {
+    const fetchWhatwedoData = async () => {
       setIsLoading(true);
       setError(null);
       try {
         const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo?category=${category}&fields=${whatwedoFields}`
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/whatwedo?category=${category}&fields=${whatwedoFields}`,
         );
         setInitiativeData(res.data?.data?.whatwedoes || []);
       } catch (err) {
-        console.error("Error fetching climate change data:", err);
-        setError("Failed to load climate change data. Please try again later.");
+        setError("Failed to fetch whatwedo data!");
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchCovidData();
+    fetchWhatwedoData();
   }, [category]);
 
-   
-
   if (error) {
-    return <h2>Oops! data not found.</h2>;
+    return null;
   }
+
   return (
-    <>
-      <InitiativeRecentPost
-        initiativeData={initiativeData}
-        language={language}
-      />
-    </>
+    <InitiativeRecentPost
+      initiativeData={initiativeData}
+      language={language}
+      loading={isLoading}
+      variant={variant}
+    />
   );
 };
 

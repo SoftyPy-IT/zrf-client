@@ -6,6 +6,12 @@ import { useLanguage } from "@/provider/LanguageProvider";
 import { TCommitte } from "@/types/type";
 import axios from "axios";
 
+/**
+ * Committee index page.
+ *
+ * Same endpoint and state as before; the presentation component now renders the
+ * banner immediately and shows a skeleton grid while the feed resolves.
+ */
 const Committee = () => {
   const { language } = useLanguage();
   const [committeeData, setCommitteeData] = useState<TCommitte[]>([]);
@@ -18,7 +24,7 @@ const Committee = () => {
       setError(null);
       try {
         const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/committee?limit=1000`
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/committee?limit=1000`,
         );
         setCommitteeData(res.data?.data?.committees || []);
       } catch (err) {
@@ -32,26 +38,14 @@ const Committee = () => {
     fetchCommitteeData();
   }, []);
 
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-600"></div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex justify-center items-center min-h-[400px]">
-        <h2 className="text-xl text-red-500 font-semibold">{error}</h2>
-      </div>
-    );
-  }
+  if (error) return null;
 
   return (
-    <>
-      <CommitteeFetchData language={language} committeeData={committeeData} />
-    </>
+    <CommitteeFetchData
+      language={language}
+      committeeData={committeeData}
+      loading={isLoading}
+    />
   );
 };
 

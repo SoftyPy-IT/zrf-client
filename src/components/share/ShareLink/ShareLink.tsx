@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   FacebookShareButton,
   LinkedinShareButton,
@@ -8,15 +8,8 @@ import {
   WhatsappShareButton,
   EmailShareButton,
 } from "react-share";
-import { Tooltip } from "@mui/material";
-import Image from "next/image";
-import { FaLink } from "react-icons/fa";
-
-import facebook from "../../../../src/assets/icon/facebook.png";
-import linkedIn from "../../../../src/assets/icon/linkedin.png";
-import whatsapp from "../../../../src/assets/icon/chat3.png";
-import twitter from "../../../../src/assets/icon/twitter.png";
-import email from "../../../../src/assets/icon/email.png";
+import { Check, Link2 } from "lucide-react";
+import { useLanguage } from "@/provider/LanguageProvider";
 
 type ShareProps = {
   shareUrl: string;
@@ -27,7 +20,7 @@ type ShareProps = {
   imageAlt?: string;
 };
 
-// Helper function to set/update meta tags
+/** Sets or updates a document meta tag. */
 const setMetaTag = (
   selector: string,
   attribute: string,
@@ -43,6 +36,22 @@ const setMetaTag = (
   meta.setAttribute("content", content);
 };
 
+const channels = [
+  { key: "whatsapp", labelEn: "WhatsApp", labelBn: "হোয়াটসঅ্যাপ" },
+  { key: "facebook", labelEn: "Facebook", labelBn: "ফেসবুক" },
+  { key: "linkedin", labelEn: "LinkedIn", labelBn: "লিংকডইন" },
+  { key: "twitter", labelEn: "X", labelBn: "এক্স" },
+  { key: "email", labelEn: "Email", labelBn: "ইমেইল" },
+] as const;
+
+type ChannelKey = (typeof channels)[number]["key"];
+
+/**
+ * Article share row.
+ *
+ * Institution-style: a labelled rule across the top, then plain text share
+ * actions per channel plus a copy-link control. No third-party icon images.
+ */
 const ShareLink = ({
   shareUrl,
   title,
@@ -52,18 +61,19 @@ const ShareLink = ({
   imageAlt,
 }: ShareProps) => {
   const [copied, setCopied] = useState(false);
+  const { language } = useLanguage();
+  const isBn = language === "BNG";
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(shareUrl);
+    navigator.clipboard?.writeText(shareUrl);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    window.setTimeout(() => setCopied(false), 2000);
   };
 
-  // Update meta tags dynamically when language changes
+  /* Keep Open Graph / Twitter cards in sync with the active language. */
   useEffect(() => {
     if (!title || !description) return;
 
-    // Update Open Graph meta tags
     setMetaTag('meta[property="og:title"]', "property", "og:title", title);
     setMetaTag(
       'meta[property="og:description"]',
@@ -72,20 +82,6 @@ const ShareLink = ({
       description,
     );
     setMetaTag('meta[property="og:url"]', "property", "og:url", shareUrl);
-
-    if (imageUrl) {
-      setMetaTag('meta[property="og:image"]', "property", "og:image", imageUrl);
-      if (imageAlt) {
-        setMetaTag(
-          'meta[property="og:image:alt"]',
-          "property",
-          "og:image:alt",
-          imageAlt,
-        );
-      }
-    }
-
-    // Update Twitter meta tags
     setMetaTag('meta[name="twitter:title"]', "name", "twitter:title", title);
     setMetaTag(
       'meta[name="twitter:description"]',
@@ -101,6 +97,7 @@ const ShareLink = ({
     );
 
     if (imageUrl) {
+      setMetaTag('meta[property="og:image"]', "property", "og:image", imageUrl);
       setMetaTag(
         'meta[name="twitter:image"]',
         "name",
@@ -109,6 +106,12 @@ const ShareLink = ({
       );
       if (imageAlt) {
         setMetaTag(
+          'meta[property="og:image:alt"]',
+          "property",
+          "og:image:alt",
+          imageAlt,
+        );
+        setMetaTag(
           'meta[name="twitter:image:alt"]',
           "name",
           "twitter:image:alt",
@@ -116,100 +119,83 @@ const ShareLink = ({
         );
       }
     }
-
-    // Update page title
-    document.title = title;
   }, [title, description, imageUrl, imageAlt, shareUrl]);
 
+  const renderButton = (key: ChannelKey, children: React.ReactNode) => (
+    <span className="inline-flex [&>button]:inline-flex [&>button]:items-center [&>button]:gap-1.5 [&>button]:rounded-lg [&>button]:border [&>button]:border-slate-200 [&>button]:bg-white [&>button]:px-3 [&>button]:py-2 [&>button]:text-[12.5px] [&>button]:font-semibold [&>button]:text-slate-700 [&>button]:transition-colors [&>button:hover]:border-brand-300 [&>button:hover]:text-brand-700">
+      {children}
+    </span>
+  );
+
+  const label = (key: ChannelKey) => {
+    const channel = channels.find((item) => item.key === key);
+    return channel ? (isBn ? channel.labelBn : channel.labelEn) : "";
+  };
+
   return (
-    <div className="w-full flex flex-col items-center md:flex-row md:items-center md:justify-between gap-4 py-6 border-t border-gray-200 mt-6">
-      <h4 className="text-sm md:text-base font-semibold text-gray-700">
-        Share this article:
+    <div className="mt-8 flex flex-col gap-4 border-t border-slate-200 pt-6 lg:flex-row lg:items-center lg:justify-between">
+      <h4 className="text-[12px] font-bold uppercase tracking-[0.12em] text-slate-500">
+        {isBn ? "শেয়ার করুন" : "Share this"}
       </h4>
 
-      <div className="flex flex-wrap justify-center gap-4">
-        <Tooltip title="Share on WhatsApp" arrow>
+      <div className="flex flex-wrap items-center gap-2">
+        {renderButton(
+          "whatsapp",
           <WhatsappShareButton url={shareUrl} title={title}>
-            <Image
-              src={whatsapp}
-              alt="WhatsApp"
-              width={40}
-              height={40}
-              className="rounded-full transition-transform duration-200 hover:scale-110"
-            />
-          </WhatsappShareButton>
-        </Tooltip>
-
-        <Tooltip title="Share on Facebook" arrow>
+            <span>{label("whatsapp")}</span>
+          </WhatsappShareButton>,
+        )}
+        {renderButton(
+          "facebook",
           <FacebookShareButton url={shareUrl} hashtag={hashtag}>
-            <Image
-              src={facebook}
-              alt="Facebook"
-              width={40}
-              height={40}
-              className="rounded-full transition-transform duration-200 hover:scale-110"
-            />
-          </FacebookShareButton>
-        </Tooltip>
-
-        <Tooltip title="Share on LinkedIn" arrow>
+            <span>{label("facebook")}</span>
+          </FacebookShareButton>,
+        )}
+        {renderButton(
+          "linkedin",
           <LinkedinShareButton
             url={shareUrl}
             title={title}
             summary={description}
             source={shareUrl}
           >
-            <Image
-              src={linkedIn}
-              alt="LinkedIn"
-              width={40}
-              height={40}
-              className="rounded-full transition-transform duration-200 hover:scale-110"
-            />
-          </LinkedinShareButton>
-        </Tooltip>
-
-        <Tooltip title="Share on Twitter" arrow>
+            <span>{label("linkedin")}</span>
+          </LinkedinShareButton>,
+        )}
+        {renderButton(
+          "twitter",
           <TwitterShareButton url={shareUrl} title={title} hashtags={[hashtag]}>
-            <Image
-              src={twitter}
-              alt="Twitter"
-              width={40}
-              height={40}
-              className="rounded-full transition-transform duration-200 hover:scale-110"
-            />
-          </TwitterShareButton>
-        </Tooltip>
-
-        <Tooltip title="Share via Email" arrow>
+            <span>{label("twitter")}</span>
+          </TwitterShareButton>,
+        )}
+        {renderButton(
+          "email",
           <EmailShareButton
             url={shareUrl}
             subject={title}
-            body={`${description}\n\nCheck this out: ${shareUrl}`}
+            body={`${description}\n\n${shareUrl}`}
           >
-            <Image
-              src={email}
-              alt="Email"
-              width={40}
-              height={40}
-              className="rounded-full transition-transform duration-200 hover:scale-110"
-            />
-          </EmailShareButton>
-        </Tooltip>
-      </div>
+            <span>{label("email")}</span>
+          </EmailShareButton>,
+        )}
 
-      <div
-        onClick={handleCopy}
-        className={`flex items-center gap-2 px-4 py-2 rounded-full border cursor-pointer transition-all duration-300 ${
-          copied
-            ? "bg-green-100 border-green-400 text-green-700"
-            : "bg-gray-50 hover:bg-gray-100 border-gray-300 text-gray-700"
-        }`}
-      >
-        <FaLink className="text-gray-600" />
-        <span className="text-xs md:text-sm font-medium truncate max-w-[140px] md:max-w-[180px]">
-          {copied ? "Link copied!" : shareUrl}
-        </span>
+        <button
+          type="button"
+          onClick={handleCopy}
+          aria-label={isBn ? "লিংক কপি করুন" : "Copy link"}
+          className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-2 text-[12.5px] font-semibold transition-colors ${
+            copied
+              ? "border-brand-300 bg-brand-50 text-brand-700"
+              : "border-slate-200 bg-white text-slate-700 hover:border-brand-300 hover:text-brand-700"
+          }`}
+        >
+          {copied ? (
+            <Check className="h-3.5 w-3.5" />
+          ) : (
+            <Link2 className="h-3.5 w-3.5" />
+          )}
+          {copied ? (isBn ? "কপি হয়েছে" : "Copied") : isBn ? "লিংক" : "Copy link"}
+        </button>
       </div>
     </div>
   );

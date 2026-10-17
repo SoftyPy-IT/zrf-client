@@ -5,17 +5,12 @@ import MessagePresident from "./MessagePresident";
 import { useLanguage } from "@/provider/LanguageProvider";
 import { useMessageData } from "@/hooks/useMessageData";
 import MessageBanner from "../message-of-vice-president/_components/MessageBanner";
-import dynamic from "next/dynamic";
- 
 
 const Message = () => {
   const { language } = useLanguage();
   const { messageData, loading, error } = useMessageData();
 
-   
-  if (error) {
-    return <h2 className="text-center">Oops! Something Went Wrong!</h2>;
-  }
+  if (error) return null;
 
   return (
     <div>
@@ -29,7 +24,11 @@ const Message = () => {
             : "জিয়াউর রহমান ফাউন্ডেশন"
         }
       />
-      <MessagePresident messageData={messageData} language={language} />
+      <MessagePresident
+        messageData={messageData}
+        language={language}
+        loading={loading}
+      />
     </div>
   );
 };

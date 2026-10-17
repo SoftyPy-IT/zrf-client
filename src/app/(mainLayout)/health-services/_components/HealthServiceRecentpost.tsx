@@ -1,87 +1,118 @@
 import React from "react";
 import Image from "next/image";
-import { TWhatWeDo } from "@/types/type";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { Skeleton } from "@/components/share/Skeleton";
+import { TWhatWeDo } from "@/types/type";
 import truncateText from "@/utils/truncate";
+import { formatDate } from "@/utils/formateDate";
 
 interface HealthServicesProps {
   healthServicesData: TWhatWeDo[];
   language: string;
+  loading?: boolean;
 }
 
+/**
+ * Compact "more health services" panel that sits beside the article on a
+ * detailed page. Deliberately text-first so it reads as a genuine index, not a
+ * second card grid.
+ */
 const HealthServiceRecentpost: React.FC<HealthServicesProps> = ({
   healthServicesData,
   language,
+  loading,
 }) => {
-  const title = language === "ENG" ? "Recent Post" : "সাম্প্রতিক পোস্ট";
+  const isBn = language === "BNG";
 
-  const sortedNewsData = healthServicesData?.sort((a, b) => {
-    const dateA = new Date(a.date).getTime();
-    const dateB = new Date(b.date).getTime();
-    return dateB - dateA;
-  });
-
-  // ✅ Bangla + English date formatter
-  const formatDate = (dateStr: string) => {
-    const date = new Date(dateStr);
-    return language === "ENG"
-      ? date.toLocaleDateString("en-US", {
-          day: "2-digit",
-          month: "long",
-          year: "numeric",
-        })
-      : date.toLocaleDateString("bn-BD", {
-          day: "2-digit",
-          month: "long",
-          year: "numeric",
-        });
-  };
+  const items = [...(healthServicesData || [])]
+    .sort(
+      (a: TWhatWeDo, b: TWhatWeDo) =>
+        new Date(b.date).getTime() - new Date(a.date).getTime(),
+    )
+    .slice(1, 5);
 
   return (
-    <div className="shadow-md rounded-md p-3">
-      <h3 className="text-xl font-semibold">{title}</h3>
-      <hr className="w-16 h-1 bg-gradient-to-r from-yellow-600 to-green-600 border-0 rounded-full mb-5" />
+    <div className="flex h-full flex-col rounded-panel border border-slate-200 bg-white p-5 shadow-card sm:p-6">
+      <h3 className="text-[13px] font-bold uppercase tracking-[0.1em] text-slate-500">
+        {isBn ? "আরও স্বাস্থ্য সেবা" : "More health services"}
+      </h3>
+      <span className="mt-3 block h-[2px] w-10 rounded-full bg-gold-500" />
 
-      <div className="flex flex-col gap-y-3 mt-5">
-        {sortedNewsData?.slice(1, 5).map((data) => (
-          <Link key={data._id} href={`/health-services/${data._id}`}>
-            <div className="flex items-center border rounded-md hover:shadow transition overflow-hidden">
-              {/* ✅ Fixed-size image container */}
-              <div className="relative w-[100px] h-[80px] flex-shrink-0">
-                {language === "ENG"
-                  ? data.eng_images?.slice(0, 1).map((img) => (
-                      <Image
-                        key={img}
-                        src={img}
-                        alt="Health Service"
-                        fill
-                        className=""
-                      />
-                    ))
-                  : data.bng_Images?.slice(0, 1).map((img) => (
-                      <Image
-                        key={img}
-                        src={img}
-                        alt="স্বাস্থ্য সেবা"
-                        fill
-                        className=""
-                      />
-                    ))}
+      {loading ? (
+        <ul
+          aria-hidden="true"
+          className="mt-4 flex flex-1 flex-col divide-y divide-slate-100"
+        >
+          {[0, 1, 2, 3].map((index) => (
+            <li key={index} className="flex items-start gap-3.5 py-4 first:pt-2">
+              <Skeleton className="h-[62px] w-[62px] shrink-0 rounded-lg" />
+              <div className="min-w-0 flex-1 space-y-2">
+                <Skeleton className="h-3.5 w-full" />
+                <Skeleton className="h-3.5 w-3/4" />
+                <Skeleton className="h-3 w-20" />
               </div>
+            </li>
+          ))}
+        </ul>
+      ) : items.length === 0 ? (
+        <p className="mt-6 text-[13.5px] text-slate-500">
+          {isBn
+            ? "এই মুহূর্তে আর কোনো স্বাস্থ্য সেবা নেই।"
+            : "No further health services at the moment."}
+        </p>
+      ) : (
+        <ul className="mt-4 flex flex-1 flex-col divide-y divide-slate-100">
+          {items.map((data) => {
+            const title = isBn ? data.bangla_title : data.english_title;
+            const image =
+              (isBn ? data.bng_Images : data.eng_images)?.[0] ||
+              (isBn ? data.eng_images : data.bng_Images)?.[0];
 
-              {/* ✅ Text section */}
-              <div className="flex-1 p-2">
-                <b className="text-xs block mb-1">{formatDate(data.date)}</b>
-                <p className="text-xs md:text-sm leading-tight">
-                  {language === "ENG"
-                    ? truncateText(data.english_short_description, 70)
-                    : truncateText(data.bangla_short_description, 70)}
-                </p>
-              </div>
-            </div>
-          </Link>
-        ))}
-      </div>
+            return (
+              <li key={data._id}>
+                <Link
+                  href={`/health-services/${data._id}`}
+                  className="group flex items-start gap-3.5 py-4 first:pt-2"
+                >
+                  <span className="relative h-[62px] w-[62px] shrink-0 overflow-hidden rounded-lg bg-slate-100">
+                    {image ? (
+                      <Image
+                        src={image}
+                        alt={title}
+                        fill
+                        sizes="62px"
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                    ) : null}
+                  </span>
+
+                  <span className="min-w-0 flex-1">
+                    <span className="clamp-2 block text-[13.5px] font-semibold leading-snug text-slate-800 transition-colors group-hover:text-brand-700">
+                      {truncateText(title, 70)}
+                    </span>
+                    {data.date && (
+                      <span className="mt-1 block text-[11.5px] font-medium text-slate-400">
+                        {formatDate(data.date)}
+                      </span>
+                    )}
+                  </span>
+
+                  <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-slate-300 transition-all group-hover:translate-x-0.5 group-hover:text-brand-600" />
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+
+      <Link
+        href="/health-services"
+        className="mt-5 inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-4 py-2.5 text-[13px] font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-700 hover:shadow-md"
+      >
+        {isBn ? "সব স্বাস্থ্য সেবা দেখুন" : "View all health services"}
+        <ArrowRight className="h-4 w-4" />
+      </Link>
     </div>
   );
 };
