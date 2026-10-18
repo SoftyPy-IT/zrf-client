@@ -8,9 +8,6 @@ import SectionHeading from "@/components/share/SectionHeading";
 import { TBanner } from "@/types/type";
 import { CheckCircle2, ArrowRight } from "lucide-react";
 
-import imgMain from "../../../../assets/images/welcome/3.jpg";
-import imgAccent from "../../../../assets/images/welcome/2.jpg";
-
 interface welcomeProps {
   welcomeData: TBanner[];
   language: string;
@@ -111,38 +108,26 @@ const WelcomeData: React.FC<welcomeProps> = ({ welcomeData, language }) => {
 
           {/* Imagery ---------------------------------------------------- */}
           <div className="order-1 lg:order-2">
-            <div className="relative mx-auto max-w-[520px]">
-              {/* Main frame */}
-              <div className="relative aspect-[4/3] overflow-hidden rounded-panel shadow-panel ring-1 ring-slate-200/70">
+            <div className="relative mx-auto w-full max-w-[540px]">
+              {/* Composite SVG artwork */}
+              <div className="relative aspect-[4/3] w-full">
                 <Image
-                  src={imgMain}
+                  src="/welcome.svg"
                   alt={
                     isBn
-                      ? "জিয়াউর রহমান ফাউন্ডেশনের কার্যক্রম"
-                      : "Ziaur Rahman Foundation field programme"
+                      ? "শহীদ রাষ্ট্রপতি জিয়াউর রহমান — জিয়াউর রহমান ফাউন্ডেশন"
+                      : "Shaheed President Ziaur Rahman — Ziaur Rahman Foundation"
                   }
                   fill
-                  sizes="(max-width: 1024px) 100vw, 520px"
-                  className="object-cover"
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 540px"
+                  className="object-contain drop-shadow-sm select-none"
                 />
               </div>
 
-              {/* Overlapping accent photo */}
-              <div className="absolute -bottom-8 -left-4 hidden w-[170px] overflow-hidden rounded-card border-[6px] border-white shadow-panel sm:block md:w-[200px]">
-                <div className="relative aspect-[4/5]">
-                  <Image
-                    src={imgAccent}
-                    alt=""
-                    fill
-                    sizes="200px"
-                    className="object-cover"
-                  />
-                </div>
-              </div>
-
               {/* Years-of-service badge */}
-              <div className="absolute -right-2 top-6 rounded-card bg-brand-700 px-5 py-4 text-center shadow-panel ring-1 ring-white/15 sm:-right-4">
-                <span className="block text-[28px] font-bold leading-none text-white">
+              <div className="absolute -right-1 top-2 z-10 rounded-card bg-brand-700/95 px-4 py-3 text-center shadow-panel ring-1 ring-white/20 backdrop-blur-sm sm:-right-3 sm:top-4 sm:px-5 sm:py-3.5">
+                <span className="block font-display text-[24px] font-bold leading-none text-white sm:text-[28px]">
                   27
                 </span>
                 <span className="mt-1 block text-[10px] font-bold uppercase tracking-[0.12em] text-gold-400">

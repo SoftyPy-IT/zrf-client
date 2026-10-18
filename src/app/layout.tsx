@@ -119,7 +119,7 @@ export default function RootLayout({
         />
       </head>
 
-      <body>
+      <body className="font-sans antialiased">
         <Providers>
           <AppRouterCacheProvider>
             <Toaster position="bottom-right" richColors />

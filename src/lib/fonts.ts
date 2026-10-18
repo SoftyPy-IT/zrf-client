@@ -1,15 +1,27 @@
-import { Inter } from "next/font/google";
 import localFont from "next/font/local";
 
 /**
  * Latin / English typeface for the whole site.
- * Inter is a variable font, so a single request covers every weight we use.
+ * Self-hosted official Inter Variable font covering full Latin and extended glyphs
+ * across all continuous weights (100–900) in normal and italic styles.
+ * Being 100% self-hosted eliminates external Google Fonts network latency and blocking.
  */
-export const inter = Inter({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
-  display: "swap",
+export const inter = localFont({
+  src: [
+    {
+      path: "../../public/fonts/inter/InterVariable.woff2",
+      style: "normal",
+      weight: "100 900",
+    },
+    {
+      path: "../../public/fonts/inter/InterVariable-Italic.woff2",
+      style: "italic",
+      weight: "100 900",
+    },
+  ],
   variable: "--font-inter",
+  display: "swap",
+  preload: true,
   fallback: ["system-ui", "-apple-system", "Segoe UI", "Roboto", "sans-serif"],
 });
 

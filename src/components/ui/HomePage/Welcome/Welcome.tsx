@@ -6,7 +6,6 @@ import WelcomeData from "./WelcomeData";
 import { useLanguage } from "@/provider/LanguageProvider";
 import { TBanner } from "@/types/type";
 import dynamic from "next/dynamic";
- 
 
 const Welcome = () => {
   const [welcomeData, setWelcomeData] = React.useState<TBanner[]>([]);
@@ -20,7 +19,7 @@ const Welcome = () => {
           `${process.env.NEXT_PUBLIC_BASE_API_URL}/banner?limit=1000`,
           {
             cache: "no-store",
-          }
+          },
         );
         const data = await response.json();
         setWelcomeData(data.data?.banners || []);
@@ -33,8 +32,6 @@ const Welcome = () => {
 
     fetchPrisonData();
   }, []);
-
-   
 
   return (
     <>
