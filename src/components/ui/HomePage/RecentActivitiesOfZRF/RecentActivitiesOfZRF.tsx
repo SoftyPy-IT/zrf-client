@@ -1,3 +1,5 @@
+"use client";
+
 import { useLanguage } from "@/provider/LanguageProvider";
 import RecentActivity from "./RecentActivity";
 import React from "react";

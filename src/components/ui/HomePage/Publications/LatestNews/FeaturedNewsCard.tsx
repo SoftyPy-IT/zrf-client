@@ -66,33 +66,33 @@ const FeaturedNewsCard = ({ news, idx, language, activeTab }: Props) => {
           </div>
         )}
 
-        <span className="absolute left-3 top-3 rounded-md bg-brand-700/95 px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-wide text-white backdrop-blur-sm">
+        <span className="absolute left-2 top-2 sm:left-3 sm:top-3 rounded-md bg-brand-700/95 px-2 py-0.5 sm:px-2.5 sm:py-1 text-[9.5px] sm:text-[10.5px] font-bold uppercase tracking-wide text-white backdrop-blur-sm">
           {badge}
         </span>
       </Link>
 
-      <div className="p-5">
+      <div className="flex flex-1 flex-col p-3 sm:p-5">
         {news.date && (
-          <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-slate-500">
-            <CalendarDays className="h-3.5 w-3.5 text-brand-500" />
+          <span className="inline-flex items-center gap-1 sm:gap-1.5 text-[10.5px] sm:text-[12px] font-medium text-slate-500">
+            <CalendarDays className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-brand-500" />
             {formatDate(news.date)}
           </span>
         )}
 
-        <h3 className="mt-2 text-[17px] font-bold leading-snug text-slate-900 transition-colors group-hover:text-brand-700">
+        <h3 className="mt-1.5 sm:mt-2 text-[13px] sm:text-[17px] font-bold leading-snug text-slate-900 transition-colors group-hover:text-brand-700 line-clamp-2">
           <Link href={href}>{truncateText(title, 78)}</Link>
         </h3>
 
-        <p className="clamp-2 mt-2 text-[13.5px] leading-relaxed text-slate-600">
+        <p className="clamp-2 mt-1 sm:mt-2 text-[11.5px] sm:text-[13.5px] leading-relaxed text-slate-600">
           {truncateText(description, 120)}
         </p>
 
         <Link
           href={href}
-          className="mt-4 inline-flex items-center gap-1.5 text-[13px] font-bold text-brand-700 transition-colors hover:text-brand-800"
+          className="mt-auto pt-3 sm:pt-4 inline-flex items-center gap-1 sm:gap-1.5 text-[11.5px] sm:text-[13px] font-bold text-brand-700 transition-colors hover:text-brand-800"
         >
           {isBn ? "বিস্তারিত" : "Read more"}
-          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 transition-transform group-hover:translate-x-1" />
         </Link>
       </div>
     </article>

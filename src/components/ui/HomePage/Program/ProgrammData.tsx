@@ -83,7 +83,7 @@ const ProgrammData: React.FC<programmProps> = ({
           }
         />
 
-        <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
           {showSkeleton && (
             <>
               <LoadingStatus
@@ -93,12 +93,12 @@ const ProgrammData: React.FC<programmProps> = ({
                 <div
                   key={index}
                   aria-hidden="true"
-                  className="rounded-card border border-slate-200 bg-white p-5"
+                  className="rounded-card border border-slate-200 bg-white p-3.5 sm:p-5"
                 >
-                  <Skeleton className="h-14 w-14 rounded-lg" />
-                  <Skeleton className="mt-4 h-4 w-3/4" />
-                  <SkeletonText lines={3} className="mt-3" lineClassName="h-3" />
-                  <Skeleton className="mt-5 h-3 w-24" />
+                  <Skeleton className="h-10 w-10 sm:h-14 sm:w-14 rounded-lg" />
+                  <Skeleton className="mt-3 sm:mt-4 h-3.5 sm:h-4 w-3/4" />
+                  <SkeletonText lines={2} className="mt-2.5 sm:mt-3" lineClassName="h-2.5 sm:h-3" />
+                  <Skeleton className="mt-4 sm:mt-5 h-2.5 sm:h-3 w-20 sm:w-24" />
                 </div>
               ))}
             </>
@@ -113,33 +113,33 @@ const ProgrammData: React.FC<programmProps> = ({
             return (
               <article
                 key={program._id}
-                className="group flex flex-col rounded-card border border-slate-200 bg-white p-5 transition-all duration-300 ease-editorial hover:-translate-y-1 hover:border-brand-200 hover:shadow-card-hover"
+                className="group flex flex-col rounded-card border border-slate-200 bg-white p-3.5 sm:p-5 transition-all duration-300 ease-editorial hover:-translate-y-1 hover:border-brand-200 hover:shadow-card-hover"
               >
-                <span className="flex h-14 w-14 items-center justify-center rounded-lg bg-brand-50 ring-1 ring-brand-100 transition-colors group-hover:bg-brand-600 group-hover:ring-brand-600">
+                <span className="flex h-10 w-10 sm:h-14 sm:w-14 items-center justify-center rounded-lg bg-brand-50 ring-1 ring-brand-100 transition-colors group-hover:bg-brand-600 group-hover:ring-brand-600">
                   <Image
                     src={getIcon(index)}
                     alt=""
                     width={32}
                     height={32}
-                    className="h-8 w-8 object-contain transition-all duration-300 group-hover:brightness-0 group-hover:invert"
+                    className="h-5 w-5 sm:h-8 sm:w-8 object-contain transition-all duration-300 group-hover:brightness-0 group-hover:invert"
                   />
                 </span>
 
-                <h3 className="mt-4 text-[15px] font-bold leading-snug text-slate-900 transition-colors group-hover:text-brand-700">
+                <h3 className="mt-3 sm:mt-4 text-[13px] sm:text-[15px] font-bold leading-snug text-slate-900 transition-colors group-hover:text-brand-700 line-clamp-2">
                   {truncateText(title, 54)}
                 </h3>
 
-                <p className="clamp-3 mt-2 text-[13px] leading-relaxed text-slate-600">
+                <p className="line-clamp-2 sm:clamp-3 mt-1.5 sm:mt-2 text-[11px] sm:text-[13px] leading-relaxed text-slate-600">
                   {truncateText(description, 92)}
                 </p>
 
                 <Link
                   href="/program"
                   aria-label={title}
-                  className="mt-auto inline-flex items-center gap-1.5 pt-4 text-[12.5px] font-bold text-brand-700 transition-colors hover:text-brand-800"
+                  className="mt-auto inline-flex items-center gap-1 sm:gap-1.5 pt-3 sm:pt-4 text-[11px] sm:text-[12.5px] font-bold text-brand-700 transition-colors hover:text-brand-800"
                 >
                   {isBn ? "বিস্তারিত" : "Learn more"}
-                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5 transition-transform group-hover:translate-x-1" />
                 </Link>
               </article>
             );

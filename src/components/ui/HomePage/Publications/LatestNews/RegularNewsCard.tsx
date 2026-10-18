@@ -38,35 +38,35 @@ const RegularNewsCard = ({ news, language, activeTab }: Props) => {
   return (
     <article className="group surface-card surface-card-hover overflow-hidden">
       <Link href={href} className="flex h-full flex-col sm:flex-row">
-        <span className="relative block h-44 shrink-0 overflow-hidden bg-slate-100 sm:h-auto sm:w-[38%]">
+        <span className="relative block aspect-[16/10] sm:aspect-auto shrink-0 overflow-hidden bg-slate-100 sm:h-auto sm:w-[38%]">
           {images[0] ? (
             <Image
               src={images[0]}
               alt=""
               fill
-              sizes="(max-width: 640px) 100vw, 260px"
+              sizes="(max-width: 640px) 50vw, 260px"
               className="object-cover transition-transform duration-500 ease-editorial group-hover:scale-[1.05]"
             />
           ) : null}
         </span>
 
-        <span className="flex flex-1 flex-col p-5">
-          <span className="inline-flex items-center gap-1.5 text-[11.5px] font-medium text-slate-500">
-            <CalendarDays className="h-3.5 w-3.5 text-brand-500" />
+        <span className="flex flex-1 flex-col p-3 sm:p-5">
+          <span className="inline-flex items-center gap-1 sm:gap-1.5 text-[10.5px] sm:text-[11.5px] font-medium text-slate-500">
+            <CalendarDays className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-brand-500" />
             {formatDate(news.date)}
           </span>
 
-          <span className="mt-1.5 text-[15px] font-bold leading-snug text-slate-900 transition-colors group-hover:text-brand-700">
+          <span className="mt-1 sm:mt-1.5 text-[12.5px] sm:text-[15px] font-bold leading-snug text-slate-900 transition-colors group-hover:text-brand-700 line-clamp-2">
             {truncateText(title, 74)}
           </span>
 
-          <span className="clamp-2 mt-2 text-[13px] leading-relaxed text-slate-600">
+          <span className="clamp-2 mt-1 sm:mt-2 text-[11px] sm:text-[13px] leading-relaxed text-slate-600">
             {truncateText(description, 105)}
           </span>
 
-          <span className="mt-auto inline-flex items-center gap-1.5 pt-4 text-[12.5px] font-bold text-brand-700">
+          <span className="mt-auto inline-flex items-center gap-1 sm:gap-1.5 pt-3 sm:pt-4 text-[11px] sm:text-[12.5px] font-bold text-brand-700">
             {isBn ? "আরও পড়ুন" : "Read more"}
-            <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+            <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5 transition-transform group-hover:translate-x-1" />
           </span>
         </span>
       </Link>

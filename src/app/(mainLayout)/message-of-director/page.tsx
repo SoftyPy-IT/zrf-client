@@ -1,39 +1,38 @@
-"use client";
+import type { Metadata } from "next";
+import MessageDirectorClient from "./_components/MessageDirectorClient";
 
-import React from "react";
-import { useLanguage } from "@/provider/LanguageProvider";
-import { useMessageData } from "@/hooks/useMessageData";
-import MessageDirector from "./MessageDirector";
-import MessageBanner from "../message-of-vice-president/_components/MessageBanner";
-
-const Message = () => {
-  const { language } = useLanguage();
-  const { messageData, loading, error } = useMessageData();
-
-  if (error) return null;
-
-  return (
-    <div>
-      <MessageBanner
-        title={
-          language === "ENG"
-            ? "Message of Executive Director"
-            : "নির্বাহী পরিচালক এর বাণী"
-        }
-        text={
-          language === "ENG"
-            ? "Ziaur Rahman Foundation"
-            : "জিয়াউর রহমান ফাউন্ডেশন"
-        }
-      />
-
-      <MessageDirector
-        messageData={messageData}
-        language={language}
-        loading={loading}
-      />
-    </div>
-  );
+export const metadata: Metadata = {
+  title: "Message from the Executive Director | Ziaur Rahman Foundation",
+  description:
+    "Official message from the Executive Director of the Ziaur Rahman Foundation regarding operational progress, humanitarian relief programmes, and welfare initiatives.",
+  alternates: {
+    canonical: "/message-of-director",
+  },
+  openGraph: {
+    title: "Message from the Executive Director | Ziaur Rahman Foundation",
+    description:
+      "Official message from the Executive Director of the Ziaur Rahman Foundation.",
+    url: "/message-of-director",
+    siteName: "Ziaur Rahman Foundation",
+    type: "article",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Message from the Executive Director — Ziaur Rahman Foundation",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Message from the Executive Director | Ziaur Rahman Foundation",
+    description:
+      "Official message from the Executive Director of the Ziaur Rahman Foundation.",
+    images: ["/og-image.png"],
+  },
 };
 
-export default Message;
+export default function MessageDirectorPage() {
+  return <MessageDirectorClient />;
+}

@@ -9,7 +9,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { metadata } = await fetchWithSEO(
     "activity",
     params.id,
-    "Rehabilitation Project"
+    "Message",
+    `/message/${params.id}`,
   );
   return metadata;
 }
@@ -18,7 +19,8 @@ export default async function MessagePage({ params }: Props) {
   const { data } = await fetchWithSEO(
     "activity",
     params.id,
-    "Rehabilitation Project"
+    "Message",
+    `/message/${params.id}`,
   );
   if (!data) notFound();
 

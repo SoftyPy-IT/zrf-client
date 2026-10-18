@@ -9,13 +9,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { metadata } = await fetchWithSEO(
     "activity",
     params.id,
-    "News Details"
+    "Upcoming Programme",
+    `/upcoming-programs/${params.id}`,
   );
   return metadata;
 }
 
 export default async function RehabilitationPage({ params }: Props) {
-  const { data } = await fetchWithSEO("activity", params.id, "News Details");
+  const { data } = await fetchWithSEO(
+    "activity",
+    params.id,
+    "Upcoming Programme",
+    `/upcoming-programs/${params.id}`,
+  );
   if (!data) notFound();
 
   return <SingleRehabilitation singleNewsData={data} />;

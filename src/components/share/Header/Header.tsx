@@ -119,25 +119,26 @@ const Header = () => {
               {/* ---------------------------------------------------------- */}
               <Link
                 href="/"
-                className="group flex shrink-0 items-center gap-3"
+                className="group flex min-w-0 items-center gap-2.5 sm:gap-3"
                 aria-label={`${isBn ? "জিয়াউর রহমান ফাউন্ডেশন" : "Ziaur Rahman Foundation"} — ${isBn ? "প্রচ্ছদ" : "Home"}`}
               >
-                <span className="relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-brand-50 ring-1 ring-brand-100 sm:h-12 sm:w-12">
+                <span className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-b from-brand-50 to-white ring-1 ring-brand-200/80 shadow-xs transition-transform duration-200 group-hover:scale-105 sm:h-11 sm:w-11 lg:h-12 lg:w-12">
                   <Image
                     src={logo}
                     alt=""
                     fill
-                    sizes="48px"
+                    sizes="(max-width: 639px) 40px, 48px"
                     className="object-contain p-1"
                     priority
                   />
                 </span>
 
-                <span className="hidden flex-col leading-tight sm:flex">
-                  <span className="text-[15px] font-bold tracking-tight text-slate-900 transition-colors group-hover:text-brand-700 lg:text-[16px]">
+                <span className="flex min-w-0 flex-col leading-tight">
+                  <span className="font-display text-[13.5px] font-bold tracking-tight text-slate-900 transition-colors group-hover:text-brand-700 xs:text-[14.5px] sm:text-[16px] lg:text-[17px]">
                     {isBn ? "জিয়াউর রহমান ফাউন্ডেশন" : "Ziaur Rahman Foundation"}
                   </span>
-                  <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-gold-600">
+                  <span className="flex items-center gap-1.5 text-[9.5px] font-semibold uppercase tracking-[0.12em] text-gold-600 xs:text-[10.5px] sm:text-[11px]">
+                    <span className="hidden h-1 w-1 rounded-full bg-gold-500 sm:inline-block" aria-hidden="true" />
                     {isBn ? "রাষ্ট্র গঠনে নিবেদিত" : "Dedicated to nation building"}
                   </span>
                 </span>
@@ -345,10 +346,10 @@ const Header = () => {
               <Image src={logo} alt="" fill sizes="40px" className="object-contain" />
             </span>
             <span className="flex min-w-0 flex-col leading-tight">
-              <span className="truncate text-[13.5px] font-bold text-slate-900">
+              <span className="truncate font-display text-[14px] font-bold text-slate-900">
                 {isBn ? "জিয়াউর রহমান ফাউন্ডেশন" : "Ziaur Rahman Foundation"}
               </span>
-              <span className="truncate text-[10.5px] font-semibold uppercase tracking-[0.1em] text-gold-600">
+              <span className="truncate text-[10px] font-semibold uppercase tracking-[0.1em] text-gold-600">
                 {isBn ? "রাষ্ট্র গঠনে নিবেদিত" : "Dedicated to nation building"}
               </span>
             </span>

@@ -35,4 +35,14 @@ export const shurjo = localFont({
   fallback: ["var(--font-inter)", "sans-serif"],
 });
 
-export const fontVariables = `${inter.variable} ${shurjo.variable}`;
+export const gelasio = localFont({
+  src: "../../public/fonts/gelasio/Gelasio-Variable.woff2",
+  variable: "--font-gelasio",
+  weight: "400 700",
+  style: "normal",
+  display: "swap",
+  preload: true,
+  fallback: ["Georgia", "Times New Roman", "serif"],
+});
+
+export const fontVariables = `${inter.variable} ${shurjo.variable} ${gelasio.variable}`;

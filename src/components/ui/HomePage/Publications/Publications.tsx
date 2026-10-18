@@ -10,7 +10,7 @@ import Skeleton from "@/components/share/Skeleton";
 const PublicationSlider = dynamic(() => import("./PublicationSlider"), {
   ssr: false,
   loading: () => (
-    <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
+    <div className="grid grid-cols-2 gap-3 sm:gap-5 sm:grid-cols-3 lg:grid-cols-6">
       {Array.from({ length: 6 }).map((_, index) => (
         <Skeleton key={index} className="aspect-[3/4] rounded-card" />
       ))}

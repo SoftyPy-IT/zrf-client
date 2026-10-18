@@ -7,12 +7,22 @@ import { cookies } from "next/headers";
 type Props = { params: { id: string } };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { metadata } = await fetchWithSEO("activity", params.id, "Activity");
+  const { metadata } = await fetchWithSEO(
+    "activity",
+    params.id,
+    "Activity",
+    `/recent-activities-of-zrf/${params.id}`,
+  );
   return metadata;
 }
 
 export default async function ActivityPage({ params }: Props) {
-  const { data } = await fetchWithSEO("activity", params.id, "Activity");
+  const { data } = await fetchWithSEO(
+    "activity",
+    params.id,
+    "Activity",
+    `/recent-activities-of-zrf/${params.id}`,
+  );
 
   if (!data) notFound();
   const cookieStore = cookies();

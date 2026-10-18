@@ -9,13 +9,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { metadata } = await fetchWithSEO(
     "whatwedo",
     params.id,
-    "Project Details",
+    "COVID-19 Relief",
+    `/whatwedo/covid/${params.id}`,
   );
   return metadata;
 }
 
 export default async function CovidPage({ params }: Props) {
-  const { data } = await fetchWithSEO("whatwedo", params.id, "Project Details");
+  const { data } = await fetchWithSEO(
+    "whatwedo",
+    params.id,
+    "COVID-19 Relief",
+    `/whatwedo/covid/${params.id}`,
+  );
   if (!data) notFound();
 
   return <SingleCovid whatWedoData={data} />;

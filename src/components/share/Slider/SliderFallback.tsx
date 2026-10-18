@@ -3,52 +3,58 @@ import Link from "next/link";
 import Container from "../Container";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import VolunteerActivismOutlinedIcon from "@mui/icons-material/VolunteerActivismOutlined";
-import bannerArt from "@/assets/images/banner/ziaBanner.jpeg";
 
 /**
  * Hero fallback.
  *
- * Rendered on the server (and shown while the banner feed resolves). It mirrors the
- * live hero — mission statement on the institutional green, artwork framed beside it —
- * so the most important element of the page paints instantly, stays crawlable, and
- * nothing shifts when the banners arrive.
+ * Rendered on the server (and shown while the banner feed resolves). It mirrors
+ * the live hero — statement on the institutional green, artwork leading on
+ * mobile and framed as a captioned plaque from `sm` upward — so the most
+ * important element of the page paints instantly, stays crawlable, and nothing
+ * shifts when the banners arrive.
  */
 const SliderFallback = ({ isBn = false }: { isBn?: boolean }) => {
-  const facts = [
-    isBn ? "প্রতিষ্ঠিত ১৯৯৯" : "Established 1999",
-    isBn ? "ঢাকা, বাংলাদেশ" : "Dhaka, Bangladesh",
-    isBn ? "মানবিক ও কল্যাণমূলক" : "Humanitarian & welfare",
-  ];
-
   return (
     <section
       aria-label={isBn ? "প্রধান ব্যানার" : "Featured banners"}
-      className="relative isolate overflow-hidden bg-brand-950"
+      className="relative isolate overflow-hidden bg-brand-900"
     >
       <div
-        className="absolute inset-0 -z-10 bg-gradient-to-br from-brand-900 via-brand-950 to-brand-950"
+        className="pointer-events-none absolute inset-0 -z-10"
         aria-hidden="true"
+        style={{
+          background:
+            "radial-gradient(120% 150% at 14% 0%, #0F5C3A 0%, #0A3D28 44%, #072A1C 100%)",
+        }}
       />
 
       <Container>
-        <div className="grid items-center gap-10 py-11 lg:grid-cols-12 lg:gap-14 lg:py-16">
-          <div className="lg:col-span-6">
-            <h1 className="text-[27px] font-bold leading-[1.16] tracking-tight text-white sm:text-4xl md:text-[40px] lg:text-[42px] lg:leading-[1.1] xl:text-[46px]">
+        <div className="grid items-center gap-8 pb-8 sm:gap-10 sm:py-11 xl:grid-cols-12 xl:gap-14 xl:py-16">
+          <div className="xl:col-span-6">
+            <p className="flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.18em] text-gold-300">
+              <span
+                className="h-[2px] w-7 rounded-full bg-gradient-to-r from-gold-500 to-gold-300"
+                aria-hidden="true"
+              />
+              {isBn ? "রাষ্ট্র গঠনে নিবেদিত" : "Dedicated to nation building"}
+            </p>
+
+            <h1 className="font-display mt-4 text-[26px] font-bold leading-[1.2] tracking-tight text-white sm:text-4xl sm:leading-[1.16] md:text-[40px] xl:text-[44px] xl:leading-[1.14]">
               {isBn
                 ? "মানবতার সেবায় জিয়াউর রহমান ফাউন্ডেশন"
                 : "Ziaur Rahman Foundation"}
             </h1>
 
-            <p className="mt-5 max-w-xl text-[14px] leading-relaxed text-brand-100 sm:text-[15px] lg:text-base">
+            <p className="mt-4 max-w-xl text-[14px] leading-relaxed text-brand-100 sm:text-[15px] xl:text-[15.5px]">
               {isBn
                 ? "শিক্ষা, স্বাস্থ্য ও আর্থিক ক্ষমতায়নের মাধ্যমে বাংলাদেশের অবহেলিত জনগোষ্ঠীর জীবনমান উন্নয়নে আমরা কাজ করছি।"
                 : "Working across Bangladesh to lift neglected communities through education, healthcare and financial empowerment."}
             </p>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="mt-7 flex gap-3">
               <Link
                 href="/about"
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-6 py-3 text-sm font-bold text-brand-800 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-50 hover:shadow-md focus-visible:outline-offset-4"
+                className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-white/25 bg-white/5 px-5 py-3 text-sm font-bold text-white transition-all duration-200 hover:border-white/45 hover:bg-white/10 focus-visible:outline-offset-4 sm:flex-none sm:px-6"
               >
                 {isBn ? "আরও জানুন" : "Learn More"}
                 <ChevronRightIcon sx={{ fontSize: 18 }} />
@@ -56,44 +62,34 @@ const SliderFallback = ({ isBn = false }: { isBn?: boolean }) => {
 
               <Link
                 href="/donations"
-                className="inline-flex items-center justify-center gap-2 rounded-lg border border-gold-500/70 bg-transparent px-6 py-3 text-sm font-bold text-gold-300 transition-all duration-200 hover:-translate-y-0.5 hover:border-gold-400 hover:bg-gold-500 hover:text-brand-950 focus-visible:outline-offset-4"
+                className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-gold-500 px-5 py-3 text-sm font-bold text-brand-950 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-gold-400 hover:shadow-md focus-visible:outline-offset-4 sm:flex-none sm:px-6"
               >
                 <VolunteerActivismOutlinedIcon sx={{ fontSize: 18 }} />
                 {isBn ? "অনুদান দিন" : "Donate Now"}
               </Link>
             </div>
-
-            <ul className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-2.5 border-t border-white/10 pt-5 text-[11.5px] font-semibold uppercase tracking-[0.12em] text-brand-300">
-              {facts.map((fact) => (
-                <li key={fact} className="flex items-center gap-2">
-                  <span
-                    className="h-1 w-1 rounded-full bg-gold-500"
-                    aria-hidden="true"
-                  />
-                  {fact}
-                </li>
-              ))}
-            </ul>
           </div>
 
-          <figure className="lg:col-span-6">
-            <div className="relative aspect-[16/10] overflow-hidden rounded-panel bg-brand-900 ring-1 ring-white/10 sm:aspect-[2/1] lg:aspect-[4/3] xl:aspect-[16/11]">
+          <div className="relative order-first flex items-center justify-center xl:order-none xl:col-span-6">
+            <div className="relative aspect-[4/3] w-full max-w-[580px] xl:max-w-none">
               <Image
-                src={bannerArt}
-                alt=""
+                src="/banner.svg"
+                alt={isBn ? "জিয়াউর রহমান ফাউন্ডেশন ব্যানার" : "Ziaur Rahman Foundation Banner"}
                 fill
                 priority
-                sizes="(max-width: 1024px) 100vw, 640px"
-                className="object-cover object-[93%_50%]"
-              />
-              <div
-                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-brand-950/45 via-transparent to-transparent"
-                aria-hidden="true"
+                unoptimized
+                sizes="(max-width: 639px) 100vw, (max-width: 1279px) 90vw, 48vw"
+                className="object-contain"
               />
             </div>
-          </figure>
+          </div>
         </div>
       </Container>
+
+      <div
+        className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-brand-700 via-gold-500 to-brand-700"
+        aria-hidden="true"
+      />
     </section>
   );
 };

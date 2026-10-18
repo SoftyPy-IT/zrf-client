@@ -6,12 +6,22 @@ import SingleNews from "../_components/SingleNews";
 type Props = { params: { id: string } };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { metadata } = await fetchWithSEO("activity", params.id, "News");
+  const { metadata } = await fetchWithSEO(
+    "activity",
+    params.id,
+    "News",
+    `/news/${params.id}`,
+  );
   return metadata;
 }
 
 export default async function NewsPage({ params }: Props) {
-  const { data } = await fetchWithSEO("activity", params.id, "News");
+  const { data } = await fetchWithSEO(
+    "activity",
+    params.id,
+    "News",
+    `/news/${params.id}`,
+  );
   if (!data) notFound();
 
   return <SingleNews singleNewsData={data} />;

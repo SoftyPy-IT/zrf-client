@@ -87,6 +87,7 @@
   html.lang-bn h4,
   html.lang-bn h5,
   html.lang-bn h6 {
+    font-family: var(--font-shurjo), var(--font-gelasio), "Gelasio", serif;
     letter-spacing: 0;
     line-height: 1.45;
   }
@@ -102,7 +103,12 @@
   h1,
   h2,
   h3,
-  h4,
+  h4 {
+    font-family: var(--font-gelasio), "Gelasio", Georgia, "Times New Roman", serif;
+    @apply font-bold text-slate-900;
+    text-wrap: balance;
+  }
+
   h5,
   h6 {
     @apply font-semibold text-slate-900;

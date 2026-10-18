@@ -142,9 +142,9 @@ const LatestNews = () => {
 
         {/* Loading ---------------------------------------------------- */}
         {loading && (
-          <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-6">
             {[0, 1].map((key) => (
-              <Skeleton key={key} className="h-[280px] rounded-panel" />
+              <Skeleton key={key} className="h-[220px] sm:h-[280px] rounded-panel" />
             ))}
           </div>
         )}
@@ -170,7 +170,7 @@ const LatestNews = () => {
 
         {/* Feature cards ---------------------------------------------- */}
         {featuredNews.length > 0 && (
-          <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-6">
             {featuredNews.map((news, index) => (
               <FeaturedNewsCard
                 key={news._id}
@@ -185,7 +185,7 @@ const LatestNews = () => {
 
         {/* Summary cards ---------------------------------------------- */}
         {regularNews.length > 0 && (
-          <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-6">
             {regularNews.map((news, index) => (
               <RegularNewsCard
                 key={news._id}

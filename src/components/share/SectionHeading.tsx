@@ -51,7 +51,7 @@ const SectionHeading = ({
 
       <h2
         className={cn(
-          "text-[22px] font-bold leading-tight sm:text-title sm:leading-tight lg:text-display-sm lg:leading-[1.14]",
+          "font-display text-[22px] font-bold leading-tight sm:text-title sm:leading-tight lg:text-display-sm lg:leading-[1.14]",
           tone === "dark" ? "text-white" : "text-slate-900",
         )}
       >

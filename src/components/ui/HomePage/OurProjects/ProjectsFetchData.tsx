@@ -67,7 +67,7 @@ const ProjectsFetchData: React.FC<projectProps> = ({
           </Link>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3">
           {showSkeleton && (
             <>
               <LoadingStatus label={isBn ? "প্রকল্প লোড হচ্ছে" : "Loading projects"} />
@@ -78,13 +78,13 @@ const ProjectsFetchData: React.FC<projectProps> = ({
                   className="overflow-hidden rounded-card border border-slate-200 bg-white"
                 >
                   <Skeleton className="aspect-[16/10] rounded-none" />
-                  <div className="p-5">
-                    <div className="flex gap-4">
-                      <Skeleton className="h-3 w-14" />
-                      <Skeleton className="h-3 w-20" />
+                  <div className="p-3 sm:p-5">
+                    <div className="flex gap-2 sm:gap-4">
+                      <Skeleton className="h-2.5 sm:h-3 w-10 sm:w-14" />
+                      <Skeleton className="h-2.5 sm:h-3 w-14 sm:w-20" />
                     </div>
-                    <Skeleton className="mt-4 h-4 w-11/12" />
-                    <SkeletonText lines={3} className="mt-4" />
+                    <Skeleton className="mt-3 sm:mt-4 h-3.5 sm:h-4 w-11/12" />
+                    <SkeletonText lines={2} className="mt-3 sm:mt-4" />
                   </div>
                 </div>
               ))}
@@ -116,54 +116,54 @@ const ProjectsFetchData: React.FC<projectProps> = ({
                       src={image}
                       alt={title}
                       fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 400px"
                       className="object-cover transition-transform duration-500 ease-editorial group-hover:scale-[1.04]"
                     />
                   ) : (
-                    <div className="flex h-full items-center justify-center text-sm text-slate-400">
+                    <div className="flex h-full items-center justify-center text-xs sm:text-sm text-slate-400">
                       {isBn ? "ছবি নেই" : "No image"}
                     </div>
                   )}
 
                   {project.category && (
-                    <span className="absolute left-3 top-3 rounded-md bg-brand-700/95 px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-wide text-white backdrop-blur-sm">
+                    <span className="absolute left-2 top-2 sm:left-3 sm:top-3 rounded-md bg-brand-700/95 px-2 py-0.5 sm:px-2.5 sm:py-1 text-[9.5px] sm:text-[10.5px] font-bold uppercase tracking-wide text-white backdrop-blur-sm">
                       {project.category}
                     </span>
                   )}
                 </Link>
 
-                <div className="flex flex-1 flex-col p-5">
-                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[12px] text-slate-500">
+                <div className="flex flex-1 flex-col p-3 sm:p-5">
+                  <div className="flex flex-wrap items-center gap-x-2.5 sm:gap-x-4 gap-y-1 text-[10.5px] sm:text-[12px] text-slate-500">
                     {project.date && (
-                      <span className="inline-flex items-center gap-1.5">
-                        <CalendarDays className="h-3.5 w-3.5 text-brand-500" />
+                      <span className="inline-flex items-center gap-1 sm:gap-1.5">
+                        <CalendarDays className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-brand-500" />
                         {new Date(project.date).getFullYear()}
                       </span>
                     )}
                     {project.location && (
-                      <span className="inline-flex items-center gap-1.5">
-                        <MapPin className="h-3.5 w-3.5 text-brand-500" />
-                        {truncateText(project.location, 22)}
+                      <span className="inline-flex items-center gap-1 sm:gap-1.5">
+                        <MapPin className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-brand-500" />
+                        {truncateText(project.location, 16)}
                       </span>
                     )}
                   </div>
 
-                  <h3 className="mt-2.5 text-[16.5px] font-bold leading-snug text-slate-900 transition-colors group-hover:text-brand-700">
+                  <h3 className="mt-2 text-[13.5px] sm:text-[16.5px] font-bold leading-snug text-slate-900 transition-colors group-hover:text-brand-700 line-clamp-2">
                     <Link href={`/our-projects/${project._id}`}>
                       {truncateText(title, 72)}
                     </Link>
                   </h3>
 
-                  <p className="clamp-3 mt-2 text-[13.5px] leading-relaxed text-slate-600">
-                    {truncateText(description, 130)}
+                  <p className="line-clamp-2 sm:clamp-3 mt-1.5 sm:mt-2 text-[11.5px] sm:text-[13.5px] leading-relaxed text-slate-600">
+                    {truncateText(description, 120)}
                   </p>
 
                   <Link
                     href={`/our-projects/${project._id}`}
-                    className="mt-auto inline-flex items-center gap-1.5 pt-5 text-[13px] font-bold text-brand-700 transition-colors hover:text-brand-800"
+                    className="mt-auto inline-flex items-center gap-1 sm:gap-1.5 pt-3 sm:pt-5 text-[11.5px] sm:text-[13px] font-bold text-brand-700 transition-colors hover:text-brand-800"
                   >
-                    {isBn ? "বিস্তারিত দেখুন" : "Read the project"}
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    {isBn ? "বিস্তারিত দেখুন" : "Read project"}
+                    <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </div>
               </article>

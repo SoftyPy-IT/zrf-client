@@ -74,13 +74,12 @@ const PhotoGallery = () => {
           />
           <div
             aria-hidden="true"
-            className="mt-10 grid auto-rows-[190px] grid-cols-2 gap-4 lg:auto-rows-[215px] lg:grid-cols-4"
+            className="mt-10 grid auto-rows-[140px] sm:auto-rows-[190px] grid-cols-2 gap-3 sm:gap-4 lg:auto-rows-[215px] lg:grid-cols-4"
           >
-            <Skeleton className="col-span-2 row-span-2 rounded-card" />
-            <Skeleton className="col-span-2 rounded-card" />
-            <Skeleton className="rounded-card" />
-            <Skeleton className="rounded-card" />
-            <Skeleton className="col-span-2 rounded-card" />
+            <Skeleton className="col-span-1 sm:col-span-2 sm:row-span-2 rounded-card" />
+            <Skeleton className="col-span-1 sm:col-span-2 rounded-card" />
+            <Skeleton className="col-span-1 rounded-card" />
+            <Skeleton className="col-span-1 rounded-card" />
           </div>
         </Container>
       </section>
@@ -104,8 +103,8 @@ const PhotoGallery = () => {
           }
         />
 
-        {/* Bento grid: first tile is a large feature, the rest are companions */}
-        <div className="mt-10 grid auto-rows-[190px] grid-cols-2 gap-4 lg:grid-cols-4 lg:auto-rows-[215px]">
+        {/* 2 items per row on mobile, bento grid on sm/lg */}
+        <div className="mt-10 grid auto-rows-[140px] sm:auto-rows-[190px] grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4 lg:auto-rows-[215px]">
           {cards.map((item, index) => {
             const thumbnail = item.thumnailImages?.[0];
             const title = isBn ? item.title_of_bangla : item.title_of_english;
@@ -113,9 +112,9 @@ const PhotoGallery = () => {
 
             const spanClasses =
               index === 0
-                ? "col-span-2 row-span-2"
+                ? "col-span-1 sm:col-span-2 sm:row-span-2"
                 : index === 1
-                  ? "col-span-2 lg:col-span-2"
+                  ? "col-span-1 sm:col-span-2 lg:col-span-2"
                   : "col-span-1";
 
             return (
@@ -140,23 +139,23 @@ const PhotoGallery = () => {
 
                 <span className="absolute inset-0 bg-gradient-to-t from-brand-950/90 via-brand-950/25 to-transparent" />
 
-                <span className="absolute inset-x-0 bottom-0 p-4">
+                <span className="absolute inset-x-0 bottom-0 p-2.5 sm:p-4">
                   {date && (
-                    <span className="block text-[11px] font-medium text-white/70">
+                    <span className="block text-[9.5px] sm:text-[11px] font-medium text-white/70">
                       {formatDate(date)}
                     </span>
                   )}
                   <span
-                    className={`mt-1 block font-semibold leading-snug text-white ${
-                      index === 0 ? "text-[16px]" : "text-[13.5px]"
+                    className={`mt-0.5 sm:mt-1 block font-semibold leading-snug text-white ${
+                      index === 0 ? "text-[12px] sm:text-[16px]" : "text-[11.5px] sm:text-[13.5px]"
                     }`}
                   >
                     <span className="clamp-2">{title}</span>
                   </span>
                 </span>
 
-                <span className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-md bg-white/15 text-white opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
-                  <Expand className="h-4 w-4" />
+                <span className="absolute right-2 top-2 sm:right-3 sm:top-3 flex h-6 w-6 sm:h-8 sm:w-8 items-center justify-center rounded-md bg-white/15 text-white opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
+                  <Expand className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 </span>
               </button>
             );

@@ -2,26 +2,27 @@
 import { Metadata } from "next";
 import { stripHtml } from "./stripHtml";
 import { cookies } from "next/headers";
-import { getPublicApiUrl } from "@/config/env";
+import { getPublicApiUrl, getPublicSiteUrl } from "@/config/env";
 
 export async function fetchWithSEO(
   endpoint: string,
   id: string,
   fallbackTitle: string = "Item Details",
+  customPath?: string,
 ): Promise<{ data: any; metadata: Metadata }> {
+  const siteUrl = getPublicSiteUrl();
+  const notFoundTitle = `${fallbackTitle} Not Found | Ziaur Rahman Foundation`;
+
   try {
-    const res = await fetch(
-      `${getPublicApiUrl()}/${endpoint}/${id}`,
-      {
-        cache: "no-store",
-      },
-    );
+    const res = await fetch(`${getPublicApiUrl()}/${endpoint}/${id}`, {
+      cache: "no-store",
+    });
 
     if (!res.ok) {
       return {
         data: null,
         metadata: {
-          title: `${fallbackTitle} Not Found`,
+          title: notFoundTitle,
           description: "The requested item could not be loaded.",
         },
       };
@@ -34,7 +35,7 @@ export async function fetchWithSEO(
       return {
         data: null,
         metadata: {
-          title: `${fallbackTitle} Not Found`,
+          title: notFoundTitle,
           description: "The requested item could not be loaded.",
         },
       };
@@ -46,28 +47,38 @@ export async function fetchWithSEO(
     const isEnglish = language === "ENG";
 
     // Use language-specific content for metadata
-    const title = isEnglish
+    const rawTitle = isEnglish
       ? data.english_title || fallbackTitle
       : data.bangla_title || fallbackTitle;
+    const title = rawTitle.includes("Ziaur Rahman Foundation")
+      ? rawTitle
+      : `${rawTitle} | Ziaur Rahman Foundation`;
 
-    // FIXED: Use correct short description based on language
-    const description = stripHtml(
-      isEnglish
-        ? data.english_short_description || ""
-        : data.bangla_short_description || "",
-    );
+    // Extract short description or fall back to main description or default
+    const rawDescription = isEnglish
+      ? data.english_short_description || data.english_description || ""
+      : data.bangla_short_description || data.bangla_description || "";
+    const description =
+      stripHtml(rawDescription) ||
+      "Ziaur Rahman Foundation initiative and community service programme in Bangladesh.";
 
-    // Use language-specific images
-    const image = isEnglish
-      ? data.eng_images?.[0] || "/default-image.jpg"
-      : data.bng_Images?.[0] || "/default-image.jpg";
+    // Multi-tiered image resolution with /og-image.png fallback
+    const image =
+      (isEnglish
+        ? data.eng_images?.[0] || data.bng_Images?.[0]
+        : data.bng_Images?.[0] || data.eng_images?.[0]) ||
+      data.thumnailImages?.[0] ||
+      data.thumbnailImages?.[0] ||
+      "/og-image.png";
 
     // Use img_tagline for image alt text
     const imageAlt = isEnglish
-      ? data.img_tagline_english || title
-      : data.img_tagline_bangla || title;
+      ? data.img_tagline_english || rawTitle
+      : data.img_tagline_bangla || rawTitle;
 
-    const url = `${process.env.NEXT_PUBLIC_SITE_URL}/${endpoint}/${id}`;
+    const url = customPath
+      ? `${siteUrl}${customPath.startsWith("/") ? "" : "/"}${customPath}`
+      : `${siteUrl}/${endpoint}/${id}`;
 
     const metadata: Metadata = {
       title,
@@ -77,6 +88,8 @@ export async function fetchWithSEO(
         description,
         type: "article",
         url,
+        siteName: "Ziaur Rahman Foundation",
+        locale: isEnglish ? "en_US" : "bn_BD",
         images: [{ url: image, width: 1200, height: 630, alt: imageAlt }],
       },
       twitter: {
@@ -96,7 +109,7 @@ export async function fetchWithSEO(
     return {
       data: null,
       metadata: {
-        title: `${fallbackTitle} Not Found`,
+        title: notFoundTitle,
         description: "The requested item could not be loaded.",
       },
     };

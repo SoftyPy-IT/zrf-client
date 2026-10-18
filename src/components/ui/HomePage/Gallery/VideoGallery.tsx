@@ -197,7 +197,7 @@ const VideoGallery = () => {
                 {isBn ? "অন্যান্য ভিডিও" : "More videos"}
               </h3>
 
-              <ul className="no-scrollbar flex max-h-[420px] flex-col gap-1.5 overflow-y-auto lg:max-h-none lg:flex-1">
+              <ul className="no-scrollbar grid grid-cols-2 gap-2 sm:flex sm:flex-col sm:gap-1.5 max-h-[420px] overflow-y-auto lg:max-h-none lg:flex-1">
                 {videos.map((video, index) => {
                   const thumb = getThumbnail(video.video_url);
                   const title = isBn
@@ -211,19 +211,19 @@ const VideoGallery = () => {
                         type="button"
                         onClick={() => selectVideo(index)}
                         aria-current={selected}
-                        className={`flex w-full items-center gap-3 rounded-lg p-2 text-left transition-colors ${
+                        className={`flex w-full flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 rounded-lg p-2 text-left transition-colors ${
                           selected
                             ? "bg-white shadow-sm ring-1 ring-brand-200"
                             : "hover:bg-white/70"
                         }`}
                       >
-                        <span className="relative h-[52px] w-[88px] shrink-0 overflow-hidden rounded-md bg-slate-200">
+                        <span className="relative aspect-video w-full sm:aspect-auto sm:h-[52px] sm:w-[88px] shrink-0 overflow-hidden rounded-md bg-slate-200">
                           {thumb && (
                             <Image
                               src={thumb}
                               alt=""
                               fill
-                              sizes="88px"
+                              sizes="(max-width: 640px) 50vw, 88px"
                               className="object-cover"
                             />
                           )}
@@ -233,7 +233,7 @@ const VideoGallery = () => {
                         </span>
 
                         <span
-                          className={`clamp-2 text-[13px] font-semibold leading-snug ${
+                          className={`line-clamp-2 text-[11.5px] sm:text-[13px] font-semibold leading-snug ${
                             selected ? "text-brand-700" : "text-slate-700"
                           }`}
                         >

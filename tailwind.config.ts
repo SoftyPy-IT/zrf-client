@@ -57,7 +57,8 @@ const config: Config = {
         sans: ["var(--font-inter)", "Inter", "system-ui", "sans-serif"],
         // Shurjo leads so Bengali punctuation and shaping stay consistent in BN mode
         bangla: ["var(--font-shurjo)", "var(--font-inter)", "sans-serif"],
-        display: ["var(--font-inter)", "Inter", "system-ui", "sans-serif"],
+        display: ["var(--font-gelasio)", "Gelasio", "Georgia", "serif"],
+        gelasio: ["var(--font-gelasio)", "Gelasio", "Georgia", "serif"],
       },
       fontSize: {
         /* Editorial scale — tighter tracking + relaxed leading on large headings */

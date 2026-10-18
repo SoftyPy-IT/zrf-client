@@ -1,36 +1,38 @@
-"use client";
+import type { Metadata } from "next";
+import MessagePresidentClient from "./_components/MessagePresidentClient";
 
-import React from "react";
-import MessagePresident from "./MessagePresident";
-import { useLanguage } from "@/provider/LanguageProvider";
-import { useMessageData } from "@/hooks/useMessageData";
-import MessageBanner from "../message-of-vice-president/_components/MessageBanner";
-
-const Message = () => {
-  const { language } = useLanguage();
-  const { messageData, loading, error } = useMessageData();
-
-  if (error) return null;
-
-  return (
-    <div>
-      <MessageBanner
-        title={
-          language === "ENG" ? "Message from President" : "প্রেসিডেন্ট এর বাণী"
-        }
-        text={
-          language === "ENG"
-            ? "Ziaur Rahman Foundation"
-            : "জিয়াউর রহমান ফাউন্ডেশন"
-        }
-      />
-      <MessagePresident
-        messageData={messageData}
-        language={language}
-        loading={loading}
-      />
-    </div>
-  );
+export const metadata: Metadata = {
+  title: "Message from the President | Ziaur Rahman Foundation",
+  description:
+    "Official message from the President of the Ziaur Rahman Foundation, articulating our vision, core values, and ongoing commitment to humanitarian service across Bangladesh.",
+  alternates: {
+    canonical: "/message-of-president",
+  },
+  openGraph: {
+    title: "Message from the President | Ziaur Rahman Foundation",
+    description:
+      "Official message from the President of the Ziaur Rahman Foundation on our humanitarian mission and service to the nation.",
+    url: "/message-of-president",
+    siteName: "Ziaur Rahman Foundation",
+    type: "article",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Message from the President — Ziaur Rahman Foundation",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Message from the President | Ziaur Rahman Foundation",
+    description:
+      "Official message from the President of the Ziaur Rahman Foundation on our humanitarian mission and service to the nation.",
+    images: ["/og-image.png"],
+  },
 };
 
-export default Message;
+export default function MessagePresidentPage() {
+  return <MessagePresidentClient />;
+}
