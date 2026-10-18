@@ -5,7 +5,6 @@ import Link from "next/link";
 import Container from "@/components/share/Container";
 import { useLanguage } from "@/provider/LanguageProvider";
 import { cn } from "@/utils/cn";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import VolunteerActivismOutlinedIcon from "@mui/icons-material/VolunteerActivismOutlined";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 import LocalHospitalOutlinedIcon from "@mui/icons-material/LocalHospitalOutlined";
@@ -72,30 +71,20 @@ const QuickAccess = () => {
                   index === 3 && "",
                 )}
               >
-                <div className="flex w-full items-center justify-between lg:w-auto">
+                <div className="flex shrink-0 items-center">
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-600 ring-1 ring-brand-100 transition-colors group-hover:bg-brand-600 group-hover:text-white group-hover:ring-brand-600 sm:h-11 sm:w-11">
                     <Icon sx={{ fontSize: 22 }} />
                   </span>
-
-                  <ChevronRightIcon
-                    sx={{ fontSize: 18 }}
-                    className="shrink-0 text-slate-300 transition-all group-hover:translate-x-0.5 group-hover:text-brand-600 lg:hidden"
-                  />
                 </div>
 
-                <span className="mt-2.5 min-w-0 flex-1 lg:mt-0">
+                <div className="mt-2.5 min-w-0 flex-1 lg:mt-0">
                   <span className="block font-display text-[13.5px] font-bold text-slate-900 transition-colors group-hover:text-brand-700 sm:text-[14.5px]">
                     {isBn ? item.titleBn : item.titleEn}
                   </span>
                   <span className="mt-0.5 block text-[11px] leading-snug text-slate-500 line-clamp-2 sm:text-[12px]">
                     {isBn ? item.textBn : item.textEn}
                   </span>
-                </span>
-
-                <ChevronRightIcon
-                  sx={{ fontSize: 18 }}
-                  className="hidden shrink-0 text-slate-300 transition-all group-hover:translate-x-0.5 group-hover:text-brand-600 lg:block"
-                />
+                </div>
               </Link>
             );
           })}

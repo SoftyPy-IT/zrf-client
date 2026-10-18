@@ -39,17 +39,17 @@ const SliderFallback = ({ isBn = false }: { isBn?: boolean }) => {
               {isBn ? "রাষ্ট্র গঠনে নিবেদিত" : "Dedicated to nation building"}
             </p>
 
-            <h1 className="font-display mt-4 text-[26px] font-bold leading-[1.2] tracking-tight text-white sm:text-4xl sm:leading-[1.16] md:text-[40px] xl:text-[44px] xl:leading-[1.14]">
-              {isBn
-                ? "মানবতার সেবায় জিয়াউর রহমান ফাউন্ডেশন"
-                : "Ziaur Rahman Foundation"}
-            </h1>
+            {/* Skeleton title placeholder so no conflicting text flashes on load */}
+            <div className="mt-4 space-y-3" aria-hidden="true">
+              <div className="h-8 sm:h-10 md:h-11 xl:h-12 w-11/12 rounded-lg bg-white/10 animate-pulse" />
+              <div className="h-8 sm:h-10 md:h-11 xl:h-12 w-3/4 rounded-lg bg-white/10 animate-pulse" />
+            </div>
 
-            <p className="mt-4 max-w-xl text-[14px] leading-relaxed text-brand-100 sm:text-[15px] xl:text-[15.5px]">
-              {isBn
-                ? "শিক্ষা, স্বাস্থ্য ও আর্থিক ক্ষমতায়নের মাধ্যমে বাংলাদেশের অবহেলিত জনগোষ্ঠীর জীবনমান উন্নয়নে আমরা কাজ করছি।"
-                : "Working across Bangladesh to lift neglected communities through education, healthcare and financial empowerment."}
-            </p>
+            {/* Skeleton description placeholder */}
+            <div className="mt-5 space-y-2.5 max-w-xl" aria-hidden="true">
+              <div className="h-4 w-full rounded-md bg-white/10 animate-pulse" />
+              <div className="h-4 w-5/6 rounded-md bg-white/10 animate-pulse" />
+            </div>
 
             <div className="mt-7 flex gap-3">
               <Link
