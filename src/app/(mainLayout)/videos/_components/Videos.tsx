@@ -17,10 +17,11 @@ const ReactPlayer = dynamic(() => import("react-player/youtube"), {
 
 const getYouTubeId = (url: string): string | null => {
   if (!url) return null;
-  const short = url.match(/youtu\.be\/([^?#&]+)/);
-  if (short) return short[1];
-  const long = url.match(/[?&]v=([^?#&]+)/);
-  if (long) return long[1];
+  const regExp = /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|shorts\/|live\/|watch\?.+&v=))([\w-]{11})/;
+  const match = url.match(regExp);
+  if (match && match[1]) return match[1];
+  const vMatch = url.match(/[?&]v=([^?#&]+)/);
+  if (vMatch && vMatch[1]) return vMatch[1];
   return null;
 };
 

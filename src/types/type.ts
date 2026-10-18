@@ -83,6 +83,7 @@ export type TEbook = {
 };
 
 export type TVideo = {
+  date: string | undefined;
   _id: string;
   video_url: string;
   video_title_english: string;

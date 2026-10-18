@@ -17,7 +17,7 @@ const ProgramBanner = () => {
       title={isBn ? "আমাদের কর্মসূচি" : "Our Programmes"}
       subtitle={
         isBn
-          ? "স্বাস্থ্য, শিক্ষা, খাদ্য নিরাপত্তা ও সামাজিক অন্তর্ভুক্তির মাধ্যমে সারা দেশে মানুষের সেবা করে আমরা।"
+          ? "স্বাস্থ্য, শিক্ষা, খাদ্য নিরাপত্তা ও সামাজিক অন্তর্ভুক্তির মাধ্যমে সারা দেশে মানুষের সেবা করে জেডআরএফ।"
           : "Serving communities nationwide through health, education, food security and social inclusion."
       }
     />

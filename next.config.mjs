@@ -16,6 +16,11 @@ const nextConfig = {
         hostname: "img.youtube.com",
         pathname: "/vi/**",
       },
+      {
+        protocol: "https",
+        hostname: "i.ytimg.com",
+        pathname: "/vi/**",
+      },
       { protocol: "https", hostname: "api.zrf.info" },
       { protocol: "http", hostname: "api.zrf.info" },
       { protocol: "https", hostname: "**.elb.amazonaws.com" },

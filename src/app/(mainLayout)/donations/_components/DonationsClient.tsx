@@ -6,7 +6,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import DonationHeader from "@/components/Donation/DonationHeader";
 import DonationForm from "@/components/Forms/DonationForm";
-import TestimonialsSection from "@/components/Donation/TestimonialsSection";
 import PartnerSection from "@/components/Donation/PartnerSection";
 import CommonBanner from "@/components/share/CommonBanner/CommonBanner";
 import PageBody from "@/components/share/PageBody";
@@ -379,8 +378,6 @@ export default function DonationsClient() {
             onAmountSelect={handleAmountSelect}
           />
         </div>
-
-        <TestimonialsSection language={language} />
       </PageBody>
 
       <PartnerSection language={language} />
