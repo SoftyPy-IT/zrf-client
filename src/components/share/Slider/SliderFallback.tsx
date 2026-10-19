@@ -71,16 +71,26 @@ const SliderFallback = ({ isBn = false }: { isBn?: boolean }) => {
           </div>
 
           <div className="relative order-first flex items-center justify-center xl:order-none xl:col-span-6">
-            <div className="relative aspect-[4/3] w-full max-w-[580px] xl:max-w-none">
-              <Image
-                src="/banner.svg"
-                alt={isBn ? "জিয়াউর রহমান ফাউন্ডেশন ব্যানার" : "Ziaur Rahman Foundation Banner"}
-                fill
-                priority
-                unoptimized
-                sizes="(max-width: 639px) 100vw, (max-width: 1279px) 90vw, 48vw"
-                className="object-contain"
+            <div className="relative aspect-square w-full max-w-[340px] sm:max-w-[420px] md:max-w-[460px] xl:max-w-[480px]">
+              {/* Ambient backlight glow */}
+              <div
+                className="pointer-events-none absolute inset-0 -z-10 rounded-full bg-gold-500/15 blur-2xl filter"
+                aria-hidden="true"
               />
+              <div className="relative h-full w-full drop-shadow-[0_20px_35px_rgba(0,0,0,0.45)]">
+                <Image
+                  src="/images/anniversary/shoronika-hero-circle.png"
+                  alt={
+                    isBn
+                      ? "জিয়াউর রহমান ফাউন্ডেশন ২৭তম প্রতিষ্ঠাবার্ষিকী"
+                      : "Ziaur Rahman Foundation 27th Anniversary"
+                  }
+                  fill
+                  priority
+                  sizes="(max-width: 639px) 340px, (max-width: 1279px) 460px, 480px"
+                  className="object-contain"
+                />
+              </div>
             </div>
           </div>
         </div>

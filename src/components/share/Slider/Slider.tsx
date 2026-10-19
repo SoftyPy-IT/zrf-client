@@ -219,12 +219,23 @@ const Slider = () => {
           </div>
 
           {/* ------------------------------------------------------------ */}
-          {/* Banner artwork — transparent, as-is, no borders or background */}
+          {/* Banner artwork — 27th anniversary commemorative medallion    */}
           {/* ------------------------------------------------------------ */}
           <div className="relative order-first flex items-center justify-center xl:order-none xl:col-span-6">
-            <div className="relative aspect-[4/3] w-full max-w-[580px] xl:max-w-none">
+            <div className="relative aspect-square w-full max-w-[340px] sm:max-w-[420px] md:max-w-[460px] xl:max-w-[480px]">
+              {/* Ambient backlight glow */}
+              <div
+                className="pointer-events-none absolute inset-0 -z-10 rounded-full bg-gold-500/15 blur-2xl filter"
+                aria-hidden="true"
+              />
               {slides.map((slide, index) => {
-                const image = index === 0 ? "/banner.svg" : slide.thumnailImages?.[0] || "/banner.svg";
+                const heroFallbackImage =
+                  "/images/anniversary/shoronika-hero-circle.png";
+                const rawImage = slide.thumnailImages?.[0];
+                const image =
+                  index === 0 || !rawImage || rawImage === "/banner.svg"
+                    ? heroFallbackImage
+                    : rawImage;
                 return (
                   <div
                     key={slide._id}
@@ -232,22 +243,28 @@ const Slider = () => {
                     aria-roledescription="slide"
                     aria-label={`${index + 1} / ${slides.length}`}
                     aria-hidden={index !== active}
-                    className={`absolute inset-0 transition-opacity duration-700 ease-editorial motion-reduce:transition-none ${
+                    className={`absolute inset-0 flex items-center justify-center transition-opacity duration-700 ease-editorial motion-reduce:transition-none ${
                       index === active
                         ? "opacity-100"
                         : "pointer-events-none opacity-0"
                     }`}
                   >
                     {image && (
-                      <Image
-                        src={image}
-                        alt={isBn ? "জিয়াউর রহমান ফাউন্ডেশন ব্যানার" : "Ziaur Rahman Foundation Banner"}
-                        fill
-                        priority={index === 0}
-                        unoptimized={image.endsWith(".svg")}
-                        sizes="(max-width: 639px) 100vw, (max-width: 1279px) 90vw, 48vw"
-                        className="object-contain"
-                      />
+                      <div className="relative h-full w-full drop-shadow-[0_20px_35px_rgba(0,0,0,0.45)]">
+                        <Image
+                          src={image}
+                          alt={
+                            isBn
+                              ? "জিয়াউর রহমান ফাউন্ডেশন ২৭তম প্রতিষ্ঠাবার্ষিকী"
+                              : "Ziaur Rahman Foundation 27th Anniversary"
+                          }
+                          fill
+                          priority={index === 0}
+                          unoptimized={image.endsWith(".svg")}
+                          sizes="(max-width: 639px) 340px, (max-width: 1279px) 460px, 480px"
+                          className="object-contain"
+                        />
+                      </div>
                     )}
                   </div>
                 );
