@@ -108,31 +108,21 @@ const WelcomeData: React.FC<welcomeProps> = ({ welcomeData, language }) => {
 
           {/* Imagery ---------------------------------------------------- */}
           <div className="order-1 lg:order-2">
-            <div className="relative mx-auto w-full max-w-[540px]">
-              {/* Composite SVG artwork */}
-              <div className="relative aspect-[4/3] w-full">
+            <div className="relative mx-auto w-full max-w-[480px]">
+              {/* Commemorative artwork card with rounded squircle shape */}
+              <div className="relative aspect-square w-full drop-shadow-[0_15px_30px_rgba(0,0,0,0.12)] transition-transform duration-300 hover:scale-[1.01]">
                 <Image
-                  src="/welcome.svg"
+                  src="/images/anniversary/shoronika-about-card.png"
                   alt={
                     isBn
-                      ? "শহীদ রাষ্ট্রপতি জিয়াউর রহমান — জিয়াউর রহমান ফাউন্ডেশন"
-                      : "Shaheed President Ziaur Rahman — Ziaur Rahman Foundation"
+                      ? "শহীদ রাষ্ট্রপতি জিয়াউর রহমান — জিয়াউর রহমান ফাউন্ডেশন ২৭তম প্রতিষ্ঠাবার্ষিকী"
+                      : "Shaheed President Ziaur Rahman — Ziaur Rahman Foundation 27th Anniversary"
                   }
                   fill
                   priority
-                  sizes="(max-width: 1024px) 100vw, 540px"
-                  className="object-contain drop-shadow-sm select-none"
+                  sizes="(max-width: 1024px) 100vw, 480px"
+                  className="object-contain select-none"
                 />
-              </div>
-
-              {/* Years-of-service badge */}
-              <div className="absolute -right-1 top-2 z-10 rounded-card bg-brand-700/95 px-4 py-3 text-center shadow-panel ring-1 ring-white/20 backdrop-blur-sm sm:-right-3 sm:top-4 sm:px-5 sm:py-3.5">
-                <span className="block font-display text-[24px] font-bold leading-none text-white sm:text-[28px]">
-                  27
-                </span>
-                <span className="mt-1 block text-[10px] font-bold uppercase tracking-[0.12em] text-gold-400">
-                  {isBn ? "বছর" : "Years"}
-                </span>
               </div>
             </div>
           </div>
